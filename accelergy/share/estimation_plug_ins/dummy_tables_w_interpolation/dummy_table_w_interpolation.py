@@ -2,7 +2,7 @@
 import csv, os, sys
 from accelergy.helper_functions import oneD_linear_interpolation
 
-class EyerissTableInterpolation(object):
+class DummyTableInterpolation(object):
     """
     a estimation plug-in
     """
@@ -10,7 +10,7 @@ class EyerissTableInterpolation(object):
     # Interface functions, function name, input arguments, and output have to adhere
     # -------------------------------------------------------------------------------------
     def __init__(self):
-        self.estimator_name =  "eyeriss_table"
+        self.estimator_name =  "dummy_table"
 
         # example primitive classes supported by this estimator
         self.supported_pc = ['SRAM', 'counter', 'mac', 'wire', 'crossbar']
@@ -118,7 +118,7 @@ class EyerissTableInterpolation(object):
             else:
                 supported = True
         if supported:
-            return 95  # eyeriss accuracy is about 95%
+            return 95  # dummy accuracy is about 95%
         else:
             return None
 
@@ -136,7 +136,7 @@ class EyerissTableInterpolation(object):
                 if row['action_name'] == action_name and\
                    int(row['width']) == width and \
                    int(row['depth']) == depth:
-                    if EyerissTable.matched_arguments(row, arguments):
+                    if DummyTable.matched_arguments(row, arguments):
                         energy = float(row['energy'])
                         break
         # no exact energy recorded in the table, do linear interpolation
@@ -149,10 +149,10 @@ class EyerissTableInterpolation(object):
                 reader = csv.DictReader(csv_file)
                 for row in reader:
                     if int(row['width']) == width and int(row['depth']) == known_list[0]['x'] and row['action_name'] == action_name:
-                        if EyerissTableInterpolation.matched_arguments(row, arguments):
+                        if DummyTableInterpolation.matched_arguments(row, arguments):
                             known_list[0]['y'] = float(row['energy'])
                     if int(row['width']) == width and int(row['depth']) == known_list[1]['x'] and row['action_name'] == action_name:
-                        if EyerissTableInterpolation.matched_arguments(row, arguments):
+                        if DummyTableInterpolation.matched_arguments(row, arguments):
                             known_list[1]['y'] = float(row['energy'])
             energy = oneD_linear_interpolation(depth, known_list)
         return energy
@@ -281,7 +281,7 @@ class EyerissTableInterpolation(object):
         else:
             return None
     def crossbar_estimate_energy(self, interface):
-        # placeholder, eyeriss estimation did not use crossbar
+        # placeholder, dummy estimation did not use crossbar
         return 0
 
 

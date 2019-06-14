@@ -2,7 +2,7 @@
 import csv, os, sys
 from accelergy.helper_functions import oneD_linear_interpolation
 
-class EyerissTable(object):
+class DummyTable(object):
     """
     a estimation plug-in
     """
@@ -10,7 +10,7 @@ class EyerissTable(object):
     # Interface functions, function name, input arguments, and output have to adhere
     # -------------------------------------------------------------------------------------
     def __init__(self):
-        self.estimator_name =  "eyeriss_table"
+        self.estimator_name =  "dummy_table"
 
         # example primitive classes supported by this estimator
         self.supported_pc = ['SRAM', 'counter', 'mac', 'wire', 'crossbar']
@@ -110,7 +110,7 @@ class EyerissTable(object):
             else:
                 supported = True
         if supported:
-            return 95  # eyeriss accuracy is about 95%
+            return 95  # dummy accuracy is about 95%
         else:
             return None
 
@@ -128,7 +128,7 @@ class EyerissTable(object):
                 if row['action_name'] == action_name and\
                    int(row['width']) == width and \
                    int(row['depth']) == depth:
-                    if EyerissTable.matched_arguments(row, arguments):
+                    if DummyTable.matched_arguments(row, arguments):
                         energy = float(row['energy'])
                         break
         return energy
@@ -257,7 +257,7 @@ class EyerissTable(object):
         else:
             return None
     def crossbar_estimate_energy(self, interface):
-        # placeholder, eyeriss estimation did not use crossbar
+        # placeholder, dummy estimation did not use crossbar
         return 0
 
 
