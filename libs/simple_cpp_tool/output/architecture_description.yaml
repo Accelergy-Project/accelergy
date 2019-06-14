@@ -1,0 +1,19 @@
+my_design:
+  glb:
+    class: SRAM
+    hardware_attributes:
+      depth: 2
+      nbanks: 2
+      width: 16
+  my_PE:
+    PE_mac:
+      class: MAC
+      hardware_attributes:
+        bit_width: 16
+        n_pipe_stage: 2
+    PE_spad:
+      class: SRAM
+      hardware_attributes:
+        depth: 20
+        nbanks: 1
+        width: 16

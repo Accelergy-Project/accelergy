@@ -110,7 +110,7 @@ class DummyTable(object):
             else:
                 supported = True
         if supported:
-            return 95  # dummy accuracy is about 95%
+            return 0.1  # dummy accuracy is about 95%
         else:
             return None
 
@@ -161,7 +161,7 @@ class DummyTable(object):
     def counter_action_supported(self, action_name, arguments):
         supported_actions = ['count', 'idle']
         if action_name in supported_actions:
-            return 95
+            return 0.1
         else:
             return None
 
@@ -194,7 +194,7 @@ class DummyTable(object):
             return False
     def mac_action_supported(self, action_name, arguments):
         if action_name in ['idle', 'mac_random', 'mac_reused', 'mac_gated']:
-            return 95
+            return 0.1
         else:
             return None
 
@@ -226,7 +226,7 @@ class DummyTable(object):
             return False
     def wire_action_spported(self, action_name, arguments):
         if action_name in ['idle', 'transfer']:
-            return 95
+            return 0.1
         else:
             return None
     def wire_estimate_energy(self, interface):
@@ -234,10 +234,7 @@ class DummyTable(object):
         if action_name == 'transfer':
             length = interface['attributes']['length']
             datawidth = interface['attributes']['datawidth']
-            C = 0.22
-            VDD = 1.2
-            alpha = 0.2
-            E = 0.001 * datawidth * 0.5 * alpha * C * length * VDD ** 2
+            E= 1
             return E
         else:
             return 0
@@ -253,7 +250,7 @@ class DummyTable(object):
             return False
     def crossbar_action_supported(self, action_name, arguments):
         if action_name in ['idle', 'transfer', 'transfer_repeated']:
-            return 95
+            return 0.1
         else:
             return None
     def crossbar_estimate_energy(self, interface):
