@@ -1,0 +1,38 @@
+# design description
+architecture:
+# ============================================================
+# Architecture Description
+# ============================================================
+  version: 0.1
+  nodes:
+    - name: hierarchy           # top-level name key has the value as your design name, there can be only one component is the top level list, whic is the design
+      attributes:                # shared attributes for all subcomponents in design
+        technology: 65nm
+        voltage: 1
+      nodes:                     # list of nodes under design
+        - name: weights_glb
+          class: shared_smartbuffer     # class signifies that this is a leaf node, i.e., component
+          attributes:            # hardware attributes that are different from default values
+            word_width: 16
+            n_words: 4
+            width: word_width * n_words # arithmetic expressions (amongst its own attributes, including projected ones, space does not matter)
+            depth: 5600
+            nbanks: 25
+            bank_depth: depth/nbanks
+            bank_width: word_width
+  
+        - name: PE[0:4]          # internal nodes
+          attributes:
+            datawidth: 16
+          nodes:                 # lower-level nodes under PE
+            - name: ifmap_sp
+              class: smartbuffer
+              attributes:
+                width: 16
+                depth: 12
+            - name: mac[0:1]
+              class: mac         # default attributes should be applied
+
+compound_components:
+  version: 0.1
+  classes: !includedir components

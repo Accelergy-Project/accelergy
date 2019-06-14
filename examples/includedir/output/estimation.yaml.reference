@@ -1,0 +1,7 @@
+hierarchy.PE[0].ifmap_sp: 140.0
+hierarchy.PE[0].mac[0]: 70.0
+hierarchy.PE[0].mac[1]: 70.0
+hierarchy.PE[1].ifmap_sp: 180.0
+hierarchy.PE[1].mac[0]: 70.0
+hierarchy.PE[1].mac[1]: 70.0
+hierarchy.weights_glb: 5200.0

@@ -1,0 +1,5 @@
+action_name,datawidth,energy
+mac_random,16,1
+mac_reused,16,1
+mac_gated,16,1
+idle,16,1

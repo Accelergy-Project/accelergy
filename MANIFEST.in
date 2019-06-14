@@ -1,0 +1,6 @@
+include accelergy/share/*
+include accelergy/share/estimation_plug_ins/*
+include accelergy/share/estimation_plug_ins/eyeriss_tables/*
+include accelergy/share/estimation_plug_ins/eyeriss_tables/data/*
+include accelergy/share/estimation_plug_ins/eyeriss_tables_w_interpolation/*
+include accelergy/share/estimation_plug_ins/eyeriss_tables_w_interpolation/data/*

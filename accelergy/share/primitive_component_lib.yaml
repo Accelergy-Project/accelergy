@@ -1,0 +1,96 @@
+# values of the attributes are defaults, can be replaced if other values are assigned to the attributes
+version: 1.0
+classes:
+  - name: adder
+    attributes:
+      technology: 65nm
+      datawidth: 16
+      num_pipeline_stages: 1
+    actions:
+      - name: add
+
+  - name: multiplier
+    attributes:
+      technology: 65nm
+      datawidth: 16
+      num_pipeline_stages: 1
+    actions:
+      - name: mult_random
+      - name: mult_reused
+      - name: mult_gated
+      - name: idle
+
+  - name: SRAM
+    attributes:
+      technology: 65nm
+      width: 64
+      depth: 512
+      n_rd_ports: 0
+      n_wr_ports: 0
+      n_rdwr_ports: 1
+      n_banks: 1
+    actions:
+      - name: read
+        arguments:
+          data_delta: 0..1
+          address_delta: 0..1
+      - name: write
+        arguments:
+          data_delta: 0..1
+          address_delta: 0..1
+      - name: idle
+
+  - name: counter
+    attributes:
+      technology: 65nm
+      datawidth: 16
+    actions:
+      - name: count
+        arguments:
+          count_delta: 1
+      - name: idle
+
+  - name: FIFO
+    attributes:
+      - technology: 65nm
+      - datawidth: 16
+      - depth: 2
+    actions:
+      - name: push
+      - name: pop
+      - name: idle
+
+  - name: mac
+    attributes:
+      technology: 65nm
+      datawidth: 16
+      num_pipeline_stages: 2
+    actions:
+      - name: mac_random
+      - name: mac_reused
+      - name: mac_gated
+      - name: idle
+
+  - name: crossbar
+    attributes:
+      technology: 65nm
+      n_inputs: 1
+      n_outputs: 1
+      datawidth: 16
+    actions:
+      - name: transfer_random
+      - name: transfer_repeated
+      - name: idle
+
+  - name: wire
+    attributes:
+      technology: 65nm
+      length: 1um
+    actions:
+      - name: transfer
+      - name: repeated_transfer
+      - name: idle
+
+
+
+
