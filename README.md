@@ -1,4 +1,4 @@
-# Accelergy infrastructure (version 1.0)
+# Accelergy infrastructure (version 0.1)
 
 Accelergy is an infrastructure for architecture-level energy estimations of accelerator designs. 
 
