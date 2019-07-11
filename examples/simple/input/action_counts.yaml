@@ -3,9 +3,9 @@
 # ================================================
 version: 0.1
 nodes:
-  - name: single
+  - name: simple
     nodes:
-    - name: glb  # leaf node (component)
+    - name: glb[0]  # leaf node (component)
       action_counts:     # key word for leaf component
         - name: read
           arguments:

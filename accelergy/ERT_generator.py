@@ -34,7 +34,7 @@ class EnergyReferenceTableGenerator(object):
     PC_classes_set = None     # static variable to record all the PC classes
     estimator_list = None     # static variable to record all the estimators
     def __init__(self):
-        
+
         # initializes all bookkeeping containers
         self.compound_class_description    = {}
         self.raw_architecture_description  = {}
@@ -62,12 +62,15 @@ class EnergyReferenceTableGenerator(object):
         return start_idx, end_idx
 
     @staticmethod
-    def is_component_list(name):
+    def is_component_list(name, binding_dictionary = None):
         """
         determines if the component is a list according to its name
         component
         if not, return 0
         if yes, return list length
+
+        it is possible that the last index of the list involves direct binding or arithmetical operations
+        (operands could be strings that are keys in binding dictionary)
         """
         start_idx = name.find('[0')
         if start_idx == -1:
@@ -76,9 +79,18 @@ class EnergyReferenceTableGenerator(object):
             if ']' not in name:
                 WARN(name, ': located [0: but not ], typo?')
             else:
-                end_idx = name.find(']')
-                list_length = int(name[start_idx+3: end_idx]) + 1
                 name_base = name[:start_idx]
+                end_idx = name.find(']')
+                tail = name[start_idx+3: end_idx]
+                # check if the tail involves arithmetic operations
+                optype, op1, op2 = EnergyReferenceTableGenerator.parse_expression_for_arithmetic(tail, binding_dictionary)
+                if optype is None:
+                    if tail in binding_dictionary:
+                        # tail is a direct binding, directly retrieve the numerical value
+                        tail = binding_dictionary[tail]
+                    list_length = int(tail) + 1
+                else:
+                    list_length = int(EnergyReferenceTableGenerator.process_arithmetic(op1, op2, optype))+ 1
                 return list_length, name_base
 
 
@@ -147,7 +159,8 @@ class EnergyReferenceTableGenerator(object):
                 try:
                     op1 = int(op1)
                 except ValueError:
-                    print(expression, '\n', binding_dictionary)
+                    print('arithmetic expression:', expression, '\n',
+                          'available operand-value binding:', binding_dictionary)
                     ERROR_CLEAN_EXIT('arithmetic operation located, but cannot parse operand value')
 
             # if the operation needs 2 operands
@@ -252,6 +265,7 @@ class EnergyReferenceTableGenerator(object):
         if 'nodes' not in architecture_description_list:
             ERROR_CLEAN_EXIT('architecture tree nodes should be the value of top level key "nodes", '
                              '"nodes" not found at top-level')
+
         raw_architecture_description = architecture_description_list['nodes']
 
         if not len(architecture_description_list['nodes']) == 1:
@@ -266,14 +280,15 @@ class EnergyReferenceTableGenerator(object):
                    "architecture description : " 
                    "please specify the design name as top-level key-value pair =>  name: <design_name>")
 
-        self.design_name                     = raw_architecture_description[0]['name']
+        self.design_name = raw_architecture_description[0]['name']
 
         # if design is itself just one leaf component
         if 'nodes' not in raw_architecture_description[0]:
             if 'class' in raw_architecture_description[0]:
+                #TODO: single leaf node case can also have a name that is of list format
                 self.construct_new_leaf_node_description(raw_architecture_description[0]['name'],
-                                                              raw_architecture_description,
-                                                              None)
+                                                         raw_architecture_description,
+                                                         None)
                 return
             # leaf class syntax violation
             else:
@@ -301,12 +316,14 @@ class EnergyReferenceTableGenerator(object):
             node_attrs = None
         elif shared_attributes_dict is not None and 'attributes' not in node_description:
             node_attrs = deepcopy(shared_attributes_dict)
-        else:
+        elif shared_attributes_dict is None and 'attributes' in node_description:
+            node_attrs = node_description['attributes']
+        else: #shared_attributes_dict is not None and attributes in node_description
             node_attrs = deepcopy(shared_attributes_dict)
             node_attrs.update(node_description['attributes'])
 
         # determine if the component is in list format
-        list_length, name_base = EnergyReferenceTableGenerator.is_component_list(node_name)
+        list_length, name_base = EnergyReferenceTableGenerator.is_component_list(node_name, shared_attributes_dict)
 
         # if the component is in list format, flatten out and create the instances
         if not list_length == 0:
@@ -690,16 +707,40 @@ class EnergyReferenceTableGenerator(object):
         compound_component_definition['attributes'] = deepcopy(compound_component_info['attributes'])
 
         # apply the physical compound attribute values (parsing of the architecture should already fulfilled
-        # the values of all attributes needed by the class, either defualt or redefined by the architecture)
+        # the values of all attributes needed by the class, either default or redefined by the architecture)
         compound_attributes = compound_component_definition['attributes'] # fully defined attribute values
+
+
+
+        # process subcomponent name format
+        #     if subcomponent is a list, expand the list of subcomponents (list tail index can be arithmetic operantions)
+        #     else keep the subcomponent name
+
+        subcomponents = deepcopy(compound_component_definition['subcomponents'])
+
+        list_of_new_components = []
+        list_of_to_remove_components = []
+
+        for subcomponent_idx in range(len(subcomponents)):
+            subcomponent = subcomponents[subcomponent_idx]
+            list_length, subcomponent_name_base = EnergyReferenceTableGenerator.is_component_list(subcomponent['name'], compound_attributes)
+            if subcomponent_name_base is not None:
+                list_of_to_remove_components.append(subcomponent)
+                INFO('list component name: ', subcomponent['name'], 'detected in compound class: ', compound_component_info['class'])
+                for i in range(list_length):
+                    new_component = deepcopy(subcomponent)
+                    new_component['name']  = subcomponent_name_base + '[' + str(i) + ']'
+                    list_of_new_components.append(new_component)
+        for comp in list_of_to_remove_components:
+            subcomponents.remove(comp)
+        for comp in list_of_new_components:
+            subcomponents.append(comp)
 
         # process the subcomponent attribute values
         # subcomponent attributes can be:
         #     1. numbers
         #     2. string bindings to compound component attributes
         #     3. arithmetic operations that contain string bindings and numbers
-
-        subcomponents = deepcopy(compound_component_definition['subcomponents'])
         compound_component_definition['subcomponents'] = {}
         for subcomponent in subcomponents:
             subcomponent_name = subcomponent['name']
@@ -831,23 +872,23 @@ class EnergyReferenceTableGenerator(object):
                 ERROR_CLEAN_EXIT('compound classes must have "subcomponents" key to specify the lower-level details',
                                   'error class name: ', compound_class_name)
 
-            list_of_new_components = []
-            list_of_to_remove_components = []
-
-            for subcomponent_idx in range(len(subcomponents)):
-                subcomponent = subcomponents[subcomponent_idx]
-                list_length, subcomponent_name_base = EnergyReferenceTableGenerator.is_component_list(subcomponent['name'])
-                if subcomponent_name_base is not None:
-                    list_of_to_remove_components.append(subcomponent)
-                    INFO('list component name: ', subcomponent['name'], 'detected in compound class: ', compound_class_name)
-                    for i in range(list_length):
-                        new_component = deepcopy(subcomponent)
-                        new_component['name']  = subcomponent_name_base + '[' + str(i) + ']'
-                        list_of_new_components.append(new_component)
-            for comp in list_of_to_remove_components:
-                subcomponents.remove(comp)
-            for comp in list_of_new_components:
-                subcomponents.append(comp)
+            # list_of_new_components = []
+            # list_of_to_remove_components = []
+            #
+            # for subcomponent_idx in range(len(subcomponents)):
+            #     subcomponent = subcomponents[subcomponent_idx]
+            #     list_length, subcomponent_name_base = EnergyReferenceTableGenerator.is_component_list(subcomponent['name'])
+            #     if subcomponent_name_base is not None:
+            #         list_of_to_remove_components.append(subcomponent)
+            #         INFO('list component name: ', subcomponent['name'], 'detected in compound class: ', compound_class_name)
+            #         for i in range(list_length):
+            #             new_component = deepcopy(subcomponent)
+            #             new_component['name']  = subcomponent_name_base + '[' + str(i) + ']'
+            #             list_of_new_components.append(new_component)
+            # for comp in list_of_to_remove_components:
+            #     subcomponents.remove(comp)
+            # for comp in list_of_new_components:
+            #     subcomponents.append(comp)
 
 
 

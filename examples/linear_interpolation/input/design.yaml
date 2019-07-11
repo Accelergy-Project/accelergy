@@ -29,4 +29,5 @@ compound_components:
 # Compound Components
 # ============================================================
   version: 0.1
-  classes: !include compound_components/shared_SRAM.yaml
+  classes: 
+    - !include compound_components/shared_SRAM.yaml

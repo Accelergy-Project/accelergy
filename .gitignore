@@ -1,6 +1,11 @@
 # Example outputs
 examples/*/output/*.yaml
 
+# Eyeriss data
+**/eyeriss_tables/
+**/eyeriss_tables_w_interpolation/
+
+
 # Debug files
 debug.py
 
@@ -8,6 +13,21 @@ debug.py
 # Emacs files
 *~
 #*#
+
+# scripts
+scripts/
+
+# cpp related
+**/cmake*/
+**/CMakeFiles/
+**/CMakeCache.txt
+libs/sim/output/*.yaml
+libs/sim/*.o
+
+#pycharm
+**/.idea/
+venv/
+
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

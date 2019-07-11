@@ -110,7 +110,7 @@ class DummyTable(object):
             else:
                 supported = True
         if supported:
-            return 0.1  # dummy accuracy is about 95%
+            return 0.1  # dummy accuracy is about 0.1%
         else:
             return None
 

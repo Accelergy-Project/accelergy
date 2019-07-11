@@ -5,7 +5,7 @@ architecture:
 # ============================================================
   version: 0.1
   nodes:
-    - name: hierarchy           # top-level name key has the value as your design name, there can be only one component is the top level list, whic is the design
+    - name: hierarchy            # top-level name key has the value as your design name, there can be only one component is the top level list, whic is the design
       attributes:                # shared attributes for all subcomponents in design
         technology: 65nm
         voltage: 1
