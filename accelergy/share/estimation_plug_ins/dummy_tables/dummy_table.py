@@ -4,7 +4,7 @@ from accelergy.helper_functions import oneD_linear_interpolation
 
 class DummyTable(object):
     """
-    a estimation plug-in
+    an estimation plug-in
     """
     # -------------------------------------------------------------------------------------
     # Interface functions, function name, input arguments, and output have to adhere
@@ -44,6 +44,8 @@ class DummyTable(object):
                     return accuracy
 
         return 0  # if not supported, accuracy is 0
+
+
 
     def estimate_energy(self, interface):
         """

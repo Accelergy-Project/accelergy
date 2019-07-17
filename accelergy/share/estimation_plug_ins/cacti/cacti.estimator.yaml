@@ -1,0 +1,10 @@
+
+# This estimator uses Cacti7 to estimate energy cnsumption for SRAM blocks
+# Minor modifications made to cacti7_exec/io.cc
+#     ine 1941 and 1945 are commented out to suppress terminal output, explicitly for Accelergy use
+
+version: 0.1
+cacti_plug_in:                                # A (lower case) name for the plugin (not really used elsewhere)
+    module: cacti_wrapper                     # The (lower case) Python module name, which actually is the name of the file
+    class: CactiWrapper                       # The class name
+

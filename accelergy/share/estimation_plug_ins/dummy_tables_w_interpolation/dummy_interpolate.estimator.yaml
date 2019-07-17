@@ -1,4 +1,4 @@
-version: 1.0
+version: 0.1
 dummy_interpolation_plug_in:                                # A (lower case) name for the plugin (not really used elsewhere)
     module: dummy_table_w_interpolation                     # The (lower case) Python module name, which actually is the name of the file
     class: DummyTableInterpolation                         # The class name

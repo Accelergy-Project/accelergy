@@ -38,7 +38,7 @@ class accelergy_loader(yaml.SafeLoader):
 def include_constructor(self, node):
     """
     constructor:
-      parses the !inldue relative_file_path
+      parses the !include relative_file_path
       loads the file from relative_file_path and insert the values into the original file
     """
     filepath = self.construct_scalar(node)
@@ -53,7 +53,7 @@ yaml.add_constructor('!include', include_constructor, accelergy_loader)
 def includedir_constructor(self, node):
     """
     constructor:
-      parses the !inldue relative_file_path
+      parses the !includedir relative_file_path
       loads the file from relative_file_path and insert the values into the original file
     """
     filepath = self.construct_scalar(node)
@@ -81,7 +81,7 @@ class accelergy_dumper(yaml.SafeDumper):
 
 def create_folder(directory):
     """
-    Checks the exitence of a directory, if does not exist, create a new one
+    Checks the existence of a directory, if does not exist, create a new one
     :param directory: path to directory under concern
     :return: None
     """
