@@ -18,7 +18,7 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-import math, os
+import math, os, sys
 from importlib.machinery import SourceFileLoader
 from copy import deepcopy
 from yaml import load, dump
@@ -827,6 +827,20 @@ class EnergyReferenceTableGenerator(object):
 
                         self.estimator_plug_ins.append(estimator_obj)
 
+    def expand_primitive_component_lib_info(self, pc_path):
+        """
+         Processes the primitive component library files and add the primitive components to Accelergy
+        :param pc_path: path that the primitive component lib is at
+        :return: None
+        """
+        primitive_component_list = load(open(pc_path), accelergy_loader)
+        syntax_validators.validate_primitive_classes(primitive_component_list)
+        for idx in range(len(primitive_component_list['classes'])):
+            pc_name = primitive_component_list['classes'][idx]['name']
+            if pc_name in self.primitive_class_description:
+                WARN(pc_name, 'redefined in', pc_path)
+            self.primitive_class_description[pc_name] = primitive_component_list['classes'][idx]
+        INFO('primitive component file parsed: ', pc_path)
 
     def construct_primitive_class_description(self):
         """
@@ -837,15 +851,15 @@ class EnergyReferenceTableGenerator(object):
         # load in the stored primitive classes
         primitive_class_paths = self.config['primitive_components']
         for pc_path in primitive_class_paths:
-            primitive_component_list = load(open(pc_path), accelergy_loader)
-            syntax_validators.validate_primitive_classes(primitive_component_list)
-            for idx in range(len(primitive_component_list['classes'])):
-                pc_name = primitive_component_list['classes'][idx]['name']
-                if pc_name in self.primitive_class_description:
-                    WARN(pc_name, 'redefined in', pc_path)
-                self.primitive_class_description[pc_name] = primitive_component_list['classes'][idx]
-
-            INFO('primitive component file parsed: ', pc_path)
+            # primitive component library file is directly specified
+            if '.yaml' in pc_path:
+                self.expand_primitive_component_lib_info(pc_path)
+            else:
+                # primitive component dir is specified, need recursive search
+                for root, directories, file_names in os.walk(pc_path):
+                    for file_name in file_names:
+                        if '.lib.yaml' in file_name:
+                            self.expand_primitive_component_lib_info(root + os.sep + file_name)
 
     def construct_compound_class_description(self, compound_class_list):
         """
@@ -916,7 +930,7 @@ class EnergyReferenceTableGenerator(object):
         if not found, create default at $HOME/.config/accelergy/accelergy_config.yaml
         Default config file contains the path to the default estimator and  primitive component library
         """
-        possible_config_dirs = ['./', os.environ['HOME']+'/.config/accelergy/']
+        possible_config_dirs = ['.' + os.sep, os.path.expanduser('~') + '/.config/accelergy/']
         config_file_name = 'accelergy_config.yaml'
         self.config = None
         for possible_dir in possible_config_dirs:
@@ -928,8 +942,8 @@ class EnergyReferenceTableGenerator(object):
         if self.config is None:
             create_folder(possible_config_dirs[1])
             this_dir, this_filename = os.path.split(__file__)
-            default_estimator_path = os.path.abspath(os.path.join(this_dir, 'share/estimation_plug_ins/'))
-            default_pc_lib_path = os.path.abspath(os.path.join(this_dir, 'share/primitive_component_lib.yaml'))
+            default_estimator_path = os.path.abspath(os.path.join(this_dir, '../../../../share/accelergy/estimation_plug_ins/'))
+            default_pc_lib_path = os.path.abspath(os.path.join(this_dir, '../../../../share/accelergy/primitive_component_libs/'))
             config_file_content = {'version': 0.1,
                                    'estimator_plug_ins': [default_estimator_path],
                                    'primitive_components': [default_pc_lib_path]}

@@ -4,7 +4,10 @@ from accelergy.helper_functions import oneD_linear_interpolation
 
 class DummyTable(object):
     """
-    an estimation plug-in
+    A dummy estimation plug-in
+    Note that this plug-in is just a placeholder to illustrate the estimation plug-in interface
+    It can be used as a template for creating user-defined plug-ins
+    The energy values returned by this plug-in is not meaningful
     """
     # -------------------------------------------------------------------------------------
     # Interface functions, function name, input arguments, and output have to adhere
@@ -13,7 +16,8 @@ class DummyTable(object):
         self.estimator_name =  "dummy_table"
 
         # example primitive classes supported by this estimator
-        self.supported_pc = ['SRAM', 'counter', 'mac', 'wire', 'crossbar']
+        self.supported_pc = ['SRAM', 'regfile','counter', 'mac', 'wire', 'crossbar',
+                             'bitwise', 'fpmac', 'adder', 'multiplier', 'FIFO']
 
     def primitive_action_supported(self, interface):
         """
@@ -65,42 +69,35 @@ class DummyTable(object):
         energy = getattr(self, query_function_name)(interface)
         return energy
 
-
-    # ---------------------------------------------------------
+    # ============================================================
     # User's functions, purely user-defined
-    # ---------------------------------------------------------
+    # ============================================================
+    @staticmethod
+    def matched_arguments(row, arguments):
+        """ helper function for locating the csv entry"""
+        if arguments is None:
+            return True
+        argument_matched = True
+        for argument_name, argument_val in arguments.items():
+            if not row[argument_name] == str(argument_val):
+                argument_matched = False
+                break
+        if argument_matched:
+            return True
+        else:
+            return False
+    # ----------------- SRAM related ---------------------------
     def SRAM_attr_supported(self, attributes):
         if 'technology' in attributes and\
             'width' in attributes and\
            'depth' in attributes and \
            'n_rdwr_ports' in attributes:
-
-           if attributes['technology'] == '65nm':
-               # SRAM tables are specifically generated for 65nm
-               n_ports = attributes['n_rdwr_ports']
-               width = attributes['width']
-               depth = attributes['depth']
-
-               # check if there is a table stored for a particular SRAM attributes
-               if n_ports == 2 and width == 64 and depth == 1024:
-                   return True
-               elif n_ports == 2 and width == 1 and depth == 12:
-                   return True
-               elif n_ports == 2 and width == 16 and depth == 224:
-                   return True
-               elif n_ports == 2 and width == 16 and depth == 24:
-                    return True
-               elif n_ports == 2 and width == 16 and depth == 12:
-                   return True
-               elif n_ports == 2 and width == 1 and depth == 12:
-                   return True
-
+            return True  # example test for sufficient attributes
         return False
 
-    # ----------------- SRAM related ---------------------------
     def SRAM_action_supported(self, action_name, arguments):
         supported = False
-        supported_action_names = ['read', 'write', 'idle']
+        supported_action_names = ['read', 'write', 'idle'] # example test of supported actions and arguments
         supported_arguments = {'data_delta': {'min': 0, 'max': 1}, 'address_delta': {'min': 0, 'max': 1}}
         if action_name in supported_action_names:
             if arguments is not None:
@@ -133,31 +130,15 @@ class DummyTable(object):
                     if DummyTable.matched_arguments(row, arguments):
                         energy = float(row['energy'])
                         break
+        if energy is None:
+            energy = 0 # if energy cannot be found in SRAM.csv file, return 0
         return energy
 
-    @staticmethod
-    def matched_arguments(row, arguments):
-        if arguments is None:
-            return True
-        argument_matched = True
-        for argument_name, argument_val in arguments.items():
-            if not row[argument_name] == str(argument_val):
-                argument_matched = False
-                break
-        if argument_matched:
-            return True
-        else:
-            return False
+
     # ----------------- counter related ---------------------------
-
     def counter_attr_supported(self, attributes):
-
-        supported_attributes = {'datawidth':[13, 10, 8, 4], 'technology': ['65nm']}
-        supported_actions = ['count', 'idle']
         if 'datawidth' in attributes and 'technology' in attributes:
-            if attributes['datawidth'] in supported_attributes['datawidth']\
-                    and attributes['technology'] in supported_attributes['technology']:
-                return True
+            return True
         return False
 
     def counter_action_supported(self, action_name, arguments):
@@ -181,17 +162,15 @@ class DummyTable(object):
                     energy = float(row['energy'])
                     break
         if energy is None:
-            print('estimator plug-in error:, cannot estimate energy for supposedly supported input', interface)
-            sys.exit(1)
+            energy = 0 # if entry cannot be found in the counter.csv file, return 0
         return energy
 
     # ----------------- mac related ---------------------------
     def mac_attr_supported(self, attributes):
-        if 'technology' in attributes and 'datawidth' in attributes:
-            if attributes['technology'] == '65nm' and attributes['datawidth'] == 16:
-                return True
-            else:
-                return False
+        if 'technology' in attributes and \
+            'datawidth' in attributes and \
+            'num_pipeline_stages' in attributes: # example test for sufficient attributes
+            return True
         else:
             return False
     def mac_action_supported(self, action_name, arguments):
@@ -213,17 +192,57 @@ class DummyTable(object):
                     energy = float(row['energy'])
                     break
         if energy is None:
-            print('estimator plug-in error:, cannot estimate energy for supposedly supported input', interface)
-            sys.exit(1)
+            energy = 0  # if entry cannot be found in the mac.csv file, return 0
         return energy
 
+    # ----------------- fpmac related ---------------------------
+    def fpmac_attr_supported(self, attributes):
+        if 'technology' in attributes and 'datawidth' in attributes \
+            and 'num_pipeline_stages' in attributes:
+            return True
+        else:
+            return False
+    def fpmac_action_supported(self, action_name, arguments):
+        if action_name in ['idle', 'mac_random', 'mac_reused', 'mac_gated']:
+            return 0.1
+        else:
+            return None
+    def fpmac_estimate_energy(self, interface):
+        # placeholder, dummy estimation always return an energy of 1
+        return 1
+    # ----------------- adder related ---------------------------
+    def adder_attr_supported(self, attributes):
+        if 'technology' in attributes and 'datawidth' in attributes:
+            return True
+        else:
+            return False
+    def adder_action_supported(self, action_name, arguments):
+        if action_name in ['idle', 'add']:
+            return 0.1
+        else:
+            return None
+    def adder_estimate_energy(self, interface):
+        # placeholder, dummy estimation  always return an energy of 1
+        return 1
+    # ----------------- multiplier related ---------------------------
+    def multiplier_attr_supported(self, attributes):
+        if 'technology' in attributes and 'datawidth' in attributes \
+            and 'num_pipeline_stages' in attributes:
+            return True
+        else:
+            return False
+    def multiplier_action_supported(self, action_name, arguments):
+        if action_name in ['idle', 'mult_random', 'mult_reused', 'mult_gated']:
+            return 0.1
+        else:
+            return None
+    def multiplier_estimate_energy(self, interface):
+        # placeholder, dummy estimation  always return an energy of 1
+        return 1
     # ----------------- wire related ---------------------------
     def wire_attr_supported(self, attributes):
         if 'technology' in attributes and 'length' in attributes and 'datawidth' in attributes:
-            if attributes['technology'] == '65nm':
-                return True
-            else:
-                return False
+            return True
         else:
             return False
     def wire_action_spported(self, action_name, arguments):
@@ -232,22 +251,13 @@ class DummyTable(object):
         else:
             return None
     def wire_estimate_energy(self, interface):
-        action_name = interface['action_name']
-        if action_name == 'transfer':
-            length = interface['attributes']['length']
-            datawidth = interface['attributes']['datawidth']
-            E= 1
-            return E
-        else:
-            return 0
-    # ----------------- wire related ---------------------------
+        # placeholder, dummy estimation  always return an energy of 1
+        return 1
+    # ----------------- crossbar related ---------------------------
     def crossbar_attr_supported(self, attributes):
         if 'technology' in attributes and 'datawidth' in attributes \
             and 'n_inputs' in attributes and 'n_outputs' in attributes:
-            if attributes['technology'] == '65nm':
-                return True
-            else:
-                return False
+            return True
         else:
             return False
     def crossbar_action_supported(self, action_name, arguments):
@@ -256,8 +266,64 @@ class DummyTable(object):
         else:
             return None
     def crossbar_estimate_energy(self, interface):
-        # placeholder, dummy estimation did not use crossbar
-        return 0
+        # placeholder, dummy estimation  always return an energy of 1
+        return 1
 
+    # ----------------- regfile related ---------------------------
+    def regfile_attr_supported(self, attributes):
+        if 'technology' in attributes and\
+            'width' in attributes and\
+           'depth' in attributes and \
+           'n_rdwr_ports' in attributes:
+            return True  # example test for sufficient attributes
+        return False
+    def regfile_action_supported(self, action_name, arguments):
+        supported = False
+        supported_action_names = ['read', 'write', 'idle'] # example test of supported actions and arguments
+        supported_arguments = {'data_delta': {'min': 0, 'max': 1}, 'address_delta': {'min': 0, 'max': 1}}
+        if action_name in supported_action_names:
+            if arguments is not None:
+                for argument_name, argument_value in arguments.items():
+                    if argument_name in supported_arguments:
+                        if supported_arguments[argument_name]['min'] <= argument_value \
+                                <= supported_arguments[argument_name]['max']:
+                            supported = True
+            else:
+                supported = True
+        if supported:
+            return 0.1  # dummy accuracy is about 0.1%
+        else:
+            return None
+    def regfile_estimate_energy(self, interface):
+        # placeholder, dummy estimation  always return an energy of 1
+        return 1
 
-
+    # ----------------- bitwise related ---------------------------
+    def bitwise_attr_supported(self, attributes):
+        if 'technology' in attributes:
+            return True
+        else:
+            return False
+    def bitwise_action_supported(self, action_name, arguments):
+        if action_name in ['idle', 'process']:
+            return 0.1
+        else:
+            return None
+    def bitwise_estimate_energy(self, interface):
+        # placeholder, dummy estimation  always return an energy of 1
+        return 1
+    # ----------------- FIFO related ---------------------------
+    def FIFO_attr_supported(self, attributes):
+        if 'technology' in attributes and 'datawidth' in attributes \
+            and 'depth' in attributes:
+            return True
+        else:
+            return False
+    def FIFO_action_supported(self, action_name, arguments):
+        if action_name in ['idle', 'transfer', 'transfer_repeated']:
+            return 0.1
+        else:
+            return None
+    def FIFO_estimate_energy(self, interface):
+        # placeholder, dummy estimation  always return an energy of 1
+        return 1

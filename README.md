@@ -1,56 +1,67 @@
 # Accelergy infrastructure (version 0.1)
 
-Accelergy is an infrastructure for architecture-level energy estimations of accelerator designs. 
+An infrastructure for architecture-level energy estimations of accelerator designs. 
 
 ## Get started 
-- Infrastructure tested on RedHat Linux6
-- python 3
+- Infrastructure tested on RedHat Linux6, WLS
+- python 3.6
 - PyYAML package 
 
 ## Install the package
 ```
-   <pip_exec> install .  
+   <pip_exec> install .  --prefix ~/.local/
    # note:<pip_exec> is different for different python versions, e.g., pip3      
 ```
-- Three new commands: ```accelergy, accelergyERT, accelergyCALC ```  should be available in your python bin
-- Please make sure your python bin is appropriately added to $PATH 
+- The ```--prefix``` flag allows Accelergy to be installed at an user-owned directory (optional)
+- Please make sure your python bin, e.g.,```~/.local/bin ```, is appropriately added to $PATH 
+- Three new commands: ```accelergy, accelergyERT, accelergyCALC ```  should be available in your python bin 
+- ```accelergy -h```, ```accelergyERT -h```, ```accelergyCALC -h``` show the help message for the commands
 
 ## Run an example evaluation
 
-```accelergy``` runs both energy reference table (ERT) generator and energy calculator, ```accelergy -h``` shows the usage of the command
-Below show an example of running ```accelergy``` to generate ERTs and energy esitmates. Assuming at repo root directory:
+```accelergy``` runs both energy reference table (ERT) generator and energy calculator. Assuming at repo root directory:
 ``` 
-cd examples/single/input
+cd examples/simple/input
 accelergy -o ../output/ design.yaml action_counts.yaml 
 ```
 
-```accelergyERT```  runs ERT generator only, ```accelergyERT -h``` shows its usage. As an example, assuming at repo root directory:
+```accelergyERT```  runs ERT generator only. Assuming at repo root directory:
 
 ```
-cd examples/single/input
+cd examples/simple/input
 accelergyERT -o ../output/ design.yaml
 ``` 
 
-```accelergyCALC```  runs energy calculator only, ```accelergyCALC -h``` shows its usage. As an example, assuming at repo root directory:
+```accelergyCALC```  runs energy calculator only. Assuming at repo root directory:
 
 ```
-cd examples/single/input
+cd examples/simple/input
 accelergyCALC -o ../output/ ERT.yaml action_counts.yaml 
 ``` 
 
+
+## File Structure
+- accelergy : package source
+- share: contains example primitive component library and dummy estimation pug-ins
+- examples: example designs and action counts for Accelergy to evaluate
+- lib: potential C++ helper classes for generating action counts
+
 ## Documentation
 
-
 ### accelergy_config.yaml
-   accelergy-config.yaml is the required config file for accelergy to:
+   accelergy-config.yaml is the required config file for Accelergy to:
    - locate its estimator plug-ins
    - locate its primitive components
    
 At the beginning of ```accelergy``` or ```accelergyERT``` run, Accelergy will automatically search for ```accelergy_config.yaml``` first at ```./``` and then at ```$HOME/.config/accelergy/``` the file will be loaded if found, otherwise, Accelergy will create a default 
-   ```accelergy_config.yaml``` at ```$HOME/.config/accelergy/```, which points to the default estimator plug-in and primitive component library.
+   ```accelergy_config.yaml``` at ```$HOME/.config/accelergy/```, which points to the default estimator plug-in directory and primitive component library directory.
 
-<p>Users can create their own  ```accelergy_config.yaml``` at ```$HOME/.config/accelergy/``` or ```./```, or modify the default 
-```accelergy_config.yaml``` created by Accelergy to specify their own estimator plug-ins and primitive component library
+Users can create their own  ```accelergy_config.yaml``` at ```$HOME/.config/accelergy/``` or ```./```, or modify the default 
+```accelergy_config.yaml``` created by Accelergy to specify their own root directories for estimator plug-ins and primitive component library.
+Accelergy does a recursive search from the specified root directories to locate the estimation  plug-ins and primitive component lib files.
+
+Primitive component library files need be end with ```.lib.yaml``` for Accelergy to locate it. 
+Estimation plug-in's API is described in *API for Estimation Plug-ins* section below. 
 
 ### Input files
 Two input files are required for a complete run of Accelergy evaluation, 
@@ -82,15 +93,14 @@ Action counts hierarchically record the run time behavior of the design running 
 the number of times each action has happened is recorded. The component names in this file has to match the  
 component names in architecture.yaml for Accelergy to find correspondence. 
 
-### API for Estimator Plug-ins
+### API for Estimation Plug-ins
 - specify the root directory in config file in the format below. Accelergy does a recrusively search to locate the estimator 
 plug in resides in the its child directories
 ```
-etimator_plug_in:
-        - root0
-        - root1
+etimator_plug_ins:
+  - root0
+  - root1
 ```
- 
   
 - *.estimator.yaml file needs to be specified for Accelergy to locate the estimator
   the file should have the following format
@@ -103,7 +113,7 @@ etimator_plug_in:
     
 ```
 
-- A pyhton module is required to be present in the same folder as the *.estimator.yaml file
+- A python module is required to be present in the same folder as the *.estimator.yaml file
     - The python file should contain a module with <python_module_name> specified in *.estimator.yaml
     - Two functions are required to be implemented as interface function calls. Accelergy specifically calls
     these two functions to check if the estimator plug-in can be used for a specific primitive component

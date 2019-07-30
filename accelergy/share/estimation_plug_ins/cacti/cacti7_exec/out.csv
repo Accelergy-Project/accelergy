@@ -1,2 +1,0 @@
-Tech node (nm),Capacity (bytes),Number of rw ports,Number of banks,Associativity,Output width (bits),Access time (ns),Random cycle time (ns),Dynamic search energy (nJ),Dynamic read energy (nJ),Dynamic write energy (nJ),Standby leakage per bank(mW),Area (mm2),
-65,448,2,1,1,16,0.346587,0.260719,N/A,0.00104792,0.0016894,0.39434,0.00688911,
