@@ -1,6 +1,6 @@
 # Accelergy infrastructure (version 0.1)
 
-An infrastructure for architecture-level energy estimations of accelerator designs. 
+An infrastructure for architecture-level energy estimations of accelerator designs. Project website: http://accelergy.mit.edu
 
 ## Get started 
 - Infrastructure tested on RedHat Linux6, WLS
@@ -9,10 +9,9 @@ An infrastructure for architecture-level energy estimations of accelerator desig
 
 ## Install the package
 ```
-   <pip_exec> install .  --prefix ~/.local/
+   <pip_exec> install .
    # note:<pip_exec> is different for different python versions, e.g., pip3      
 ```
-- The ```--prefix``` flag allows Accelergy to be installed at an user-owned directory (optional)
 - Please make sure your python bin, e.g.,```~/.local/bin ```, is appropriately added to $PATH 
 - Three new commands: ```accelergy, accelergyERT, accelergyCALC ```  should be available in your python bin 
 - ```accelergy -h```, ```accelergyERT -h```, ```accelergyCALC -h``` show the help message for the commands

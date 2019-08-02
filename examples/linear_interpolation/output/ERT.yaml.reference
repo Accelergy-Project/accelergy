@@ -4,120 +4,120 @@ linear_interpolation.glb:
       active_banks: 0
       address_delta: 0
       data_delta: 0
-    energy: 25.0
+    energy: 0
   - arguments:
       active_banks: 0
       address_delta: 0
       data_delta: 1
-    energy: 25.0
+    energy: 0
   - arguments:
       active_banks: 0
       address_delta: 1
       data_delta: 0
-    energy: 25.0
+    energy: 0
   - arguments:
       active_banks: 0
       address_delta: 1
       data_delta: 1
-    energy: 25.0
+    energy: 0
   - arguments:
       active_banks: 1
       address_delta: 0
       data_delta: 0
-    energy: 25.0
+    energy: 1
   - arguments:
       active_banks: 1
       address_delta: 0
       data_delta: 1
-    energy: 25.0
+    energy: 1
   - arguments:
       active_banks: 1
       address_delta: 1
       data_delta: 0
-    energy: 25.0
+    energy: 1
   - arguments:
       active_banks: 1
       address_delta: 1
       data_delta: 1
-    energy: 25.0
+    energy: 1
   - arguments:
       active_banks: 2
       address_delta: 0
       data_delta: 0
-    energy: 25.0
+    energy: 2
   - arguments:
       active_banks: 2
       address_delta: 0
       data_delta: 1
-    energy: 25.0
+    energy: 2
   - arguments:
       active_banks: 2
       address_delta: 1
       data_delta: 0
-    energy: 25.0
+    energy: 2
   - arguments:
       active_banks: 2
       address_delta: 1
       data_delta: 1
-    energy: 25.0
+    energy: 2
   write:
   - arguments:
       active_banks: 0
       address_delta: 0
       data_delta: 0
-    energy: 25.0
+    energy: 0
   - arguments:
       active_banks: 0
       address_delta: 0
       data_delta: 1
-    energy: 25.0
+    energy: 0
   - arguments:
       active_banks: 0
       address_delta: 1
       data_delta: 0
-    energy: 25.0
+    energy: 0
   - arguments:
       active_banks: 0
       address_delta: 1
       data_delta: 1
-    energy: 25.0
+    energy: 0
   - arguments:
       active_banks: 1
       address_delta: 0
       data_delta: 0
-    energy: 25.0
+    energy: 1
   - arguments:
       active_banks: 1
       address_delta: 0
       data_delta: 1
-    energy: 25.0
+    energy: 1
   - arguments:
       active_banks: 1
       address_delta: 1
       data_delta: 0
-    energy: 25.0
+    energy: 1
   - arguments:
       active_banks: 1
       address_delta: 1
       data_delta: 1
-    energy: 25.0
+    energy: 1
   - arguments:
       active_banks: 2
       address_delta: 0
       data_delta: 0
-    energy: 25.0
+    energy: 2
   - arguments:
       active_banks: 2
       address_delta: 0
       data_delta: 1
-    energy: 25.0
+    energy: 2
   - arguments:
       active_banks: 2
       address_delta: 1
       data_delta: 0
-    energy: 25.0
+    energy: 2
   - arguments:
       active_banks: 2
       address_delta: 1
       data_delta: 1
-    energy: 25.0
+    energy: 2

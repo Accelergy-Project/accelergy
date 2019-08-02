@@ -35,7 +35,7 @@ hierarchy.PE.ifmap_sp:
     energy: 2.0
   idle:
     arguments: null
-    energy: 1.0
+    energy: 2.0
   update:
   - arguments:
       address_delta: 0
@@ -92,42 +92,42 @@ hierarchy.weights_glb:
       active_banks: 1
       address_delta: 0
       data_delta: 0
-    energy: 26.0
+    energy: 27.0
   - arguments:
       active_banks: 1
       address_delta: 1
       data_delta: 0
-    energy: 26.0
+    energy: 27.0
   - arguments:
       active_banks: 1
       address_delta: 0
       data_delta: 1
-    energy: 26.0
+    energy: 27.0
   - arguments:
       active_banks: 1
       address_delta: 1
       data_delta: 1
-    energy: 26.0
+    energy: 27.0
   - arguments:
       active_banks: 2
       address_delta: 0
       data_delta: 0
-    energy: 26.0
+    energy: 28.0
   - arguments:
       active_banks: 2
       address_delta: 1
       data_delta: 0
-    energy: 26.0
+    energy: 28.0
   - arguments:
       active_banks: 2
       address_delta: 0
       data_delta: 1
-    energy: 26.0
+    energy: 28.0
   - arguments:
       active_banks: 2
       address_delta: 1
       data_delta: 1
-    energy: 26.0
+    energy: 28.0
   fill:
   - arguments:
       active_banks: 0
@@ -153,42 +153,42 @@ hierarchy.weights_glb:
       active_banks: 1
       address_delta: 0
       data_delta: 0
-    energy: 26.0
+    energy: 27.0
   - arguments:
       active_banks: 1
       address_delta: 1
       data_delta: 0
-    energy: 26.0
+    energy: 27.0
   - arguments:
       active_banks: 1
       address_delta: 0
       data_delta: 1
-    energy: 26.0
+    energy: 27.0
   - arguments:
       active_banks: 1
       address_delta: 1
       data_delta: 1
-    energy: 26.0
+    energy: 27.0
   - arguments:
       active_banks: 2
       address_delta: 0
       data_delta: 0
-    energy: 26.0
+    energy: 28.0
   - arguments:
       active_banks: 2
       address_delta: 1
       data_delta: 0
-    energy: 26.0
+    energy: 28.0
   - arguments:
       active_banks: 2
       address_delta: 0
       data_delta: 1
-    energy: 26.0
+    energy: 28.0
   - arguments:
       active_banks: 2
       address_delta: 1
       data_delta: 1
-    energy: 26.0
+    energy: 28.0
   update:
   - arguments:
       active_banks: 0
@@ -214,39 +214,39 @@ hierarchy.weights_glb:
       active_banks: 1
       address_delta: 0
       data_delta: 0
-    energy: 26.0
+    energy: 27.0
   - arguments:
       active_banks: 1
       address_delta: 1
       data_delta: 0
-    energy: 26.0
+    energy: 27.0
   - arguments:
       active_banks: 1
       address_delta: 0
       data_delta: 1
-    energy: 26.0
+    energy: 27.0
   - arguments:
       active_banks: 1
       address_delta: 1
       data_delta: 1
-    energy: 26.0
+    energy: 27.0
   - arguments:
       active_banks: 2
       address_delta: 0
       data_delta: 0
-    energy: 26.0
+    energy: 28.0
   - arguments:
       active_banks: 2
       address_delta: 1
       data_delta: 0
-    energy: 26.0
+    energy: 28.0
   - arguments:
       active_banks: 2
       address_delta: 0
       data_delta: 1
-    energy: 26.0
+    energy: 28.0
   - arguments:
       active_banks: 2
       address_delta: 1
       data_delta: 1
-    energy: 26.0
+    energy: 28.0

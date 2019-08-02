@@ -572,7 +572,7 @@ class EnergyReferenceTableGenerator(object):
                                                                                      subcomponent_info,
                                                                                      None,
                                                                                      compound_component_attributes)
-                    action_ERT['energy'] = round(action_ERT['energy']+subaction_energy, self.decimal_place)
+                            action_ERT['energy'] = round(action_ERT['energy']+subaction_energy, self.decimal_place)
 
                 # record the generated ERT for the compound component
                 compound_component_ERT[compound_action_name] = deepcopy(action_ERT)
@@ -851,6 +851,7 @@ class EnergyReferenceTableGenerator(object):
         # load in the stored primitive classes
         primitive_class_paths = self.config['primitive_components']
         for pc_path in primitive_class_paths:
+            print(pc_path)
             # primitive component library file is directly specified
             if '.yaml' in pc_path:
                 self.expand_primitive_component_lib_info(pc_path)
@@ -941,9 +942,9 @@ class EnergyReferenceTableGenerator(object):
 
         if self.config is None:
             create_folder(possible_config_dirs[1])
-            this_dir, this_filename = os.path.split(__file__)
-            default_estimator_path = os.path.abspath(os.path.join(this_dir, '../../../../share/accelergy/estimation_plug_ins/'))
-            default_pc_lib_path = os.path.abspath(os.path.join(this_dir, '../../../../share/accelergy/primitive_component_libs/'))
+            #this_dir, this_filename = os.path.split(__file__)
+            default_estimator_path = os.path.abspath(str(sys.prefix) + '/share/accelergy/estimation_plug_ins/')
+            default_pc_lib_path = os.path.abspath(os.path.join(str(sys.prefix)+ '/share/accelergy/primitive_component_libs/'))
             config_file_content = {'version': 0.1,
                                    'estimator_plug_ins': [default_estimator_path],
                                    'primitive_components': [default_pc_lib_path]}

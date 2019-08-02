@@ -70,3 +70,12 @@ actions:
         actions:
         - name: transfer
           repeat: active_banks
+  - name: idle
+    subcomponents:
+      - name: SRAM_bank[0]
+        actions:
+        - name: idle
+          repeat: nbanks
+      - name: wr_crossbar
+        actions:
+        - name: idle
