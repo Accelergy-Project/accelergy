@@ -67,15 +67,13 @@ classes:
       datawidth: 16
     actions:
       - name: count
-        arguments:
-          count_delta: 1
       - name: idle
 
   - name: FIFO
     attributes:
-      - technology: 65nm
-      - datawidth: 16
-      - depth: 2
+      technology: 65nm
+      datawidth: 16
+      depth: 2
     actions:
       - name: push
       - name: pop

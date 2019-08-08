@@ -25,5 +25,7 @@ nodes:
             data_delta: 1
             address_delta: 0
           counts: 100
+        - name: idle
+          counts: 100
 
 

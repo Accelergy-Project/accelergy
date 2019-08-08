@@ -26,6 +26,7 @@ from accelergy import syntax_validators
 from accelergy.utils import accelergy_loader, accelergy_dumper, \
                             write_yaml_file, ERROR_CLEAN_EXIT, WARN, INFO,\
                             create_folder
+from accelergy.config_file_checker import config_file_checker
 
 
 class EnergyReferenceTableGenerator(object):
@@ -927,32 +928,12 @@ class EnergyReferenceTableGenerator(object):
 
     def locate_config(self):
         """
-        Search for accelerg_config.yaml in ./ and $HOME/.config/accelergy
-        if not found, create default at $HOME/.config/accelergy/accelergy_config.yaml
-        Default config file contains the path to the default estimator and  primitive component library
+        Calls the config file checker to test/create config files
+        Version control implemented inside config_file_checker.py
         """
-        possible_config_dirs = ['.' + os.sep, os.path.expanduser('~') + '/.config/accelergy/']
-        config_file_name = 'accelergy_config.yaml'
-        self.config = None
-        for possible_dir in possible_config_dirs:
-            if os.path.exists(possible_dir + config_file_name):
-                self.config = load(open(possible_dir + config_file_name), accelergy_loader)
-                INFO('config file located:', possible_dir + config_file_name)
-                break
+        config_file_content = config_file_checker()
+        self.config = config_file_content
 
-        if self.config is None:
-            create_folder(possible_config_dirs[1])
-            #this_dir, this_filename = os.path.split(__file__)
-            default_estimator_path = os.path.abspath(str(sys.prefix) + '/share/accelergy/estimation_plug_ins/')
-            default_pc_lib_path = os.path.abspath(os.path.join(str(sys.prefix)+ '/share/accelergy/primitive_component_libs/'))
-            config_file_content = {'version': 0.1,
-                                   'estimator_plug_ins': [default_estimator_path],
-                                   'primitive_components': [default_pc_lib_path]}
-
-            config_file_path = possible_config_dirs[1] + config_file_name
-            INFO('Accelergy creating default config at:', possible_config_dirs[1] + config_file_name, 'with:', config_file_content)
-            write_yaml_file(config_file_path, config_file_content)
-            self.config = config_file_content
 
     def generate_ERTs(self, design_path, output_path, precision):
         """

@@ -41,8 +41,9 @@ accelergyCALC -o ../output/ ERT.yaml action_counts.yaml
 
 ## File Structure
 - accelergy : package source
-- share: contains directories for default primitive component libraries and dummy estimation pug-ins
+- share: contains example primitive component library and dummy estimation pug-ins
 - examples: example designs and action counts for Accelergy to evaluate
+- lib: potential C++ helper classes for generating action counts
 
 ## Documentation
 
@@ -55,9 +56,8 @@ At the beginning of ```accelergy``` or ```accelergyERT``` run, Accelergy will au
    ```accelergy_config.yaml``` at ```$HOME/.config/accelergy/```, which points to the default estimator plug-in directory and primitive component library directory.
 
 Users can create their own  ```accelergy_config.yaml``` at ```$HOME/.config/accelergy/``` or ```./```, or modify the default 
-```accelergy_config.yaml``` created by Accelergy to specify their own root directories for estimator plug-ins
- and primitive component library. Accelergy does a recursive search from the specified root directories to locate 
- the estimation plug-ins and primitive component lib files.
+```accelergy_config.yaml``` created by Accelergy to specify their own root directories for estimator plug-ins and primitive component library.
+Accelergy does a recursive search from the specified root directories to locate the estimation  plug-ins and primitive component lib files.
 
 Primitive component library files need be end with ```.lib.yaml``` for Accelergy to locate it. 
 Estimation plug-in's API is described in *API for Estimation Plug-ins* section below. 
@@ -70,36 +70,39 @@ detailed syntax examples are located in ```examples/```
 - ```action_counts.yaml```
 
 #### design.yaml
-  There are two top-level keys in design.yaml, *architecture description* and *compound components*
-- *architecture description*: hierarchically describes the design in terms of components. 
-The architecture is represented as a tree structure, with internal nodes and leaf nodes.
-Internal nodes are merely an internal level of representation,
+  There are two parts in design.yaml, architecture description and compound components
+- architecture.yaml: hierarchically describes the design in terms of components. 
+Therefore, the architecture can be represented as a tree structure, with internal nodes
+and leaf nodes. Internal nodes are merely an internal level of representation,
 not physical hardware instantiations. Leaf nodes are physical hardware instantiations, 
 and therefore are components in the design. The component can either belong to a primitive component class or 
 a compound component class. Architecture description should be generated using yaml format. 
 Nodes at the same level are represented in a list format, each item in the list is dictionary format. 
 
-- *compound components*: provides all the compound component classes that are needed by the design. A compound component class
-provides the attributes, the subcomponents, the compound actions and corresponding arguments (if there are any).
-Compound component classes are always two-level, top-level compound component and the lower-level sub-components,
-which can primitive components (specified in Accelergy primitive library or user-defined primitive library) or compound component,
-which needs to be specified in this file as another compound component class. 
+
+- compound_components.yaml: provides all the compound component classes that are needed by the design. A component class
+provides the components it consists of, its compound action names, corresponding arguments names and ranges, and 
+the definition of each compound action. Compound component classes have two types of components, one the the top-level component, 
+the other is the lower-level components, which can primitive components (specified in Accelergy primitive library 
+or user-defined primitive library) or compound component, which needs to be specified in this file as another compound 
+component class. 
 
 #### action_counts.yaml
-Action counts hierarchically record the run time behavior of the design running a specific workload. 
-For each component in the design, the number of times each action has happened is recorded.
-The component names in this file has to match the component names in architecture.yaml for Accelergy to find correspondence. 
+Action counts hierarchically record the run time behavior of the design running a specific workload. For each component in the design,
+the number of times each action has happened is recorded. The component names in this file has to match the  
+component names in architecture.yaml for Accelergy to find correspondence. 
 
 ### API for Estimation Plug-ins
-- Users need to specify the root directory in config file in the format below. Accelergy does a recursive search to locate the estimator 
-plug-ins according to the provided root directories
+- specify the root directory in config file in the format below. Accelergy does a recrusively search to locate the estimator 
+plug in resides in the its child directories
 ```
-estimator_plug_ins:
+etimator_plug_ins:
   - root0
   - root1
 ```
   
-- *.estimator.yaml* file needs to be specified for Accelergy to locate the estimator, and the file should have the following format
+- *.estimator.yaml file needs to be specified for Accelergy to locate the estimator
+  the file should have the following format
 ```
   version: <version_number> 
   estimator_plug_in_name:
@@ -109,9 +112,9 @@ estimator_plug_ins:
     
 ```
 
-- A python module is required to be present in the same folder as the *.estimator.yaml* file
-    - The python file should contain a class as specified in *.estimator.yaml*
-    - There are two required class functions, i.e., the interface function calls. Accelergy specifically calls
+- A python module is required to be present in the same folder as the *.estimator.yaml file
+    - The python file should contain a module with <python_module_name> specified in *.estimator.yaml
+    - Two functions are required to be implemented as interface function calls. Accelergy specifically calls
     these two functions to check if the estimator plug-in can be used for a specific primitive component
         - ``` primitive_action_supported(self, interface) ```
             - parameters: ```interface``` is a dictionary that contains the following four keys:
