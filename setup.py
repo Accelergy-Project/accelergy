@@ -1,12 +1,28 @@
 from setuptools import setup
+from setuptools.command.install_scripts import install_scripts
+import subprocess
 import os
+
+class InstallCommand(install_scripts):
+    """A custom install_scripts setup to install accelergy plug-ins too."""
+    """This happens at the later stage after plug-in dir is created."""
+    def run(self):
+        print("Installing extra plugins.")
+        try:
+            tmp = subprocess.call([
+                "bash",
+                "install_plug-in.sh",
+                "/".join(self.install_dir.split("/")[:-1])]) # take out the /bin part
+        except:
+            print("Extra plugin installation failed.")
+        install_scripts.run(self)
 
 def readme():
       with open('README.md') as f:
             return f.read()
 
-setup(
-    name='accelergy',
+setup(cmdclass={'install_scripts' : InstallCommand},
+      name='accelergy',
       version='0.1',
       description='Accelergy Estimation Framework',
       classifiers=[
