@@ -167,3 +167,7 @@ def INFO(*argv):
         else:
             msg_str += arg + ' '
     print(msg_str)
+
+def ASSERT_MSG(expression, msg):
+    if not expression:
+        ERROR_CLEAN_EXIT(msg);
