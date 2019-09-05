@@ -29,7 +29,7 @@ architecture:
           class: smartbuffer
           attributes:
             width: 16
-            depth: 256
+            depth: 12
         - name: mac[2]
           class: mac         # default attributes should be applied
 
