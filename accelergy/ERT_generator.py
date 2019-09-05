@@ -357,7 +357,7 @@ class EnergyReferenceTableGenerator(object):
             ASSERT_MSG(isinstance(node_description['subtree'], dict),
                        "v0.2 error: %s.subtree has to be a dictionary" % prefix)
             node_prefix = prefix + '.' + node_name
-            self.flatten_architecture_subtree(node.prefiex,
+            self.flatten_architecture_subtree(node_prefix,
                                               node_description['subtree'],
                                               node_attrs)
 

@@ -1,9 +1,11 @@
 # Example outputs
 examples/*/output/*.yaml
 
-# Eyeriss data
-**/eyeriss_tables/
-**/eyeriss_tables_w_interpolation/
+# proprietary
+**/proprietary_examples/
+
+# c++ libs
+**/libs/
 
 
 # Debug files
