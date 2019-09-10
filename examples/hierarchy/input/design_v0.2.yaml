@@ -7,7 +7,7 @@ architecture:
   subtree:
     name: hierarchy            # top-level name key has the value as your design name, there can be only one component is the top level list, whic is the design
     attributes:                # shared attributes for all subcomponents in design
-      technology: 65nm
+      technology: 40nm
       voltage: 1
     local:                     # list of components in this level
       - name: weights_glb

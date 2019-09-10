@@ -1,11 +1,11 @@
 # values of the attributes are defaults, can be replaced if other values are assigned to the attributes
-version: 0.1
+version: 0.2
 classes:
-
   - name: bitwise
     attributes:
       technology: 65nm
       datawidth: 16
+      latency: 5ns
       num: 1
     actions:
       - name: process
@@ -16,6 +16,34 @@ classes:
       technology: 65nm
       datawidth: 16
       num_pipeline_stages: 1
+      latency: 5ns
+    actions:
+      - name: add
+      - name: idle
+
+  - name: in32adder
+    attributes:
+      technology: 65nm
+      num_pipeline_stages: 1
+      latency: 5ns
+    actions:
+      - name: add
+      - name: idle
+
+  - name: int16adder
+    attributes:
+      technology: 65nm
+      num_pipeline_stages: 1
+      latency: 5ns
+    actions:
+      - name: add
+      - name: idle
+
+  - name: int8adder
+    attributes:
+      technology: 65nm
+      num_pipeline_stages: 1
+      latency: 5ns
     actions:
       - name: add
       - name: idle
@@ -25,6 +53,40 @@ classes:
       technology: 65nm
       datawidth: 16
       num_pipeline_stages: 1
+      latency: 5ns
+    actions:
+      - name: mult_random
+      - name: mult_reused
+      - name: mult_gated
+      - name: idle
+
+  - name: int32multiplier
+    attributes:
+      technology: 65nm
+      num_pipeline_stages: 1
+      latency: 5ns
+    actions:
+      - name: mult_random
+      - name: mult_reused
+      - name: mult_gated
+      - name: idle
+
+  - name: int16multiplier
+    attributes:
+      technology: 65nm
+      num_pipeline_stages: 1
+      latency: 5ns
+    actions:
+      - name: mult_random
+      - name: mult_reused
+      - name: mult_gated
+      - name: idle
+
+  - name: int8multiplier
+    attributes:
+      technology: 65nm
+      num_pipeline_stages: 1
+      latency: 5ns
     actions:
       - name: mult_random
       - name: mult_reused
@@ -36,7 +98,7 @@ classes:
       technology: 65nm
       datawidth: 16
       entries: 1
-      num: 1
+      latency: 5ns
     actions:
       - name: process
       - name: idle
@@ -50,6 +112,7 @@ classes:
       n_wr_ports: 0
       n_rdwr_ports: 1
       n_banks: 1
+      latency: 5ns
     actions:
       - name: read
         arguments:
@@ -65,6 +128,7 @@ classes:
     attributes:
       technology: 65nm
       datawidth: 16
+      latency: 5ns
     actions:
       - name: count
       - name: idle
@@ -74,6 +138,7 @@ classes:
       technology: 65nm
       datawidth: 16
       depth: 2
+      latency: 5ns
     actions:
       - name: push
       - name: pop
@@ -82,8 +147,63 @@ classes:
   - name: mac
     attributes:
       technology: 65nm
-      datawidth: 16
       num_pipeline_stages: 2
+      latency: 5ns
+    actions:
+      - name: mac_random
+      - name: mac_reused
+      - name: mac_gated
+      - name: idle
+
+  - name: int8mac
+    attributes:
+      technology: 65nm
+      num_pipeline_stages: 2
+      latency: 5ns
+    actions:
+      - name: mac_random
+      - name: mac_reused
+      - name: mac_gated
+      - name: idle
+
+  - name: int16mac
+    attributes:
+      technology: 65nm
+      num_pipeline_stages: 2
+      latency: 5ns
+    actions:
+      - name: mac_random
+      - name: mac_reused
+      - name: mac_gated
+      - name: idle
+
+  - name: int32mac
+    attributes:
+      technology: 65nm
+      num_pipeline_stages: 2
+      latency: 5ns
+    actions:
+      - name: mac_random
+      - name: mac_reused
+      - name: mac_gated
+      - name: idle
+
+  - name: fp32mac
+    attributes:
+      technology: 65nm
+      num_pipeline_stages: 2
+      latency: 5ns
+    actions:
+      - name: mac_random
+      - name: mac_reused
+      - name: mac_gated
+      - name: idle
+
+  - name: fp64mac
+    attributes:
+      technology: 65nm
+      num_pipeline_stages: 2
+      latency: 5ns
     actions:
       - name: mac_random
       - name: mac_reused
@@ -95,6 +215,7 @@ classes:
       technology: 65nm
       datawidth: 16
       num_pipeline_stages: 3
+      latency: 5ns
     actions:
       - name: mac_random
       - name: mac_reused
@@ -107,6 +228,7 @@ classes:
       n_inputs: 1
       n_outputs: 1
       datawidth: 16
+      latency: 5ns
     actions:
       - name: transfer_random
       - name: transfer_repeated
@@ -116,6 +238,7 @@ classes:
     attributes:
       technology: 65nm
       length: 1um
+      latency: 5ns
     actions:
       - name: transfer
       - name: repeated_transfer

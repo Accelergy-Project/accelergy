@@ -27,6 +27,7 @@ from accelergy.utils import accelergy_loader, accelergy_dumper, \
                             write_yaml_file, ERROR_CLEAN_EXIT, WARN, INFO, ASSERT_MSG,\
                             create_folder
 from accelergy.config_file_checker import config_file_checker
+from accelergy.arithmetic_parsers import  parse_expression_for_arithmetic, process_arithmetic
 
 
 class EnergyReferenceTableGenerator(object):
@@ -73,7 +74,7 @@ class EnergyReferenceTableGenerator(object):
         it is possible that the last index of the list involves direct binding or arithmetical operations
         (operands could be strings that are keys in binding dictionary)
         """
-        start_idx = name.find('[0')
+        start_idx = name.find('[0:')
         if start_idx == -1:
             return 0, None
         else:
@@ -84,100 +85,16 @@ class EnergyReferenceTableGenerator(object):
                 end_idx = name.find(']')
                 tail = name[start_idx+3: end_idx]
                 # check if the tail involves arithmetic operations
-                optype, op1, op2 = EnergyReferenceTableGenerator.parse_expression_for_arithmetic(tail, binding_dictionary)
+                optype, op1, op2 = parse_expression_for_arithmetic(tail, binding_dictionary)
                 if optype is None:
                     if tail in binding_dictionary:
                         # tail is a direct binding, directly retrieve the numerical value
                         tail = binding_dictionary[tail]
                     list_length = int(tail) + 1
                 else:
-                    list_length = int(EnergyReferenceTableGenerator.process_arithmetic(op1, op2, optype))+ 1
+                    list_length = int(process_arithmetic(op1, op2, optype))+ 1
                 return list_length, name_base
 
-
-    @staticmethod
-    def process_arithmetic(op1, op2, op_type):
-        """ Turns string expression into arithmetic operation"""
-        if op_type == '*':
-            result = op1 * op2
-        elif op_type == '/':
-            result = int(math.ceil(op1/op2))
-        elif op_type == '//':
-            result = op1//op2
-        elif op_type == '%':
-            result = math.remainder(op1, op2)
-        elif op_type == '-':
-            result = int(op1 -op2)
-        elif op_type == '+':
-            result = int(op1 + op2)
-        elif op_type == 'log2':
-            result = int(math.ceil(math.log2(op1)))
-        else:
-            result = None
-            ERROR_CLEAN_EXIT('wrong op_type')
-        return result
-
-
-    @staticmethod
-    def parse_expression_for_arithmetic(expression, binding_dictionary):
-        """
-        Expression contains the operands and the op type,
-        binding dictionary contains the numerical values of the operands (if they are strings)
-        """
-        # parse for the supported arithmetic operations
-        if '*' in expression:
-            op_type = '*'
-        elif '/' in expression:
-            op_type = '/'
-        elif '//' in expression:
-            op_type = '//'
-        elif '%' in expression:
-            op_type = '%'
-        elif '+' in expression:
-            op_type = '+'
-        elif '-' in expression:
-            op_type = '-'
-        elif 'log2(' and ')' in expression:
-            op_type = 'log2'
-        else:
-            op_type = None
-
-        # if the expression is an arithmetic operation
-        if op_type is not None:
-
-            if not op_type == 'log2':
-                op1 = expression[:expression.find(op_type)].strip()
-                op2 = expression[expression.find(op_type) + 1:].strip()
-
-            # log2 only needs one operand, and needs to be processed differently
-            else:
-                op1 = expression[expression.find('(') + 1: expression.find(')')].strip()
-                op2 = None
-
-            if op1 in binding_dictionary:
-                op1 = binding_dictionary[op1]
-            else:
-                try:
-                    op1 = int(op1)
-                except ValueError:
-                    print('arithmetic expression:', expression, '\n',
-                          'available operand-value binding:', binding_dictionary)
-                    ERROR_CLEAN_EXIT('arithmetic operation located, but cannot parse operand value')
-
-            # if the operation needs 2 operands
-            if op2 is not None:
-                if op2 in binding_dictionary:
-                    op2 = binding_dictionary[op2]
-                else:
-                    try:
-                        op2 = int(op2)
-                    except ValueError:
-                        ERROR_CLEAN_EXIT('arithmetic operation located, but cannot parse operand value')
-        # if the expression is not an arithmetic operation
-        else:
-            op1 = None
-            op2 = None
-        return op_type, op1, op2
 
     @staticmethod
     def remove_brackets(name):
@@ -244,10 +161,10 @@ class EnergyReferenceTableGenerator(object):
         # check if there is any binding or arithmetic expressions in the attribute dictionary
         for attr_name, attr_val in new_component_description['attributes'].items():
             if type(attr_val) is str :
-                op_type, op1, op2 = EnergyReferenceTableGenerator.parse_expression_for_arithmetic\
+                op_type, op1, op2 = parse_expression_for_arithmetic\
                                                 (attr_val, new_component_description['attributes'])
                 if not op_type is None:
-                    result = EnergyReferenceTableGenerator.process_arithmetic(op1, op2, op_type)
+                    result = process_arithmetic(op1, op2, op_type)
                     new_component_description['attributes'][attr_name] = result
                 else:
                     if attr_val in new_component_description['attributes']:
@@ -298,15 +215,7 @@ class EnergyReferenceTableGenerator(object):
         if version == 0.1:
             # if design is itself just one leaf component
             if 'nodes' not in raw_architecture_description:
-                if 'class' in raw_architecture_description:
-                    #TODO: single leaf node case can also have a name that is of list format
-                    self.construct_new_leaf_node_description(raw_architecture_description['name'],
-                                                             raw_architecture_description,
-                                                             None)
-                    return
-                # leaf class syntax violation
-                else:
-                    ERROR_CLEAN_EXIT('architecture description syntax violation: leaf component without class')
+                ERROR_CLEAN_EXIT('architecture description syntax violation: design must contain nodes')
             # if architecture tree has height > 1
             else:
                 for node in raw_architecture_description['nodes']:
@@ -332,7 +241,7 @@ class EnergyReferenceTableGenerator(object):
             ERROR_CLEAN_EXIT('component format violation: "name" needs to be specified as a key in node description')
 
         node_name = node_description['name']
-        #FIXME: Handel multiple instances here
+        #FIXME: Handle multiple instances here
 
         if shared_attributes_dict is None and 'attributes' not in node_description:
             node_attrs = None
@@ -534,12 +443,12 @@ class EnergyReferenceTableGenerator(object):
         compound component: parse the subcomponet information and evaluate the ERT for the subcomponent actions first
 
             - top-level compound component with actions
-                1. no argument, generate for the action by parsing its defintion and recursively call this function
+                1. no argument, generate for the action by parsing its definition and recursively call this function
                 2. argument ranges: generate energy/action for one possible argument value(s) a time,
                                     and loops through all the possibilities
 
             - low-level compound components
-              1. no argument, generate for the action by parsing its defintion and recursively call this function
+              1. no argument, generate for the action by parsing its definition and recursively call this function
               2. argument values: since it is low-level, its argument values should already be defined by the
                                   high-level compound component's action argument value
 
@@ -688,9 +597,9 @@ class EnergyReferenceTableGenerator(object):
         """
         if 'repeat' in action and action['repeat'] is not None:
             if type(action['repeat']) is not int:
-                op_type, op1, op2 = EnergyReferenceTableGenerator.parse_expression_for_arithmetic(action['repeat'], upper_level_binding)
+                op_type, op1, op2 = parse_expression_for_arithmetic(action['repeat'], upper_level_binding)
                 if op_type is not None:
-                    parsed_repeat = EnergyReferenceTableGenerator.process_arithmetic(op1, op2, op_type)
+                    parsed_repeat = process_arithmetic(op1, op2, op_type)
 
                 else:
                     if action['repeat'] in upper_level_binding:
@@ -722,9 +631,9 @@ class EnergyReferenceTableGenerator(object):
         try:
             start_idx = int(split_sub_string[0])
         except ValueError:
-            op_type, op1, op2 = self.parse_expression_for_arithmetic(split_sub_string[0], attributes_dict)
+            op_type, op1, op2 = parse_expression_for_arithmetic(split_sub_string[0], attributes_dict)
             if op_type is not None:
-                start_idx = self.process_arithmetic(op1, op2, op_type)
+                start_idx = process_arithmetic(op1, op2, op_type)
             else:
                 if split_sub_string[0] not in attributes_dict:
                     ERROR_CLEAN_EXIT('cannot find mapping from', arg_range_str, 'to', attributes_dict)
@@ -735,9 +644,9 @@ class EnergyReferenceTableGenerator(object):
         try:
             end_idx = int(split_sub_string[1])
         except ValueError:
-            op_type, op1, op2 = self.parse_expression_for_arithmetic(split_sub_string[1], attributes_dict)
+            op_type, op1, op2 = parse_expression_for_arithmetic(split_sub_string[1], attributes_dict)
             if op_type is not None:
-                end_idx = self.process_arithmetic(op1, op2, op_type)
+                end_idx = process_arithmetic(op1, op2, op_type)
             else:
                 if split_sub_string[1] not in attributes_dict:
                     ERROR_CLEAN_EXIT('cannot find mapping from', arg_range_str, 'to', attributes_dict)
@@ -774,8 +683,6 @@ class EnergyReferenceTableGenerator(object):
         # the values of all attributes needed by the class, either default or redefined by the architecture)
         compound_attributes = compound_component_definition['attributes'] # fully defined attribute values
 
-
-
         # process subcomponent name format
         #     if subcomponent is a list, expand the list of subcomponents (list tail index can be arithmetic operantions)
         #     else keep the subcomponent name
@@ -790,7 +697,7 @@ class EnergyReferenceTableGenerator(object):
             list_length, subcomponent_name_base = EnergyReferenceTableGenerator.is_component_list(subcomponent['name'], compound_attributes)
             if subcomponent_name_base is not None:
                 list_of_to_remove_components.append(subcomponent)
-                INFO('list component name: ', subcomponent['name'], 'detected in compound class: ', compound_component_info['class'])
+                # INFO('list component name: ', subcomponent['name'], 'detected in compound class: ', compound_component_info['class'])
                 for i in range(list_length):
                     new_component = deepcopy(subcomponent)
                     new_component['name']  = subcomponent_name_base + '[' + str(i) + ']'
@@ -812,9 +719,9 @@ class EnergyReferenceTableGenerator(object):
             for sub_attr_name, sub_attr_val in sub_component_attributes.items():
                 if type(sub_attr_val) is str:
                     # subcomponent attributes can be computed in terms of upper-level compound attributes
-                    op_type, op1, op2 = EnergyReferenceTableGenerator.parse_expression_for_arithmetic(sub_attr_val, compound_attributes)
+                    op_type, op1, op2 = parse_expression_for_arithmetic(sub_attr_val, compound_attributes)
                     if op_type is not None:
-                        sub_component_attributes[sub_attr_name] = EnergyReferenceTableGenerator.process_arithmetic(op1, op2, op_type)
+                        sub_component_attributes[sub_attr_name] = process_arithmetic(op1, op2, op_type)
                         # INFO(compound_component_name, 'sub-attribute', sub_attr_name, 'processed as arithmetic operation')
                     else:
                         try:
@@ -842,9 +749,9 @@ class EnergyReferenceTableGenerator(object):
                     for c_action_arg_name, c_action_arg_range in c_action_args.items():
                         c_action_args[c_action_arg_name], detect_arg_range_binding = \
                             self.map_arg_range_bounds(c_action_arg_range, compound_attributes)
-                        if detect_arg_range_binding:
-                            INFO(compound_component_name, 'action:', c_action_name, 'arg:', c_action_arg_name,
-                                 'range interpreted as:', c_action_args[c_action_arg_name])
+                        # if detect_arg_range_binding:
+                        #     INFO(compound_component_name, 'action:', c_action_name, 'arg:', c_action_arg_name,
+                        #          'range interpreted as:', c_action_args[c_action_arg_name])
 
         # low-level compound components will have 'actions' assigned, since top-level action will be interpreted as
         # one or more defined low-level compound action
@@ -857,7 +764,6 @@ class EnergyReferenceTableGenerator(object):
                 for class_action_def in compound_class_info['actions']:
                     if class_action_def['name'] == action_name:
                         action['subcomponents'] = deepcopy(class_action_def['subcomponents'])
-
 
         return compound_component_definition
 
@@ -951,25 +857,6 @@ class EnergyReferenceTableGenerator(object):
                 ERROR_CLEAN_EXIT('compound classes must have "subcomponents" key to specify the lower-level details',
                                   'error class name: ', compound_class_name)
 
-            # list_of_new_components = []
-            # list_of_to_remove_components = []
-            #
-            # for subcomponent_idx in range(len(subcomponents)):
-            #     subcomponent = subcomponents[subcomponent_idx]
-            #     list_length, subcomponent_name_base = EnergyReferenceTableGenerator.is_component_list(subcomponent['name'])
-            #     if subcomponent_name_base is not None:
-            #         list_of_to_remove_components.append(subcomponent)
-            #         INFO('list component name: ', subcomponent['name'], 'detected in compound class: ', compound_class_name)
-            #         for i in range(list_length):
-            #             new_component = deepcopy(subcomponent)
-            #             new_component['name']  = subcomponent_name_base + '[' + str(i) + ']'
-            #             list_of_new_components.append(new_component)
-            # for comp in list_of_to_remove_components:
-            #     subcomponents.remove(comp)
-            # for comp in list_of_new_components:
-            #     subcomponents.append(comp)
-
-
 
     def ERT_existed(self, component_name):
         """
@@ -988,15 +875,22 @@ class EnergyReferenceTableGenerator(object):
             ERT_existed = False
         return ERT_existed, component_name_to_be_recorded
 
-
-    def locate_config(self):
+    def generate_ERTs_for_architecture(self):
         """
-        Calls the config file checker to test/create config files
-        Version control implemented inside config_file_checker.py
+        For each component in the architecture, generate an ERT if needed
+        generated ERTs are saved to self.energy_reference_table
         """
-        config_file_content = config_file_checker()
-        self.config = config_file_content
-
+        for component_name, component_info in self.architecture_description.items():
+            component_info['name'] = component_name
+            ERT_check_result = self.ERT_existed(component_name)
+            if not ERT_check_result[0]:
+                INFO(component_info['name'], ' ---> Generating new ERT')
+                is_primitive_class = True if self.is_primitive_class(component_info['class']) else False
+                ERT = self.generate_component_ERT(component_info, is_primitive_class)
+                self.energy_reference_table[ERT_check_result[1]] = ERT
+                INFO(component_info['name'], ' ---> New ERT generated')
+            else:
+                INFO(component_info['name'], '---> Existing ERT can be used')
 
     def generate_ERTs(self, design_path, output_path, precision):
         """
@@ -1008,36 +902,30 @@ class EnergyReferenceTableGenerator(object):
         print('Generating energy reference tables')
         print('=========================================')
 
-        # ------------------------------------------------------------------------------
-        # Load accelergy config and design specification
-        # ------------------------------------------------------------------------------
-        self.locate_config()
-        self.design = load(open(design_path), accelergy_loader)
-        INFO('design loaded:', design_path)
-        self.output_path    = output_path
-        self.construct_compound_class_description(self.design['compound_components'])
-        self.decimal_place  = precision
+        # Interpret inputs
+        self.design_path = design_path
+        self.output_path = output_path
+        self.decimal_place = precision
 
-        # load in the primitive classes (static) in the library
+        # Load accelergy config and design specification
+        self.config = config_file_checker()
+        self.design = load(open(self.design_path), accelergy_loader)
+        INFO('design loaded:', design_path)
+        self.construct_compound_class_description(self.design['compound_components'])
+
+        # Load the primitive classes library
         self.construct_primitive_class_description()
 
-        # ------------------------------------------------------------------------------
         # Parse the architecture description and save the parsed version
-        # ------------------------------------------------------------------------------
         self.construct_save_architecture_description(self.design['architecture'])
 
-        # ------------------------------------------------------------------------------
-        # Generate Energy Reference Tables for the components
-        # ------------------------------------------------------------------------------
+        # Instantiate the estimation plug-ins as intances of the corresponding plug-in classes
         self.instantiate_estimator_plug_ins()
-        for component_name, component_info in self.architecture_description.items():
-            component_info['name'] = component_name
-            ERT_check_result = self.ERT_existed(component_name)
-            if not ERT_check_result[0]:
-                is_primitive_class = True if self.is_primitive_class(component_info['class']) else False
-                ERT = self.generate_component_ERT(component_info, is_primitive_class)
-                self.energy_reference_table[ERT_check_result[1]] = ERT
 
+        # Generate Energy Reference Tables for the components
+        self.generate_ERTs_for_architecture()
+
+        # Save the ERTs to ERT.yaml in the output directory
         ERT_file_path = self.output_path + '/' + 'ERT.yaml'
         write_yaml_file(ERT_file_path, self.energy_reference_table)
         print('---> Finished: ERT generation finished, ERT saved to:\n', os.path.abspath(output_path))
