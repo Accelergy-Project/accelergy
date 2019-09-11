@@ -64,20 +64,15 @@ def includedir_constructor(self, node):
     for filename in glob.glob(dirname + "/*.yaml"):
         with open(filename, 'r') as f:
             yamllist.append(yaml.load(f, accelergy_loader))
-
     return yamllist
     
-
 yaml.add_constructor('!includedir', includedir_constructor, accelergy_loader)
-
-
 
 class accelergy_dumper(yaml.SafeDumper):
     """ Accelergy yaml dumper """
     
     def ignore_aliases(self, _data):
         return True
-
 
 def create_folder(directory):
     """
@@ -99,21 +94,13 @@ def write_yaml_file(filepath, content):
     :param content: yaml string that needs to be written to the destination file
     :return: None
     """
-
     if os.path.exists(filepath):
         os.remove(filepath)
-
     create_folder(os.path.dirname(filepath))
-
     out_file = open(filepath, 'a')
+    out_file.write(dump( content, default_flow_style= False, Dumper= accelergy_dumper))
 
-    out_file.write(dump( content,
-                         default_flow_style=False,
-                         Dumper= accelergy_dumper))
-
-    
 def remove_quotes(filepath):
-   
     """
     :param filepath: file that needs to processed
     :return: None
@@ -170,4 +157,15 @@ def INFO(*argv):
 
 def ASSERT_MSG(expression, msg):
     if not expression:
-        ERROR_CLEAN_EXIT(msg);
+        ERROR_CLEAN_EXIT(msg)
+
+def add_functions_as_methods(functions):
+    def decorator(Class):
+        for function in functions:
+            setattr(Class, function.__name__, function)
+        return Class
+    return decorator
+
+def register_function(sequence, function):
+    sequence.append(function)
+    return function

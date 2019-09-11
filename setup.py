@@ -7,7 +7,7 @@ def readme():
 
 setup(
     name='accelergy',
-      version='0.1',
+      version='0.2',
       description='Accelergy Estimation Framework',
       classifiers=[
         'Development Status :: 3 - Alpha',

@@ -22,7 +22,7 @@
 #----------------------------------------------------
 
 # validator for estimator API syntax
-from accelergy.utils import ERROR_CLEAN_EXIT
+from accelergy.utils import ERROR_CLEAN_EXIT, INFO, ASSERT_MSG
 
 def validate_estimator_API(estimatorAPI):
 
@@ -69,3 +69,4 @@ def validate_primitive_classes(primitive_class_description):
             ERROR_CLEAN_EXIT('primitive class actions not found', primitive_class)
         if 'attributes' not in primitive_class:
             ERROR_CLEAN_EXIT('primitive class attributes not found', primitive_class)
+
