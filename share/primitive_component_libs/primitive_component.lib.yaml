@@ -21,33 +21,6 @@ classes:
       - name: add
       - name: idle
 
-  - name: in32adder
-    attributes:
-      technology: 65nm
-      num_pipeline_stages: 1
-      latency: 5ns
-    actions:
-      - name: add
-      - name: idle
-
-  - name: int16adder
-    attributes:
-      technology: 65nm
-      num_pipeline_stages: 1
-      latency: 5ns
-    actions:
-      - name: add
-      - name: idle
-
-  - name: int8adder
-    attributes:
-      technology: 65nm
-      num_pipeline_stages: 1
-      latency: 5ns
-    actions:
-      - name: add
-      - name: idle
-
   - name: multiplier
     attributes:
       technology: 65nm
@@ -60,43 +33,10 @@ classes:
       - name: mult_gated
       - name: idle
 
-  - name: int32multiplier
-    attributes:
-      technology: 65nm
-      num_pipeline_stages: 1
-      latency: 5ns
-    actions:
-      - name: mult_random
-      - name: mult_reused
-      - name: mult_gated
-      - name: idle
-
-  - name: int16multiplier
-    attributes:
-      technology: 65nm
-      num_pipeline_stages: 1
-      latency: 5ns
-    actions:
-      - name: mult_random
-      - name: mult_reused
-      - name: mult_gated
-      - name: idle
-
-  - name: int8multiplier
-    attributes:
-      technology: 65nm
-      num_pipeline_stages: 1
-      latency: 5ns
-    actions:
-      - name: mult_random
-      - name: mult_reused
-      - name: mult_gated
-      - name: idle
-
   - name: regfile
     attributes:
       technology: 65nm
-      datawidth: 16
+      width: 16
       entries: 1
       latency: 5ns
     actions:
@@ -147,61 +87,7 @@ classes:
   - name: mac
     attributes:
       technology: 65nm
-      num_pipeline_stages: 2
-      latency: 5ns
-    actions:
-      - name: mac_random
-      - name: mac_reused
-      - name: mac_gated
-      - name: idle
-
-  - name: int8mac
-    attributes:
-      technology: 65nm
-      num_pipeline_stages: 2
-      latency: 5ns
-    actions:
-      - name: mac_random
-      - name: mac_reused
-      - name: mac_gated
-      - name: idle
-
-  - name: int16mac
-    attributes:
-      technology: 65nm
-      num_pipeline_stages: 2
-      latency: 5ns
-    actions:
-      - name: mac_random
-      - name: mac_reused
-      - name: mac_gated
-      - name: idle
-
-  - name: int32mac
-    attributes:
-      technology: 65nm
-      num_pipeline_stages: 2
-      latency: 5ns
-    actions:
-      - name: mac_random
-      - name: mac_reused
-      - name: mac_gated
-      - name: idle
-
-  - name: fp32mac
-    attributes:
-      technology: 65nm
-      num_pipeline_stages: 2
-      latency: 5ns
-    actions:
-      - name: mac_random
-      - name: mac_reused
-      - name: mac_gated
-      - name: idle
-
-  - name: fp64mac
-    attributes:
-      technology: 65nm
+      datawidth: 16
       num_pipeline_stages: 2
       latency: 5ns
     actions:
@@ -213,7 +99,7 @@ classes:
   - name: fpmac
     attributes:
       technology: 65nm
-      datawidth: 16
+      datawidth: 32
       num_pipeline_stages: 3
       latency: 5ns
     actions:

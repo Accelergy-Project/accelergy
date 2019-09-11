@@ -59,6 +59,7 @@ def v02_compound_component_constructor(self, compound_component_info):
     #     if subcomponent is a list, expand the list of subcomponents (list tail index can be arithmetic operantions)
     #     else keep the subcomponent name
 
+    subcomponent_list_base_names = [] # v0.2: record the list subcomponent name bases
     subcomponents = deepcopy(compound_component_definition['subcomponents'])
 
     list_of_new_components = []
@@ -68,6 +69,7 @@ def v02_compound_component_constructor(self, compound_component_info):
         subcomponent = subcomponents[subcomponent_idx]
         list_length, subcomponent_name_base = v02_is_component_list(subcomponent['name'], compound_attributes)
         if subcomponent_name_base is not None:
+            subcomponent_list_base_names.append(subcomponent_name_base) # v0.2: record the list subcomponent name bases
             list_of_to_remove_components.append(subcomponent)
             # INFO('list component name: ', subcomponent['name'], 'detected in compound class: ', compound_component_info['class'])
             for i in range(list_length):
@@ -124,7 +126,9 @@ def v02_compound_component_constructor(self, compound_component_info):
                     if detect_arg_range_binding:
                         INFO(compound_component_name, 'action:', c_action_name, 'arg:', c_action_arg_name,
                              'range interpreted as:', c_action_args[c_action_arg_name])
-
+            rename_subcomponent_name_in_action_def(c_action,
+                                                   subcomponent_list_base_names,
+                                                   compound_component_definition['subcomponents'].keys())
     # low-level compound components will have 'actions' assigned, since top-level action will be interpreted as
     # one or more defined low-level compound action
     #     no change should be added as the action arguments should be defined already, so the required action list
@@ -136,5 +140,17 @@ def v02_compound_component_constructor(self, compound_component_info):
             for class_action_def in compound_class_info['actions']:
                 if class_action_def['name'] == action_name:
                     action['subcomponents'] = deepcopy(class_action_def['subcomponents'])
-
+                    rename_subcomponent_name_in_action_def(action,
+                                                           subcomponent_list_base_names,
+                                                           compound_component_definition['subcomponents'].keys())
     return compound_component_definition
+
+def rename_subcomponent_name_in_action_def(action_def, subcomponent_list_base_names, subcomponent_names):
+    for sub_component in action_def['subcomponents']:
+        sub_cname = sub_component['name']
+        if sub_cname not in subcomponent_names:
+            if sub_cname in subcomponent_list_base_names:
+                sub_component['name'] = sub_cname + '[0]'
+            else:
+                ERROR_CLEAN_EXIT('v0.2 error: compound class description...',
+                                 'Cannot find corresponding sub_component in the action definition', action_def)

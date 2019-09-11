@@ -18,7 +18,7 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 from accelergy.utils import ERROR_CLEAN_EXIT, INFO, WARN, register_function, ASSERT_MSG
-from accelergy.arithmetic_parsers import parse_expression_for_arithmetic, process_arithmetic
+from accelergy.v02_functions.v02_shared_functions import v02_is_component_list
 from copy import deepcopy
 import functools
 
@@ -73,10 +73,8 @@ def v02_validate_top_level_architecture_description(architecture_description):
 @register_function
 def flatten_architecture_subtree(self, prefix, node_description, shared_attributes_dict= None): # For version 0.2
     if 'name' not in node_description:
-        ERROR_CLEAN_EXIT('component format violation: "name" needs to be specified as a key in node description')
-
-    node_name = node_description['name']
-    #FIXME: Handle multiple instances here
+        ERROR_CLEAN_EXIT('v0.2 error: archtecture description...',
+                         ' "name" needs to be specified as a key in node description', node_description)
 
     if shared_attributes_dict is None and 'attributes' not in node_description:
         node_attrs = None
@@ -88,19 +86,45 @@ def flatten_architecture_subtree(self, prefix, node_description, shared_attribut
         node_attrs = deepcopy(shared_attributes_dict)
         node_attrs.update(node_description['attributes'])
 
-    if 'local' in node_description:
-        ASSERT_MSG(isinstance(node_description['local'], list),
-                   "v0.2 error: %s.local has to be a list of components" % prefix)
+    node_name = node_description['name']
+    # determine if the component is in list format
+    list_length, name_base = v02_is_component_list(node_name, shared_attributes_dict)
 
-        for c_id in range(len(node_description['local'])):
-            item_prefix = prefix + '.' + node_name + '.' + node_description['local'][c_id]['name']
-            self.construct_new_leaf_node_description(item_prefix,
-                                                 node_description['local'][c_id],
-                                                 node_attrs)
+    # if the component is in list format, flatten out and create the instances
+    if not list_length == 0:
+        for item_idx in range(list_length):
+            item_prefix = prefix + '.' + name_base + '[' + str(item_idx) + ']'
+            self.v02_tree_node_classification(node_description, item_prefix, node_attrs)
+
+    # if the component is a standalone component, parse the component description directly
+    else:
+        prefix = prefix + '.' + node_name
+        self.v02_tree_node_classification(node_description, prefix, node_attrs)
+
+@register_function
+def v02_tree_node_classification(self, node_description, prefix, node_attrs):
     if 'subtree' in node_description:
         ASSERT_MSG(isinstance(node_description['subtree'], dict),
                    "v0.2 error: %s.subtree has to be a dictionary" % prefix)
-        node_prefix = prefix + '.' + node_name
-        self.flatten_architecture_subtree(node_prefix,
-                                          node_description['subtree'],
-                                          node_attrs)
+        self.flatten_architecture_subtree(prefix, node_description['subtree'], node_attrs)
+
+    elif 'local' in node_description:
+        ASSERT_MSG(isinstance(node_description['local'], list),
+                   "v0.2 error: %s.local has to be a list of components" % prefix)
+        for c_id in range(len(node_description['local'])):
+            local_node_list_length, local_node_name_base = v02_is_component_list(
+                node_description['local'][c_id]['name'], node_attrs)
+            if not local_node_list_length == 0:
+                for local_node_list_item_idx in range(local_node_list_length):
+                    local_node_name = prefix + '.' + local_node_name_base + '[' + str(local_node_list_item_idx) + ']'
+                    self.construct_new_leaf_node_description(local_node_name,
+                                                             node_description['local'][c_id],
+                                                             node_attrs)
+            else:
+                local_node_name = prefix + '.' + node_description['local'][c_id]['name']
+                self.construct_new_leaf_node_description(local_node_name,
+                                                         node_description['local'][c_id],
+                                                         node_attrs)
+    else:
+        ERROR_CLEAN_EXIT('v0.2 error: architecture description...',
+                         'Unrecognized tree node type', node_description)

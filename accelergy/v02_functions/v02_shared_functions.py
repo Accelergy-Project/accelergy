@@ -27,23 +27,23 @@ def v02_is_component_list(name, binding_dictionary = None):
     it is possible that the last index of the list involves direct binding or arithmetical operations
     (operands could be strings that are keys in binding dictionary)
     """
-    start_idx = name.find('[0:')
+    start_idx = name.find('[')
     if start_idx == -1:
         return 0, None
     else:
         if ']' not in name:
-            WARN(name, ': located [0: but not ], typo?')
+            WARN(name, ': located [ but not ], typo?')
         else:
             name_base = name[:start_idx]
             end_idx = name.find(']')
-            tail = name[start_idx+3: end_idx]
+            n = name[start_idx+1: end_idx]
             # check if the tail involves arithmetic operations
-            optype, op1, op2 = parse_expression_for_arithmetic(tail, binding_dictionary)
+            optype, op1, op2 = parse_expression_for_arithmetic(n, binding_dictionary)
             if optype is None:
-                if tail in binding_dictionary:
+                if n in binding_dictionary:
                     # tail is a direct binding, directly retrieve the numerical value
-                    tail = binding_dictionary[tail]
-                list_length = int(tail) + 1
+                    n = binding_dictionary[n]
+                list_length = int(n)
             else:
-                list_length = int(process_arithmetic(op1, op2, optype))+ 1
+                list_length = int(process_arithmetic(op1, op2, optype))
             return list_length, name_base

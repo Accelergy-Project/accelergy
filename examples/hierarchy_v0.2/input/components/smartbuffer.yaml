@@ -1,0 +1,76 @@
+name: smartbuffer
+attributes:
+  technology: 15
+  width: 64
+  depth: 512
+  n_rdwr_ports: 2
+
+subcomponents:
+  - name: storage_SRAM
+    class: SRAM
+    attributes:
+      technology: technology
+      width: width
+      depth: depth
+      n_banks: 1                      # single banked SRAM
+      n_rdwr_ports: n_rdwr_ports
+
+  - name: sb_pattern_generator[3]  # subsubcomponents can be specified as a list[drain_pg, fill_pg, update_pg]
+    class: counter
+    attributes:
+      datawidth: log2(depth)
+      technology: technology
+
+actions:                     # list of compound actions in the design
+  - name: drain              # compound action 0: drain
+    arguments:
+      address_delta: 0..1    # degree of address switching (smallest 0, largest 1; idle, 1: random)
+      data_delta: 0..1       # degree of data switching (smallest 0, largest 1; 0: idle, 1: random)
+    subcomponents:              # ---> this is a compound action
+      - name: storage_SRAM
+        actions:
+          - name: read
+            arguments:
+              address_delta: address_delta
+              data_delta: data_delta
+      - name: sb_pattern_generator
+        actions:
+          - name: count
+  - name: idle
+    subcomponents:
+      - name: storage_SRAM
+        actions:
+          - name: idle
+      - name: sb_pattern_generator
+        actions:
+          - name: idle
+
+  - name: fill              # compound action 1: fill
+    arguments:
+      address_delta: 0..1
+      data_delta: 0..1
+    subcomponents:
+      - name: storage_SRAM
+        actions:
+          - name: write
+            arguments:
+              address_delta: address_delta
+              data_delta: data_delta
+      - name: sb_pattern_generator
+        actions:
+          - name: count
+
+  - name: update            # compound action 2: update
+    arguments:
+      address_delta: 0..1
+      data_delta: 0..1
+    subcomponents:
+      - name: storage_SRAM
+        actions:
+          - name: write
+            arguments:
+              address_delta: address_delta
+              data_delta: data_delta
+      - name: sb_pattern_generator
+        actions:
+          - name: count
