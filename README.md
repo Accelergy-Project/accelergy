@@ -1,4 +1,4 @@
-# Accelergy infrastructure (version 0.1)
+# Accelergy infrastructure (version 0.2)
 
 An infrastructure for architecture-level energy estimations of accelerator designs. Project website: http://accelergy.mit.edu
 

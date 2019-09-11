@@ -1,7 +1,7 @@
 # ================================================
 # Action Counts
 # ================================================
-version: 0.1
+version: 0.2  # no changes for action counts format between version 0.1 and 0.2
 nodes:
   - name: hierarchy
     nodes:

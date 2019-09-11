@@ -7,6 +7,8 @@ examples/*/output/*.yaml
 # c++ libs
 **/libs/
 
+# old versions
+**/*_old.*
 
 # Debug files
 debug.py
@@ -18,13 +20,6 @@ debug.py
 
 # scripts
 scripts/
-
-# cpp related
-**/cmake*/
-**/CMakeFiles/
-**/CMakeCache.txt
-libs/sim/output/*.yaml
-libs/sim/*.o
 
 #pycharm
 **/.idea/
