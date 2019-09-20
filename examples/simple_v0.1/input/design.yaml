@@ -1,27 +1,26 @@
 # design description
-# design that will incur linear interpolation on the estimator
-
 architecture: 
 # ============================================================
 # Architecture Description
 # ============================================================
   version: 0.1
   nodes:
-    - name: linear_interpolation # top-level name key has the value as your design name, there can be only one component is the top level list, whic is the design
+    - name: simple              # top-level name key has the value as your design name, there can be only one component is the top level list, whic is the design
       attributes:               # shared attributes for all subcomponents in design
         technology: 65nm
         voltage: 1
+        num_glbs: 5
       nodes:                     # list of nodes under design, this design only has one node
-        - name: glb
+        - name: glb[0:num_glbs-1]
           class: shared_SRAM     # class signifies that this is a leaf node, i.e., component
           attributes:            # hardware attributes that are different from default values
-            nbanks: 25
-            bank_depth: 220      # SRAM depth that is not directly supported by the default estimator
+            nbanks: 3
+            bank_depth: 224
             bank_width: 16
-            n_rd_ports: 2        # number of architectural read ports (same as defualt value, can be ommited)
-            n_wr_ports: 2        # number of architectural write ports (same as defualt value, can be ommited)
-            n_bank_rd_ports: 1   # (same as defualt value, can be ommited)
-            n_bank_wr_ports: 1   # (same as defualt value, can be ommited)
+            n_rd_ports: 2        # number of architectural read ports (same as default value, can be omitted)
+            n_wr_ports: 2        # number of architectural write ports (same as default value, can be omitted)
+            n_bank_rd_ports: 1   # (same as default value, can be omitted)
+            n_bank_wr_ports: 1   # (same as default value, can be omitted)
             n_bank_rdwr_ports: n_bank_rd_ports + n_bank_wr_ports
 
 compound_components: 
@@ -29,5 +28,5 @@ compound_components:
 # Compound Components
 # ============================================================
   version: 0.1
-  classes: 
+  classes:
     - !include compound_components/shared_SRAM.yaml

@@ -29,20 +29,12 @@ register_function = functools.partial(register_function, functions)
 @register_function
 def v02_parse_architecture_description(self, architecture_description):
     v02_validate_top_level_architecture_description(architecture_description)
-    raw_architecture_description = architecture_description['subtree']
+    raw_architecture_description = architecture_description['subtree'][0]
     self.design_name = raw_architecture_description['name']
     global_attributes = None if 'attributes' not in raw_architecture_description \
         else raw_architecture_description['attributes']
-    if 'local' in raw_architecture_description:
-        for c_id in range(len(raw_architecture_description['local'])):
-            item_prefix = self.design_name + "." + raw_architecture_description['local'][c_id]['name']
-            self.construct_new_leaf_node_description(item_prefix,
-                                                     raw_architecture_description['local'][c_id],
-                                                     global_attributes)
-    if 'subtree' in raw_architecture_description:
-        self.flatten_architecture_subtree(self.design_name,
-                                          raw_architecture_description['subtree'],
-                                          global_attributes)
+    self.v02_tree_node_classification(raw_architecture_description, self.design_name , global_attributes)
+
 
 def v02_validate_top_level_architecture_description(architecture_description):
     INFO("architecture description file version: 0.2, checking syntax...")
@@ -50,13 +42,16 @@ def v02_validate_top_level_architecture_description(architecture_description):
         ERROR_CLEAN_EXIT('v0.2 error: architecture description...',
                          'Architecture tree nodes should be the value of top level key "subtree", '
                          '"subtree" not found at top-level')
-    raw_architecture_description = architecture_description['subtree']
+    # top-level subtree should only have one node
+    ASSERT_MSG((isinstance(architecture_description['subtree'], list) and len(architecture_description['subtree']) == 1),
+               'v0.2 error: top-level subtree must be a single element list that contains the design name')
     if 'local' in architecture_description:
         ERROR_CLEAN_EXIT('v0.2 error: architecture description...',
                          'The first level list of your architecture description should only have a subtree, '
                          'which is your design\'s root node')
 
     # design name syntax check
+    raw_architecture_description = architecture_description['subtree'][0]
     if 'name' not in raw_architecture_description:
         ERROR_CLEAN_EXIT(
             "v0.2 error: architecture description...\n"
@@ -65,50 +60,51 @@ def v02_validate_top_level_architecture_description(architecture_description):
     if 'local' in raw_architecture_description:
         ASSERT_MSG(isinstance(raw_architecture_description['local'], list),
                    "v0.2 error: %s.local has to be a list of components" % design_name)
-
     if 'subtree' in raw_architecture_description:
-        ASSERT_MSG(isinstance(raw_architecture_description['subtree'], dict),
-                   "v0.2 error: %s.subtree has to be a dictionary" % design_name)
+        ASSERT_MSG(isinstance(raw_architecture_description['subtree'], list),
+                   "v0.2 error: %s.subtree has to be a list" % design_name)
 
 @register_function
-def flatten_architecture_subtree(self, prefix, node_description, shared_attributes_dict= None): # For version 0.2
-    if 'name' not in node_description:
-        ERROR_CLEAN_EXIT('v0.2 error: archtecture description...',
-                         ' "name" needs to be specified as a key in node description', node_description)
+def flatten_architecture_subtree(self, prefix, subtree_description, shared_attributes_dict= None): # For version 0.2
+    ASSERT_MSG(isinstance(subtree_description, list),
+               'v0.2 error: architecture description...\n %s.subtree needs to be a list'% prefix)
+    for subtree_item_description in subtree_description:
+        if 'name' not in subtree_item_description:
+            ERROR_CLEAN_EXIT('v0.2 error: architecture description...',
+                             ' "name" needs to be specified as a key in node description', subtree_item_description)
 
-    if shared_attributes_dict is None and 'attributes' not in node_description:
-        node_attrs = None
-    elif shared_attributes_dict is not None and 'attributes' not in node_description:
-        node_attrs = deepcopy(shared_attributes_dict)
-    elif shared_attributes_dict is None and 'attributes' in node_description:
-        node_attrs = node_description['attributes']
-    else: #shared_attributes_dict is not None and attributes in node_description
-        node_attrs = deepcopy(shared_attributes_dict)
-        node_attrs.update(node_description['attributes'])
+        if shared_attributes_dict is None and 'attributes' not in subtree_item_description:
+            node_attrs = None
+        elif shared_attributes_dict is not None and 'attributes' not in subtree_item_description:
+            node_attrs = deepcopy(shared_attributes_dict)
+        elif shared_attributes_dict is None and 'attributes' in subtree_item_description:
+            node_attrs = subtree_item_description['attributes']
+        else: #shared_attributes_dict is not None and attributes in node_description
+            node_attrs = deepcopy(shared_attributes_dict)
+            node_attrs.update(subtree_item_description['attributes'])
 
-    node_name = node_description['name']
-    # determine if the component is in list format
-    list_length, name_base = v02_is_component_list(node_name, shared_attributes_dict)
+        node_name = subtree_item_description['name']
+        # determine if the component is in list format
+        list_length, name_base = v02_is_component_list(node_name, shared_attributes_dict)
+        # if the component is in list format, flatten out and create the instances
+        if not list_length == 0:
+            for item_idx in range(list_length):
+                item_prefix = prefix + '.' + name_base + '[' + str(item_idx) + ']'
+                self.v02_tree_node_classification(subtree_item_description, item_prefix, node_attrs)
 
-    # if the component is in list format, flatten out and create the instances
-    if not list_length == 0:
-        for item_idx in range(list_length):
-            item_prefix = prefix + '.' + name_base + '[' + str(item_idx) + ']'
-            self.v02_tree_node_classification(node_description, item_prefix, node_attrs)
-
-    # if the component is a standalone component, parse the component description directly
-    else:
-        prefix = prefix + '.' + node_name
-        self.v02_tree_node_classification(node_description, prefix, node_attrs)
+        # if the component is a standalone component, parse the component description directly
+        else:
+            item_prefix = prefix + '.' + node_name
+            self.v02_tree_node_classification(subtree_item_description, item_prefix, node_attrs)
 
 @register_function
 def v02_tree_node_classification(self, node_description, prefix, node_attrs):
     if 'subtree' in node_description:
-        ASSERT_MSG(isinstance(node_description['subtree'], dict),
-                   "v0.2 error: %s.subtree has to be a dictionary" % prefix)
+        ASSERT_MSG(isinstance(node_description['subtree'], list),
+                   "v0.2 error: %s.subtree has to be a list" % prefix)
         self.flatten_architecture_subtree(prefix, node_description['subtree'], node_attrs)
 
-    elif 'local' in node_description:
+    if 'local' in node_description:
         ASSERT_MSG(isinstance(node_description['local'], list),
                    "v0.2 error: %s.local has to be a list of components" % prefix)
         for c_id in range(len(node_description['local'])):
@@ -125,6 +121,6 @@ def v02_tree_node_classification(self, node_description, prefix, node_attrs):
                 self.construct_new_leaf_node_description(local_node_name,
                                                          node_description['local'][c_id],
                                                          node_attrs)
-    else:
+    if 'subtree'not in node_description and 'local' not in node_description:
         ERROR_CLEAN_EXIT('v0.2 error: architecture description...',
                          'Unrecognized tree node type', node_description)

@@ -30,14 +30,7 @@ setup(
                   ('share/accelergy/estimation_plug_ins/dummy_tables/data',
                     ['share/estimation_plug_ins/dummy_tables/data/counter.csv',
                      'share/estimation_plug_ins/dummy_tables/data/mac.csv',
-                     'share/estimation_plug_ins/dummy_tables/data/SRAM.csv']),
-                  ('share/accelergy/estimation_plug_ins/dummy_tables_w_interpolation',
-                    ['share/estimation_plug_ins/dummy_tables_w_interpolation/dummy_interpolate.estimator.yaml',
-                     'share/estimation_plug_ins/dummy_tables_w_interpolation/dummy_table_w_interpolation.py']),
-                  ('share/accelergy/estimation_plug_ins/dummy_tables_w_interpolation/data',
-                    ['share/estimation_plug_ins/dummy_tables_w_interpolation/data/counter.csv',
-                     'share/estimation_plug_ins/dummy_tables_w_interpolation/data/mac.csv',
-                     'share/estimation_plug_ins/dummy_tables_w_interpolation/data/SRAM.csv'])
+                     'share/estimation_plug_ins/dummy_tables/data/SRAM.csv'])
                   ],
       include_package_data = True,
       entry_points = {

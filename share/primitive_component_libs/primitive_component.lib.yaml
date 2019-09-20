@@ -11,7 +11,7 @@ classes:
       - name: process
       - name: idle
 
-  - name: adder
+  - name: intadder
     attributes:
       technology: 65nm
       datawidth: 16
@@ -21,7 +21,20 @@ classes:
       - name: add
       - name: idle
 
-  - name: multiplier
+  - name: fpadder
+    attributes:
+      technology: 65nm
+      exponent: 8
+      mantissa: 24
+      sign: 0
+      num_pipeline_stages: 1
+      latency: 5ns
+    actions:
+      - name: add
+      - name: idle
+
+
+  - name: intmultiplier
     attributes:
       technology: 65nm
       datawidth: 16
@@ -32,6 +45,21 @@ classes:
       - name: mult_reused
       - name: mult_gated
       - name: idle
+
+  - name: fpmultiplier
+    attributes:
+      technology: 65nm
+      exponent: 8
+      mantissa: 24
+      sign: 0
+      num_pipeline_stages: 1
+      latency: 5ns
+    actions:
+      - name: mult_random
+      - name: mult_reused
+      - name: mult_gated
+      - name: idle
+
 
   - name: regfile
     attributes:
@@ -84,7 +112,7 @@ classes:
       - name: pop
       - name: idle
 
-  - name: mac
+  - name: intmac
     attributes:
       technology: 65nm
       datawidth: 16
@@ -99,7 +127,9 @@ classes:
   - name: fpmac
     attributes:
       technology: 65nm
-      datawidth: 32
+      exponent: 8
+      mantissa: 24
+      sign: 0
       num_pipeline_stages: 3
       latency: 5ns
     actions:
@@ -130,5 +160,25 @@ classes:
       - name: repeated_transfer
       - name: idle
 
+  - name: serializer
+    attributes:
+      technology: 65nm
+      ratio: 4
+      datawidth: 64  #input data width
+    actions:
+      - name: serialize
+      - name: idle
 
+  - name: deserializer
+    attributes:
+      technology: 65nm
+      ratio: 4
+      datawidth: 16  # input data width
+    actions:
+      - name: deserialize
+      - name: idle
 
+  - name: comparator
+    attributes:
+      technology: 65nm
+      datawidth: 8

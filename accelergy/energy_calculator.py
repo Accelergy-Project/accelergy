@@ -18,10 +18,10 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-import os
+import os, re
 from yaml import load, dump
 from accelergy.utils import accelergy_loader, accelergy_dumper, \
-                            write_yaml_file, ERROR_CLEAN_EXIT, WARN, INFO
+                            write_yaml_file, ERROR_CLEAN_EXIT, WARN, INFO, ASSERT_MSG
 
 
 class EnergyCalculator(object):
@@ -31,6 +31,7 @@ class EnergyCalculator(object):
         self.energy_estimation_table  = {}
         self.design_name              = None
         self.decimal_points           = None
+        self.flattened_list   = None
 
     @staticmethod
     def belongs_to_list(name):
@@ -46,26 +47,63 @@ class EnergyCalculator(object):
             return name_base
         else:
             return name
+    @staticmethod
+    def remove_brackets(name):
+        """Removes the brackets from a component name in a list"""
+        if '[' not in name and ']' not in name:
+            return name
+        if '[' in name and ']' in name:
+            start_idx = name.find('[')
+            end_idx = name.find(']')
+            name = name[:start_idx] + name[end_idx + 1:]
+            name = EnergyCalculator.remove_brackets(name)
+            return name
 
     def construct_action_counts(self, action_counts_list):
         if 'version' not in action_counts_list:
             ERROR_CLEAN_EXIT('please specify the version of parser your input format adheres to using '
                              '"version" key at top level')
-        if 'nodes' not in action_counts_list:
-            ERROR_CLEAN_EXIT('action counts tree nodes should be the value of top level key "nodes", '
-                             '"nodes" not found at top-level')
-        raw_action_counts = action_counts_list['nodes']
-
-        if not len(raw_action_counts) == 1:
-            ERROR_CLEAN_EXIT('the first level list of your action counts should only have one node, '
-                             'which is your design\'s root node' )
-
-        self.design_name = raw_action_counts[0]['name']
-        for node_description in raw_action_counts[0]['nodes']:
-            self.flatten_action_count(self.design_name, node_description)
 
 
-    def flatten_action_count(self, prefix, node_description):
+        if action_counts_list['version'] == 0.1:
+            raw_action_counts = action_counts_list['nodes']
+            if 'nodes' not in action_counts_list:
+                ERROR_CLEAN_EXIT('v0.1 error: action counts...\n Tree nodes should be the value of top level key "nodes", '
+                                 '"nodes" not found at top-level')
+            if not len(raw_action_counts) == 1:
+                ERROR_CLEAN_EXIT('the first level list of your action counts should only have one node, '
+                                 'which is your design\'s root node')
+            self.design_name = raw_action_counts[0]['name']
+            for node_description in raw_action_counts[0]['nodes']:
+                self.v01_flatten_action_count(self.design_name, node_description)
+
+        if action_counts_list['version'] == 0.2:
+            ASSERT_MSG('subtree' in action_counts_list, 'v0.2 error: action counts... \n'
+                        'the action counts mut contain the "subtree" key at the top level')
+            raw_action_counts = action_counts_list['subtree']
+            ASSERT_MSG(len(raw_action_counts) == 1, 'v0.2 error: action counts... \n'
+                                'the first level list of your action counts should only have one node, '
+                                 'which is your design\'s root node')
+            self.design_name = action_counts_list['subtree'][0]['name']
+            self.v02_flatten_action_count(self.design_name, action_counts_list['subtree'][0])
+
+    def v02_flatten_action_count(self, prefix, node_description):
+        # syntax error checks
+        if 'name' not in node_description:
+            ERROR_CLEAN_EXIT('component format violation: "name" needs to be specified as a key in node description')
+        # extract basic information
+        # node_base_name = EnergyCalculator.belongs_to_list(node_name)
+        if 'local' in node_description:
+            local_nodes = node_description['local']
+            for local_node in local_nodes:
+                full_name = prefix + '.' + local_node['name']
+                self.action_counts[full_name] = local_node['action_counts']
+        if 'subtree' in node_description:
+            for subtree_node_description in node_description['subtree']:
+                subtree_prefix = prefix + '.' + subtree_node_description['name']
+                self.v02_flatten_action_count(subtree_prefix, subtree_node_description)
+
+    def v01_flatten_action_count(self, prefix, node_description):
         # syntax error checks
         if 'name' not in node_description:
             ERROR_CLEAN_EXIT('component format violation: "name" needs to be specified as a key in node description')
@@ -73,7 +111,6 @@ class EnergyCalculator(object):
             ERROR_CLEAN_EXIT('action_counts and nodes keys cannot exist in the same node')
         # extract basic information
         node_name = node_description['name']
-        # node_base_name = EnergyCalculator.belongs_to_list(node_name)
         if 'action_counts' in node_description:
             full_name = prefix + '.' + node_name
             self.action_counts[full_name] = node_description['action_counts']
@@ -81,7 +118,7 @@ class EnergyCalculator(object):
         else:
             prefix = prefix + '.' + node_name
             for sub_node_description in node_description['nodes']:
-                self.flatten_action_count(prefix, sub_node_description)
+                self.v01_flatten_action_count(prefix, sub_node_description)
 
 
     def process_component_action_counts(self, action_count_list, component_ERT):
@@ -116,6 +153,7 @@ class EnergyCalculator(object):
         standalone component: no modifications
         """
         if '[' not in name and ']' not in name:
+            ASSERT_MSG(name in self.energy_reference_table, "Cannot find %s's ERT"%name)
             return name
         else:
             new_name = ''
@@ -124,20 +162,65 @@ class EnergyCalculator(object):
                 base_name_segment = EnergyCalculator.belongs_to_list(name_segment)
                 new_name += base_name_segment + '.'
             new_name = new_name[:-1]
+            if self.flattened_list is not None:
+                ASSERT_MSG(new_name in self.flattened_list,
+                           "According to the flattened architecture, %s is not a legal name " % name)
+                saved_entry = self.flattened_list[new_name]
+                for idx in range(len(saved_entry['format'])):
+                    range_location = saved_entry['format'][idx]
+                    range_min = int(saved_entry['range'][idx][0])
+                    range_max = int(saved_entry['range'][idx][1])
+                    curr_idx = int(hierarchical_name_list[range_location][hierarchical_name_list[range_location].find('[')+1:\
+                                                           hierarchical_name_list[range_location].find(']')])
+                    ASSERT_MSG(range_max>= curr_idx >= range_min,
+                               'Invalid list component name %s, index out of bound'%name)
             INFO('list component detected:', name, 'projected into', new_name)
             return new_name
 
-    def generate_estimations(self, action_counts_path, ERT_path, output_path, precision):
+    def load_flattened_arch(self, flattened_arch_path):
+        raw_flattened_arch = load(open(flattened_arch_path), accelergy_loader)['flattened_architecture']
+        for component_name, component_info in raw_flattened_arch.items():
+            if  '['  in component_name and ']'  in component_name:
+                component_name_base = EnergyCalculator.remove_brackets(component_name)
+
+                # dissect hierarchy
+                parts = []
+                part_start_idx = 0
+                for i in range(len(component_name)):
+                    if component_name[i] is '.' and component_name[i+1] is not '.' \
+                          and component_name[i-1] is not '.':
+                        parts.append(component_name[part_start_idx:i])
+                        part_start_idx = i+1
+
+                # dissect location of the lists
+                format = []  # where the indexes are
+                for part_idx in range(len(parts)):
+                    if '[' and ']' in parts[part_idx]:
+                        format.append(part_idx)
+
+                # dissect range
+                idx_list = [] # what the range is, each range is in the format [min, max]
+                for match in re.finditer(r'\[\w+..\w+\]', component_name):
+                    list_range = component_name[match.start() + 1:match.end() - 1].split('..')
+                    idx_list.append(list_range)
+                self.flattened_list[component_name_base] = {'format': format, 'range': idx_list}
+
+
+    def generate_estimations(self, action_counts_path, ERT_path, output_path, precision, flattened_arch_path = None):
         print('\n=========================================')
         print('Generating energy estimation')
         print('=========================================')
         # load and parse access counts
         self.energy_reference_table = load(open(ERT_path), accelergy_loader)
         self.construct_action_counts(load(open(action_counts_path), accelergy_loader))
+        self.decimal_points = precision
         INFO('design under evaluation:', self.design_name)
         INFO('processing action counts file:', os.path.abspath(action_counts_path))
-
-        self.decimal_points = precision
+        if flattened_arch_path is None:
+            WARN('flattened architecture is not given, will not perform legal component name check')
+        else:
+            self.flattened_list = {}
+            self.load_flattened_arch(flattened_arch_path)
 
         for name, action_count_list in self.action_counts.items():
             INFO('processing for component:', name)

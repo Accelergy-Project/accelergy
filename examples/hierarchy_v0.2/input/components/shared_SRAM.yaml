@@ -11,7 +11,7 @@ attributes:
   n_bank_rdwr_ports: n_bank_rd_ports + n_bank_wr_ports # supported arithmetic operations: +, -, *,  %, / (ceil), //, log2()
                                                        # top-level attributes can be described in terms of other top level attributes
 subcomponents:
-  - name: SRAM_bank[nbanks]
+  - name: SRAM_bank[0..nbanks]
     class: SRAM
     attributes:
       technology: technology
@@ -30,33 +30,35 @@ subcomponents:
       technology: technology
       n_inputs: n_wr_ports/n_bank_wr_ports
       n_outputs: nbanks * n_bank_wr_ports
+
 actions:
   - name: read
     arguments:
       data_delta: 0..1
       address_delta: 0..1
-      active_banks: 0..n_rd_ports*1   # argument ranges can bind to compound attributes
+      active_banks: 0..n_rd_ports*1
     subcomponents:
-      - name: SRAM_bank
+      - name: SRAM_bank[0]
         actions:
         - name: read
           arguments:
-            data_delta: data_delta  # lower level arguments can bind to high-level arguments
+            data_delta: data_delta
             address_delta: address_delta
           repeat: active_banks
         - name: idle
-          repeat: nbanks - active_banks # repeat can be related to compound attributes and compound arguments, and can be arithmetic
+          repeat: nbanks - active_banks
       - name: rd_crossbar
         actions:
           - name: transfer
             repeat: active_banks
+
   - name: write
     arguments:
       data_delta: 0..1
       address_delta: 0..1
       active_banks: 0..n_wr_ports
     subcomponents:
-      - name: SRAM_bank
+      - name: SRAM_bank[0]
         actions:
         - name: write
           arguments:
@@ -69,3 +71,10 @@ actions:
         actions:
         - name: transfer
           repeat: active_banks
+
+  - name: idle
+    subcomponents:
+      - name: SRAM_bank[0]
+        actions:
+        - name: idle
+          repeat: nbanks

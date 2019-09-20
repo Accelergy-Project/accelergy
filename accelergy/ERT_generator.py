@@ -18,7 +18,7 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-import os
+import os, re, string
 from importlib.machinery import SourceFileLoader
 from copy import deepcopy
 from yaml import load
@@ -271,7 +271,8 @@ class EnergyReferenceTableGenerator(object):
                 best_accuracy = accuracy
                 best_estimator = estimator
         if best_estimator is None:
-            ERROR_CLEAN_EXIT('cannot find estimator plug-in:', estimator_plug_in_interface, self.estimator_plug_ins)
+            ERROR_CLEAN_EXIT('cannot find estimator plug-in:', estimator_plug_in_interface,
+                             'Available plug-ins:', self.estimator_plug_ins)
         energy = best_estimator.estimate_energy(estimator_plug_in_interface)
         return energy
     def generate_component_ert(self, component_info, is_primitive_class):
@@ -430,7 +431,6 @@ class EnergyReferenceTableGenerator(object):
         """
         split_sub_string = arg_range_str.split('..')
         detect_arg_range_binding = False
-
         # process the start index
         try:
             start_idx = int(split_sub_string[0])
@@ -578,7 +578,50 @@ class EnergyReferenceTableGenerator(object):
         architecture_description_parser = 'v' + str(self.arch_version).replace('.', '') + \
                                  '_parse_architecture_description'
         getattr(self, architecture_description_parser)(architecture_description_list)
-    def generate_ERTs(self, design_path, output_path, precision):
+
+
+    def generate_easy_to_read_flattened_architecture(self):
+        self.easy_to_read_flattened_architecture = {}
+        list_names = {}
+        for component_name, component_info in self.architecture_description.items():
+
+            if '[' not in component_name or ']' not in component_name:
+                self.easy_to_read_flattened_architecture[component_name] = deepcopy(component_info)
+            else:
+                name_base = EnergyReferenceTableGenerator.remove_brackets(component_name)
+                idx_list = []
+                for match in re.finditer(r'\[\w+\]', component_name):
+                    idx_list.append(int(component_name[match.start()+1:match.end()-1]))
+                if name_base not in list_names:
+                    list_names[name_base] = {}
+                    list_names[name_base]['format'] = []
+                    parts = component_name.split('.')
+                    for part_idx in range(len(parts)):
+                        if '[' and ']' in parts[part_idx]:
+                            list_names[name_base]['format'].append(part_idx)
+                    list_names[name_base]['idx_list'] = idx_list
+                else:
+                    i = 0
+                    for existing_idx in list_names[name_base]['idx_list']:
+                        if idx_list[i] > existing_idx:
+                            list_names[name_base]['idx_list'][i] = idx_list[i]
+                        i +=1
+
+        for name_base, list_info in list_names.items():
+            ranged_name_list = name_base.split('.')
+            max_name_list = name_base.split('.')
+            for idx in range(len(list_info['format'])):
+                range_location = list_info['format'][idx]
+                range_max = list_info['idx_list'][idx]
+                ranged_name_list[range_location] += '[0..' + str(range_max) + ']'
+                max_name_list[range_location] += '[' + str(range_max)  + ']'
+            sep = '.'
+            ranged_name_str = sep.join(ranged_name_list)
+            max_name_str = sep.join(max_name_list)
+            self.easy_to_read_flattened_architecture[ranged_name_str] = self.architecture_description[max_name_str]
+
+
+    def generate_ERTs(self, design_path, output_path, precision, flatten_arch_flag):
         """
         main function to start the energy reference generator
         parses the input files
@@ -602,8 +645,14 @@ class EnergyReferenceTableGenerator(object):
         # Load the primitive classes library
         self.construct_primitive_class_description()
 
-        # Parse the architecture description and save the parsed version
+        # Parse the architecture description and save the parsed version if flag high
         self.construct_save_architecture_description(self.design['architecture'])
+        if flatten_arch_flag:
+            self.generate_easy_to_read_flattened_architecture()
+            arch_file_path = self.output_path + '/' + 'flattened_architecture.yaml'
+            flattened_architecture_yaml = {'flattened_architecture': self.easy_to_read_flattened_architecture}
+            write_yaml_file(arch_file_path, flattened_architecture_yaml)
+            INFO('Architecture flattened ... saved to ', arch_file_path)
 
         # Instantiate the estimation plug-ins as intances of the corresponding plug-in classes
         self.instantiate_estimator_plug_ins()

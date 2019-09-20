@@ -1,11 +1,11 @@
 # ================================================
 # Action Counts
 # ================================================
-version: 0.1
-nodes:
-  - name: linear_interpolation
-    nodes:
-    - name: glb  # leaf node (component)
+version: 0.2
+subtree:
+  - name: simple
+    local:
+    - name: glb[0]  # leaf node (component)
       action_counts:     # key word for leaf component
         - name: read
           arguments:
@@ -25,5 +25,5 @@ nodes:
             data_delta: 1
             address_delta: 0
           counts: 100
-
-
+        - name: idle
+          counts: 100

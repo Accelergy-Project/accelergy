@@ -27,23 +27,28 @@ def v02_is_component_list(name, binding_dictionary = None):
     it is possible that the last index of the list involves direct binding or arithmetical operations
     (operands could be strings that are keys in binding dictionary)
     """
-    start_idx = name.find('[')
-    if start_idx == -1:
+    left_bracket_idx = name.find('[')
+    range_flag = name.find('..')
+    if left_bracket_idx == -1 or range_flag == -1:
         return 0, None
     else:
         if ']' not in name:
-            WARN(name, ': located [ but not ], typo?')
+            WARN(name, ': located [ and .. but not ], typo?')
         else:
-            name_base = name[:start_idx]
-            end_idx = name.find(']')
-            n = name[start_idx+1: end_idx]
-            # check if the tail involves arithmetic operations
-            optype, op1, op2 = parse_expression_for_arithmetic(n, binding_dictionary)
-            if optype is None:
-                if n in binding_dictionary:
-                    # tail is a direct binding, directly retrieve the numerical value
-                    n = binding_dictionary[n]
-                list_length = int(n)
-            else:
-                list_length = int(process_arithmetic(op1, op2, optype))
+            name_base = name[:left_bracket_idx]
+            right_bracket_idx = name.find(']')
+            list_start_idx = str_to_int(name[left_bracket_idx+1:range_flag], binding_dictionary)
+            list_end_idx = str_to_int(name[range_flag+2:right_bracket_idx], binding_dictionary)
+            list_length = list_end_idx - list_start_idx + 1
             return list_length, name_base
+
+# parses the string indexes to integers
+def str_to_int(str_to_be_parsed, binding_dictionary):
+    optype, op1, op2 = parse_expression_for_arithmetic(str_to_be_parsed, binding_dictionary)
+    if optype is None:
+        parsed_int = binding_dictionary[str_to_be_parsed] if str_to_be_parsed in binding_dictionary \
+                                                          else int(str_to_be_parsed)
+    else:
+        parsed_int = int(process_arithmetic(op1, op2, optype))
+
+    return parsed_int

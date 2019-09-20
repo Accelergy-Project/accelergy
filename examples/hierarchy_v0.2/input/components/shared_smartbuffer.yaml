@@ -26,7 +26,7 @@ subcomponents:
       n_bank_rdwr_ports: n_bank_wr_ports + n_bank_rd_ports
       technology: technology
 
-  - name: sb_pattern_generator  # [drain_pg, fill_pg, update_pg]
+  - name: sb_pattern_generator
     class: counter
     attributes:
       datawidth: log2(depth)
@@ -49,6 +49,7 @@ actions:                    # list of compound actions in the design
       - name: sb_pattern_generator
         actions:
           - name: count
+
   - name: fill
     arguments:
       address_delta: 0..1

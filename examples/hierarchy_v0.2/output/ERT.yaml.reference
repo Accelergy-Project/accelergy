@@ -1,252 +1,392 @@
-hierarchy.PE.ifmap_sp:
+hierarchy.GLB:
   drain:
   - arguments:
+      active_banks: 0
       address_delta: 0
       data_delta: 0
-    energy: 2.0
+    energy: 6
   - arguments:
+      active_banks: 0
       address_delta: 1
       data_delta: 0
-    energy: 2.0
+    energy: 6
   - arguments:
+      active_banks: 0
       address_delta: 0
       data_delta: 1
-    energy: 2.0
+    energy: 6
   - arguments:
+      active_banks: 0
       address_delta: 1
       data_delta: 1
-    energy: 2.0
+    energy: 6
+  - arguments:
+      active_banks: 1
+      address_delta: 0
+      data_delta: 0
+    energy: 7
+  - arguments:
+      active_banks: 1
+      address_delta: 1
+      data_delta: 0
+    energy: 7
+  - arguments:
+      active_banks: 1
+      address_delta: 0
+      data_delta: 1
+    energy: 7
+  - arguments:
+      active_banks: 1
+      address_delta: 1
+      data_delta: 1
+    energy: 7
+  - arguments:
+      active_banks: 2
+      address_delta: 0
+      data_delta: 0
+    energy: 8
+  - arguments:
+      active_banks: 2
+      address_delta: 1
+      data_delta: 0
+    energy: 8
+  - arguments:
+      active_banks: 2
+      address_delta: 0
+      data_delta: 1
+    energy: 8
+  - arguments:
+      active_banks: 2
+      address_delta: 1
+      data_delta: 1
+    energy: 8
   fill:
   - arguments:
+      active_banks: 0
       address_delta: 0
       data_delta: 0
-    energy: 2.0
+    energy: 6
   - arguments:
+      active_banks: 0
       address_delta: 1
       data_delta: 0
-    energy: 2.0
+    energy: 6
   - arguments:
+      active_banks: 0
       address_delta: 0
       data_delta: 1
-    energy: 2.0
+    energy: 6
   - arguments:
+      active_banks: 0
       address_delta: 1
       data_delta: 1
-    energy: 2.0
-  idle:
-    arguments: null
-    energy: 2.0
+    energy: 6
+  - arguments:
+      active_banks: 1
+      address_delta: 0
+      data_delta: 0
+    energy: 7
+  - arguments:
+      active_banks: 1
+      address_delta: 1
+      data_delta: 0
+    energy: 7
+  - arguments:
+      active_banks: 1
+      address_delta: 0
+      data_delta: 1
+    energy: 7
+  - arguments:
+      active_banks: 1
+      address_delta: 1
+      data_delta: 1
+    energy: 7
+  - arguments:
+      active_banks: 2
+      address_delta: 0
+      data_delta: 0
+    energy: 8
+  - arguments:
+      active_banks: 2
+      address_delta: 1
+      data_delta: 0
+    energy: 8
+  - arguments:
+      active_banks: 2
+      address_delta: 0
+      data_delta: 1
+    energy: 8
+  - arguments:
+      active_banks: 2
+      address_delta: 1
+      data_delta: 1
+    energy: 8
   update:
   - arguments:
+      active_banks: 0
       address_delta: 0
       data_delta: 0
-    energy: 2.0
+    energy: 6
   - arguments:
+      active_banks: 0
       address_delta: 1
       data_delta: 0
-    energy: 2.0
+    energy: 6
   - arguments:
+      active_banks: 0
       address_delta: 0
       data_delta: 1
-    energy: 2.0
+    energy: 6
   - arguments:
+      active_banks: 0
       address_delta: 1
       data_delta: 1
-    energy: 2.0
-hierarchy.PE.mac:
+    energy: 6
+  - arguments:
+      active_banks: 1
+      address_delta: 0
+      data_delta: 0
+    energy: 7
+  - arguments:
+      active_banks: 1
+      address_delta: 1
+      data_delta: 0
+    energy: 7
+  - arguments:
+      active_banks: 1
+      address_delta: 0
+      data_delta: 1
+    energy: 7
+  - arguments:
+      active_banks: 1
+      address_delta: 1
+      data_delta: 1
+    energy: 7
+  - arguments:
+      active_banks: 2
+      address_delta: 0
+      data_delta: 0
+    energy: 8
+  - arguments:
+      active_banks: 2
+      address_delta: 1
+      data_delta: 0
+    energy: 8
+  - arguments:
+      active_banks: 2
+      address_delta: 0
+      data_delta: 1
+    energy: 8
+  - arguments:
+      active_banks: 2
+      address_delta: 1
+      data_delta: 1
+    energy: 8
+hierarchy.PE_large.arithmetic_units.adder:
+  add:
+    arguments: null
+    energy: 1
   idle:
     arguments: null
-    energy: 1.0
+    energy: 1
+hierarchy.PE_large.arithmetic_units.mac:
+  idle:
+    arguments: null
+    energy: 1
   mac_gated:
     arguments: null
-    energy: 1.0
+    energy: 1
   mac_random:
     arguments: null
-    energy: 1.0
+    energy: 1
   mac_reused:
     arguments: null
-    energy: 1.0
-hierarchy.weights_glb:
+    energy: 1
+hierarchy.PE_large.channel:
+  idle:
+    arguments: null
+    energy: 1
+  pop:
+    arguments: null
+    energy: 1
+  push:
+    arguments: null
+    energy: 1
+hierarchy.PE_large.memory_storage.double_buffer_sp:
   drain:
   - arguments:
-      active_banks: 0
       address_delta: 0
       data_delta: 0
-    energy: 26.0
+    energy: 2
   - arguments:
-      active_banks: 0
       address_delta: 1
       data_delta: 0
-    energy: 26.0
+    energy: 2
   - arguments:
-      active_banks: 0
       address_delta: 0
       data_delta: 1
-    energy: 26.0
+    energy: 2
   - arguments:
-      active_banks: 0
       address_delta: 1
       data_delta: 1
-    energy: 26.0
-  - arguments:
-      active_banks: 1
-      address_delta: 0
-      data_delta: 0
-    energy: 27.0
-  - arguments:
-      active_banks: 1
-      address_delta: 1
-      data_delta: 0
-    energy: 27.0
-  - arguments:
-      active_banks: 1
-      address_delta: 0
-      data_delta: 1
-    energy: 27.0
-  - arguments:
-      active_banks: 1
-      address_delta: 1
-      data_delta: 1
-    energy: 27.0
-  - arguments:
-      active_banks: 2
-      address_delta: 0
-      data_delta: 0
-    energy: 28.0
-  - arguments:
-      active_banks: 2
-      address_delta: 1
-      data_delta: 0
-    energy: 28.0
-  - arguments:
-      active_banks: 2
-      address_delta: 0
-      data_delta: 1
-    energy: 28.0
-  - arguments:
-      active_banks: 2
-      address_delta: 1
-      data_delta: 1
-    energy: 28.0
+    energy: 2
   fill:
   - arguments:
-      active_banks: 0
       address_delta: 0
       data_delta: 0
-    energy: 26.0
+    energy: 2
   - arguments:
-      active_banks: 0
       address_delta: 1
       data_delta: 0
-    energy: 26.0
+    energy: 2
   - arguments:
-      active_banks: 0
       address_delta: 0
       data_delta: 1
-    energy: 26.0
+    energy: 2
   - arguments:
-      active_banks: 0
       address_delta: 1
       data_delta: 1
-    energy: 26.0
-  - arguments:
-      active_banks: 1
-      address_delta: 0
-      data_delta: 0
-    energy: 27.0
-  - arguments:
-      active_banks: 1
-      address_delta: 1
-      data_delta: 0
-    energy: 27.0
-  - arguments:
-      active_banks: 1
-      address_delta: 0
-      data_delta: 1
-    energy: 27.0
-  - arguments:
-      active_banks: 1
-      address_delta: 1
-      data_delta: 1
-    energy: 27.0
-  - arguments:
-      active_banks: 2
-      address_delta: 0
-      data_delta: 0
-    energy: 28.0
-  - arguments:
-      active_banks: 2
-      address_delta: 1
-      data_delta: 0
-    energy: 28.0
-  - arguments:
-      active_banks: 2
-      address_delta: 0
-      data_delta: 1
-    energy: 28.0
-  - arguments:
-      active_banks: 2
-      address_delta: 1
-      data_delta: 1
-    energy: 28.0
+    energy: 2
+  idle:
+    arguments: null
+    energy: 2
   update:
   - arguments:
-      active_banks: 0
       address_delta: 0
       data_delta: 0
-    energy: 26.0
+    energy: 2
   - arguments:
-      active_banks: 0
       address_delta: 1
       data_delta: 0
-    energy: 26.0
+    energy: 2
   - arguments:
-      active_banks: 0
       address_delta: 0
       data_delta: 1
-    energy: 26.0
+    energy: 2
   - arguments:
-      active_banks: 0
       address_delta: 1
       data_delta: 1
-    energy: 26.0
+    energy: 2
+hierarchy.PE_large.memory_storage.two_byte_sp:
+  drain:
   - arguments:
-      active_banks: 1
-      address_delta: 0
-      data_delta: 0
-    energy: 27.0
-  - arguments:
-      active_banks: 1
-      address_delta: 1
-      data_delta: 0
-    energy: 27.0
-  - arguments:
-      active_banks: 1
-      address_delta: 0
-      data_delta: 1
-    energy: 27.0
-  - arguments:
-      active_banks: 1
-      address_delta: 1
-      data_delta: 1
-    energy: 27.0
-  - arguments:
-      active_banks: 2
       address_delta: 0
       data_delta: 0
-    energy: 28.0
+    energy: 2
   - arguments:
-      active_banks: 2
       address_delta: 1
       data_delta: 0
-    energy: 28.0
+    energy: 2
   - arguments:
-      active_banks: 2
       address_delta: 0
       data_delta: 1
-    energy: 28.0
+    energy: 2
   - arguments:
-      active_banks: 2
       address_delta: 1
       data_delta: 1
-    energy: 28.0
+    energy: 2
+  fill:
+  - arguments:
+      address_delta: 0
+      data_delta: 0
+    energy: 2
+  - arguments:
+      address_delta: 1
+      data_delta: 0
+    energy: 2
+  - arguments:
+      address_delta: 0
+      data_delta: 1
+    energy: 2
+  - arguments:
+      address_delta: 1
+      data_delta: 1
+    energy: 2
+  idle:
+    arguments: null
+    energy: 2
+  update:
+  - arguments:
+      address_delta: 0
+      data_delta: 0
+    energy: 2
+  - arguments:
+      address_delta: 1
+      data_delta: 0
+    energy: 2
+  - arguments:
+      address_delta: 0
+      data_delta: 1
+    energy: 2
+  - arguments:
+      address_delta: 1
+      data_delta: 1
+    energy: 2
+hierarchy.PE_small.byte_sp:
+  drain:
+  - arguments:
+      address_delta: 0
+      data_delta: 0
+    energy: 2
+  - arguments:
+      address_delta: 1
+      data_delta: 0
+    energy: 2
+  - arguments:
+      address_delta: 0
+      data_delta: 1
+    energy: 2
+  - arguments:
+      address_delta: 1
+      data_delta: 1
+    energy: 2
+  fill:
+  - arguments:
+      address_delta: 0
+      data_delta: 0
+    energy: 2
+  - arguments:
+      address_delta: 1
+      data_delta: 0
+    energy: 2
+  - arguments:
+      address_delta: 0
+      data_delta: 1
+    energy: 2
+  - arguments:
+      address_delta: 1
+      data_delta: 1
+    energy: 2
+  idle:
+    arguments: null
+    energy: 2
+  update:
+  - arguments:
+      address_delta: 0
+      data_delta: 0
+    energy: 2
+  - arguments:
+      address_delta: 1
+      data_delta: 0
+    energy: 2
+  - arguments:
+      address_delta: 0
+      data_delta: 1
+    energy: 2
+  - arguments:
+      address_delta: 1
+      data_delta: 1
+    energy: 2
+hierarchy.PE_small.mac:
+  idle:
+    arguments: null
+    energy: 1
+  mac_gated:
+    arguments: null
+    energy: 1
+  mac_random:
+    arguments: null
+    energy: 1
+  mac_reused:
+    arguments: null
+    energy: 1

@@ -7,9 +7,6 @@ examples/*/output/*.yaml
 # c++ libs
 **/libs/
 
-# old versions
-**/*_old.*
-
 # Debug files
 debug.py
 

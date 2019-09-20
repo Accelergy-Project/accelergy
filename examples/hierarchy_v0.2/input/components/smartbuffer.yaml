@@ -15,7 +15,7 @@ subcomponents:
       n_banks: 1                      # single banked SRAM
       n_rdwr_ports: n_rdwr_ports
 
-  - name: sb_pattern_generator[3]  # subsubcomponents can be specified as a list[drain_pg, fill_pg, update_pg]
+  - name: sb_pattern_generator[0..2]  # subsubcomponents can be specified as a list[drain_pg, fill_pg, update_pg]
     class: counter
     attributes:
       datawidth: log2(depth)
@@ -33,7 +33,7 @@ actions:                     # list of compound actions in the design
             arguments:
               address_delta: address_delta
               data_delta: data_delta
-      - name: sb_pattern_generator
+      - name: sb_pattern_generator[0]
         actions:
           - name: count
   - name: idle
@@ -41,7 +41,7 @@ actions:                     # list of compound actions in the design
       - name: storage_SRAM
         actions:
           - name: idle
-      - name: sb_pattern_generator
+      - name: sb_pattern_generator[0]
         actions:
           - name: idle
 
@@ -56,7 +56,7 @@ actions:                     # list of compound actions in the design
             arguments:
               address_delta: address_delta
               data_delta: data_delta
-      - name: sb_pattern_generator
+      - name: sb_pattern_generator[0]
         actions:
           - name: count
 
@@ -71,6 +71,6 @@ actions:                     # list of compound actions in the design
             arguments:
               address_delta: address_delta
               data_delta: data_delta
-      - name: sb_pattern_generator
+      - name: sb_pattern_generator[0]
         actions:
           - name: count
