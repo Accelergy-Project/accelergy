@@ -182,3 +182,6 @@ classes:
     attributes:
       technology: 65nm
       datawidth: 8
+    actions:
+      - name: compare
+      - name: idle

@@ -10,6 +10,8 @@ examples/*/output/*.yaml
 # Debug files
 debug.py
 
+# directory
+**/.directory
 
 # Emacs files
 *~

@@ -21,14 +21,16 @@ An infrastructure for architecture-level energy estimations of accelerator desig
 ```accelergy``` runs both energy reference table (ERT) generator and energy calculator. Assuming at repo root directory:
 ``` 
 cd examples/simple/input
-accelergy -o ../output/ design.yaml action_counts.yaml 
+accelergy -o ../output/ design.yaml action_counts.yaml --enable_flattened_arch 1
 ```
+The ```--enable_flattened_arch``` flags allows Accelergy to output an architecture summary in the output directory. The 
+flattened architecture includes all the interpreted attribute values and classes for all the components in the design.
 
 ```accelergyERT```  runs ERT generator only. Assuming at repo root directory:
 
 ```
 cd examples/simple/input
-accelergyERT -o ../output/ design.yaml
+accelergyERT -o ../output/ design.yaml --enable_flattened_arch 1
 ``` 
 
 ```accelergyCALC```  runs energy calculator only. Assuming at repo root directory:
