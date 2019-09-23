@@ -19,7 +19,7 @@ setup(
       author='Yannan Wu',
       author_email='nelliewu@mit.edu',
       license='MIT',
-      packages=['accelergy'],
+      packages=['accelergy', 'accelergy.v01_functions', 'accelergy.v02_functions'],
       install_requires = ['pyYAML'],
       python_requires = '>=3.6',
       data_files=[('share/accelergy/primitive_component_libs/',
