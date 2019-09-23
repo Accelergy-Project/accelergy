@@ -46,7 +46,10 @@ def v02_is_component_list(name, binding_dictionary = None):
 def str_to_int(str_to_be_parsed, binding_dictionary):
     optype, op1, op2 = parse_expression_for_arithmetic(str_to_be_parsed, binding_dictionary)
     if optype is None:
-        parsed_int = binding_dictionary[str_to_be_parsed] if str_to_be_parsed in binding_dictionary \
+        if binding_dictionary is None:
+            parsed_int = int(str_to_be_parsed)
+        else:
+            parsed_int = binding_dictionary[str_to_be_parsed] if str_to_be_parsed in binding_dictionary \
                                                           else int(str_to_be_parsed)
     else:
         parsed_int = int(process_arithmetic(op1, op2, optype))
