@@ -53,6 +53,8 @@ def parse_expression_for_arithmetic(expression, binding_dictionary):
                 try:
                     op2 = int(op2)
                 except ValueError:
+                    print('arithmetic expression:', expression, '\n',
+                          'available operand-value binding:', binding_dictionary)
                     ERROR_CLEAN_EXIT('arithmetic operation located, but cannot parse operand value')
     # if the expression is not an arithmetic operation
     else:

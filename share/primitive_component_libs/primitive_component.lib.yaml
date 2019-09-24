@@ -95,7 +95,7 @@ classes:
   - name: counter
     attributes:
       technology: 65nm
-      datawidth: 16
+      width: 16
       latency: 5ns
     actions:
       - name: count
@@ -156,8 +156,8 @@ classes:
       length: 1um
       latency: 5ns
     actions:
-      - name: transfer
-      - name: repeated_transfer
+      - name: transfer_random
+      - name: transfer_repeated
       - name: idle
 
   - name: serializer
