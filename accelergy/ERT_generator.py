@@ -650,7 +650,8 @@ class EnergyReferenceTableGenerator(object):
         if flatten_arch_flag:
             self.generate_easy_to_read_flattened_architecture()
             arch_file_path = self.output_path + '/' + 'flattened_architecture.yaml'
-            flattened_architecture_yaml = {'flattened_architecture': self.easy_to_read_flattened_architecture}
+            flattened_architecture_yaml = {'flattened_architecture': {'version': self.arch_version,
+                                                                      'components': self.easy_to_read_flattened_architecture}}
             write_yaml_file(arch_file_path, flattened_architecture_yaml)
             INFO('Architecture flattened ... saved to ', arch_file_path)
 
@@ -662,5 +663,6 @@ class EnergyReferenceTableGenerator(object):
 
         # Save the ERTs to ERT.yaml in the output directory
         ERT_file_path = self.output_path + '/' + 'ERT.yaml'
-        write_yaml_file(ERT_file_path, self.energy_reference_table)
+        ERT_dict = {'ERT':{'version': self.arch_version, 'tables': self.energy_reference_table}}
+        write_yaml_file(ERT_file_path, ERT_dict)
         print('---> Finished: ERT generation finished, ERT saved to:\n', os.path.abspath(output_path))

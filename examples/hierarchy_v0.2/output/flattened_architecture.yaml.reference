@@ -1,69 +1,71 @@
 flattened_architecture:
-  hierarchy.GLB:
-    attributes:
-      bank_depth: 512
-      bank_width: 16
-      depth: 2560
-      n_bank_rd_ports: 1
-      n_bank_wr_ports: 1
-      n_rd_ports: 2
-      n_rdwr_ports: 2
-      n_words: 4
-      n_wr_ports: 2
-      nbanks: 5
-      technology: 40nm
-      width: 64
-      word_width: 16
-    class: shared_smartbuffer
-  hierarchy.PE_large[0..2].arithmetic_units.adder:
-    attributes:
-      datawidth: 16
-      latency: 5ns
-      num_pipeline_stages: 1
-      technology: 40nm
-    class: adder
-  hierarchy.PE_large[0..2].arithmetic_units.mac[0..1]:
-    attributes:
-      datawidth: 16
-      latency: 5ns
-      num_pipeline_stages: 2
-      technology: 40nm
-    class: mac
-  hierarchy.PE_large[0..2].channel[0..1]:
-    attributes:
-      datawidth: 16
-      depth: 2
-      latency: 5ns
-      technology: 40nm
-    class: FIFO
-  hierarchy.PE_large[0..2].memory_storage.double_buffer_sp:
-    attributes:
-      datawidth: 16
-      depth: 512
-      n_rdwr_ports: 2
-      technology: 40nm
-      width: 64
-    class: smartbuffer
-  hierarchy.PE_large[0..2].memory_storage.two_byte_sp:
-    attributes:
-      datawidth: 16
-      depth: 512
-      n_rdwr_ports: 2
-      technology: 40nm
-      width: 64
-    class: smartbuffer
-  hierarchy.PE_small[0..2].byte_sp:
-    attributes:
-      datawidth: 8
-      depth: 12
-      n_rdwr_ports: 2
-      technology: 40nm
-      width: 8
-    class: smartbuffer
-  hierarchy.PE_small[0..2].mac[0..1]:
-    attributes:
-      datawidth: 8
-      latency: 5ns
-      num_pipeline_stages: 2
-      technology: 40nm
-    class: mac
+  components:
+    hierarchy.GLB:
+      attributes:
+        bank_depth: 512
+        bank_width: 16
+        depth: 2560
+        n_bank_rd_ports: 1
+        n_bank_wr_ports: 1
+        n_rd_ports: 2
+        n_rdwr_ports: 2
+        n_words: 4
+        n_wr_ports: 2
+        nbanks: 5
+        technology: 40nm
+        width: 64
+        word_width: 16
+      class: shared_smartbuffer
+    hierarchy.PE_large[0..2].arithmetic_units.adder:
+      attributes:
+        datawidth: 16
+        latency: 5ns
+        num_pipeline_stages: 1
+        technology: 40nm
+      class: intadder
+    hierarchy.PE_large[0..2].arithmetic_units.mac[0..1]:
+      attributes:
+        datawidth: 16
+        latency: 5ns
+        num_pipeline_stages: 2
+        technology: 40nm
+      class: intmac
+    hierarchy.PE_large[0..2].channel[0..1]:
+      attributes:
+        datawidth: 16
+        depth: 2
+        latency: 5ns
+        technology: 40nm
+      class: FIFO
+    hierarchy.PE_large[0..2].memory_storage.double_buffer_sp:
+      attributes:
+        datawidth: 16
+        depth: 512
+        n_rdwr_ports: 2
+        technology: 40nm
+        width: 64
+      class: smartbuffer
+    hierarchy.PE_large[0..2].memory_storage.two_byte_sp:
+      attributes:
+        datawidth: 16
+        depth: 512
+        n_rdwr_ports: 2
+        technology: 40nm
+        width: 64
+      class: smartbuffer
+    hierarchy.PE_small[0..2].byte_sp:
+      attributes:
+        datawidth: 8
+        depth: 12
+        n_rdwr_ports: 2
+        technology: 40nm
+        width: 8
+      class: smartbuffer
+    hierarchy.PE_small[0..2].mac[0..1]:
+      attributes:
+        datawidth: 8
+        latency: 5ns
+        num_pipeline_stages: 2
+        technology: 40nm
+      class: intmac
+  version: 0.2

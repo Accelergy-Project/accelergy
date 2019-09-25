@@ -31,7 +31,8 @@ class EnergyCalculator(object):
         self.energy_estimation_table  = {}
         self.design_name              = None
         self.decimal_points           = None
-        self.flattened_list   = None
+        self.flattened_list           = None
+        self.action_counts_version    = None
 
     @staticmethod
     def belongs_to_list(name):
@@ -60,10 +61,26 @@ class EnergyCalculator(object):
             return name
 
     def construct_action_counts(self, action_counts_list):
+        if 'action_counts' in action_counts_list:
+            action_counts_content = action_counts_list['action_counts']
+        else:
+            action_counts_content =  action_counts_list
+        self.process_action_count_content(action_counts_content)
+
+    def process_action_count_content(self, action_counts_list):
         if 'version' not in action_counts_list:
             ERROR_CLEAN_EXIT('please specify the version of parser your input format adheres to using '
                              '"version" key at top level')
-
+        self.action_counts_version = action_counts_list['version']
+        if action_counts_list['version'] == 0.2:
+            ASSERT_MSG('subtree' in action_counts_list, 'v0.2 error: action counts... \n'
+                        'the action counts mut contain the "subtree" key at the top level')
+            raw_action_counts = action_counts_list['subtree']
+            ASSERT_MSG(len(raw_action_counts) == 1, 'v0.2 error: action counts... \n'
+                                'the first level list of your action counts should only have one node, '
+                                 'which is your design\'s root node')
+            self.design_name = action_counts_list['subtree'][0]['name']
+            self.v02_flatten_action_count(self.design_name, action_counts_list['subtree'][0])
 
         if action_counts_list['version'] == 0.1:
             raw_action_counts = action_counts_list['nodes']
@@ -76,16 +93,6 @@ class EnergyCalculator(object):
             self.design_name = raw_action_counts[0]['name']
             for node_description in raw_action_counts[0]['nodes']:
                 self.v01_flatten_action_count(self.design_name, node_description)
-
-        if action_counts_list['version'] == 0.2:
-            ASSERT_MSG('subtree' in action_counts_list, 'v0.2 error: action counts... \n'
-                        'the action counts mut contain the "subtree" key at the top level')
-            raw_action_counts = action_counts_list['subtree']
-            ASSERT_MSG(len(raw_action_counts) == 1, 'v0.2 error: action counts... \n'
-                                'the first level list of your action counts should only have one node, '
-                                 'which is your design\'s root node')
-            self.design_name = action_counts_list['subtree'][0]['name']
-            self.v02_flatten_action_count(self.design_name, action_counts_list['subtree'][0])
 
     def v02_flatten_action_count(self, prefix, node_description):
         # syntax error checks
@@ -178,7 +185,7 @@ class EnergyCalculator(object):
             return new_name
 
     def load_flattened_arch(self, flattened_arch_path):
-        raw_flattened_arch = load(open(flattened_arch_path), accelergy_loader)['flattened_architecture']
+        raw_flattened_arch = load(open(flattened_arch_path), accelergy_loader)['flattened_architecture']['components']
         for component_name, component_info in raw_flattened_arch.items():
             if  '['  in component_name and ']'  in component_name:
                 component_name_base = EnergyCalculator.remove_brackets(component_name)
@@ -205,13 +212,25 @@ class EnergyCalculator(object):
                     idx_list.append(list_range)
                 self.flattened_list[component_name_base] = {'format': format, 'range': idx_list}
 
+    def extract_ERT(self, ERT_path):
+         raw_file = load(open(ERT_path), accelergy_loader)
+         if 'ERT' not in raw_file:
+             self.energy_reference_table = raw_file
+         else:
+             ASSERT_MSG('version' in raw_file['ERT'], 'v>=0.2 error: ERT ... \n ERT must contain "version" key')
+             ASSERT_MSG('tables' in raw_file['ERT'], 'v>=0.2 error: ERT ... \n ERT must contain "tables" key')
+             ERT_version = raw_file['ERT']['version']
+             if ERT_version <= 0.2:
+                 self.energy_reference_table = raw_file['ERT']['tables']
+             else:
+                 ERROR_CLEAN_EXIT('ERT version: ', ERT_version, 'no parser available...')
 
     def generate_estimations(self, action_counts_path, ERT_path, output_path, precision, flattened_arch_path = None):
         print('\n=========================================')
         print('Generating energy estimation')
         print('=========================================')
         # load and parse access counts
-        self.energy_reference_table = load(open(ERT_path), accelergy_loader)
+        self.extract_ERT(ERT_path)
         self.construct_action_counts(load(open(action_counts_path), accelergy_loader))
         self.decimal_points = precision
         INFO('design under evaluation:', self.design_name)
@@ -233,6 +252,7 @@ class EnergyCalculator(object):
 
         # save results
         file_path = output_path + '/estimation.yaml'
-        write_yaml_file(file_path, self.energy_estimation_table)
+        write_yaml_file(file_path, {'energy_estimation': {'components': self.energy_estimation_table,
+                                                          'version': self.action_counts_version}})
         print('---> Finished: energy calculation finished, estimation saved to:\n', os.path.abspath(output_path))
 
