@@ -3,9 +3,10 @@
 An infrastructure for architecture-level energy estimations of accelerator designs. Project website: http://accelergy.mit.edu
 
 ## Get started 
-- Infrastructure tested on RedHat Linux6, WLS
+- Infrastructure tested on RedHat Linux6, Ubuntu
 - python 3.6
-- PyYAML package 
+- PyYAML >= 1.1 (dependency automatically handled at installation)
+- yamlordereddictloader >= 0.4 (dependency automatically handled at installation)
 
 ## Install the package
 ```
@@ -13,33 +14,69 @@ An infrastructure for architecture-level energy estimations of accelerator desig
    # note:<pip_exec> is different for different python versions, e.g., pip3      
 ```
 - Please make sure your python bin, e.g.,```~/.local/bin ```, is appropriately added to $PATH 
-- Three new commands: ```accelergy, accelergyERT, accelergyCALC ```  should be available in your python bin 
-- ```accelergy -h```, ```accelergyERT -h```, ```accelergyCALC -h``` show the help message for the commands
+- A new command: ```accelergy ```  should be available in your python bin 
+- ```accelergy -h``` shows the help message for the command
 
 ## Run an example evaluation
 
-```accelergy``` runs both energy reference table (ERT) generator and energy calculator. Assuming at repo root directory:
+```accelergy``` generates the appropriate outputs according to the available input files. 
 ``` 
-cd examples/simple/input
-accelergy -o ../output/ design.yaml action_counts.yaml --enable_flattened_arch 1
+# To run both ERT generator and energy calculator
+cd examples/simple_v0.2/input
+accelergy -o ../output/ *.yaml 
+
+# To run just the ERT generator
+accelergy -o ../otuput/ design.yaml
+
+# To run just the energy calculator
+accelergy -o ../output ../output/ERT.yaml action_counts.yaml
 ```
-The ```--enable_flattened_arch``` flags allows Accelergy to output an architecture summary in the output directory. The 
-flattened architecture includes all the interpreted attribute values and classes for all the components in the design.
 
-```accelergyERT```  runs ERT generator only. Assuming at repo root directory:
+### Input files
 
-```
-cd examples/simple/input
-accelergyERT -o ../output/ design.yaml --enable_flattened_arch 1
-``` 
-
-```accelergyCALC```  runs energy calculator only. Assuming at repo root directory:
-
-```
-cd examples/simple/input
-accelergyCALC -o ../output/ ERT.yaml action_counts.yaml 
-``` 
-
+  There are three types of input files:
+  - architecture description (unique)
+    ```yaml
+    artchitecture_description:  # required top-key
+      version: 0.2              # required version number
+      subtree:                  # required architecture tree root
+        ...
+    ```
+  - compound component class description (can be composed of multiple files)
+    ```yaml
+    compound_components: # required top-key
+      version: 0.2       # required version number
+      classes:           # required list identifier
+        - name: ...      # various compound component classes specified as a list
+        ...
+    ```
+  - action counts (can be composed of multiple files)
+    ```yaml
+    compound_components: # required top-key
+      version: 0.2       # required version number
+      subtree:           # required architecture tree root
+        - name: ...      # various action counts specified as a list
+        ...
+    ```
+  Accelergy parses the input files and decide what operations to perform:
+  - Providing **all three types of inputs** will allow Accelergy to generate the ERTs for the components in the design, 
+  and perform energy estimations using the workload-generated action counts.
+  
+  - Providing just the **architecture description** and **compound component class description** allows Accelergy to generate 
+  the ERTs for the components in the design.
+  
+  - Providing the **generated ERTs** and the **action counts** allows Accelergy to directly generate energy estimations 
+  if the components in the design.
+  
+  ### Input flags
+   Accelergy accepts several optional flags:
+   - ```-o``` : specifies the output directory. Default is current directory
+   - ```-p``` : specified the precision of the caclulated ERTs and estimations. Default is 3.
+   - ```--enable_flattened_arch ```: once set to 1, it allows Accelergy to output an architecture summary in the output 
+   directory and check the validity of component names in the action counts file. 
+   The flattened architecture includes all the interpreted attribute values and classes for all the components
+   in the design. Default is 0.
+   
 
 ## File Structure
 - accelergy : package source
@@ -53,44 +90,11 @@ accelergyCALC -o ../output/ ERT.yaml action_counts.yaml
    - locate its estimator plug-ins
    - locate its primitive components
    
-At the beginning of ```accelergy``` or ```accelergyERT``` run, Accelergy will automatically search for ```accelergy_config.yaml``` first at ```./``` and then at ```$HOME/.config/accelergy/``` the file will be loaded if found, otherwise, Accelergy will create a default 
-   ```accelergy_config.yaml``` at ```$HOME/.config/accelergy/```, which points to the default estimator plug-in directory and primitive component library directory.
-
-Users can create their own  ```accelergy_config.yaml``` at ```$HOME/.config/accelergy/``` or ```./```, or modify the default 
-```accelergy_config.yaml``` created by Accelergy to specify their own root directories for estimator plug-ins
- and primitive component library. Accelergy does a recursive search from the specified root directories to locate 
- the estimation plug-ins and primitive component lib files.
-
+At the beginning of ```accelergy``` run, Accelergy will automatically search for ```accelergy_config.yaml``` first at ```./``` and then at ```$HOME/.config/accelergy/``` the file will be loaded if found, otherwise, Accelergy will create a default 
+   ```accelergy_config.yaml``` at ```$HOME/.config/accelergy/```, which points to the root directories of the default estimator plug-in directory and primitive component library directory.
+   
 Primitive component library files need be end with ```.lib.yaml``` for Accelergy to locate it. 
-Estimation plug-in's API is described in *API for Estimation Plug-ins* section below. 
-
-### Input files
-Two input files are required for a complete run of Accelergy evaluation, 
-detailed syntax examples are located in ```examples/```
-
-- ```design.yaml```
-- ```action_counts.yaml```
-
-#### design.yaml
-  There are two top-level keys in design.yaml, *architecture description* and *compound components*
-- *architecture description*: hierarchically describes the design in terms of components. 
-The architecture is represented as a tree structure, with internal nodes and leaf nodes.
-Internal nodes are merely an internal level of representation,
-not physical hardware instantiations. Leaf nodes are physical hardware instantiations, 
-and therefore are components in the design. The component can either belong to a primitive component class or 
-a compound component class. Architecture description should be generated using yaml format. 
-Nodes at the same level are represented in a list format, each item in the list is dictionary format. 
-
-- *compound components*: provides all the compound component classes that are needed by the design. A compound component class
-provides the attributes, the subcomponents, the compound actions and corresponding arguments (if there are any).
-Compound component classes are always two-level, top-level compound component and the lower-level sub-components,
-which can primitive components (specified in Accelergy primitive library or user-defined primitive library) or compound component,
-which needs to be specified in this file as another compound component class. 
-
-#### action_counts.yaml
-Action counts hierarchically record the run time behavior of the design running a specific workload. 
-For each component in the design, the number of times each action has happened is recorded.
-The component names in this file has to match the component names in architecture.yaml for Accelergy to find correspondence. 
+find correspondence. 
 
 ### API for Estimation Plug-ins
 - Users need to specify the root directory in config file in the format below. Accelergy does a recursive search to locate the estimator 
@@ -102,7 +106,7 @@ estimator_plug_ins:
 ```
   
 - *.estimator.yaml* file needs to be specified for Accelergy to locate the estimator, and the file should have the following format
-```
+```yaml
   version: <version_number> 
   estimator_plug_in_name:
     module:  <wrapper file name>

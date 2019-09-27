@@ -184,8 +184,7 @@ class EnergyCalculator(object):
             INFO('list component detected:', name, 'projected into', new_name)
             return new_name
 
-    def load_flattened_arch(self, flattened_arch_path):
-        raw_flattened_arch = load(open(flattened_arch_path), accelergy_loader)['flattened_architecture']['components']
+    def load_flattened_arch(self, raw_flattened_arch):
         for component_name, component_info in raw_flattened_arch.items():
             if  '['  in component_name and ']'  in component_name:
                 component_name_base = EnergyCalculator.remove_brackets(component_name)
@@ -212,34 +211,33 @@ class EnergyCalculator(object):
                     idx_list.append(list_range)
                 self.flattened_list[component_name_base] = {'format': format, 'range': idx_list}
 
-    def extract_ERT(self, ERT_path):
-         raw_file = load(open(ERT_path), accelergy_loader)
-         if 'ERT' not in raw_file:
-             self.energy_reference_table = raw_file
+    def extract_ERT(self, raw_ERT):
+         if 'version' not in raw_ERT:
+             self.energy_reference_table = raw_ERT
          else:
-             ASSERT_MSG('version' in raw_file['ERT'], 'v>=0.2 error: ERT ... \n ERT must contain "version" key')
-             ASSERT_MSG('tables' in raw_file['ERT'], 'v>=0.2 error: ERT ... \n ERT must contain "tables" key')
-             ERT_version = raw_file['ERT']['version']
+             ASSERT_MSG('version' in raw_ERT, 'v>=0.2 error: ERT ... \n ERT must contain "version" key')
+             ASSERT_MSG('tables' in raw_ERT, 'v>=0.2 error: ERT ... \n ERT must contain "tables" key')
+             ERT_version = raw_ERT['version']
              if ERT_version <= 0.2:
-                 self.energy_reference_table = raw_file['ERT']['tables']
+                 self.energy_reference_table = raw_ERT['tables']
              else:
                  ERROR_CLEAN_EXIT('ERT version: ', ERT_version, 'no parser available...')
 
-    def generate_estimations(self, action_counts_path, ERT_path, output_path, precision, flattened_arch_path = None):
+
+    def generate_estimations(self, araw_action_counts, raw_ERT, output_path, precision, raw_flattened_arch):
         print('\n=========================================')
         print('Generating energy estimation')
         print('=========================================')
         # load and parse access counts
-        self.extract_ERT(ERT_path)
-        self.construct_action_counts(load(open(action_counts_path), accelergy_loader))
+        self.extract_ERT(raw_ERT['ERT'])
+        self.construct_action_counts(araw_action_counts)
         self.decimal_points = precision
         INFO('design under evaluation:', self.design_name)
-        INFO('processing action counts file:', os.path.abspath(action_counts_path))
-        if flattened_arch_path is None:
+        if raw_flattened_arch is None:
             WARN('flattened architecture is not given, will not perform legal component name check')
         else:
             self.flattened_list = {}
-            self.load_flattened_arch(flattened_arch_path)
+            self.load_flattened_arch(raw_flattened_arch['flattened_architecture']['components'])
 
         for name, action_count_list in self.action_counts.items():
             INFO('processing for component:', name)

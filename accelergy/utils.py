@@ -22,8 +22,7 @@ import os, sys
 import glob
 import yaml
 from yaml import dump
-
-
+import yamlordereddictloader
 
 class accelergy_loader(yaml.SafeLoader):
     """
@@ -65,8 +64,50 @@ def includedir_constructor(self, node):
         with open(filename, 'r') as f:
             yamllist.append(yaml.load(f, accelergy_loader))
     return yamllist
-    
+
 yaml.add_constructor('!includedir', includedir_constructor, accelergy_loader)
+
+
+class accelergy_loader_ordered(yamlordereddictloader.SafeLoader):
+    """
+    Accelergy yaml loader
+    """
+
+    def __init__(self, stream):
+        self._root = os.path.split(stream.name)[0]
+        super(accelergy_loader_ordered, self).__init__(stream)
+
+def include_constructor(self, node):
+    """
+    constructor:
+      parses the !include relative_file_path
+      loads the file from relative_file_path and insert the values into the original file
+    """
+    filepath = self.construct_scalar(node)
+    if filepath[-1] == ',':
+        filepath = filepath[:-1]
+    filename = os.path.join(self._root, filepath)
+    with open(filename, 'r') as f:
+        return yaml.load(f, accelergy_loader_ordered)
+yaml.add_constructor('!include', include_constructor, accelergy_loader_ordered)
+
+
+def includedir_constructor(self, node):
+    """
+    constructor:
+      parses the !includedir relative_file_path
+      loads the file from relative_file_path and insert the values into the original file
+    """
+    filepath = self.construct_scalar(node)
+    if filepath[-1] == ',':
+        filepath = filepath[:-1]
+    dirname = os.path.join(self._root, filepath)
+    yamllist = []
+    for filename in glob.glob(dirname + "/*.yaml"):
+        with open(filename, 'r') as f:
+            yamllist.append(yaml.load(f, accelergy_loader_ordered))
+    return yamllist
+yaml.add_constructor('!includedir', includedir_constructor, accelergy_loader_ordered)
 
 class accelergy_dumper(yaml.SafeDumper):
     """ Accelergy yaml dumper """

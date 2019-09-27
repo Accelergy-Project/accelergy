@@ -20,7 +20,7 @@ setup(
       author_email='nelliewu@mit.edu',
       license='MIT',
       packages=['accelergy', 'accelergy.v01_functions', 'accelergy.v02_functions'],
-      install_requires = ['pyYAML'],
+      install_requires = ['pyYAML >= 1.1', 'yamlordereddictloader >= 0.4'],
       python_requires = '>=3.6',
       data_files=[('share/accelergy/primitive_component_libs/',
                     ['share/primitive_component_libs/primitive_component.lib.yaml']),
@@ -34,9 +34,7 @@ setup(
                   ],
       include_package_data = True,
       entry_points = {
-        'console_scripts': ['accelergy=accelergy.accelergy_console:main',
-                            'accelergyERT=accelergy.accelergyERT_console:main',
-                            'accelergyCALC=accelergy.accelergyCALC_console:main'],
+        'console_scripts': ['accelergy=accelergy.accelergy_console:main'],
       },
       zip_safe = False,
 

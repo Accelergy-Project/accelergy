@@ -51,15 +51,17 @@ def v02_compound_component_constructor(self, compound_component_info):
     compound_component_definition['class'] = compound_component_info['class']
     compound_component_definition['attributes'] = deepcopy(compound_component_info['attributes'])
 
-    # apply the physical compound attribute values (parsing of the architecture should already fulfilled
-    # the values of all attributes needed by the class, either default or redefined by the architecture)
-    compound_attributes = compound_component_definition['attributes']  # fully defined attribute values
+    # fully defined attribute values
+    compound_attributes = compound_component_definition['attributes']
 
     # process subcomponent name format
     #     if subcomponent is a list, expand the list of subcomponents (list tail index can be arithmetic operantions)
     #     else keep the subcomponent name
 
     subcomponents = deepcopy(compound_component_definition['subcomponents'])
+    # check if any sub-compound-component attribute is not specified in the top-level, apply defualt value specified
+    # in the class definition
+
 
     list_of_new_components = []
     list_of_to_remove_components = []
@@ -102,6 +104,31 @@ def v02_compound_component_constructor(self, compound_component_info):
                     except KeyError:
                         ERROR_CLEAN_EXIT('cannot find bindings from upper-level attribute names',
                                          '{', sub_attr_name, ':', sub_attr_val, '}')
+        # process default sub-component-component attribute values that are not specified in the top-level
+        # default values can be :
+        #   (1) numerical values
+        #   (2) arithmetic operations of other sub-compound-component attribute values
+        sub_class = subcomponent['class']
+        if sub_class in self.compound_class_description:
+            sub_class_description = deepcopy(self.compound_class_description[sub_class])
+            for attr_name, default_attr_val in sub_class_description['attributes'].items():
+                if attr_name not in subcomponent['attributes']:
+                    if type(default_attr_val) is str:
+                        op_type, op1, op2 = parse_expression_for_arithmetic(default_attr_val,
+                                                                            subcomponent['attributes'])
+                        if op_type is not None:
+                            default_attr_val = process_arithmetic(op1, op2, op_type)
+                            # INFO(compound_component_name, 'sub-attribute', sub_attr_name, 'processed as arithmetic operation')
+                        else:
+                            try:
+                                default_attr_val = subcomponent['attributes']
+                                # INFO(compound_component_name, 'sub-attribute', sub_attr_name,'processed as binding')
+                            except KeyError:
+                                WARN('did not find bindings of the specified default attribute value for class: ',
+                                    sub_class, '---> {', attr_name, ':', default_attr_val, '}, '
+                                    '   Keep the original specifications')
+                    subcomponent['attributes'][attr_name] = default_attr_val
+
         compound_component_definition['subcomponents'][subcomponent_name] = subcomponent
 
     # top-level compound component will not have 'actions' specified in the component info

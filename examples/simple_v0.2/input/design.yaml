@@ -23,7 +23,7 @@ architecture:
             n_bank_wr_ports: 1   # (same as default value, can be omitted)
             n_bank_rdwr_ports: n_bank_rd_ports + n_bank_wr_ports
 
-compound_components: 
+compound_components:
 # ============================================================
 # Compound Components
 # ============================================================

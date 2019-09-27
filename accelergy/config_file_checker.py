@@ -37,6 +37,7 @@ def config_file_v02():
             original_config_file_path = possible_dir + config_file_name
             original_content = load(open(original_config_file_path), accelergy_loader)
             INFO('config file located:', original_config_file_path)
+            print('config file content: \n', original_content)
             if 'version' not in original_content:
                 ERROR_CLEAN_EXIT('config file has no version number, cannot proceed')
             file_version = original_content['version']
@@ -50,9 +51,10 @@ def config_file_v02():
     else:
         create_folder(possible_config_dirs[1])
         config_file_path = possible_config_dirs[1] + config_file_name
-        default_estimator_path = os.path.abspath(str(sys.prefix) + '/share/accelergy/estimation_plug_ins/')
-        default_pc_lib_path = os.path.abspath(
-            os.path.join(str(sys.prefix) + '/share/accelergy/primitive_component_libs/'))
+        curr_file_path = os.path.abspath(__file__)
+        accelergy_share_folder_path = os.path.abspath(curr_file_path + '../../../../../../share/accelergy/')
+        default_estimator_path = os.path.abspath(accelergy_share_folder_path + '/estimation_plug_ins/')
+        default_pc_lib_path = os.path.abspath(accelergy_share_folder_path + '/primitive_component_libs/')
         config_file_content = {'version': 0.2,
                                'estimator_plug_ins': [default_estimator_path],
                                'primitive_components': [default_pc_lib_path]}
@@ -60,6 +62,3 @@ def config_file_v02():
              config_file_content)
         write_yaml_file(config_file_path, config_file_content)
         return config_file_content
-
-
-

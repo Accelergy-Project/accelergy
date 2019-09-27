@@ -42,20 +42,21 @@ class EnergyReferenceTableGenerator(object):
     estimator_list = None     # static variable to record all the estimators
     def __init__(self):
         # initializes all bookkeeping containers
-        self.compound_class_description    = {}
-        self.raw_architecture_description  = {}
-        self.architecture_description      = {}
-        self.primitive_class_description   = {}
-        self.config                        = None
-        self.energy_reference_table        = {}
-        self.design_name                   = None
-        self.output_path                   = None
-        self.estimator_plug_ins            = []
-        self.decimal_place                 = 3
-        self.design                        = None
-        self.compound_component_constructor = None
-        self.compound_class_version         = None
-        self.arch_version                   = None
+        self.compound_class_description      = {}
+        self.raw_architecture_description    = None
+        self.raw_compound_class_description  = None
+        self.architecture_description        = {}
+        self.primitive_class_description     = {}
+        self.config                          = None
+        self.energy_reference_table          = {}
+        self.design_name                     = None
+        self.output_path                     = None
+        self.estimator_plug_ins              = []
+        self.decimal_place                   = 3
+        self.design                          = None
+        self.compound_component_constructor  = None
+        self.compound_class_version          = None
+        self.arch_version                    = None
     @staticmethod
     def parse_arg_range(arg_range):
         if type(arg_range) is not str or '..' not in arg_range:
@@ -496,7 +497,6 @@ class EnergyReferenceTableGenerator(object):
         # load in the stored primitive classes
         primitive_class_paths = self.config['primitive_components']
         for pc_path in primitive_class_paths:
-            print(pc_path)
             # primitive component library file is directly specified
             if '.yaml' in pc_path:
                 self.expand_primitive_component_lib_info(pc_path)
@@ -546,40 +546,38 @@ class EnergyReferenceTableGenerator(object):
                 INFO(component_info['name'], ' ---> New ERT generated')
             else:
                 INFO(component_info['name'], '---> Existing ERT can be used')
-    def construct_compound_class_description(self, compound_class_list):
+    def construct_compound_class_description(self):
         """
         checks if there are duplicated compound component class names
         :param compound_class_list: list of compound classes that need parsing
         :return: None (self.compound_class_description is updated)
         """
-        if 'version' not in compound_class_list:
+        if 'version' not in self.raw_compound_class_description:
             ERROR_CLEAN_EXIT('please specify the version of parser your input format adheres to using '
                              '"version" key at top level')
-        for idx in range(len(compound_class_list['classes'])):
-            compound_class_name = compound_class_list['classes'][idx]['name']
+        for idx in range(len(self.raw_compound_class_description['classes'])):
+            compound_class_name = self.raw_compound_class_description['classes'][idx]['name']
             if compound_class_name in self.compound_class_description:
                 ERROR_CLEAN_EXIT('duplicate compound class name in component class description,',
                                  'error class name', compound_class_name)
-            self.compound_class_description[compound_class_name] = compound_class_list['classes'][idx]
+            self.compound_class_description[compound_class_name] = self.raw_compound_class_description['classes'][idx]
             try:
                 subcomponents = self.compound_class_description[compound_class_name]['subcomponents']
             except KeyError:
                 subcomponents = None
                 ERROR_CLEAN_EXIT('compound classes must have "subcomponents" key to specify the lower-level details',
                                   'error class name: ', compound_class_name)
-        self.compound_class_version = compound_class_list['version']
+        self.compound_class_version = self.raw_compound_class_description['version']
         self.compound_component_constructor = 'v' + str(self.compound_class_version).replace('.', '') + \
                                           '_compound_component_constructor'
-    def construct_save_architecture_description(self, architecture_description_list):
-        if 'version' not in architecture_description_list:
+    def construct_save_architecture_description(self):
+        if 'version' not in self.raw_architecture_description:
             ERROR_CLEAN_EXIT('please specify the version of parser your input format adheres to using '
                              '"version" key at top level')
-        self.arch_version  = architecture_description_list['version']
+        self.arch_version  = self.raw_architecture_description['version']
         architecture_description_parser = 'v' + str(self.arch_version).replace('.', '') + \
                                  '_parse_architecture_description'
-        getattr(self, architecture_description_parser)(architecture_description_list)
-
-
+        getattr(self, architecture_description_parser)(self.raw_architecture_description)
     def generate_easy_to_read_flattened_architecture(self):
         self.easy_to_read_flattened_architecture = {}
         list_names = {}
@@ -619,9 +617,40 @@ class EnergyReferenceTableGenerator(object):
             ranged_name_str = sep.join(ranged_name_list)
             max_name_str = sep.join(max_name_list)
             self.easy_to_read_flattened_architecture[ranged_name_str] = self.architecture_description[max_name_str]
+    def interpret_input_path(self, file_path):
+        file = load(open(file_path), accelergy_loader)
+        for key in file:
+            if key == 'architecture':
+                content = file[key]
+                ASSERT_MSG('version' in content and 'subtree' in content,
+                           'File content not legal: %s, architecture description must contain '
+                            '"version" and "subtree" keys'%file_path)
+                ASSERT_MSG(type(content['subtree'] is dict),
+                           'File content not legal: %s, "subtree" key must have value of type dict' % file_path)
+                if self.raw_architecture_description is None:
+                    self.raw_architecture_description = file[key]
+                else:
+                    ASSERT_MSG(self.raw_architecture_description['version'] == content['version'],
+                               'File content not legal: %s, Versions of two architecture description '
+                               'related file do not match'%file_path)
+                    self.raw_architecture_description.update(file[key]['subtree'])
 
-
-    def generate_ERTs(self, design_path, output_path, precision, flatten_arch_flag):
+            if key == 'compound_components':
+                content = file[key]
+                ASSERT_MSG('version' in content and 'classes' in content,
+                           'File content not legal: %s, component class description must contain '
+                            '"version" and "classes" keys'%file_path)
+                ASSERT_MSG(type(content['classes'] is list),
+                           'File content not legal: %s, "classes" key must have value of type list' % file_path)
+                if self.raw_compound_class_description is None:
+                    self.raw_compound_class_description = file[key]
+                else:
+                    ASSERT_MSG(self.raw_compound_class_description['version'] == content['version'],
+                               'File content not legal: %s, Versions of two compound class description '
+                               'related file do not match'%file_path)
+                    self.raw_compound_class_description['classes'].append(file[key]['classes'])
+    def generate_ERTs(self, raw_architecture_description, raw_compound_class_description
+                      ,output_path, precision, flatten_arch_flag):
         """
         main function to start the energy reference generator
         parses the input files
@@ -632,21 +661,30 @@ class EnergyReferenceTableGenerator(object):
         print('=========================================')
 
         # Interpret inputs
-        self.design_path = design_path
         self.output_path = output_path
         self.decimal_place = precision
 
-        # Load accelergy config and design specification
+        # Load accelergy config
         self.config = config_file_checker()
-        self.design = load(open(self.design_path), accelergy_loader)
-        INFO('design loaded:', design_path)
-        self.construct_compound_class_description(self.design['compound_components'])
+
+        # interpret the list of files
+        # for file_path in path_arglist:
+        #     self.interpret_input_path(file_path)
+        #     INFO('Input file parsed: ', file_path)
+        self.raw_architecture_description = raw_architecture_description['architecture']
+        self.raw_compound_class_description = raw_compound_class_description['compound_components']
+
+        # self.design = load(open(self.design_path), accelergy_loader)
+        # INFO('design loaded:', design_path)
+        self.construct_compound_class_description()
 
         # Load the primitive classes library
         self.construct_primitive_class_description()
+        ASSERT_MSG(not len(self.primitive_class_description) == 0, 'No primitive component class found, '
+                   'please check if the paths in config file are correct')
 
         # Parse the architecture description and save the parsed version if flag high
-        self.construct_save_architecture_description(self.design['architecture'])
+        self.construct_save_architecture_description()
         if flatten_arch_flag:
             self.generate_easy_to_read_flattened_architecture()
             arch_file_path = self.output_path + '/' + 'flattened_architecture.yaml'
@@ -657,6 +695,8 @@ class EnergyReferenceTableGenerator(object):
 
         # Instantiate the estimation plug-ins as intances of the corresponding plug-in classes
         self.instantiate_estimator_plug_ins()
+        ASSERT_MSG(not len(self.estimator_plug_ins) == 0, 'No estimation plug-in found, '
+                                                      'please check if the paths in config file are correct')
 
         # Generate Energy Reference Tables for the components
         self.generate_ERTs_for_architecture()

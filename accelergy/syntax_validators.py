@@ -23,6 +23,7 @@
 
 # validator for estimator API syntax
 from accelergy.utils import ERROR_CLEAN_EXIT, INFO, ASSERT_MSG
+import collections
 
 def validate_estimator_API(estimatorAPI):
 

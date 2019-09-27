@@ -33,7 +33,6 @@ classes:
       - name: add
       - name: idle
 
-
   - name: intmultiplier
     attributes:
       technology: 65nm
@@ -91,7 +90,6 @@ classes:
           data_delta: 0..1
           address_delta: 0..1
       - name: idle
-
   - name: counter
     attributes:
       technology: 65nm

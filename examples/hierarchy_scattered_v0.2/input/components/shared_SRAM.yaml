@@ -1,0 +1,83 @@
+compound_components:
+  version: 0.2
+  classes:
+  - name: shared_SRAM
+    attributes:
+      technology: 15
+      nbanks: 10
+      bank_depth: 512
+      bank_width: 64
+      n_rd_ports: 2  # number of architectural read ports
+      n_wr_ports: 2  # number of architectural write ports
+      n_bank_rd_ports: 1
+      n_bank_wr_ports: 1
+      n_bank_rdwr_ports: n_bank_rd_ports + n_bank_wr_ports # supported arithmetic operations: +, -, *,  %, / (ceil), //, log2()
+                                                           # top-level attributes can be described in terms of other top level attributes
+    subcomponents:
+      - name: SRAM_bank[0..nbanks]
+        class: SRAM
+        attributes:
+          technology: technology
+          width: bank_width
+          depth: bank_depth
+          n_rdwr_ports: n_bank_rdwr_ports
+      - name: rd_crossbar
+        class: crossbar
+        attributes:
+          technology: technology
+          n_inputs: n_rd_ports/n_bank_rd_ports
+          n_outputs: nbanks * n_bank_rd_ports
+      - name: wr_crossbar
+        class: crossbar
+        attributes:
+          technology: technology
+          n_inputs: n_wr_ports/n_bank_wr_ports
+          n_outputs: nbanks * n_bank_wr_ports
+
+    actions:
+      - name: read
+        arguments:
+          data_delta: 0..1
+          address_delta: 0..1
+          active_banks: 0..n_rd_ports*1
+        subcomponents:
+          - name: SRAM_bank[0]
+            actions:
+            - name: read
+              arguments:
+                data_delta: data_delta
+                address_delta: address_delta
+              repeat: active_banks
+            - name: idle
+              repeat: nbanks - active_banks
+          - name: rd_crossbar
+            actions:
+              - name: transfer
+                repeat: active_banks
+
+      - name: write
+        arguments:
+          data_delta: 0..1
+          address_delta: 0..1
+          active_banks: 0..n_wr_ports
+        subcomponents:
+          - name: SRAM_bank[0]
+            actions:
+            - name: write
+              arguments:
+                data_delta: data_delta
+                address_delta: address_delta
+              repeat: active_banks
+            - name: idle
+              repeat: nbanks - active_banks
+          - name: wr_crossbar
+            actions:
+            - name: transfer
+              repeat: active_banks
+
+      - name: idle
+        subcomponents:
+          - name: SRAM_bank[0]
+            actions:
+            - name: idle
+              repeat: nbanks
