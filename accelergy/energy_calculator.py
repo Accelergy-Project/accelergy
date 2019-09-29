@@ -73,14 +73,13 @@ class EnergyCalculator(object):
                              '"version" key at top level')
         self.action_counts_version = action_counts_list['version']
         if action_counts_list['version'] == 0.2:
-            ASSERT_MSG('subtree' in action_counts_list, 'v0.2 error: action counts... \n'
-                        'the action counts mut contain the "subtree" key at the top level')
-            raw_action_counts = action_counts_list['subtree']
-            ASSERT_MSG(len(raw_action_counts) == 1, 'v0.2 error: action counts... \n'
-                                'the first level list of your action counts should only have one node, '
-                                 'which is your design\'s root node')
-            self.design_name = action_counts_list['subtree'][0]['name']
-            self.v02_flatten_action_count(self.design_name, action_counts_list['subtree'][0])
+            ASSERT_MSG('subtree' in action_counts_list or 'local' in action_counts_list, 'v0.2 error: action counts... \n'
+                        'the action counts must contain the "subtree" key or "local" key at the top level')
+            # raw_action_counts = action_counts_list['subtree']
+            # ASSERT_MSG(len(raw_action_counts) == 1, 'v0.2 error: action counts... \n'
+            #                     'the first level list of your action counts should only have one node, '
+            #                      'which is your design\'s root node')
+            self.v02_flatten_action_count(None, action_counts_list)
 
         if action_counts_list['version'] == 0.1:
             raw_action_counts = action_counts_list['nodes']
@@ -95,19 +94,26 @@ class EnergyCalculator(object):
                 self.v01_flatten_action_count(self.design_name, node_description)
 
     def v02_flatten_action_count(self, prefix, node_description):
-        # syntax error checks
-        if 'name' not in node_description:
-            ERROR_CLEAN_EXIT('component format violation: "name" needs to be specified as a key in node description')
-        # extract basic information
-        # node_base_name = EnergyCalculator.belongs_to_list(node_name)
         if 'local' in node_description:
             local_nodes = node_description['local']
             for local_node in local_nodes:
-                full_name = prefix + '.' + local_node['name']
+                ASSERT_MSG("name" in local_node, 'action count error... '
+                                                 'component format violation: "name" needs to be '
+                                                 'specified as a key in node description')
+                if prefix is None:
+                    full_name = local_node['name']
+                else:
+                    full_name = prefix + '.' + local_node['name']
                 self.action_counts[full_name] = local_node['action_counts']
         if 'subtree' in node_description:
             for subtree_node_description in node_description['subtree']:
-                subtree_prefix = prefix + '.' + subtree_node_description['name']
+                ASSERT_MSG("name" in subtree_node_description, 'action count error... '
+                                                 'component format violation: "name" needs to be '
+                                                 'specified as a key in node description')
+                if prefix is None:
+                    subtree_prefix = subtree_node_description['name']
+                else:
+                    subtree_prefix = prefix + '.' + subtree_node_description['name']
                 self.v02_flatten_action_count(subtree_prefix, subtree_node_description)
 
     def v01_flatten_action_count(self, prefix, node_description):
@@ -232,7 +238,6 @@ class EnergyCalculator(object):
         self.extract_ERT(raw_ERT['ERT'])
         self.construct_action_counts(araw_action_counts)
         self.decimal_points = precision
-        INFO('design under evaluation:', self.design_name)
         if raw_flattened_arch is None:
             WARN('flattened architecture is not given, will not perform legal component name check')
         else:

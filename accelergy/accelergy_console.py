@@ -2,6 +2,7 @@ from accelergy.ERT_generator import EnergyReferenceTableGenerator
 from accelergy.energy_calculator import EnergyCalculator
 
 import argparse, sys
+from copy import deepcopy
 from yaml import load
 from accelergy.utils import accelergy_loader, ERROR_CLEAN_EXIT, WARN, INFO, ASSERT_MSG, accelergy_loader_ordered
 
@@ -57,7 +58,7 @@ def main():
                                              raw_compound_class_description is not None,
                                              raw_action_counts is not None,
                                              raw_ERT is not None,
-                                             raw_flattened_arch is None))
+                                             raw_flattened_arch is not None))
 
     if raw_ERT is not None and raw_action_counts is not None:
         INFO('Accelergy found ERT and ACTION COUNTS '
@@ -173,25 +174,53 @@ def interpret_input_path(path_arglist):
                 # check syntax of input file
                 #-------------------------------------------------------------------------
                 ASSERT_MSG('version' in content, 'File content not legal: %s, %s must contain '
-                            '"version" key'%(file_path, key))
-                tree_root_name = None
+                            '"version" key '%(file_path, key))
                 if content['version'] == 0.1:
-                    tree_root_name = 'nodes'
+                    ASSERT_MSG('nodes' in content, 'v0.1 error... File content not legal: %s, %s must contain '
+                                                     '"nodes" key ' % (file_path, key))
+                    if raw_action_counts is None:
+                       raw_action_counts = {key: content}
+                    else:
+                        ASSERT_MSG(raw_action_counts[key]['version'] == content['version'],
+                                   'File content not legal: %s, versions of two %s'
+                                   'related files do not match'%(file_path, key))
+                        if "nodes" in content:
+                            if "nodes" in raw_action_counts[key]:
+                                raw_action_counts[key]["nodes"].extend(content["nodes"])
+                            else:
+                                raw_action_counts[key]["nodes"] = content["nodes"]
+
                 if content['version'] == 0.2:
-                    tree_root_name = 'subtree'
-                ASSERT_MSG(tree_root_name in content,
-                           'File content not legal: %s, action counts must contain %s key'
-                           %(file_path, tree_root_name))
-                ASSERT_MSG(type(content[tree_root_name]) is list,
-                           'File content not legal: %s, %s key must have value of type list'
-                           %(file_path, tree_root_name))
-                if raw_action_counts is None:
-                   raw_action_counts = {key: file[key]}
-                else:
-                    ASSERT_MSG(raw_action_counts[key]['version'] == content['version'],
-                               'File content not legal: %s, versions of two %s'
-                               'related files do not match'%(file_path, key))
-                    raw_action_counts[key][tree_root_name].extend(file[key][tree_root_name])
+
+                    ASSERT_MSG('local' in content or 'subtree' in content, 'File content not legal: %s, %s must contain '
+                               '"local"/"subtree" key '%(file_path, key))
+
+                    if "local" in content:
+                        ASSERT_MSG(type(content["local"]) is list,
+                                   'File content not legal: %s, "local" key must have value of type list'
+                                   %(file_path))
+
+                    if "subtree" in content:
+                        ASSERT_MSG(type(content["subtree"]) is list,
+                                   'File content not legal: %s, "subtree" key must have value of type list'
+                                   %(file_path))
+
+                    if raw_action_counts is None:
+                       raw_action_counts = {key: content}
+                    else:
+                        ASSERT_MSG(raw_action_counts[key]['version'] == content['version'],
+                                   'File content not legal: %s, versions of two %s'
+                                   'related files do not match'%(file_path, key))
+                        if "local" in content:
+                            if "local" in raw_action_counts[key]:
+                                raw_action_counts[key]["local"].extend(content["local"])
+                            else:
+                                raw_action_counts[key]["local"] = content["local"]
+                        if "subtree" in content:
+                            if "subtree" in raw_action_counts[key]:
+                                raw_action_counts[key]["subtree"].extend(content["subtree"])
+                            else:
+                                raw_action_counts[key]["subtree"] = content["subtree"]
 
             if key == 'ERT':
                 content = file[key]
@@ -223,7 +252,7 @@ def interpret_input_path(path_arglist):
                                'related files do not match'%(file_path,key))
                     raw_flattened_arch[key]['components'].update(file[key]['components'])
             if key not in available_keys:
-                WARN('File contains unrecognized information:', file_path,
+                WARN('File contains unrecognized information:', file_path, key,
                      '\n Accelergy only recognizes the following keys', available_keys)
             else:
                 INFO('%s related info found in %s'%(key, file_path))
