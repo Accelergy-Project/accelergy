@@ -1,0 +1,51 @@
+compound_components:
+  version: 0.2
+  classes:
+  - name: memory_controller
+    attributes:
+      technology: 40nm
+      datawidth: 64
+      comparator_width: 4
+      n_crossbar_inputs: 1
+      n_crossbar_outputs: 12
+    subcomponents:
+      - name: comparator
+        class: comparator
+        attributes:
+          technology: technology
+          datawidth: comparator_width
+      - name: crossbar
+        class: crossbar
+        attributes:
+          technology: technology
+          datawidth: datawidth
+          n_inputs: n_crossbar_inputs
+          n_outputs: n_crossbar_outputs
+
+    actions:
+      - name: transfer_random
+        subcomponents:
+          - name: comparator
+            actions:
+              - name: compare
+          - name: crossbar
+            actions:
+              - name: transfer_random
+
+      - name: transfer_repeated
+        subcomponents:
+          - name: comparator
+            actions:
+              - name: compare
+          - name: crossbar
+            actions:
+              - name: transfer_repeated
+
+      - name: idle
+        subcomponents:
+          - name: comparator
+            actions:
+              - name: idle
+          - name: crossbar
+            actions:
+              - name: idle

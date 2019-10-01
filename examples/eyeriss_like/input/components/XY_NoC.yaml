@@ -1,0 +1,83 @@
+compound_components:
+  version: 0.2
+  classes:
+  - name: XY_NoC
+    attributes:
+      technology: 40nm
+      Y_comparator_width: 4  # compare rowID
+      X_comparator_width: 4  # compare colID
+      n_PE_rows: 12
+      n_PE_cols: 14
+      total_PEs: n_PE_cols * n_PE_rows
+      datawidth: 64
+      Y_X_wire_avg_length: 3mm
+    subcomponents:
+      - name: Y_memory_controller[0..n_PE_rows-1]
+        class: memory_controller
+        attributes:
+          technology: technology
+          datawidth: datawidth
+          comparator_width: Y_comparator_width
+          n_crossbar_inputs: 1
+          n_crossbar_outputs: n_PE_rows
+      - name: X_memory_controller[0..total_PEs-1]
+        class: memory_controller
+        attributes:
+          technology: technology
+          datawidth: datawidth
+          comparator_width: X_comparator_width
+          n_crossbar_inputs: 1
+          n_crossbar_outputs: n_PE_cols
+      - name: Y_X_wire[0..n_PE_rows-1]
+        class: wire
+        attributes:
+          technology: technology
+          width: datawidth + X_comparator_width
+          length: Y_X_wire_avg_length
+    actions:
+      - name: transfer_random
+        arguments:
+          n_rows: 0..n_PE_rows
+          n_destinations: 0..total_PEs
+        subcomponents:
+          - name: Y_memory_controller[0]
+            actions:
+              - name: transfer_random
+                repeat: n_rows
+          - name: X_memory_controller[0]
+            actions:
+              - name: transfer_random
+                repeat: n_destinations
+          - name: Y_X_wire[0]
+            actions:
+            - name: transfer_random
+              repeat: n_rows
+
+      - name: transfer_repeated
+        arguments:
+          n_rows: 0..n_PE_rows
+          n_destinations: 0..total_PEs
+        subcomponents:
+          - name: Y_memory_controller[0]
+            actions:
+              - name: transfer_repeated
+                repeat: n_rows
+          - name: X_memory_controller[0]
+            actions:
+              - name: transfer_repeated
+                repeat: n_destinations
+          - name: Y_X_wire[0]
+            actions:
+            - name: transfer_repeated
+              repeat: n_rows
+
+      - name: idle
+        subcomponents:
+          - name: Y_memory_controller[0]
+            actions:
+              - name: idle
+                repeat: total_PEs
+          - name: X_memory_controller[0]
+            actions:
+              - name: idle
+                repeat: n_PE_rows

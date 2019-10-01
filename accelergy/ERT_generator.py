@@ -57,6 +57,7 @@ class EnergyReferenceTableGenerator(object):
         self.compound_component_constructor  = None
         self.compound_class_version          = None
         self.arch_version                    = None
+        self.verbose                         = 0
     @staticmethod
     def parse_arg_range(arg_range):
         if type(arg_range) is not str or '..' not in arg_range:
@@ -258,6 +259,7 @@ class EnergyReferenceTableGenerator(object):
                                            'arguments': None}
             energy = self.eval_primitive_action_energy(estimator_plug_in_interface)
             return {'energy': energy, 'arguments': None}
+
     def eval_primitive_action_energy(self, estimator_plug_in_interface):
         """
         :param estimator_plug_in_interface: dictionary that adheres to
@@ -268,6 +270,8 @@ class EnergyReferenceTableGenerator(object):
         best_estimator = None
         for estimator in self.estimator_plug_ins:
             accuracy = estimator.primitive_action_supported(estimator_plug_in_interface)
+            ASSERT_MSG(type(accuracy) is int or type(accuracy) is float,
+                       'Wrong plug-in accuracy: %s ...  Returned accuracy must be integers or floats'%(estimator))
             if accuracy > best_accuracy:
                 best_accuracy = accuracy
                 best_estimator = estimator
@@ -275,7 +279,11 @@ class EnergyReferenceTableGenerator(object):
             ERROR_CLEAN_EXIT('cannot find estimator plug-in:', estimator_plug_in_interface,
                              'Available plug-ins:', self.estimator_plug_ins)
         energy = best_estimator.estimate_energy(estimator_plug_in_interface)
+        if self.verbose:
+         INFO('Received energy estimation for primitive class:\n', estimator_plug_in_interface,
+              '\nestimated by:', best_estimator, 'n estimated energy:', energy)
         return energy
+
     def generate_component_ert(self, component_info, is_primitive_class):
         """
         According to component type, processes the received information differently
@@ -327,6 +335,7 @@ class EnergyReferenceTableGenerator(object):
             compound_component_ERT = {}
             compound_class_name = component_info['class']
             compound_component_attributes = component_info['attributes']
+            ASSERT_MSG(compound_class_name in self.compound_class_description, 'Cannot find class definition: %s'%compound_class_name)
             compound_class_description = self.compound_class_description[compound_class_name]
             if 'subcomponents' not in compound_class_description:
                 ERROR_CLEAN_EXIT('compound class description missing subcomponents:', compound_class_name)
@@ -391,6 +400,7 @@ class EnergyReferenceTableGenerator(object):
                 # record the generated ERT for the compound component
                 compound_component_ERT[compound_action_name] = deepcopy(action_ERT)
             return compound_component_ERT
+
     def eval_subcomponent_action_for_ERT(self, subaction, subcomponent_info, upper_level_arguments, upper_level_attributes):
         subaction_copy = deepcopy(subaction) # do not want to modify the class definitions
         if 'arguments' in subaction and subaction_copy['arguments'] is not None:  # if there is arguments, evaluate the arguments in terms of the compound action arguments
@@ -409,6 +419,8 @@ class EnergyReferenceTableGenerator(object):
         subaction_ERT = self.generate_component_ert(subcomponent_info, is_subcomponent_primitive_class)
         # the call is guaranteed to produce an ERT with 'energy' and 'argument' key
         subaction_energy = subaction_ERT[subaction_copy['name']]['energy']
+        if type(subaction_energy) is not int and type(subaction_energy) is not float:
+            ERROR_CLEAN_EXIT('Unusual estimated energy received for:',subcomponent_info, 'Energy received: %s'%subaction_energy)
         # parse the repeat information of the subaction (if any)
         #     repeat can be int
         #                   binding to compound component arguments
@@ -544,8 +556,6 @@ class EnergyReferenceTableGenerator(object):
                 ERT = self.generate_component_ert(component_info, is_primitive_class)
                 self.energy_reference_table[ERT_check_result[1]] = ERT
                 INFO(component_info['name'], ' ---> New ERT generated')
-            else:
-                INFO(component_info['name'], '---> Existing ERT can be used')
     def construct_compound_class_description(self):
         """
         checks if there are duplicated compound component class names
@@ -650,7 +660,7 @@ class EnergyReferenceTableGenerator(object):
                                'related file do not match'%file_path)
                     self.raw_compound_class_description['classes'].append(file[key]['classes'])
     def generate_ERTs(self, raw_architecture_description, raw_compound_class_description
-                      ,output_path, precision, flatten_arch_flag):
+                      ,output_path, precision, flatten_arch_flag, verbose):
         """
         main function to start the energy reference generator
         parses the input files
@@ -661,6 +671,7 @@ class EnergyReferenceTableGenerator(object):
         print('=========================================')
 
         # Interpret inputs
+        self.verbose = verbose
         self.output_path = output_path
         self.decimal_place = precision
 

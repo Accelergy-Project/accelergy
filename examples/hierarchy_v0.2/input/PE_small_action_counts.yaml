@@ -4,20 +4,6 @@
 action_counts:
   version: 0.2
   local:
-    - name: hierarchy.GLB
-      action_counts:
-        - name: drain
-          arguments:
-            data_delta: 1
-            address_delta: 1
-            active_banks: 1
-          counts: 100
-        - name: fill
-          arguments:
-            data_delta: 1
-            address_delta: 1
-            active_banks: 1
-          counts: 100
     - name: hierarchy.PE_small[0].mac[0]
       action_counts:
         - name: mac_random
@@ -26,12 +12,17 @@ action_counts:
           counts: 50
     - name: hierarchy.PE_small[0].byte_sp
       action_counts:
-        - name: drain
+        - name: fill
           arguments:
             data_delta: 1
             address_delta: 1
           counts: 20
-        - name: drain
+        - name: read
+          arguments:
+            data_delta: 1
+            address_delta: 1
+          counts: 20
+        - name: read
           arguments:
             data_delta: 0
             address_delta: 0

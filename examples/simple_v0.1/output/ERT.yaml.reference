@@ -3,127 +3,127 @@ ERT:
     simple.glb:
       idle:
         arguments: null
-        energy: 3
+        energy: 0
       read:
       - arguments:
           active_banks: 0
           address_delta: 0
           data_delta: 0
-        energy: 3
+        energy: 0
       - arguments:
           active_banks: 0
           address_delta: 0
           data_delta: 1
-        energy: 3
+        energy: 0
       - arguments:
           active_banks: 0
           address_delta: 1
           data_delta: 0
-        energy: 3
+        energy: 0
       - arguments:
           active_banks: 0
           address_delta: 1
           data_delta: 1
-        energy: 3
+        energy: 0
       - arguments:
           active_banks: 1
           address_delta: 0
           data_delta: 0
-        energy: 4
+        energy: 2
       - arguments:
           active_banks: 1
           address_delta: 0
           data_delta: 1
-        energy: 4
+        energy: 2
       - arguments:
           active_banks: 1
           address_delta: 1
           data_delta: 0
-        energy: 4
+        energy: 2
       - arguments:
           active_banks: 1
           address_delta: 1
           data_delta: 1
+        energy: 2
+      - arguments:
+          active_banks: 2
+          address_delta: 0
+          data_delta: 0
         energy: 4
       - arguments:
           active_banks: 2
           address_delta: 0
-          data_delta: 0
-        energy: 5
-      - arguments:
-          active_banks: 2
-          address_delta: 0
           data_delta: 1
-        energy: 5
+        energy: 4
       - arguments:
           active_banks: 2
           address_delta: 1
           data_delta: 0
-        energy: 5
+        energy: 4
       - arguments:
           active_banks: 2
           address_delta: 1
           data_delta: 1
-        energy: 5
+        energy: 4
       write:
       - arguments:
           active_banks: 0
           address_delta: 0
           data_delta: 0
-        energy: 3
+        energy: 0
       - arguments:
           active_banks: 0
           address_delta: 0
           data_delta: 1
-        energy: 3
+        energy: 0
       - arguments:
           active_banks: 0
           address_delta: 1
           data_delta: 0
-        energy: 3
+        energy: 0
       - arguments:
           active_banks: 0
           address_delta: 1
           data_delta: 1
-        energy: 3
+        energy: 0
       - arguments:
           active_banks: 1
           address_delta: 0
           data_delta: 0
-        energy: 4
+        energy: 2
       - arguments:
           active_banks: 1
           address_delta: 0
           data_delta: 1
-        energy: 4
+        energy: 2
       - arguments:
           active_banks: 1
           address_delta: 1
           data_delta: 0
-        energy: 4
+        energy: 2
       - arguments:
           active_banks: 1
           address_delta: 1
           data_delta: 1
+        energy: 2
+      - arguments:
+          active_banks: 2
+          address_delta: 0
+          data_delta: 0
         energy: 4
       - arguments:
           active_banks: 2
           address_delta: 0
-          data_delta: 0
-        energy: 5
-      - arguments:
-          active_banks: 2
-          address_delta: 0
           data_delta: 1
-        energy: 5
+        energy: 4
       - arguments:
           active_banks: 2
           address_delta: 1
           data_delta: 0
-        energy: 5
+        energy: 4
       - arguments:
           active_banks: 2
           address_delta: 1
           data_delta: 1
-        energy: 5
+        energy: 4
   version: 0.1

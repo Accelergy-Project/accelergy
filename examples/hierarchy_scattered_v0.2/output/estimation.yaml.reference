@@ -1,9 +1,0 @@
-energy_estimation:
-  components:
-    hierarchy.GLB: 1400
-    hierarchy.PE_large[2].arithmetic_units.mac[0]: 70
-    hierarchy.PE_large[2].arithmetic_units.mac[1]: 70
-    hierarchy.PE_large[2].channel[0]: 40
-    hierarchy.PE_small[0].byte_sp: 140
-    hierarchy.PE_small[0].mac[0]: 70
-  version: 0.2

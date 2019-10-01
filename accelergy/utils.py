@@ -109,7 +109,7 @@ def includedir_constructor(self, node):
     return yamllist
 yaml.add_constructor('!includedir', includedir_constructor, accelergy_loader_ordered)
 
-class accelergy_dumper(yaml.SafeDumper):
+class accelergy_dumper(yamlordereddictloader.SafeDumper):
     """ Accelergy yaml dumper """
     
     def ignore_aliases(self, _data):

@@ -20,6 +20,9 @@ def main():
     parser.add_argument('-p', '--precision', type=int, default='3',
                         help= 'Number of decimal points for generated energy values. '
                               'Default is 3.')
+    parser.add_argument('-v', '--verbose', type=int, default = 0,
+                        help= 'If set to 1, Accelergy outputs the interactions between the estimation plug-ins. '
+                              'Default is 0')
     parser.add_argument('--enable_flattened_arch', type=int, default='0',
                         help= 'If set to 1, Accelergy outputs an architecture summary in the output directory and checks'
                               ' the validity of component names in the action counts file. '
@@ -38,6 +41,7 @@ def main():
     path_arglist = args.files
     output_path = args.outdir
     precision = args.precision
+    verbose = args.verbose
     flatten_arch_flag = args.enable_flattened_arch
 
     print('\n#===================================================================================#')
@@ -82,13 +86,16 @@ def main():
 
         generator = EnergyReferenceTableGenerator()
         generator.generate_ERTs(raw_architecture_description, raw_compound_class_description,
-                                output_path, precision, flatten_arch_flag)
+                                output_path, precision, flatten_arch_flag, verbose)
 
         if raw_action_counts is not None:
             ert_path = output_path + '/' + 'ERT.yaml'
             raw_ERT = load(open(ert_path), accelergy_loader)
             if flatten_arch_flag == 0:
                 raw_flattened_arch = None
+            else:
+                arch_path = output_path + '/' + 'flattened_architecture.yaml'
+                raw_flattened_arch = load(open(arch_path), accelergy_loader)
             estimator = EnergyCalculator()
             estimator.generate_estimations(raw_action_counts, raw_ERT, output_path, precision, raw_flattened_arch)
     else:
@@ -162,10 +169,12 @@ def interpret_input_path(path_arglist):
                 if raw_compound_class_description is None:
                    raw_compound_class_description = {'compound_components': file_reload[key]}
                 else:
+                    print(content['version'], raw_compound_class_description['compound_components']['version'])
                     ASSERT_MSG(raw_compound_class_description['compound_components']['version']
                                == content['version'],
-                               'File content not legal: %s, versions of two %s'
+                               'File content not legal: %s, versions of two %s '
                                'related file do not match'%(file_path, key))
+
                     raw_compound_class_description[key]['classes'].extend(file_reload[key]['classes'])
 
             if key == 'action_counts':

@@ -187,7 +187,7 @@ class EnergyCalculator(object):
                                                            hierarchical_name_list[range_location].find(']')])
                     ASSERT_MSG(range_max>= curr_idx >= range_min,
                                'Invalid list component name %s, index out of bound'%name)
-            INFO('list component detected:', name, 'projected into', new_name)
+            # INFO('list component detected:', name, 'projected into', new_name)
             return new_name
 
     def load_flattened_arch(self, raw_flattened_arch):
