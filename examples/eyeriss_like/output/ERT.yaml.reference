@@ -20,7 +20,7 @@ ERT:
         energy: 4
       idle:
         arguments: null
-        energy: 2
+        energy: 0
       read:
       - arguments:
           address_delta: 0
@@ -58,7 +58,7 @@ ERT:
     eyeriss_like.PE.mac:
       idle:
         arguments: null
-        energy: 1
+        energy: 0
       mac_gated:
         arguments: null
         energy: 1
@@ -88,7 +88,7 @@ ERT:
         energy: 4
       idle:
         arguments: null
-        energy: 2
+        energy: 0
       read:
       - arguments:
           address_delta: 0
@@ -143,7 +143,7 @@ ERT:
         energy: 4
       idle:
         arguments: null
-        energy: 2
+        energy: 0
       read:
       - arguments:
           address_delta: 0
@@ -181,7 +181,7 @@ ERT:
     eyeriss_like.ifmap_NoC:
       idle:
         arguments: null
-        energy: 4
+        energy: 0
       transfer_random:
       - arguments:
           n_destinations: 0
@@ -17763,7 +17763,7 @@ ERT:
     eyeriss_like.psum_read_NoC:
       idle:
         arguments: null
-        energy: 4
+        energy: 0
       transfer_random:
       - arguments:
           n_destinations: 0
@@ -35345,7 +35345,7 @@ ERT:
     eyeriss_like.psum_write_NoC:
       idle:
         arguments: null
-        energy: 4
+        energy: 0
       transfer_random:
       - arguments:
           n_destinations: 0
@@ -53136,7 +53136,7 @@ ERT:
         energy: 4
       idle:
         arguments: null
-        energy: 2
+        energy: 0
       read:
       - arguments:
           address_delta: 0
@@ -53558,7 +53558,7 @@ ERT:
     eyeriss_like.weights_NoC:
       idle:
         arguments: null
-        energy: 4
+        energy: 0
       transfer_random:
       - arguments:
           n_destinations: 0
@@ -71165,7 +71165,7 @@ ERT:
         energy: 4
       idle:
         arguments: null
-        energy: 2
+        energy: 0
       read:
       - arguments:
           address_delta: 0

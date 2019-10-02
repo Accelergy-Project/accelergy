@@ -128,8 +128,17 @@ def v02_compound_component_constructor(self, compound_component_info):
                                     sub_class, '---> {', attr_name, ':', default_attr_val, '}, '
                                     '   Keep the original specifications')
                     subcomponent['attributes'][attr_name] = default_attr_val
-
         compound_component_definition['subcomponents'][subcomponent_name] = subcomponent
+        # check if the subcomponent name is a list
+        # list_length, name_base = v02_is_component_list(subcomponent_name, compound_attributes)
+        # if subcomponent_name == 'Y_memory_controller[0..total_PEs-1]':
+        #     print('----------------------', list_length, name_base)
+        # if name_base is None:
+        #     compound_component_definition['subcomponents'][subcomponent_name] = subcomponent
+        # else:
+        #     for item_idx in range(list_length):
+        #         new_subcomponent_name = name_base + '[' + str(item_idx) + ']'
+        #         compound_component_definition['subcomponents'][new_subcomponent_name] = deepcopy(subcomponent)
 
     # top-level compound component will not have 'actions' specified in the component info
     #      because accelergy needs to generate the energy values for all possible actions (and arguments)
@@ -151,12 +160,13 @@ def v02_compound_component_constructor(self, compound_component_info):
                     if detect_arg_range_binding:
                         INFO(compound_component_name, 'action:', c_action_name, 'arg:', c_action_arg_name,
                              'range interpreted as:', c_action_args[c_action_arg_name])
-            check_subcomponent_name_in_action_def(c_action,
-                                                   compound_component_definition['subcomponents'].keys())
+            # check_subcomponent_name_in_action_def(c_action,
+            #                                       compound_component_definition['subcomponents'].keys(),
+            #                                       compound_attributes)
     # low-level compound components will have 'actions' assigned, since top-level action will be interpreted as
     # one or more defined low-level compound action
     #     no change should be added as the action arguments should be defined already, so the required action list
-    #     from component info is copied, with the definition of the action retried from class description
+    #     from component info is copied, with the definition of the action retrieved from class description
     else:
         compound_component_definition['actions'] = deepcopy(compound_component_info['actions'])
         for action in compound_component_definition['actions']:
@@ -164,14 +174,32 @@ def v02_compound_component_constructor(self, compound_component_info):
             for class_action_def in compound_class_info['actions']:
                 if class_action_def['name'] == action_name:
                     action['subcomponents'] = deepcopy(class_action_def['subcomponents'])
-                    check_subcomponent_name_in_action_def(action,
-                                                           compound_component_definition['subcomponents'].keys())
+                    # action = check_subcomponent_name_in_action_def(action,
+                    #                                       compound_component_definition['subcomponents'].keys(),
+                    #                                       compound_attributes)
     return compound_component_definition
 
-def check_subcomponent_name_in_action_def(action_def,  subcomponent_names):
+def v02_check_subcomponent_name_in_action_def(action_def, subcomponent_names, compound_attributes):
+    new_subcomponents = deepcopy(action_def['subcomponents'])
     for sub_component in action_def['subcomponents']:
         sub_cname = sub_component['name']
-        if sub_cname not in subcomponent_names:
-            ERROR_CLEAN_EXIT('v0.2 error: compound class description...\n',
-                             'Cannot parse action "%s"\n'% action_def['name'],
-                             'Cannot find "%s" in compound component definition'%sub_cname )
+        # check if the subcomponent name is a list
+        list_length, name_base = v02_is_component_list(sub_cname, compound_attributes)
+        if name_base is not None:
+            new_subcomponents.remove(sub_component)
+            for item_idx in range(list_length):
+                new_sub_cname = name_base + '[' + str(item_idx) + ']'
+                new_sub_comp = deepcopy(sub_component)
+                new_sub_comp['name'] = new_sub_cname
+                new_subcomponents.append(new_sub_comp)
+                if new_sub_cname not in subcomponent_names:
+                    ERROR_CLEAN_EXIT('v0.2 error: compound class description...\n',
+                                     'Cannot parse action "%s"\n'% action_def['name'],
+                                     'Cannot find "%s" in compound component definition'%new_sub_cname )
+        else:
+            if sub_cname not in subcomponent_names:
+                ERROR_CLEAN_EXIT('v0.2 error: compound class description...\n',
+                                 'Cannot parse action "%s"\n' % action_def['name'],
+                                 'Cannot find "%s" in compound component definition' % sub_cname)
+    action_def['subcomponents'] = new_subcomponents
+    return action_def

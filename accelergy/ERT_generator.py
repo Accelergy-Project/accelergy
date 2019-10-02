@@ -281,7 +281,7 @@ class EnergyReferenceTableGenerator(object):
         energy = best_estimator.estimate_energy(estimator_plug_in_interface)
         if self.verbose:
          INFO('Received energy estimation for primitive class:\n', estimator_plug_in_interface,
-              '\nestimated by:', best_estimator, 'n estimated energy:', energy)
+              '\n estimated by:', best_estimator, ' ---> estimated energy:', energy)
         return energy
 
     def generate_component_ert(self, component_info, is_primitive_class):

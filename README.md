@@ -3,10 +3,11 @@
 An infrastructure for architecture-level energy estimations of accelerator designs. Project website: http://accelergy.mit.edu
 
 ## Get started 
-- Infrastructure tested on RedHat Linux6, Ubuntu
-- python 3.6
-- PyYAML >= 1.1 (dependency automatically handled at installation)
-- yamlordereddictloader >= 0.4 (dependency automatically handled at installation)
+- Infrastructure tested on RedHat Linux, Ubuntu, MacOS
+- Required packages
+  - Python >= 3.6
+  - PyYAML >= 1.1 (dependency automatically handled at installation)
+  - yamlordereddictloader >= 0.4 (dependency automatically handled at installation)
 
 ## Install the package
 ```
@@ -23,10 +24,10 @@ An infrastructure for architecture-level energy estimations of accelerator desig
 ``` 
 # To run both ERT generator and energy calculator
 cd examples/simple_v0.2/input
-accelergy -o ../output/ *.yaml 
+accelergy -o ../output/ *.yaml components/*.yaml 
 
 # To run just the ERT generator
-accelergy -o ../otuput/ design.yaml
+accelergy -o ../otuput/ design.yaml components/*.yaml 
 
 # To run just the energy calculator
 accelergy -o ../output ../output/ERT.yaml action_counts.yaml
@@ -72,6 +73,8 @@ accelergy -o ../output ../output/ERT.yaml action_counts.yaml
    Accelergy accepts several optional flags:
    - ```-o``` : specifies the output directory. Default is current directory
    - ```-p``` : specified the precision of the caclulated ERTs and estimations. Default is 3.
+   - ```-verbose```: once set to 1, it allows Accelergy to output the interactions with the estimation plug-ins, including the
+     primitive component information, the selected estimation plug-in name, and the estimated energy returned from the plug-in.
    - ```--enable_flattened_arch ```: once set to 1, it allows Accelergy to output an architecture summary in the output 
    directory and check the validity of component names in the action counts file. 
    The flattened architecture includes all the interpreted attribute values and classes for all the components

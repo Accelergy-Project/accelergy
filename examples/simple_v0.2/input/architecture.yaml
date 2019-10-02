@@ -1,5 +1,4 @@
-# design description
-architecture: 
+architecture:
 # ============================================================
 # Architecture Description
 # ============================================================
@@ -22,11 +21,3 @@ architecture:
             n_bank_rd_ports: 1   # (same as default value, can be omitted)
             n_bank_wr_ports: 1   # (same as default value, can be omitted)
             n_bank_rdwr_ports: n_bank_rd_ports + n_bank_wr_ports
-
-compound_components:
-# ============================================================
-# Compound Components
-# ============================================================
-  version: 0.2
-  classes:
-    - !include compound_components/shared_SRAM.yaml

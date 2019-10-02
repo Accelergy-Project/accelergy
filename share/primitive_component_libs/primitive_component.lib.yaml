@@ -64,10 +64,17 @@ classes:
     attributes:
       technology: 65nm
       width: 16
-      entries: 1
+      depth: 1
       latency: 5ns
     actions:
-      - name: process
+      - name: read
+        arguments:
+          data_delta: 0..1
+          address_delta: 0..1
+      - name: write
+        arguments:
+          data_delta: 0..1
+          address_delta: 0..1
       - name: idle
 
   - name: SRAM
