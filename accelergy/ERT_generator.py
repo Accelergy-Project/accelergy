@@ -649,7 +649,7 @@ class EnergyReferenceTableGenerator(object):
                     minE = arg_combo['energy'] if arg_combo['energy'] < minE else minE
                     min_arg = arg_combo['arguments'] if arg_combo['energy'] < minE else min_arg
                     total = total + arg_combo['energy']
-                avg = total / len(action_ERT)
+                avg = round(total / len(action_ERT), self.decimal_place)
                 ERT_suammry[action_name] = {'average energy': avg, 'max energy': maxE, 'min energy': minE}
         return ERT_suammry
     def generate_easy_to_read_flattened_architecture_ERT_summary(self):
