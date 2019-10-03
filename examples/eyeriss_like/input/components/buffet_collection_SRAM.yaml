@@ -9,8 +9,7 @@ compound_components:
       n_rdwr_ports: 2
       n_banks: 1
       n_buffets: 1
-      buffet_manager_depth: 12
-      update_fifo_depth: 0
+      scoreboard_depth: 12
     subcomponents:
       - name: buffet[0..n_buffets-1]
         class: buffet
@@ -18,8 +17,8 @@ compound_components:
           technology: technology
           depth: memory_depth
           width: memory_width
-          manager_depth: buffet_manager_depth
-          update_fifo_depth: update_fifo_depth
+          n_banks: n_banks
+          scoreboard_depth: buffet_manager_depth
       - name: storage
         class: SRAM
         attributes:
@@ -27,7 +26,6 @@ compound_components:
           width: memory_width
           depth: memory_depth
           n_rdwr_ports: n_rdwr_ports
-          n_banks: n_banks
     actions:
       - name: fill
         arguments:
@@ -37,6 +35,9 @@ compound_components:
           - name: buffet[0]
             actions:
               - name: fill
+                arguments:
+                  address_delta: address_delta/n_banks
+                  data_delta: data_delta
           - name: storage
             actions:
               - name: write
@@ -52,7 +53,8 @@ compound_components:
             actions:
               - name: read
                 arguments:
-                  address_delta: address_delta
+                  address_delta: address_delta/n_banks
+                  data_delta: data_delta
           - name: storage
             actions:
               - name: read
@@ -68,7 +70,8 @@ compound_components:
             actions:
               - name: update
                 arguments:
-                  address_delta: address_delta
+                  address_delta: address_delta/n_banks
+                  data_delta: data_delta
           - name: storage
             actions:
               - name: write
@@ -77,7 +80,7 @@ compound_components:
                   address_delta: address_delta
       - name: idle
         subcomponents:
-          - name: buffet[0]
+          - name: buffet[0..n_buffets-1]
             actions:
               - name: idle
           - name: storage

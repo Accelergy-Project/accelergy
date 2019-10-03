@@ -5,19 +5,19 @@ ERT:
       - arguments:
           address_delta: 0
           data_delta: 0
-        energy: 4
+        energy: 3
       - arguments:
           address_delta: 0
           data_delta: 1
-        energy: 4
+        energy: 5
       - arguments:
           address_delta: 1
           data_delta: 0
-        energy: 4
+        energy: 5
       - arguments:
           address_delta: 1
           data_delta: 1
-        energy: 4
+        energy: 7
       idle:
         arguments: null
         energy: 0
@@ -25,15 +25,15 @@ ERT:
       - arguments:
           address_delta: 0
           data_delta: 0
-        energy: 8
+        energy: 4
       - arguments:
           address_delta: 0
           data_delta: 1
-        energy: 8
+        energy: 6
       - arguments:
           address_delta: 1
           data_delta: 0
-        energy: 8
+        energy: 6
       - arguments:
           address_delta: 1
           data_delta: 1
@@ -42,7 +42,7 @@ ERT:
       - arguments:
           address_delta: 0
           data_delta: 0
-        energy: 5
+        energy: 3
       - arguments:
           address_delta: 0
           data_delta: 1
@@ -54,7 +54,7 @@ ERT:
       - arguments:
           address_delta: 1
           data_delta: 1
-        energy: 5
+        energy: 7
     hierarchy.PE_large.arithmetic_units.adder:
       add:
         arguments: null
@@ -90,19 +90,19 @@ ERT:
       - arguments:
           address_delta: 0
           data_delta: 0
-        energy: 4
+        energy: 3
       - arguments:
           address_delta: 0
           data_delta: 1
-        energy: 4
+        energy: 5
       - arguments:
           address_delta: 1
           data_delta: 0
-        energy: 4
+        energy: 5
       - arguments:
           address_delta: 1
           data_delta: 1
-        energy: 4
+        energy: 7
       idle:
         arguments: null
         energy: 0
@@ -110,15 +110,15 @@ ERT:
       - arguments:
           address_delta: 0
           data_delta: 0
-        energy: 8
+        energy: 4
       - arguments:
           address_delta: 0
           data_delta: 1
-        energy: 8
+        energy: 6
       - arguments:
           address_delta: 1
           data_delta: 0
-        energy: 8
+        energy: 6
       - arguments:
           address_delta: 1
           data_delta: 1
@@ -127,7 +127,7 @@ ERT:
       - arguments:
           address_delta: 0
           data_delta: 0
-        energy: 5
+        energy: 3
       - arguments:
           address_delta: 0
           data_delta: 1
@@ -139,25 +139,25 @@ ERT:
       - arguments:
           address_delta: 1
           data_delta: 1
-        energy: 5
+        energy: 7
     hierarchy.PE_large.memory_storage.two_byte_sp:
       fill:
       - arguments:
           address_delta: 0
           data_delta: 0
-        energy: 4
+        energy: 3
       - arguments:
           address_delta: 0
           data_delta: 1
-        energy: 4
+        energy: 5
       - arguments:
           address_delta: 1
           data_delta: 0
-        energy: 4
+        energy: 5
       - arguments:
           address_delta: 1
           data_delta: 1
-        energy: 4
+        energy: 7
       idle:
         arguments: null
         energy: 0
@@ -165,15 +165,15 @@ ERT:
       - arguments:
           address_delta: 0
           data_delta: 0
-        energy: 8
+        energy: 4
       - arguments:
           address_delta: 0
           data_delta: 1
-        energy: 8
+        energy: 6
       - arguments:
           address_delta: 1
           data_delta: 0
-        energy: 8
+        energy: 6
       - arguments:
           address_delta: 1
           data_delta: 1
@@ -182,7 +182,7 @@ ERT:
       - arguments:
           address_delta: 0
           data_delta: 0
-        energy: 5
+        energy: 3
       - arguments:
           address_delta: 0
           data_delta: 1
@@ -194,25 +194,25 @@ ERT:
       - arguments:
           address_delta: 1
           data_delta: 1
-        energy: 5
+        energy: 7
     hierarchy.PE_small.byte_sp:
       fill:
       - arguments:
           address_delta: 0
           data_delta: 0
-        energy: 4
+        energy: 3
       - arguments:
           address_delta: 0
           data_delta: 1
-        energy: 4
+        energy: 5
       - arguments:
           address_delta: 1
           data_delta: 0
-        energy: 4
+        energy: 5
       - arguments:
           address_delta: 1
           data_delta: 1
-        energy: 4
+        energy: 7
       idle:
         arguments: null
         energy: 0
@@ -220,15 +220,15 @@ ERT:
       - arguments:
           address_delta: 0
           data_delta: 0
-        energy: 8
+        energy: 4
       - arguments:
           address_delta: 0
           data_delta: 1
-        energy: 8
+        energy: 6
       - arguments:
           address_delta: 1
           data_delta: 0
-        energy: 8
+        energy: 6
       - arguments:
           address_delta: 1
           data_delta: 1
@@ -237,7 +237,7 @@ ERT:
       - arguments:
           address_delta: 0
           data_delta: 0
-        energy: 5
+        energy: 3
       - arguments:
           address_delta: 0
           data_delta: 1
@@ -249,7 +249,7 @@ ERT:
       - arguments:
           address_delta: 1
           data_delta: 1
-        energy: 5
+        energy: 7
     hierarchy.PE_small.mac:
       idle:
         arguments: null

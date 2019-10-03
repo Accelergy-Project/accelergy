@@ -23,7 +23,7 @@ compound_components:
           n_banks: n_banks
           n_buffets: n_buffets
           buffet_manager_depth: buffet_manager_depth
-      - name: address_generator[0..2]
+      - name: address_generators[0..2]
         class: counter
         attributes:
           technology: technology
@@ -41,7 +41,7 @@ compound_components:
                 arguments:
                   data_delta: data_delta
                   address_delta: address_delta
-          - name: address_generator[0]
+          - name: address_generators[0]
             actions:
               - name: count
 
@@ -56,7 +56,7 @@ compound_components:
                 arguments:
                   data_delta: data_delta
                   address_delta: address_delta
-          - name: address_generator[1]
+          - name: address_generators[1]
             actions:
               - name: count
 
@@ -71,7 +71,7 @@ compound_components:
                 arguments:
                   data_delta: data_delta
                   address_delta: address_delta
-          - name: address_generator[2]
+          - name: address_generators[2]
             actions:
             - name: count
 

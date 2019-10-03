@@ -4,85 +4,109 @@ compound_components:
   - name: buffet
     attributes:
       technology: 40nm
-      depth: 12         # depth of the corresponding memory storage
-      width: 16         # width of the corresponding memory storage
-      manager_depth: 12 # manager size is 0 if there is no update
+      depth: 12
+      width: 16
+      scoreboard_depth: 12
       address_width: log(depth)
-      fifo_request_width: address_width + width # dependency reflected as attribute order
-      update_fifo_depth: 0
     subcomponents:
-      - name: buffet_manager
-        class: SRAM
+      - name: scoreboard
+        class: regfile
         attributes:
           technology: technology
-          depth: manager_depth
+          depth: scoreboard_depth
           width: 1
-      - name: fill_request_fifo
+      - name: data_fifos[0..3]
         class: FIFO
         attributes:
           technology: technology
-          datawidth: fifo_request_width  # fill pushes index and data
-      - name: read_request_fifo
-        class: FIFO
-        attributes:
-          techonology: technology
-          datawidth: address_width # read pushes index
-      - name: read_response_fifo
+          datawidth: width
+      - name: addr_fifos[0..3]
         class: FIFO
         attributes:
           technology: technology
-          datawidth: width   # read pops data
-      - name: update_request_fifo
-        class: FIFO
-        attributes:
-          technology: technology
-          datawidth: fifo_request_width  # update pushed both index and data to buffet
-          depth: update_fifo_depth
+          datawidth: address_width
     actions:
       - name: fill
+        arguments:
+          address_delta: 0..1
+          data_delta: 0..1
         subcomponents:
-          - name: fill_request_fifo
+          - name: scoreboard
+            actions:
+              - name: write
+                arguments:
+                  address_delta: 1
+                  data_delta: 1
+          - name: data_fifos[0]
             actions:
               - name: push
+                repeat: data_delta
               - name: pop
+                repeat: data_delta
+          - name: addr_fifos[0]
+            actions:
+              - name: push
+                repeat: address_delta
+              - name: pop
+                repeat: address_delta
       - name: read
         arguments:
           address_delta: 0..1
+          data_delta: 0..1
         subcomponents:
-          - name: read_request_fifo
-            actions:
-              - name: push
-              - name: pop
-          - name: read_response_fifo
-            actions:
-              - name: push
-              - name: pop
-          - name: buffet_manager
+          - name: scoreboard
             actions:
               - name: read
                 arguments:
                   address_delta: address_delta
-                  data_delta: 1  # manager width is 1 bit, data variation is not important
+                  data_delta: 1  # 1 bit flag not related to actual data
               - name: write
                 arguments:
                   address_delta: address_delta
-                  data_delta: address_delta
+                  data_delta: 1 # 1 bit flag not related to actual data
+          - name: data_fifos[0]
+            actions:
+              - name: push
+                repeat: data_delta  # use repeat to control generated energy
+              - name: pop
+                repeat: data_delta
+          - name: addr_fifos[0]
+            actions:
+              - name: push
+                repeat: address_delta
+              - name: pop
+                repeat: address_delta
       - name: update
         arguments:
           address_delta: 0..1
+          data_delta: 0..1
         subcomponents:
-          - name: buffet_manager
+          - name: scoreboard
             actions:
               - name: write
                 arguments:
-                  address_delta: address_delta
-                  data_delta: 1  # manager width is 1 bit, data variation is not important
-          - name: update_request_fifo
+                  address_delta: 1
+                  data_delta: 1
+          - name: data_fifos[0]
             actions:
               - name: push
+                repeat: data_delta
               - name: pop
+                repeat: data_delta
+          - name: addr_fifos[0]
+            actions:
+              - name: push
+                repeat: address_delta
+              - name: pop
+                repeat: address_delta
       - name: idle
         subcomponents:
-          - name: buffet_manager
+          - name: scoreboard
+            actions:
+              - name: idle
+          - name: data_fifos[0..2]
+            actions:
+              - name: idle
+          - name: addr_fifos[0..2]
             actions:
               - name: idle

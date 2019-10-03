@@ -40,6 +40,8 @@ def v02_is_component_list(name, binding_dictionary = None):
             list_start_idx = str_to_int(name[left_bracket_idx+1:range_flag], binding_dictionary)
             list_end_idx = str_to_int(name[range_flag+2:right_bracket_idx], binding_dictionary)
             list_length = list_end_idx - list_start_idx + 1
+            if list_end_idx < list_start_idx:
+                list_length = -1
             return list_length, name_base
 
 # parses the string indexes to integers

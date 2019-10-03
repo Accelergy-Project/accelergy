@@ -38,46 +38,39 @@ compound_components:
       - name: transfer_random
         arguments:
           n_rows: 0..n_PE_rows
-          n_destinations: 0..total_PEs
+          n_cols_per_row: 0..n_PE_cols
         subcomponents:
-          - name: Y_memory_controller[0]
+          - name: Y_memory_controller[1..n_rows]
             actions:
               - name: transfer_random
-                repeat: n_rows
-          - name: X_memory_controller[0]
+          - name: X_memory_controller[1..n_cols_per_row * n_rows]
             actions:
               - name: transfer_random
-                repeat: n_destinations
-          - name: Y_X_wire[0]
+          - name: Y_X_wire[0..n_rows-1]
             actions:
             - name: transfer_random
-              repeat: n_rows
 
       - name: transfer_repeated
         arguments:
           n_rows: 0..n_PE_rows
-          n_destinations: 0..total_PEs
+          n_cols_per_row: 0..n_PE_cols
         subcomponents:
-          - name: Y_memory_controller[0]
+          - name: Y_memory_controller[1..n_rows]
             actions:
               - name: transfer_repeated
-                repeat: n_rows
-          - name: X_memory_controller[0]
+          - name: X_memory_controller[1..n_cols_per_row * n_rows]
             actions:
               - name: transfer_repeated
-                repeat: n_destinations
-          - name: Y_X_wire[0]
+          - name: Y_X_wire[0..n_rows-1]
             actions:
             - name: transfer_repeated
-              repeat: n_rows
+
 
       - name: idle
         subcomponents:
-          - name: Y_memory_controller[0]
+          - name: Y_memory_controller[0..n_PE_rows-1]
             actions:
               - name: idle
-                repeat: total_PEs
-          - name: X_memory_controller[0]
+          - name: X_memory_controller[0..total_PEs-1]
             actions:
               - name: idle
-                repeat: n_PE_rows

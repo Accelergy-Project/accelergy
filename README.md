@@ -72,9 +72,11 @@ accelergy -o ../output ../output/ERT.yaml action_counts.yaml
   ### Input flags
    Accelergy accepts several optional flags:
    - ```-o``` : specifies the output directory. Default is current directory
-   - ```-p``` : specified the precision of the caclulated ERTs and estimations. Default is 3.
-   - ```-verbose```: once set to 1, it allows Accelergy to output the interactions with the estimation plug-ins, including the
+   - ```-p``` : specified the precision of the calculated ERTs and estimations. Default is 3.
+   - ```-v```: once set to 1, it allows Accelergy to output the interactions with the estimation plug-ins, including the
      primitive component information, the selected estimation plug-in name, and the estimated energy returned from the plug-in.
+   - ```-s```: once set to 1, it allows Accelergy to output an ERT summary that contains the avg, min, and max for the 
+               actions of the components in the architecture.
    - ```--enable_flattened_arch ```: once set to 1, it allows Accelergy to output an architecture summary in the output 
    directory and check the validity of component names in the action counts file. 
    The flattened architecture includes all the interpreted attribute values and classes for all the components

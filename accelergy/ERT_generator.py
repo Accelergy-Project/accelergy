@@ -18,7 +18,7 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-import os, re, string
+import os, re, math
 from importlib.machinery import SourceFileLoader
 from copy import deepcopy
 from yaml import load
@@ -58,6 +58,8 @@ class EnergyReferenceTableGenerator(object):
         self.compound_class_version          = None
         self.arch_version                    = None
         self.verbose                         = 0
+        self.show_ERT_summary                = 1
+        self.ERT_summary                     = {}
     @staticmethod
     def parse_arg_range(arg_range):
         if type(arg_range) is not str or '..' not in arg_range:
@@ -89,7 +91,8 @@ class EnergyReferenceTableGenerator(object):
                     else:
                         parsed_repeat = None
                         ERROR_CLEAN_EXIT('repeat value for primitive action cannot be parsed, ',
-                                      'no binding found in compound arguments/ attributes',action)
+                                      'no binding found in compound arguments/ attributes',action,
+                                         'available binding:', upper_level_binding)
 
                 return parsed_repeat
             # return the actual value if repeat is an integer
@@ -259,7 +262,6 @@ class EnergyReferenceTableGenerator(object):
                                            'arguments': None}
             energy = self.eval_primitive_action_energy(estimator_plug_in_interface)
             return {'energy': energy, 'arguments': None}
-
     def eval_primitive_action_energy(self, estimator_plug_in_interface):
         """
         :param estimator_plug_in_interface: dictionary that adheres to
@@ -278,12 +280,11 @@ class EnergyReferenceTableGenerator(object):
         if best_estimator is None:
             ERROR_CLEAN_EXIT('cannot find estimator plug-in:', estimator_plug_in_interface,
                              'Available plug-ins:', self.estimator_plug_ins)
-        energy = best_estimator.estimate_energy(estimator_plug_in_interface)
+        energy = round(best_estimator.estimate_energy(estimator_plug_in_interface), self.decimal_place)
         if self.verbose:
          INFO('Received energy estimation for primitive class:\n', estimator_plug_in_interface,
               '\n estimated by:', best_estimator, ' ---> estimated energy:', energy)
         return energy
-
     def generate_component_ert(self, component_info, is_primitive_class):
         """
         According to component type, processes the received information differently
@@ -357,6 +358,16 @@ class EnergyReferenceTableGenerator(object):
                         action_ERT = self.initialize_ERT_for_action_with_arg_ranges(action)
                         # for each arg values combo for the compound component
                         for arg_val_combo in action_ERT:
+
+                            if self.compound_class_version >= 0.2:
+                                action_def_checker = 'v' + str(self.compound_class_version).replace('.', '') \
+                                                     + '_check_subcomponent_name_in_action_def'
+                                binding_dict = deepcopy(compound_component_attributes)
+                                binding_dict.update(arg_val_combo['arguments'])
+                                action = getattr(self, action_def_checker)(action,
+                                                                           defined_component['subcomponents'].keys(),
+                                                                           binding_dict)
+
                             # for each subcomponent involved in action definition
                             for subcomponent_action in action['subcomponents']:
                                 subcomponent_name = subcomponent_action['name']
@@ -373,6 +384,14 @@ class EnergyReferenceTableGenerator(object):
                     # if arguments are static values, then this is a compound component that is subcomponent of another compound component
                     else:
                         action_ERT = {'energy' : 0, 'arguments': action['arguments']}
+                        if self.compound_class_version >= 0.2:
+                            action_def_checker = 'v' + str(self.compound_class_version).replace('.', '') \
+                                                 + '_check_subcomponent_name_in_action_def'
+                            binding_dict = deepcopy(compound_component_attributes)
+                            binding_dict.update(action['arguments'])
+                            action = getattr(self, action_def_checker)(action,
+                                                                       defined_component['subcomponents'].keys(),
+                                                                       binding_dict)
                         for subcomponent_action in action['subcomponents']:  # for each subcomponent involved in action definition
                             subcomponent_name = subcomponent_action['name']
                             subcomponent_info = defined_component['subcomponents'][subcomponent_name]  # retrieve hardware info from the updated subcomponent list
@@ -386,11 +405,30 @@ class EnergyReferenceTableGenerator(object):
                 else:
                     # if the compound action has no arguments
                     action_ERT = {'energy': 0, 'arguments': None}
+                    if self.compound_class_version >= 0.2:
+                        action_def_checker = 'v' + str(self.compound_class_version).replace('.', '') \
+                                             + '_check_subcomponent_name_in_action_def'
+                        binding_dict = deepcopy(compound_component_attributes)
+                        action = getattr(self, action_def_checker)(action,
+                                                                   defined_component['subcomponents'].keys(),
+                                                                   binding_dict)
                     subaction_energy = 0
                     for subcomponent_action in action['subcomponents']:  # for each subcomponent involved in action definition
                         subcomponent_name = subcomponent_action['name']
                         subcomponent_info = defined_component['subcomponents'][subcomponent_name]  # retrieve hardware info from the updated subcomponent list
+                        is_primitive_class = self.is_primitive_class(subcomponent_info['class'])
+                        if is_primitive_class:
+                            sub_class_info = self.primitive_class_description[subcomponent_info['class']]
+                        else:
+                            sub_class_info = self.compound_class_description[subcomponent_info['class']]
+
                         for subaction in subcomponent_action['actions']:  # for each action that is related to this subcomponent
+                            for class_action in sub_class_info['actions']:
+                                if class_action['name'] == subaction['name']:
+                                    if 'arguments' in class_action:
+                                        ERROR_CLEAN_EXIT(subaction, ' from class: ', subcomponent_info['name'],
+                                                         ' has no argument values specified from upper level class when used as a subcomponent for compound calss: ',
+                                                         compound_class_name)
                             subaction_energy = self.eval_subcomponent_action_for_ERT(subaction,
                                                                                      subcomponent_info,
                                                                                      None,
@@ -400,19 +438,25 @@ class EnergyReferenceTableGenerator(object):
                 # record the generated ERT for the compound component
                 compound_component_ERT[compound_action_name] = deepcopy(action_ERT)
             return compound_component_ERT
-
     def eval_subcomponent_action_for_ERT(self, subaction, subcomponent_info, upper_level_arguments, upper_level_attributes):
         subaction_copy = deepcopy(subaction) # do not want to modify the class definitions
+        aggregated_dict = deepcopy(upper_level_attributes)
+        if upper_level_arguments is not None:
+            aggregated_dict.update(deepcopy(upper_level_arguments))
         if 'arguments' in subaction and subaction_copy['arguments'] is not None:  # if there is arguments, evaluate the arguments in terms of the compound action arguments
             for subarg_name, subarg_info in subaction_copy['arguments'].items():
                 if type(subarg_info) is str :
                     try:
-                        subaction_copy['arguments'][subarg_name] = upper_level_arguments[subarg_info]
+                        subaction_copy['arguments'][subarg_name] = aggregated_dict[subarg_info]
                     except KeyError:
-                        print('available compound arguments: ', upper_level_arguments)
-                        print('primitive argument to for binding:', subarg_info)
-                        ERROR_CLEAN_EXIT('subcomponent argument name cannot be ',
-                                          'mapped to upper class arguments', subarg_info)
+                        op_type, op1, op2 = parse_expression_for_arithmetic(subarg_info, aggregated_dict)
+                        if op_type is not None:
+                            subaction_copy['arguments'][subarg_name] = process_arithmetic(op1, op2, op_type)
+                        else:
+                            print('available compound arguments and attributes: ', aggregated_dict)
+                            print('primitive argument to for binding:', subarg_info)
+                            ERROR_CLEAN_EXIT('subcomponent argument name cannot be ',
+                                              'mapped to upper class arguments', subarg_info)
 
         subcomponent_info['actions'] = [subaction_copy]
         is_subcomponent_primitive_class = self.is_primitive_class(subcomponent_info['class'])
@@ -428,11 +472,10 @@ class EnergyReferenceTableGenerator(object):
         upper_level_binding = deepcopy(upper_level_attributes)
         if upper_level_arguments is not None:
             upper_level_binding.update(upper_level_arguments)
-
         parsed_repeat_info = EnergyReferenceTableGenerator.parse_repeat(subaction, upper_level_binding)
         subaction_energy *= parsed_repeat_info
         # print(subaction_ERT, parsed_repeat_info, subaction_energy)
-        return subaction_energy
+        return round(subaction_energy, self.decimal_place)
     def map_arg_range_bounds(self, arg_range_str, attributes_dict):
         """
         arguments for compound actions might have ranges that are specified in terms of it attributes
@@ -588,13 +631,37 @@ class EnergyReferenceTableGenerator(object):
         architecture_description_parser = 'v' + str(self.arch_version).replace('.', '') + \
                                  '_parse_architecture_description'
         getattr(self, architecture_description_parser)(self.raw_architecture_description)
-    def generate_easy_to_read_flattened_architecture(self):
-        self.easy_to_read_flattened_architecture = {}
+    def generate_ERT_summary(self, ERT_entry_name):
+        ERTs = self.energy_reference_table[ERT_entry_name]
+        ERT_suammry = {}
+        for action_name, action_ERT in ERTs.items():
+            if type(action_ERT) is dict:
+                ERT_suammry[action_name] = {'energy': action_ERT['energy']}
+            else:
+                minE = math.inf
+                min_arg = None
+                maxE = 0-math.inf
+                max_arg = None
+                total = 0
+                for arg_combo in action_ERT:
+                    maxE = arg_combo['energy'] if arg_combo['energy'] > maxE else maxE
+                    max_arg = arg_combo['arguments'] if arg_combo['energy'] > maxE else max_arg
+                    minE = arg_combo['energy'] if arg_combo['energy'] < minE else minE
+                    min_arg = arg_combo['arguments'] if arg_combo['energy'] < minE else min_arg
+                    total = total + arg_combo['energy']
+                avg = total / len(action_ERT)
+                ERT_suammry[action_name] = {'average energy': avg, 'max energy': maxE, 'min energy': minE}
+        return ERT_suammry
+    def generate_easy_to_read_flattened_architecture_ERT_summary(self):
+        easy_to_read_flattened_architecture = {}
         list_names = {}
+        ERT_summary = {}
         for component_name, component_info in self.architecture_description.items():
 
             if '[' not in component_name or ']' not in component_name:
-                self.easy_to_read_flattened_architecture[component_name] = deepcopy(component_info)
+                easy_to_read_flattened_architecture[component_name] = deepcopy(component_info)
+                if self.show_ERT_summary:
+                    ERT_summary[component_name] = self.generate_ERT_summary(component_name)
             else:
                 name_base = EnergyReferenceTableGenerator.remove_brackets(component_name)
                 idx_list = []
@@ -626,7 +693,22 @@ class EnergyReferenceTableGenerator(object):
             sep = '.'
             ranged_name_str = sep.join(ranged_name_list)
             max_name_str = sep.join(max_name_list)
-            self.easy_to_read_flattened_architecture[ranged_name_str] = self.architecture_description[max_name_str]
+            easy_to_read_flattened_architecture[ranged_name_str] = self.architecture_description[max_name_str]
+            if self.show_ERT_summary:
+
+                ERT_summary[ranged_name_str] = self.generate_ERT_summary(name_base)
+
+        if self.show_ERT_summary:
+            ERT_summary_file = {'ERT_summary': {'version': self.compound_class_version,
+                                                'ERT summaries': ERT_summary}}
+            write_yaml_file(self.output_path + '/ERT_summary.yaml', ERT_summary_file)
+            INFO('ERT summary saved to ', self.output_path + '/ERT_summary.yaml')
+        if self.flattened_arch:
+            arch_file_path = self.output_path + '/' + 'flattened_architecture.yaml'
+            flattened_architecture_yaml = {'flattened_architecture': {'version': self.arch_version,
+                                                                      'components': easy_to_read_flattened_architecture}}
+            write_yaml_file(arch_file_path, flattened_architecture_yaml)
+            INFO('Architecture flattened ... saved to ', arch_file_path)
     def interpret_input_path(self, file_path):
         file = load(open(file_path), accelergy_loader)
         for key in file:
@@ -660,7 +742,7 @@ class EnergyReferenceTableGenerator(object):
                                'related file do not match'%file_path)
                     self.raw_compound_class_description['classes'].append(file[key]['classes'])
     def generate_ERTs(self, raw_architecture_description, raw_compound_class_description
-                      ,output_path, precision, flatten_arch_flag, verbose):
+                      ,output_path, precision, flatten_arch_flag, verbose, show_ERT_summary):
         """
         main function to start the energy reference generator
         parses the input files
@@ -674,6 +756,8 @@ class EnergyReferenceTableGenerator(object):
         self.verbose = verbose
         self.output_path = output_path
         self.decimal_place = precision
+        self.flattened_arch = flatten_arch_flag
+        self.show_ERT_summary = show_ERT_summary
 
         # Load accelergy config
         self.config = config_file_checker()
@@ -696,13 +780,9 @@ class EnergyReferenceTableGenerator(object):
 
         # Parse the architecture description and save the parsed version if flag high
         self.construct_save_architecture_description()
-        if flatten_arch_flag:
-            self.generate_easy_to_read_flattened_architecture()
-            arch_file_path = self.output_path + '/' + 'flattened_architecture.yaml'
-            flattened_architecture_yaml = {'flattened_architecture': {'version': self.arch_version,
-                                                                      'components': self.easy_to_read_flattened_architecture}}
-            write_yaml_file(arch_file_path, flattened_architecture_yaml)
-            INFO('Architecture flattened ... saved to ', arch_file_path)
+
+
+
 
         # Instantiate the estimation plug-ins as intances of the corresponding plug-in classes
         self.instantiate_estimator_plug_ins()
@@ -711,6 +791,9 @@ class EnergyReferenceTableGenerator(object):
 
         # Generate Energy Reference Tables for the components
         self.generate_ERTs_for_architecture()
+
+        if self.flattened_arch or self.show_ERT_summary:
+            self.generate_easy_to_read_flattened_architecture_ERT_summary()
 
         # Save the ERTs to ERT.yaml in the output directory
         ERT_file_path = self.output_path + '/' + 'ERT.yaml'

@@ -23,6 +23,11 @@ def main():
     parser.add_argument('-v', '--verbose', type=int, default = 0,
                         help= 'If set to 1, Accelergy outputs the interactions between the estimation plug-ins. '
                               'Default is 0')
+    parser.add_argument('-s', '--ERT_summary', type=int, default = 1,
+                        help= 'If set to 1, Accelergy outputs an easy-to-read '
+                              'ERT summary that contains the average, min and max energy/action'
+                              'for all the actions of all the components. '
+                              'Default is 1')
     parser.add_argument('--enable_flattened_arch', type=int, default='0',
                         help= 'If set to 1, Accelergy outputs an architecture summary in the output directory and checks'
                               ' the validity of component names in the action counts file. '
@@ -43,6 +48,7 @@ def main():
     precision = args.precision
     verbose = args.verbose
     flatten_arch_flag = args.enable_flattened_arch
+    ERT_summary = args.ERT_summary
 
     print('\n#===================================================================================#')
     print('#=========================== Running Accelergy =====================================#')
@@ -86,7 +92,7 @@ def main():
 
         generator = EnergyReferenceTableGenerator()
         generator.generate_ERTs(raw_architecture_description, raw_compound_class_description,
-                                output_path, precision, flatten_arch_flag, verbose)
+                                output_path, precision, flatten_arch_flag, verbose, ERT_summary)
 
         if raw_action_counts is not None:
             ert_path = output_path + '/' + 'ERT.yaml'

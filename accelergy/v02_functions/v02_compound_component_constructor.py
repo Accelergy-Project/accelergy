@@ -121,7 +121,7 @@ def v02_compound_component_constructor(self, compound_component_info):
                             # INFO(compound_component_name, 'sub-attribute', sub_attr_name, 'processed as arithmetic operation')
                         else:
                             try:
-                                default_attr_val = subcomponent['attributes']
+                                default_attr_val = subcomponent['attributes'][default_attr_val]
                                 # INFO(compound_component_name, 'sub-attribute', sub_attr_name,'processed as binding')
                             except KeyError:
                                 WARN('did not find bindings of the specified default attribute value for class: ',
@@ -160,7 +160,7 @@ def v02_compound_component_constructor(self, compound_component_info):
                     if detect_arg_range_binding:
                         INFO(compound_component_name, 'action:', c_action_name, 'arg:', c_action_arg_name,
                              'range interpreted as:', c_action_args[c_action_arg_name])
-            # check_subcomponent_name_in_action_def(c_action,
+            # c_action = v02_check_subcomponent_name_in_action_def(c_action,
             #                                       compound_component_definition['subcomponents'].keys(),
             #                                       compound_attributes)
     # low-level compound components will have 'actions' assigned, since top-level action will be interpreted as
@@ -174,18 +174,22 @@ def v02_compound_component_constructor(self, compound_component_info):
             for class_action_def in compound_class_info['actions']:
                 if class_action_def['name'] == action_name:
                     action['subcomponents'] = deepcopy(class_action_def['subcomponents'])
-                    # action = check_subcomponent_name_in_action_def(action,
+                    # action = v02_check_subcomponent_name_in_action_def(action,
                     #                                       compound_component_definition['subcomponents'].keys(),
                     #                                       compound_attributes)
     return compound_component_definition
 
-def v02_check_subcomponent_name_in_action_def(action_def, subcomponent_names, compound_attributes):
+@register_function
+def v02_check_subcomponent_name_in_action_def(self, action_def, subcomponent_names, compound_attributes):
     new_subcomponents = deepcopy(action_def['subcomponents'])
     for sub_component in action_def['subcomponents']:
         sub_cname = sub_component['name']
         # check if the subcomponent name is a list
         list_length, name_base = v02_is_component_list(sub_cname, compound_attributes)
-        if name_base is not None:
+        if list_length == -1:
+           new_subcomponents.remove(sub_component)
+           INFO(sub_cname, ' in "', action_def['name'], '" interpreted as negative list length --> subcomponent ignored')
+        elif name_base is not None:
             new_subcomponents.remove(sub_component)
             for item_idx in range(list_length):
                 new_sub_cname = name_base + '[' + str(item_idx) + ']'
