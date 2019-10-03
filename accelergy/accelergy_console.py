@@ -175,7 +175,6 @@ def interpret_input_path(path_arglist):
                 if raw_compound_class_description is None:
                    raw_compound_class_description = {'compound_components': file_reload[key]}
                 else:
-                    print(content['version'], raw_compound_class_description['compound_components']['version'])
                     ASSERT_MSG(raw_compound_class_description['compound_components']['version']
                                == content['version'],
                                'File content not legal: %s, versions of two %s '

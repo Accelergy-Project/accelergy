@@ -627,7 +627,7 @@ energy_estimation:
     eyeriss_like.ifmap_NoC: 0
     eyeriss_like.psum_read_NoC: 0
     eyeriss_like.psum_write_NoC: 0
-    eyeriss_like.shared_glb: 307104
+    eyeriss_like.shared_glb: 299912
     eyeriss_like.weights_NoC: 0
     eyeriss_like.weights_glb: 12680
   version: 0.2

@@ -4889,99 +4889,99 @@ ERT:
       - arguments:
           address_delta: 1
           data_delta: 0
-        energy: 5
+        energy: 3
       - arguments:
           address_delta: 1
           data_delta: 1
-        energy: 7
-      - arguments:
-          address_delta: 2
-          data_delta: 0
         energy: 5
       - arguments:
           address_delta: 2
-          data_delta: 1
-        energy: 7
-      - arguments:
-          address_delta: 3
           data_delta: 0
+        energy: 3
+      - arguments:
+          address_delta: 2
+          data_delta: 1
         energy: 5
       - arguments:
           address_delta: 3
-          data_delta: 1
-        energy: 7
-      - arguments:
-          address_delta: 4
           data_delta: 0
+        energy: 3
+      - arguments:
+          address_delta: 3
+          data_delta: 1
         energy: 5
       - arguments:
           address_delta: 4
-          data_delta: 1
-        energy: 7
-      - arguments:
-          address_delta: 5
           data_delta: 0
+        energy: 3
+      - arguments:
+          address_delta: 4
+          data_delta: 1
         energy: 5
       - arguments:
           address_delta: 5
-          data_delta: 1
-        energy: 7
-      - arguments:
-          address_delta: 6
           data_delta: 0
+        energy: 3
+      - arguments:
+          address_delta: 5
+          data_delta: 1
         energy: 5
       - arguments:
           address_delta: 6
-          data_delta: 1
-        energy: 7
-      - arguments:
-          address_delta: 7
           data_delta: 0
+        energy: 3
+      - arguments:
+          address_delta: 6
+          data_delta: 1
         energy: 5
       - arguments:
           address_delta: 7
-          data_delta: 1
-        energy: 7
-      - arguments:
-          address_delta: 8
           data_delta: 0
+        energy: 3
+      - arguments:
+          address_delta: 7
+          data_delta: 1
         energy: 5
       - arguments:
           address_delta: 8
-          data_delta: 1
-        energy: 7
-      - arguments:
-          address_delta: 9
           data_delta: 0
+        energy: 3
+      - arguments:
+          address_delta: 8
+          data_delta: 1
         energy: 5
       - arguments:
           address_delta: 9
-          data_delta: 1
-        energy: 7
-      - arguments:
-          address_delta: 10
           data_delta: 0
+        energy: 3
+      - arguments:
+          address_delta: 9
+          data_delta: 1
         energy: 5
       - arguments:
           address_delta: 10
-          data_delta: 1
-        energy: 7
-      - arguments:
-          address_delta: 11
           data_delta: 0
+        energy: 3
+      - arguments:
+          address_delta: 10
+          data_delta: 1
         energy: 5
       - arguments:
           address_delta: 11
-          data_delta: 1
-        energy: 7
-      - arguments:
-          address_delta: 12
           data_delta: 0
+        energy: 3
+      - arguments:
+          address_delta: 11
+          data_delta: 1
         energy: 5
       - arguments:
           address_delta: 12
+          data_delta: 0
+        energy: 3
+      - arguments:
+          address_delta: 12
           data_delta: 1
-        energy: 7
+        energy: 5
       - arguments:
           address_delta: 13
           data_delta: 0
@@ -5101,99 +5101,99 @@ ERT:
       - arguments:
           address_delta: 1
           data_delta: 0
-        energy: 6
+        energy: 4
       - arguments:
           address_delta: 1
           data_delta: 1
-        energy: 8
-      - arguments:
-          address_delta: 2
-          data_delta: 0
         energy: 6
       - arguments:
           address_delta: 2
-          data_delta: 1
-        energy: 8
-      - arguments:
-          address_delta: 3
           data_delta: 0
+        energy: 4
+      - arguments:
+          address_delta: 2
+          data_delta: 1
         energy: 6
       - arguments:
           address_delta: 3
-          data_delta: 1
-        energy: 8
-      - arguments:
-          address_delta: 4
           data_delta: 0
+        energy: 4
+      - arguments:
+          address_delta: 3
+          data_delta: 1
         energy: 6
       - arguments:
           address_delta: 4
-          data_delta: 1
-        energy: 8
-      - arguments:
-          address_delta: 5
           data_delta: 0
+        energy: 4
+      - arguments:
+          address_delta: 4
+          data_delta: 1
         energy: 6
       - arguments:
           address_delta: 5
-          data_delta: 1
-        energy: 8
-      - arguments:
-          address_delta: 6
           data_delta: 0
+        energy: 4
+      - arguments:
+          address_delta: 5
+          data_delta: 1
         energy: 6
       - arguments:
           address_delta: 6
-          data_delta: 1
-        energy: 8
-      - arguments:
-          address_delta: 7
           data_delta: 0
+        energy: 4
+      - arguments:
+          address_delta: 6
+          data_delta: 1
         energy: 6
       - arguments:
           address_delta: 7
-          data_delta: 1
-        energy: 8
-      - arguments:
-          address_delta: 8
           data_delta: 0
+        energy: 4
+      - arguments:
+          address_delta: 7
+          data_delta: 1
         energy: 6
       - arguments:
           address_delta: 8
-          data_delta: 1
-        energy: 8
-      - arguments:
-          address_delta: 9
           data_delta: 0
+        energy: 4
+      - arguments:
+          address_delta: 8
+          data_delta: 1
         energy: 6
       - arguments:
           address_delta: 9
-          data_delta: 1
-        energy: 8
-      - arguments:
-          address_delta: 10
           data_delta: 0
+        energy: 4
+      - arguments:
+          address_delta: 9
+          data_delta: 1
         energy: 6
       - arguments:
           address_delta: 10
-          data_delta: 1
-        energy: 8
-      - arguments:
-          address_delta: 11
           data_delta: 0
+        energy: 4
+      - arguments:
+          address_delta: 10
+          data_delta: 1
         energy: 6
       - arguments:
           address_delta: 11
-          data_delta: 1
-        energy: 8
-      - arguments:
-          address_delta: 12
           data_delta: 0
+        energy: 4
+      - arguments:
+          address_delta: 11
+          data_delta: 1
         energy: 6
       - arguments:
           address_delta: 12
+          data_delta: 0
+        energy: 4
+      - arguments:
+          address_delta: 12
           data_delta: 1
-        energy: 8
+        energy: 6
       - arguments:
           address_delta: 13
           data_delta: 0
@@ -5310,99 +5310,99 @@ ERT:
       - arguments:
           address_delta: 1
           data_delta: 0
-        energy: 5
+        energy: 3
       - arguments:
           address_delta: 1
           data_delta: 1
-        energy: 7
-      - arguments:
-          address_delta: 2
-          data_delta: 0
         energy: 5
       - arguments:
           address_delta: 2
-          data_delta: 1
-        energy: 7
-      - arguments:
-          address_delta: 3
           data_delta: 0
+        energy: 3
+      - arguments:
+          address_delta: 2
+          data_delta: 1
         energy: 5
       - arguments:
           address_delta: 3
-          data_delta: 1
-        energy: 7
-      - arguments:
-          address_delta: 4
           data_delta: 0
+        energy: 3
+      - arguments:
+          address_delta: 3
+          data_delta: 1
         energy: 5
       - arguments:
           address_delta: 4
-          data_delta: 1
-        energy: 7
-      - arguments:
-          address_delta: 5
           data_delta: 0
+        energy: 3
+      - arguments:
+          address_delta: 4
+          data_delta: 1
         energy: 5
       - arguments:
           address_delta: 5
-          data_delta: 1
-        energy: 7
-      - arguments:
-          address_delta: 6
           data_delta: 0
+        energy: 3
+      - arguments:
+          address_delta: 5
+          data_delta: 1
         energy: 5
       - arguments:
           address_delta: 6
-          data_delta: 1
-        energy: 7
-      - arguments:
-          address_delta: 7
           data_delta: 0
+        energy: 3
+      - arguments:
+          address_delta: 6
+          data_delta: 1
         energy: 5
       - arguments:
           address_delta: 7
-          data_delta: 1
-        energy: 7
-      - arguments:
-          address_delta: 8
           data_delta: 0
+        energy: 3
+      - arguments:
+          address_delta: 7
+          data_delta: 1
         energy: 5
       - arguments:
           address_delta: 8
-          data_delta: 1
-        energy: 7
-      - arguments:
-          address_delta: 9
           data_delta: 0
+        energy: 3
+      - arguments:
+          address_delta: 8
+          data_delta: 1
         energy: 5
       - arguments:
           address_delta: 9
-          data_delta: 1
-        energy: 7
-      - arguments:
-          address_delta: 10
           data_delta: 0
+        energy: 3
+      - arguments:
+          address_delta: 9
+          data_delta: 1
         energy: 5
       - arguments:
           address_delta: 10
-          data_delta: 1
-        energy: 7
-      - arguments:
-          address_delta: 11
           data_delta: 0
+        energy: 3
+      - arguments:
+          address_delta: 10
+          data_delta: 1
         energy: 5
       - arguments:
           address_delta: 11
-          data_delta: 1
-        energy: 7
-      - arguments:
-          address_delta: 12
           data_delta: 0
+        energy: 3
+      - arguments:
+          address_delta: 11
+          data_delta: 1
         energy: 5
       - arguments:
           address_delta: 12
+          data_delta: 0
+        energy: 3
+      - arguments:
+          address_delta: 12
           data_delta: 1
-        energy: 7
+        energy: 5
       - arguments:
           address_delta: 13
           data_delta: 0
@@ -7086,11 +7086,11 @@ ERT:
       - arguments:
           address_delta: 1
           data_delta: 0
-        energy: 5
+        energy: 3
       - arguments:
           address_delta: 1
           data_delta: 1
-        energy: 7
+        energy: 5
       - arguments:
           address_delta: 2
           data_delta: 0
@@ -7114,11 +7114,11 @@ ERT:
       - arguments:
           address_delta: 1
           data_delta: 0
-        energy: 6
+        energy: 4
       - arguments:
           address_delta: 1
           data_delta: 1
-        energy: 8
+        energy: 6
       - arguments:
           address_delta: 2
           data_delta: 0
@@ -7139,11 +7139,11 @@ ERT:
       - arguments:
           address_delta: 1
           data_delta: 0
-        energy: 5
+        energy: 3
       - arguments:
           address_delta: 1
           data_delta: 1
-        energy: 7
+        energy: 5
       - arguments:
           address_delta: 2
           data_delta: 0

@@ -213,7 +213,7 @@ class EnergyReferenceTableGenerator(object):
            queries the plug-in with the best estimation accuracy
         """
         primitive_class_name = component_info['class']
-        attributes = component_info['attributes']
+        attributes = dict(component_info['attributes'])
 
         # --> if the action requires arguments (either ranges or static values are provided)
         if 'arguments' in action:
@@ -238,7 +238,7 @@ class EnergyReferenceTableGenerator(object):
                     estimator_plug_in_interface = {'class_name': primitive_class_name,
                                                    'attributes': attributes,
                                                    'action_name': action['name'],
-                                                   'arguments': arg_combo['arguments']}
+                                                   'arguments': dict(arg_combo['arguments'])}
                     # print(arg_combo)
                     energy = self.eval_primitive_action_energy(estimator_plug_in_interface)
                     arg_combo['energy'] = energy
@@ -250,12 +250,13 @@ class EnergyReferenceTableGenerator(object):
                 estimator_plug_in_interface = {'class_name': primitive_class_name,
                                                'attributes': attributes,
                                                'action_name': action['name'],
-                                               'arguments': action['arguments']}
+                                               'arguments': dict(action['arguments'])}
                 energy = self.eval_primitive_action_energy(estimator_plug_in_interface)
                 return {'energy': energy, 'arguments': action['arguments']}  # energy of a fixed set of argument values
 
         # --> if there is no argument required for the action
         else:
+            # interface does not need to be ordered dictionary
             estimator_plug_in_interface = {'class_name': primitive_class_name,
                                            'attributes': attributes,
                                            'action_name': action['name'],
@@ -283,7 +284,7 @@ class EnergyReferenceTableGenerator(object):
         energy = round(best_estimator.estimate_energy(estimator_plug_in_interface), self.decimal_place)
         if self.verbose:
          INFO('Received energy estimation for primitive class:\n', estimator_plug_in_interface,
-              '\n estimated by:', best_estimator, ' ---> estimated energy:', energy)
+              '\n estimated by:', best_estimator, ' ---> estimated energy:', str(energy), 'pJ')
         return energy
     def generate_component_ert(self, component_info, is_primitive_class):
         """

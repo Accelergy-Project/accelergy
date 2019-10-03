@@ -89,17 +89,17 @@ ERT_summary:
         min energy: 0
     eyeriss_like.shared_glb:
       fill:
-        average energy: 5.923
+        average energy: 5.0
         max energy: 7
         min energy: 3
       idle:
         energy: 0
       read:
-        average energy: 6.923
+        average energy: 6.0
         max energy: 8
         min energy: 4
       update:
-        average energy: 5.923
+        average energy: 5.0
         max energy: 7
         min energy: 3
     eyeriss_like.weights_NoC:
@@ -115,17 +115,17 @@ ERT_summary:
         min energy: 0
     eyeriss_like.weights_glb:
       fill:
-        average energy: 5.333
+        average energy: 4.667
         max energy: 7
         min energy: 3
       idle:
         energy: 0
       read:
-        average energy: 6.333
+        average energy: 5.667
         max energy: 8
         min energy: 4
       update:
-        average energy: 5.333
+        average energy: 4.667
         max energy: 7
         min energy: 3
   version: 0.2

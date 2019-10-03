@@ -17,7 +17,6 @@ compound_components:
           technology: technology
           depth: memory_depth
           width: memory_width
-          n_banks: n_banks
           scoreboard_depth: buffet_manager_depth
       - name: storage
         class: SRAM
@@ -26,6 +25,7 @@ compound_components:
           width: memory_width
           depth: memory_depth
           n_rdwr_ports: n_rdwr_ports
+          n_banks: n_banks
     actions:
       - name: fill
         arguments:
@@ -36,7 +36,7 @@ compound_components:
             actions:
               - name: fill
                 arguments:
-                  address_delta: address_delta/n_banks
+                  address_delta: round(address_delta/n_banks)
                   data_delta: data_delta
           - name: storage
             actions:
@@ -53,7 +53,7 @@ compound_components:
             actions:
               - name: read
                 arguments:
-                  address_delta: address_delta/n_banks
+                  address_delta: round(address_delta/n_banks)
                   data_delta: data_delta
           - name: storage
             actions:
@@ -70,7 +70,7 @@ compound_components:
             actions:
               - name: update
                 arguments:
-                  address_delta: address_delta/n_banks
+                  address_delta: round(address_delta/n_banks)
                   data_delta: data_delta
           - name: storage
             actions:

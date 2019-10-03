@@ -160,9 +160,6 @@ def v02_compound_component_constructor(self, compound_component_info):
                     if detect_arg_range_binding:
                         INFO(compound_component_name, 'action:', c_action_name, 'arg:', c_action_arg_name,
                              'range interpreted as:', c_action_args[c_action_arg_name])
-            # c_action = v02_check_subcomponent_name_in_action_def(c_action,
-            #                                       compound_component_definition['subcomponents'].keys(),
-            #                                       compound_attributes)
     # low-level compound components will have 'actions' assigned, since top-level action will be interpreted as
     # one or more defined low-level compound action
     #     no change should be added as the action arguments should be defined already, so the required action list
@@ -174,9 +171,6 @@ def v02_compound_component_constructor(self, compound_component_info):
             for class_action_def in compound_class_info['actions']:
                 if class_action_def['name'] == action_name:
                     action['subcomponents'] = deepcopy(class_action_def['subcomponents'])
-                    # action = v02_check_subcomponent_name_in_action_def(action,
-                    #                                       compound_component_definition['subcomponents'].keys(),
-                    #                                       compound_attributes)
     return compound_component_definition
 
 @register_function
@@ -188,7 +182,8 @@ def v02_check_subcomponent_name_in_action_def(self, action_def, subcomponent_nam
         list_length, name_base = v02_is_component_list(sub_cname, compound_attributes)
         if list_length == -1:
            new_subcomponents.remove(sub_component)
-           INFO(sub_cname, ' in "', action_def['name'], '" interpreted as negative list length --> subcomponent ignored')
+           WARN(sub_cname, ' in "', action_def['name'],
+                '" interpreted as negative list length --> subcomponent ignored')
         elif name_base is not None:
             new_subcomponents.remove(sub_component)
             for item_idx in range(list_length):
