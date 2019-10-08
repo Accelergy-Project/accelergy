@@ -82,7 +82,7 @@ def main():
         estimator = EnergyCalculator()
         estimator.generate_estimations(raw_action_counts, raw_ERT, output_path, precision, raw_flattened_arch)
 
-    elif raw_compound_class_description is not None and raw_architecture_description is not None:
+    elif raw_architecture_description is not None:
         if raw_action_counts is None:
             INFO('Accelergy found ARCHITECTURE and COMPOUND COMPONENT but NO ERT or ACTION COUNTS  '
                  '\n---------->  PERFORM ERT GENERATION')

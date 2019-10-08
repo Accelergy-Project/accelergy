@@ -91,11 +91,11 @@ classes:
       - name: read
         arguments:
           data_delta: 0..1
-          address_delta: 0..1
+          address_delta: 0..n_banks
       - name: write
         arguments:
           data_delta: 0..1
-          address_delta: 0..1
+          address_delta: 0..n_banks
       - name: idle
 
   - name: counter

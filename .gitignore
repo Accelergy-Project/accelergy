@@ -6,7 +6,7 @@ examples/*/output/*.yaml
 
 # c++ libs
 **/libs/
-
+tutorial_examples/
 # Debug files
 debug.py
 

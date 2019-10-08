@@ -316,17 +316,27 @@ class EnergyReferenceTableGenerator(object):
             primitive_class_name = component_info['class']
             ERT = {}  # energy reference table for this class
             class_description = self.primitive_class_description[primitive_class_name]
-            if 'actions' not in component_info:
-              action_list = class_description['actions']
-            else:
-              action_list = component_info['actions']
-
             # apply the default primitive attribute values
             if 'attributes' not in component_info:
                 component_info['attributes'] = {}
             for attr_name, attr_default in class_description['attributes'].items():
                 if attr_name not in component_info['attributes']:
                     component_info['attributes'].update({attr_name: attr_default})
+
+            if 'actions' not in component_info:
+              action_list = class_description['actions']
+              for action in action_list:
+                  if 'arguments' in action:
+                      for arg_name, arg_range in action['arguments'].items():
+                          idx_start = arg_range.split('..')[0]
+                          idx_end = arg_range.split('..')[1]
+                          if idx_end in component_info['attributes']:
+                              idx_end = component_info['attributes'][idx_end]
+                          if idx_start in component_info['attributes']:
+                              idx_start = component_info['attributes'][idx_start]
+                          action['arguments'][arg_name] = str(idx_start) + '..' + str(idx_end)
+            else:
+              action_list = component_info['actions']
 
             for action in action_list:
               ERT[action['name']] = self.construct_interface_and_estimate(action, component_info)
@@ -570,6 +580,7 @@ class EnergyReferenceTableGenerator(object):
                                     WARN(pc_name, 'redefined in', pc_path)
                                 self.primitive_class_description[pc_name] = primitive_component_list['classes'][idx]
                             INFO('primitive component file parsed: ', pc_path)
+
     def ERT_existed(self, component_name):
         """
         Component that belongs to a list shares ERT with other identical components in the list
@@ -768,11 +779,14 @@ class EnergyReferenceTableGenerator(object):
         #     self.interpret_input_path(file_path)
         #     INFO('Input file parsed: ', file_path)
         self.raw_architecture_description = raw_architecture_description['architecture']
-        self.raw_compound_class_description = raw_compound_class_description['compound_components']
-
-        # self.design = load(open(self.design_path), accelergy_loader)
-        # INFO('design loaded:', design_path)
-        self.construct_compound_class_description()
+        self.raw_compound_class_description = raw_compound_class_description['compound_components'] \
+                                              if raw_compound_class_description is not None \
+                                              else None
+        if self.raw_compound_class_description is None:
+            INFO('ERT_generator... No compound component description is provided. \n'
+                 'Architecture Descriptio must be in terms of primitive components')
+        else:
+            self.construct_compound_class_description()
 
         # Load the primitive classes library
         self.construct_primitive_class_description()
@@ -781,9 +795,6 @@ class EnergyReferenceTableGenerator(object):
 
         # Parse the architecture description and save the parsed version if flag high
         self.construct_save_architecture_description()
-
-
-
 
         # Instantiate the estimation plug-ins as intances of the corresponding plug-in classes
         self.instantiate_estimator_plug_ins()
