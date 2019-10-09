@@ -101,6 +101,7 @@ classes:
   - name: DRAM
     attributes:
       technology: 65nm
+      type: LPDDR4
       width: 64
     actions:
       - name: read
