@@ -9,7 +9,7 @@ compound_components:
       n_rdwr_ports: 2
       n_banks: 1
       n_buffets: 1
-      buffet_manager_depth: memory_depth/n_banks
+      scoreboard_depth: memory_depth/n_banks
       update_fifo_depth: 0
 
     subcomponents:
@@ -22,7 +22,7 @@ compound_components:
           n_rdwr_ports: n_rdwr_ports
           n_banks: n_banks
           n_buffets: n_buffets
-          buffet_manager_depth: buffet_manager_depth
+          scoreboard_depth: scoreboard_depth
       - name: address_generators[0..2]
         class: counter
         attributes:

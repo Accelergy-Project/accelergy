@@ -58,11 +58,11 @@ compound_components:
             actions:
               - name: read
                 arguments:
-                  address_delta: address_delta
+                  address_delta: 1
                   data_delta: 1  # 1 bit flag not related to actual data
               - name: write
                 arguments:
-                  address_delta: address_delta
+                  address_delta: 1
                   data_delta: 1 # 1 bit flag not related to actual data
           - name: data_fifos[0]
             actions:

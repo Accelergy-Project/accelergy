@@ -239,7 +239,7 @@ class EnergyCalculator(object):
         self.construct_action_counts(araw_action_counts)
         self.decimal_points = precision
         if raw_flattened_arch is None:
-            WARN('flattened architecture is not given, will not perform legal component name check')
+            WARN('flattened architecture is not given or --enable_flattened_arch not set high, will not perform legal component name check')
         else:
             self.flattened_list = {}
             self.load_flattened_arch(raw_flattened_arch['flattened_architecture']['components'])

@@ -98,6 +98,15 @@ classes:
           address_delta: 0..n_banks
       - name: idle
 
+  - name: DRAM
+    attributes:
+      technology: 65nm
+      width: 64
+    actions:
+      - name: read
+      - name: write
+      - name: idle
+
   - name: counter
     attributes:
       technology: 65nm

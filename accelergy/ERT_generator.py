@@ -369,18 +369,18 @@ class EnergyReferenceTableGenerator(object):
                         action_ERT = self.initialize_ERT_for_action_with_arg_ranges(action)
                         # for each arg values combo for the compound component
                         for arg_val_combo in action_ERT:
-
+                            new_action = deepcopy(action)
                             if self.compound_class_version >= 0.2:
                                 action_def_checker = 'v' + str(self.compound_class_version).replace('.', '') \
                                                      + '_check_subcomponent_name_in_action_def'
                                 binding_dict = deepcopy(compound_component_attributes)
                                 binding_dict.update(arg_val_combo['arguments'])
-                                action = getattr(self, action_def_checker)(action,
+                                new_action = getattr(self, action_def_checker)(new_action,
                                                                            defined_component['subcomponents'].keys(),
                                                                            binding_dict)
 
                             # for each subcomponent involved in action definition
-                            for subcomponent_action in action['subcomponents']:
+                            for subcomponent_action in new_action['subcomponents']:
                                 subcomponent_name = subcomponent_action['name']
                                 # retrieve hardware info from the updated subcomponent list
                                 subcomponent_info = defined_component['subcomponents'][subcomponent_name]
@@ -400,10 +400,10 @@ class EnergyReferenceTableGenerator(object):
                                                  + '_check_subcomponent_name_in_action_def'
                             binding_dict = deepcopy(compound_component_attributes)
                             binding_dict.update(action['arguments'])
-                            action = getattr(self, action_def_checker)(action,
+                            new_action = getattr(self, action_def_checker)(action,
                                                                        defined_component['subcomponents'].keys(),
                                                                        binding_dict)
-                        for subcomponent_action in action['subcomponents']:  # for each subcomponent involved in action definition
+                        for subcomponent_action in new_action['subcomponents']:  # for each subcomponent involved in action definition
                             subcomponent_name = subcomponent_action['name']
                             subcomponent_info = defined_component['subcomponents'][subcomponent_name]  # retrieve hardware info from the updated subcomponent list
                             for subaction in subcomponent_action['actions']:  # for each action that is related to this subcomponent
@@ -421,8 +421,8 @@ class EnergyReferenceTableGenerator(object):
                                              + '_check_subcomponent_name_in_action_def'
                         binding_dict = deepcopy(compound_component_attributes)
                         action = getattr(self, action_def_checker)(action,
-                                                                   defined_component['subcomponents'].keys(),
-                                                                   binding_dict)
+                                                                       defined_component['subcomponents'].keys(),
+                                                                       binding_dict)
                     subaction_energy = 0
                     for subcomponent_action in action['subcomponents']:  # for each subcomponent involved in action definition
                         subcomponent_name = subcomponent_action['name']

@@ -624,10 +624,10 @@ energy_estimation:
     eyeriss_like.PE[9].mac: 19968
     eyeriss_like.PE[9].psum_spad: 266648
     eyeriss_like.PE[9].weights_spad: 80256
-    eyeriss_like.ifmap_NoC: 0
-    eyeriss_like.psum_read_NoC: 0
-    eyeriss_like.psum_write_NoC: 0
+    eyeriss_like.ifmap_NoC: 86299
+    eyeriss_like.psum_read_NoC: 64896
+    eyeriss_like.psum_write_NoC: 64896
     eyeriss_like.shared_glb: 299912
-    eyeriss_like.weights_NoC: 0
+    eyeriss_like.weights_NoC: 17280
     eyeriss_like.weights_glb: 12680
   version: 0.2
