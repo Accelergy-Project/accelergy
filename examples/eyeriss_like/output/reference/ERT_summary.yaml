@@ -1,5 +1,5 @@
 ERT_summary:
-  ERT summaries:
+  components:
     eyeriss_like.PE[0..167].ifmap_spad:
       fill:
         average energy: 5.0

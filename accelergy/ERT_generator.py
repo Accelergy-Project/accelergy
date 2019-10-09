@@ -712,7 +712,7 @@ class EnergyReferenceTableGenerator(object):
 
         if self.show_ERT_summary:
             ERT_summary_file = {'ERT_summary': {'version': self.compound_class_version,
-                                                'ERT summaries': ERT_summary}}
+                                                'components': ERT_summary}}
             write_yaml_file(self.output_path + '/ERT_summary.yaml', ERT_summary_file)
             INFO('ERT summary saved to ', self.output_path + '/ERT_summary.yaml')
         if self.flattened_arch:

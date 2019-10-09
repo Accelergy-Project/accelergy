@@ -1,5 +1,5 @@
 ERT_summary:
-  ERT summaries:
+  components:
     simple.glb[0..4]:
       idle:
         energy: 0

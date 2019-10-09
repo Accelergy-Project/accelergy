@@ -26,11 +26,7 @@ setup(
                     ['share/primitive_component_libs/primitive_component.lib.yaml']),
                   ('share/accelergy/estimation_plug_ins/dummy_tables',
                     ['share/estimation_plug_ins/dummy_tables/dummy.estimator.yaml',
-                     'share/estimation_plug_ins/dummy_tables/dummy_table.py']),
-                  ('share/accelergy/estimation_plug_ins/dummy_tables/data',
-                    ['share/estimation_plug_ins/dummy_tables/data/counter.csv',
-                     'share/estimation_plug_ins/dummy_tables/data/mac.csv',
-                     'share/estimation_plug_ins/dummy_tables/data/SRAM.csv'])
+                     'share/estimation_plug_ins/dummy_tables/dummy_table.py'])
                   ],
       include_package_data = True,
       entry_points = {
