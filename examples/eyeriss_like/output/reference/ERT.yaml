@@ -186,783 +186,783 @@ ERT:
       - arguments:
           n_cols_per_row: 0
           n_rows: 0
-        energy: 0
+        energy: 1
       - arguments:
           n_cols_per_row: 0
           n_rows: 1
-        energy: 0
+        energy: 2
       - arguments:
           n_cols_per_row: 0
           n_rows: 2
-        energy: 0
+        energy: 3
       - arguments:
           n_cols_per_row: 0
           n_rows: 3
-        energy: 0
+        energy: 4
       - arguments:
           n_cols_per_row: 0
           n_rows: 4
-        energy: 0
+        energy: 5
       - arguments:
           n_cols_per_row: 0
           n_rows: 5
-        energy: 0
+        energy: 6
       - arguments:
           n_cols_per_row: 0
           n_rows: 6
-        energy: 0
+        energy: 7
       - arguments:
           n_cols_per_row: 0
           n_rows: 7
-        energy: 0
+        energy: 8
       - arguments:
           n_cols_per_row: 0
           n_rows: 8
-        energy: 0
+        energy: 9
       - arguments:
           n_cols_per_row: 0
           n_rows: 9
-        energy: 0
+        energy: 10
       - arguments:
           n_cols_per_row: 0
           n_rows: 10
-        energy: 0
+        energy: 11
       - arguments:
           n_cols_per_row: 0
           n_rows: 11
-        energy: 0
+        energy: 12
       - arguments:
           n_cols_per_row: 0
           n_rows: 12
-        energy: 0
+        energy: 13
       - arguments:
           n_cols_per_row: 1
           n_rows: 0
-        energy: 0
+        energy: 1
       - arguments:
           n_cols_per_row: 1
           n_rows: 1
-        energy: 0
+        energy: 3
       - arguments:
           n_cols_per_row: 1
           n_rows: 2
-        energy: 0
+        energy: 5
       - arguments:
           n_cols_per_row: 1
           n_rows: 3
-        energy: 0
+        energy: 7
       - arguments:
           n_cols_per_row: 1
           n_rows: 4
-        energy: 0
+        energy: 9
       - arguments:
           n_cols_per_row: 1
           n_rows: 5
-        energy: 0
+        energy: 11
       - arguments:
           n_cols_per_row: 1
           n_rows: 6
-        energy: 0
+        energy: 13
       - arguments:
           n_cols_per_row: 1
           n_rows: 7
-        energy: 0
+        energy: 15
       - arguments:
           n_cols_per_row: 1
           n_rows: 8
-        energy: 0
+        energy: 17
       - arguments:
           n_cols_per_row: 1
           n_rows: 9
-        energy: 0
+        energy: 19
       - arguments:
           n_cols_per_row: 1
           n_rows: 10
-        energy: 0
+        energy: 21
       - arguments:
           n_cols_per_row: 1
           n_rows: 11
-        energy: 0
+        energy: 23
       - arguments:
           n_cols_per_row: 1
           n_rows: 12
-        energy: 0
+        energy: 25
       - arguments:
           n_cols_per_row: 2
           n_rows: 0
-        energy: 0
+        energy: 1
       - arguments:
           n_cols_per_row: 2
           n_rows: 1
-        energy: 0
+        energy: 4
       - arguments:
           n_cols_per_row: 2
           n_rows: 2
-        energy: 0
+        energy: 7
       - arguments:
           n_cols_per_row: 2
           n_rows: 3
-        energy: 0
+        energy: 10
       - arguments:
           n_cols_per_row: 2
           n_rows: 4
-        energy: 0
+        energy: 13
       - arguments:
           n_cols_per_row: 2
           n_rows: 5
-        energy: 0
+        energy: 16
       - arguments:
           n_cols_per_row: 2
           n_rows: 6
-        energy: 0
+        energy: 19
       - arguments:
           n_cols_per_row: 2
           n_rows: 7
-        energy: 0
+        energy: 22
       - arguments:
           n_cols_per_row: 2
           n_rows: 8
-        energy: 0
+        energy: 25
       - arguments:
           n_cols_per_row: 2
           n_rows: 9
-        energy: 0
+        energy: 28
       - arguments:
           n_cols_per_row: 2
           n_rows: 10
-        energy: 0
+        energy: 31
       - arguments:
           n_cols_per_row: 2
           n_rows: 11
-        energy: 0
+        energy: 34
       - arguments:
           n_cols_per_row: 2
           n_rows: 12
-        energy: 0
+        energy: 37
       - arguments:
           n_cols_per_row: 3
           n_rows: 0
-        energy: 0
+        energy: 1
       - arguments:
           n_cols_per_row: 3
           n_rows: 1
-        energy: 0
+        energy: 5
       - arguments:
           n_cols_per_row: 3
           n_rows: 2
-        energy: 0
+        energy: 9
       - arguments:
           n_cols_per_row: 3
           n_rows: 3
-        energy: 0
+        energy: 13
       - arguments:
           n_cols_per_row: 3
           n_rows: 4
-        energy: 0
+        energy: 17
       - arguments:
           n_cols_per_row: 3
           n_rows: 5
-        energy: 0
+        energy: 21
       - arguments:
           n_cols_per_row: 3
           n_rows: 6
-        energy: 0
+        energy: 25
       - arguments:
           n_cols_per_row: 3
           n_rows: 7
-        energy: 0
+        energy: 29
       - arguments:
           n_cols_per_row: 3
           n_rows: 8
-        energy: 0
+        energy: 33
       - arguments:
           n_cols_per_row: 3
           n_rows: 9
-        energy: 0
+        energy: 37
       - arguments:
           n_cols_per_row: 3
           n_rows: 10
-        energy: 0
+        energy: 41
       - arguments:
           n_cols_per_row: 3
           n_rows: 11
-        energy: 0
+        energy: 45
       - arguments:
           n_cols_per_row: 3
           n_rows: 12
-        energy: 0
+        energy: 49
       - arguments:
           n_cols_per_row: 4
           n_rows: 0
-        energy: 0
+        energy: 1
       - arguments:
           n_cols_per_row: 4
           n_rows: 1
-        energy: 0
+        energy: 6
       - arguments:
           n_cols_per_row: 4
           n_rows: 2
-        energy: 0
+        energy: 11
       - arguments:
           n_cols_per_row: 4
           n_rows: 3
-        energy: 0
+        energy: 16
       - arguments:
           n_cols_per_row: 4
           n_rows: 4
-        energy: 0
+        energy: 21
       - arguments:
           n_cols_per_row: 4
           n_rows: 5
-        energy: 0
+        energy: 26
       - arguments:
           n_cols_per_row: 4
           n_rows: 6
-        energy: 0
+        energy: 31
       - arguments:
           n_cols_per_row: 4
           n_rows: 7
-        energy: 0
+        energy: 36
       - arguments:
           n_cols_per_row: 4
           n_rows: 8
-        energy: 0
+        energy: 41
       - arguments:
           n_cols_per_row: 4
           n_rows: 9
-        energy: 0
+        energy: 46
       - arguments:
           n_cols_per_row: 4
           n_rows: 10
-        energy: 0
+        energy: 51
       - arguments:
           n_cols_per_row: 4
           n_rows: 11
-        energy: 0
+        energy: 56
       - arguments:
           n_cols_per_row: 4
           n_rows: 12
-        energy: 0
+        energy: 61
       - arguments:
           n_cols_per_row: 5
           n_rows: 0
-        energy: 0
+        energy: 1
       - arguments:
           n_cols_per_row: 5
           n_rows: 1
-        energy: 0
+        energy: 7
       - arguments:
           n_cols_per_row: 5
           n_rows: 2
-        energy: 0
+        energy: 13
       - arguments:
           n_cols_per_row: 5
           n_rows: 3
-        energy: 0
+        energy: 19
       - arguments:
           n_cols_per_row: 5
           n_rows: 4
-        energy: 0
+        energy: 25
       - arguments:
           n_cols_per_row: 5
           n_rows: 5
-        energy: 0
+        energy: 31
       - arguments:
           n_cols_per_row: 5
           n_rows: 6
-        energy: 0
+        energy: 37
       - arguments:
           n_cols_per_row: 5
           n_rows: 7
-        energy: 0
+        energy: 43
       - arguments:
           n_cols_per_row: 5
           n_rows: 8
-        energy: 0
+        energy: 49
       - arguments:
           n_cols_per_row: 5
           n_rows: 9
-        energy: 0
+        energy: 55
       - arguments:
           n_cols_per_row: 5
           n_rows: 10
-        energy: 0
+        energy: 61
       - arguments:
           n_cols_per_row: 5
           n_rows: 11
-        energy: 0
+        energy: 67
       - arguments:
           n_cols_per_row: 5
           n_rows: 12
-        energy: 0
+        energy: 73
       - arguments:
           n_cols_per_row: 6
           n_rows: 0
-        energy: 0
+        energy: 1
       - arguments:
           n_cols_per_row: 6
           n_rows: 1
-        energy: 0
+        energy: 8
       - arguments:
           n_cols_per_row: 6
           n_rows: 2
-        energy: 0
+        energy: 15
       - arguments:
           n_cols_per_row: 6
           n_rows: 3
-        energy: 0
+        energy: 22
       - arguments:
           n_cols_per_row: 6
           n_rows: 4
-        energy: 0
+        energy: 29
       - arguments:
           n_cols_per_row: 6
           n_rows: 5
-        energy: 0
+        energy: 36
       - arguments:
           n_cols_per_row: 6
           n_rows: 6
-        energy: 0
+        energy: 43
       - arguments:
           n_cols_per_row: 6
           n_rows: 7
-        energy: 0
+        energy: 50
       - arguments:
           n_cols_per_row: 6
           n_rows: 8
-        energy: 0
+        energy: 57
       - arguments:
           n_cols_per_row: 6
           n_rows: 9
-        energy: 0
+        energy: 64
       - arguments:
           n_cols_per_row: 6
           n_rows: 10
-        energy: 0
+        energy: 71
       - arguments:
           n_cols_per_row: 6
           n_rows: 11
-        energy: 0
+        energy: 78
       - arguments:
           n_cols_per_row: 6
           n_rows: 12
-        energy: 0
+        energy: 85
       - arguments:
           n_cols_per_row: 7
           n_rows: 0
-        energy: 0
+        energy: 1
       - arguments:
           n_cols_per_row: 7
           n_rows: 1
-        energy: 0
+        energy: 9
       - arguments:
           n_cols_per_row: 7
           n_rows: 2
-        energy: 0
+        energy: 17
       - arguments:
           n_cols_per_row: 7
           n_rows: 3
-        energy: 0
+        energy: 25
       - arguments:
           n_cols_per_row: 7
           n_rows: 4
-        energy: 0
+        energy: 33
       - arguments:
           n_cols_per_row: 7
           n_rows: 5
-        energy: 0
+        energy: 41
       - arguments:
           n_cols_per_row: 7
           n_rows: 6
-        energy: 0
+        energy: 49
       - arguments:
           n_cols_per_row: 7
           n_rows: 7
-        energy: 0
+        energy: 57
       - arguments:
           n_cols_per_row: 7
           n_rows: 8
-        energy: 0
+        energy: 65
       - arguments:
           n_cols_per_row: 7
           n_rows: 9
-        energy: 0
+        energy: 73
       - arguments:
           n_cols_per_row: 7
           n_rows: 10
-        energy: 0
+        energy: 81
       - arguments:
           n_cols_per_row: 7
           n_rows: 11
-        energy: 0
+        energy: 89
       - arguments:
           n_cols_per_row: 7
           n_rows: 12
-        energy: 0
+        energy: 97
       - arguments:
           n_cols_per_row: 8
           n_rows: 0
-        energy: 0
+        energy: 1
       - arguments:
           n_cols_per_row: 8
           n_rows: 1
-        energy: 0
+        energy: 10
       - arguments:
           n_cols_per_row: 8
           n_rows: 2
-        energy: 0
+        energy: 19
       - arguments:
           n_cols_per_row: 8
           n_rows: 3
-        energy: 0
+        energy: 28
       - arguments:
           n_cols_per_row: 8
           n_rows: 4
-        energy: 0
+        energy: 37
       - arguments:
           n_cols_per_row: 8
           n_rows: 5
-        energy: 0
+        energy: 46
       - arguments:
           n_cols_per_row: 8
           n_rows: 6
-        energy: 0
+        energy: 55
       - arguments:
           n_cols_per_row: 8
           n_rows: 7
-        energy: 0
+        energy: 64
       - arguments:
           n_cols_per_row: 8
           n_rows: 8
-        energy: 0
+        energy: 73
       - arguments:
           n_cols_per_row: 8
           n_rows: 9
-        energy: 0
+        energy: 82
       - arguments:
           n_cols_per_row: 8
           n_rows: 10
-        energy: 0
+        energy: 91
       - arguments:
           n_cols_per_row: 8
           n_rows: 11
-        energy: 0
+        energy: 100
       - arguments:
           n_cols_per_row: 8
           n_rows: 12
-        energy: 0
+        energy: 109
       - arguments:
           n_cols_per_row: 9
           n_rows: 0
-        energy: 0
+        energy: 1
       - arguments:
           n_cols_per_row: 9
           n_rows: 1
-        energy: 0
+        energy: 11
       - arguments:
           n_cols_per_row: 9
           n_rows: 2
-        energy: 0
+        energy: 21
       - arguments:
           n_cols_per_row: 9
           n_rows: 3
-        energy: 0
+        energy: 31
       - arguments:
           n_cols_per_row: 9
           n_rows: 4
-        energy: 0
+        energy: 41
       - arguments:
           n_cols_per_row: 9
           n_rows: 5
-        energy: 0
+        energy: 51
       - arguments:
           n_cols_per_row: 9
           n_rows: 6
-        energy: 0
+        energy: 61
       - arguments:
           n_cols_per_row: 9
           n_rows: 7
-        energy: 0
+        energy: 71
       - arguments:
           n_cols_per_row: 9
           n_rows: 8
-        energy: 0
+        energy: 81
       - arguments:
           n_cols_per_row: 9
           n_rows: 9
-        energy: 0
+        energy: 91
       - arguments:
           n_cols_per_row: 9
           n_rows: 10
-        energy: 0
+        energy: 101
       - arguments:
           n_cols_per_row: 9
           n_rows: 11
-        energy: 0
+        energy: 111
       - arguments:
           n_cols_per_row: 9
           n_rows: 12
-        energy: 0
+        energy: 121
       - arguments:
           n_cols_per_row: 10
           n_rows: 0
-        energy: 0
+        energy: 1
       - arguments:
           n_cols_per_row: 10
           n_rows: 1
-        energy: 0
+        energy: 12
       - arguments:
           n_cols_per_row: 10
           n_rows: 2
-        energy: 0
+        energy: 23
       - arguments:
           n_cols_per_row: 10
           n_rows: 3
-        energy: 0
+        energy: 34
       - arguments:
           n_cols_per_row: 10
           n_rows: 4
-        energy: 0
+        energy: 45
       - arguments:
           n_cols_per_row: 10
           n_rows: 5
-        energy: 0
+        energy: 56
       - arguments:
           n_cols_per_row: 10
           n_rows: 6
-        energy: 0
+        energy: 67
       - arguments:
           n_cols_per_row: 10
           n_rows: 7
-        energy: 0
+        energy: 78
       - arguments:
           n_cols_per_row: 10
           n_rows: 8
-        energy: 0
+        energy: 89
       - arguments:
           n_cols_per_row: 10
           n_rows: 9
-        energy: 0
+        energy: 100
       - arguments:
           n_cols_per_row: 10
           n_rows: 10
-        energy: 0
+        energy: 111
       - arguments:
           n_cols_per_row: 10
           n_rows: 11
-        energy: 0
+        energy: 122
       - arguments:
           n_cols_per_row: 10
           n_rows: 12
-        energy: 0
+        energy: 133
       - arguments:
           n_cols_per_row: 11
           n_rows: 0
-        energy: 0
+        energy: 1
       - arguments:
           n_cols_per_row: 11
           n_rows: 1
-        energy: 0
+        energy: 13
       - arguments:
           n_cols_per_row: 11
           n_rows: 2
-        energy: 0
+        energy: 25
       - arguments:
           n_cols_per_row: 11
           n_rows: 3
-        energy: 0
+        energy: 37
       - arguments:
           n_cols_per_row: 11
           n_rows: 4
-        energy: 0
+        energy: 49
       - arguments:
           n_cols_per_row: 11
           n_rows: 5
-        energy: 0
+        energy: 61
       - arguments:
           n_cols_per_row: 11
           n_rows: 6
-        energy: 0
+        energy: 73
       - arguments:
           n_cols_per_row: 11
           n_rows: 7
-        energy: 0
+        energy: 85
       - arguments:
           n_cols_per_row: 11
           n_rows: 8
-        energy: 0
+        energy: 97
       - arguments:
           n_cols_per_row: 11
           n_rows: 9
-        energy: 0
+        energy: 109
       - arguments:
           n_cols_per_row: 11
           n_rows: 10
-        energy: 0
+        energy: 121
       - arguments:
           n_cols_per_row: 11
           n_rows: 11
-        energy: 0
+        energy: 133
       - arguments:
           n_cols_per_row: 11
           n_rows: 12
-        energy: 0
+        energy: 145
       - arguments:
           n_cols_per_row: 12
           n_rows: 0
-        energy: 0
+        energy: 1
       - arguments:
           n_cols_per_row: 12
           n_rows: 1
-        energy: 0
+        energy: 14
       - arguments:
           n_cols_per_row: 12
           n_rows: 2
-        energy: 0
+        energy: 27
       - arguments:
           n_cols_per_row: 12
           n_rows: 3
-        energy: 0
+        energy: 40
       - arguments:
           n_cols_per_row: 12
           n_rows: 4
-        energy: 0
+        energy: 53
       - arguments:
           n_cols_per_row: 12
           n_rows: 5
-        energy: 0
+        energy: 66
       - arguments:
           n_cols_per_row: 12
           n_rows: 6
-        energy: 0
+        energy: 79
       - arguments:
           n_cols_per_row: 12
           n_rows: 7
-        energy: 0
+        energy: 92
       - arguments:
           n_cols_per_row: 12
           n_rows: 8
-        energy: 0
+        energy: 105
       - arguments:
           n_cols_per_row: 12
           n_rows: 9
-        energy: 0
+        energy: 118
       - arguments:
           n_cols_per_row: 12
           n_rows: 10
-        energy: 0
+        energy: 131
       - arguments:
           n_cols_per_row: 12
           n_rows: 11
-        energy: 0
+        energy: 144
       - arguments:
           n_cols_per_row: 12
           n_rows: 12
-        energy: 0
+        energy: 157
       - arguments:
           n_cols_per_row: 13
           n_rows: 0
-        energy: 0
+        energy: 1
       - arguments:
           n_cols_per_row: 13
           n_rows: 1
-        energy: 0
+        energy: 15
       - arguments:
           n_cols_per_row: 13
           n_rows: 2
-        energy: 0
+        energy: 29
       - arguments:
           n_cols_per_row: 13
           n_rows: 3
-        energy: 0
+        energy: 43
       - arguments:
           n_cols_per_row: 13
           n_rows: 4
-        energy: 0
+        energy: 57
       - arguments:
           n_cols_per_row: 13
           n_rows: 5
-        energy: 0
+        energy: 71
       - arguments:
           n_cols_per_row: 13
           n_rows: 6
-        energy: 0
+        energy: 85
       - arguments:
           n_cols_per_row: 13
           n_rows: 7
-        energy: 0
+        energy: 99
       - arguments:
           n_cols_per_row: 13
           n_rows: 8
-        energy: 0
+        energy: 113
       - arguments:
           n_cols_per_row: 13
           n_rows: 9
-        energy: 0
+        energy: 127
       - arguments:
           n_cols_per_row: 13
           n_rows: 10
-        energy: 0
+        energy: 141
       - arguments:
           n_cols_per_row: 13
           n_rows: 11
-        energy: 0
+        energy: 155
       - arguments:
           n_cols_per_row: 13
           n_rows: 12
-        energy: 0
+        energy: 169
       - arguments:
           n_cols_per_row: 14
           n_rows: 0
-        energy: 0
+        energy: 1
       - arguments:
           n_cols_per_row: 14
           n_rows: 1
-        energy: 0
+        energy: 16
       - arguments:
           n_cols_per_row: 14
           n_rows: 2
-        energy: 0
+        energy: 31
       - arguments:
           n_cols_per_row: 14
           n_rows: 3
-        energy: 0
+        energy: 46
       - arguments:
           n_cols_per_row: 14
           n_rows: 4
-        energy: 0
+        energy: 61
       - arguments:
           n_cols_per_row: 14
           n_rows: 5
-        energy: 0
+        energy: 76
       - arguments:
           n_cols_per_row: 14
           n_rows: 6
-        energy: 0
+        energy: 91
       - arguments:
           n_cols_per_row: 14
           n_rows: 7
-        energy: 0
+        energy: 106
       - arguments:
           n_cols_per_row: 14
           n_rows: 8
-        energy: 0
+        energy: 121
       - arguments:
           n_cols_per_row: 14
           n_rows: 9
-        energy: 0
+        energy: 136
       - arguments:
           n_cols_per_row: 14
           n_rows: 10
-        energy: 0
+        energy: 151
       - arguments:
           n_cols_per_row: 14
           n_rows: 11
-        energy: 0
+        energy: 166
       - arguments:
           n_cols_per_row: 14
           n_rows: 12
-        energy: 0
+        energy: 181
       transfer_repeated:
       - arguments:
           n_cols_per_row: 0
@@ -971,51 +971,51 @@ ERT:
       - arguments:
           n_cols_per_row: 0
           n_rows: 1
-        energy: 0
+        energy: 1
       - arguments:
           n_cols_per_row: 0
           n_rows: 2
-        energy: 0
+        energy: 2
       - arguments:
           n_cols_per_row: 0
           n_rows: 3
-        energy: 0
+        energy: 3
       - arguments:
           n_cols_per_row: 0
           n_rows: 4
-        energy: 0
+        energy: 4
       - arguments:
           n_cols_per_row: 0
           n_rows: 5
-        energy: 0
+        energy: 5
       - arguments:
           n_cols_per_row: 0
           n_rows: 6
-        energy: 0
+        energy: 6
       - arguments:
           n_cols_per_row: 0
           n_rows: 7
-        energy: 0
+        energy: 7
       - arguments:
           n_cols_per_row: 0
           n_rows: 8
-        energy: 0
+        energy: 8
       - arguments:
           n_cols_per_row: 0
           n_rows: 9
-        energy: 0
+        energy: 9
       - arguments:
           n_cols_per_row: 0
           n_rows: 10
-        energy: 0
+        energy: 10
       - arguments:
           n_cols_per_row: 0
           n_rows: 11
-        energy: 0
+        energy: 11
       - arguments:
           n_cols_per_row: 0
           n_rows: 12
-        energy: 0
+        energy: 12
       - arguments:
           n_cols_per_row: 1
           n_rows: 0
@@ -1023,51 +1023,51 @@ ERT:
       - arguments:
           n_cols_per_row: 1
           n_rows: 1
-        energy: 0
+        energy: 2
       - arguments:
           n_cols_per_row: 1
           n_rows: 2
-        energy: 0
+        energy: 4
       - arguments:
           n_cols_per_row: 1
           n_rows: 3
-        energy: 0
+        energy: 6
       - arguments:
           n_cols_per_row: 1
           n_rows: 4
-        energy: 0
+        energy: 8
       - arguments:
           n_cols_per_row: 1
           n_rows: 5
-        energy: 0
+        energy: 10
       - arguments:
           n_cols_per_row: 1
           n_rows: 6
-        energy: 0
+        energy: 12
       - arguments:
           n_cols_per_row: 1
           n_rows: 7
-        energy: 0
+        energy: 14
       - arguments:
           n_cols_per_row: 1
           n_rows: 8
-        energy: 0
+        energy: 16
       - arguments:
           n_cols_per_row: 1
           n_rows: 9
-        energy: 0
+        energy: 18
       - arguments:
           n_cols_per_row: 1
           n_rows: 10
-        energy: 0
+        energy: 20
       - arguments:
           n_cols_per_row: 1
           n_rows: 11
-        energy: 0
+        energy: 22
       - arguments:
           n_cols_per_row: 1
           n_rows: 12
-        energy: 0
+        energy: 24
       - arguments:
           n_cols_per_row: 2
           n_rows: 0
@@ -1075,51 +1075,51 @@ ERT:
       - arguments:
           n_cols_per_row: 2
           n_rows: 1
-        energy: 0
+        energy: 3
       - arguments:
           n_cols_per_row: 2
           n_rows: 2
-        energy: 0
+        energy: 6
       - arguments:
           n_cols_per_row: 2
           n_rows: 3
-        energy: 0
+        energy: 9
       - arguments:
           n_cols_per_row: 2
           n_rows: 4
-        energy: 0
+        energy: 12
       - arguments:
           n_cols_per_row: 2
           n_rows: 5
-        energy: 0
+        energy: 15
       - arguments:
           n_cols_per_row: 2
           n_rows: 6
-        energy: 0
+        energy: 18
       - arguments:
           n_cols_per_row: 2
           n_rows: 7
-        energy: 0
+        energy: 21
       - arguments:
           n_cols_per_row: 2
           n_rows: 8
-        energy: 0
+        energy: 24
       - arguments:
           n_cols_per_row: 2
           n_rows: 9
-        energy: 0
+        energy: 27
       - arguments:
           n_cols_per_row: 2
           n_rows: 10
-        energy: 0
+        energy: 30
       - arguments:
           n_cols_per_row: 2
           n_rows: 11
-        energy: 0
+        energy: 33
       - arguments:
           n_cols_per_row: 2
           n_rows: 12
-        energy: 0
+        energy: 36
       - arguments:
           n_cols_per_row: 3
           n_rows: 0
@@ -1127,51 +1127,51 @@ ERT:
       - arguments:
           n_cols_per_row: 3
           n_rows: 1
-        energy: 0
+        energy: 4
       - arguments:
           n_cols_per_row: 3
           n_rows: 2
-        energy: 0
+        energy: 8
       - arguments:
           n_cols_per_row: 3
           n_rows: 3
-        energy: 0
+        energy: 12
       - arguments:
           n_cols_per_row: 3
           n_rows: 4
-        energy: 0
+        energy: 16
       - arguments:
           n_cols_per_row: 3
           n_rows: 5
-        energy: 0
+        energy: 20
       - arguments:
           n_cols_per_row: 3
           n_rows: 6
-        energy: 0
+        energy: 24
       - arguments:
           n_cols_per_row: 3
           n_rows: 7
-        energy: 0
+        energy: 28
       - arguments:
           n_cols_per_row: 3
           n_rows: 8
-        energy: 0
+        energy: 32
       - arguments:
           n_cols_per_row: 3
           n_rows: 9
-        energy: 0
+        energy: 36
       - arguments:
           n_cols_per_row: 3
           n_rows: 10
-        energy: 0
+        energy: 40
       - arguments:
           n_cols_per_row: 3
           n_rows: 11
-        energy: 0
+        energy: 44
       - arguments:
           n_cols_per_row: 3
           n_rows: 12
-        energy: 0
+        energy: 48
       - arguments:
           n_cols_per_row: 4
           n_rows: 0
@@ -1179,51 +1179,51 @@ ERT:
       - arguments:
           n_cols_per_row: 4
           n_rows: 1
-        energy: 0
+        energy: 5
       - arguments:
           n_cols_per_row: 4
           n_rows: 2
-        energy: 0
+        energy: 10
       - arguments:
           n_cols_per_row: 4
           n_rows: 3
-        energy: 0
+        energy: 15
       - arguments:
           n_cols_per_row: 4
           n_rows: 4
-        energy: 0
+        energy: 20
       - arguments:
           n_cols_per_row: 4
           n_rows: 5
-        energy: 0
+        energy: 25
       - arguments:
           n_cols_per_row: 4
           n_rows: 6
-        energy: 0
+        energy: 30
       - arguments:
           n_cols_per_row: 4
           n_rows: 7
-        energy: 0
+        energy: 35
       - arguments:
           n_cols_per_row: 4
           n_rows: 8
-        energy: 0
+        energy: 40
       - arguments:
           n_cols_per_row: 4
           n_rows: 9
-        energy: 0
+        energy: 45
       - arguments:
           n_cols_per_row: 4
           n_rows: 10
-        energy: 0
+        energy: 50
       - arguments:
           n_cols_per_row: 4
           n_rows: 11
-        energy: 0
+        energy: 55
       - arguments:
           n_cols_per_row: 4
           n_rows: 12
-        energy: 0
+        energy: 60
       - arguments:
           n_cols_per_row: 5
           n_rows: 0
@@ -1231,51 +1231,51 @@ ERT:
       - arguments:
           n_cols_per_row: 5
           n_rows: 1
-        energy: 0
+        energy: 6
       - arguments:
           n_cols_per_row: 5
           n_rows: 2
-        energy: 0
+        energy: 12
       - arguments:
           n_cols_per_row: 5
           n_rows: 3
-        energy: 0
+        energy: 18
       - arguments:
           n_cols_per_row: 5
           n_rows: 4
-        energy: 0
+        energy: 24
       - arguments:
           n_cols_per_row: 5
           n_rows: 5
-        energy: 0
+        energy: 30
       - arguments:
           n_cols_per_row: 5
           n_rows: 6
-        energy: 0
+        energy: 36
       - arguments:
           n_cols_per_row: 5
           n_rows: 7
-        energy: 0
+        energy: 42
       - arguments:
           n_cols_per_row: 5
           n_rows: 8
-        energy: 0
+        energy: 48
       - arguments:
           n_cols_per_row: 5
           n_rows: 9
-        energy: 0
+        energy: 54
       - arguments:
           n_cols_per_row: 5
           n_rows: 10
-        energy: 0
+        energy: 60
       - arguments:
           n_cols_per_row: 5
           n_rows: 11
-        energy: 0
+        energy: 66
       - arguments:
           n_cols_per_row: 5
           n_rows: 12
-        energy: 0
+        energy: 72
       - arguments:
           n_cols_per_row: 6
           n_rows: 0
@@ -1283,51 +1283,51 @@ ERT:
       - arguments:
           n_cols_per_row: 6
           n_rows: 1
-        energy: 0
+        energy: 7
       - arguments:
           n_cols_per_row: 6
           n_rows: 2
-        energy: 0
+        energy: 14
       - arguments:
           n_cols_per_row: 6
           n_rows: 3
-        energy: 0
+        energy: 21
       - arguments:
           n_cols_per_row: 6
           n_rows: 4
-        energy: 0
+        energy: 28
       - arguments:
           n_cols_per_row: 6
           n_rows: 5
-        energy: 0
+        energy: 35
       - arguments:
           n_cols_per_row: 6
           n_rows: 6
-        energy: 0
+        energy: 42
       - arguments:
           n_cols_per_row: 6
           n_rows: 7
-        energy: 0
+        energy: 49
       - arguments:
           n_cols_per_row: 6
           n_rows: 8
-        energy: 0
+        energy: 56
       - arguments:
           n_cols_per_row: 6
           n_rows: 9
-        energy: 0
+        energy: 63
       - arguments:
           n_cols_per_row: 6
           n_rows: 10
-        energy: 0
+        energy: 70
       - arguments:
           n_cols_per_row: 6
           n_rows: 11
-        energy: 0
+        energy: 77
       - arguments:
           n_cols_per_row: 6
           n_rows: 12
-        energy: 0
+        energy: 84
       - arguments:
           n_cols_per_row: 7
           n_rows: 0
@@ -1335,51 +1335,51 @@ ERT:
       - arguments:
           n_cols_per_row: 7
           n_rows: 1
-        energy: 0
+        energy: 8
       - arguments:
           n_cols_per_row: 7
           n_rows: 2
-        energy: 0
+        energy: 16
       - arguments:
           n_cols_per_row: 7
           n_rows: 3
-        energy: 0
+        energy: 24
       - arguments:
           n_cols_per_row: 7
           n_rows: 4
-        energy: 0
+        energy: 32
       - arguments:
           n_cols_per_row: 7
           n_rows: 5
-        energy: 0
+        energy: 40
       - arguments:
           n_cols_per_row: 7
           n_rows: 6
-        energy: 0
+        energy: 48
       - arguments:
           n_cols_per_row: 7
           n_rows: 7
-        energy: 0
+        energy: 56
       - arguments:
           n_cols_per_row: 7
           n_rows: 8
-        energy: 0
+        energy: 64
       - arguments:
           n_cols_per_row: 7
           n_rows: 9
-        energy: 0
+        energy: 72
       - arguments:
           n_cols_per_row: 7
           n_rows: 10
-        energy: 0
+        energy: 80
       - arguments:
           n_cols_per_row: 7
           n_rows: 11
-        energy: 0
+        energy: 88
       - arguments:
           n_cols_per_row: 7
           n_rows: 12
-        energy: 0
+        energy: 96
       - arguments:
           n_cols_per_row: 8
           n_rows: 0
@@ -1387,51 +1387,51 @@ ERT:
       - arguments:
           n_cols_per_row: 8
           n_rows: 1
-        energy: 0
+        energy: 9
       - arguments:
           n_cols_per_row: 8
           n_rows: 2
-        energy: 0
+        energy: 18
       - arguments:
           n_cols_per_row: 8
           n_rows: 3
-        energy: 0
+        energy: 27
       - arguments:
           n_cols_per_row: 8
           n_rows: 4
-        energy: 0
+        energy: 36
       - arguments:
           n_cols_per_row: 8
           n_rows: 5
-        energy: 0
+        energy: 45
       - arguments:
           n_cols_per_row: 8
           n_rows: 6
-        energy: 0
+        energy: 54
       - arguments:
           n_cols_per_row: 8
           n_rows: 7
-        energy: 0
+        energy: 63
       - arguments:
           n_cols_per_row: 8
           n_rows: 8
-        energy: 0
+        energy: 72
       - arguments:
           n_cols_per_row: 8
           n_rows: 9
-        energy: 0
+        energy: 81
       - arguments:
           n_cols_per_row: 8
           n_rows: 10
-        energy: 0
+        energy: 90
       - arguments:
           n_cols_per_row: 8
           n_rows: 11
-        energy: 0
+        energy: 99
       - arguments:
           n_cols_per_row: 8
           n_rows: 12
-        energy: 0
+        energy: 108
       - arguments:
           n_cols_per_row: 9
           n_rows: 0
@@ -1439,51 +1439,51 @@ ERT:
       - arguments:
           n_cols_per_row: 9
           n_rows: 1
-        energy: 0
+        energy: 10
       - arguments:
           n_cols_per_row: 9
           n_rows: 2
-        energy: 0
+        energy: 20
       - arguments:
           n_cols_per_row: 9
           n_rows: 3
-        energy: 0
+        energy: 30
       - arguments:
           n_cols_per_row: 9
           n_rows: 4
-        energy: 0
+        energy: 40
       - arguments:
           n_cols_per_row: 9
           n_rows: 5
-        energy: 0
+        energy: 50
       - arguments:
           n_cols_per_row: 9
           n_rows: 6
-        energy: 0
+        energy: 60
       - arguments:
           n_cols_per_row: 9
           n_rows: 7
-        energy: 0
+        energy: 70
       - arguments:
           n_cols_per_row: 9
           n_rows: 8
-        energy: 0
+        energy: 80
       - arguments:
           n_cols_per_row: 9
           n_rows: 9
-        energy: 0
+        energy: 90
       - arguments:
           n_cols_per_row: 9
           n_rows: 10
-        energy: 0
+        energy: 100
       - arguments:
           n_cols_per_row: 9
           n_rows: 11
-        energy: 0
+        energy: 110
       - arguments:
           n_cols_per_row: 9
           n_rows: 12
-        energy: 0
+        energy: 120
       - arguments:
           n_cols_per_row: 10
           n_rows: 0
@@ -1491,51 +1491,51 @@ ERT:
       - arguments:
           n_cols_per_row: 10
           n_rows: 1
-        energy: 0
+        energy: 11
       - arguments:
           n_cols_per_row: 10
           n_rows: 2
-        energy: 0
+        energy: 22
       - arguments:
           n_cols_per_row: 10
           n_rows: 3
-        energy: 0
+        energy: 33
       - arguments:
           n_cols_per_row: 10
           n_rows: 4
-        energy: 0
+        energy: 44
       - arguments:
           n_cols_per_row: 10
           n_rows: 5
-        energy: 0
+        energy: 55
       - arguments:
           n_cols_per_row: 10
           n_rows: 6
-        energy: 0
+        energy: 66
       - arguments:
           n_cols_per_row: 10
           n_rows: 7
-        energy: 0
+        energy: 77
       - arguments:
           n_cols_per_row: 10
           n_rows: 8
-        energy: 0
+        energy: 88
       - arguments:
           n_cols_per_row: 10
           n_rows: 9
-        energy: 0
+        energy: 99
       - arguments:
           n_cols_per_row: 10
           n_rows: 10
-        energy: 0
+        energy: 110
       - arguments:
           n_cols_per_row: 10
           n_rows: 11
-        energy: 0
+        energy: 121
       - arguments:
           n_cols_per_row: 10
           n_rows: 12
-        energy: 0
+        energy: 132
       - arguments:
           n_cols_per_row: 11
           n_rows: 0
@@ -1543,51 +1543,51 @@ ERT:
       - arguments:
           n_cols_per_row: 11
           n_rows: 1
-        energy: 0
+        energy: 12
       - arguments:
           n_cols_per_row: 11
           n_rows: 2
-        energy: 0
+        energy: 24
       - arguments:
           n_cols_per_row: 11
           n_rows: 3
-        energy: 0
+        energy: 36
       - arguments:
           n_cols_per_row: 11
           n_rows: 4
-        energy: 0
+        energy: 48
       - arguments:
           n_cols_per_row: 11
           n_rows: 5
-        energy: 0
+        energy: 60
       - arguments:
           n_cols_per_row: 11
           n_rows: 6
-        energy: 0
+        energy: 72
       - arguments:
           n_cols_per_row: 11
           n_rows: 7
-        energy: 0
+        energy: 84
       - arguments:
           n_cols_per_row: 11
           n_rows: 8
-        energy: 0
+        energy: 96
       - arguments:
           n_cols_per_row: 11
           n_rows: 9
-        energy: 0
+        energy: 108
       - arguments:
           n_cols_per_row: 11
           n_rows: 10
-        energy: 0
+        energy: 120
       - arguments:
           n_cols_per_row: 11
           n_rows: 11
-        energy: 0
+        energy: 132
       - arguments:
           n_cols_per_row: 11
           n_rows: 12
-        energy: 0
+        energy: 144
       - arguments:
           n_cols_per_row: 12
           n_rows: 0
@@ -1595,51 +1595,51 @@ ERT:
       - arguments:
           n_cols_per_row: 12
           n_rows: 1
-        energy: 0
+        energy: 13
       - arguments:
           n_cols_per_row: 12
           n_rows: 2
-        energy: 0
+        energy: 26
       - arguments:
           n_cols_per_row: 12
           n_rows: 3
-        energy: 0
+        energy: 39
       - arguments:
           n_cols_per_row: 12
           n_rows: 4
-        energy: 0
+        energy: 52
       - arguments:
           n_cols_per_row: 12
           n_rows: 5
-        energy: 0
+        energy: 65
       - arguments:
           n_cols_per_row: 12
           n_rows: 6
-        energy: 0
+        energy: 78
       - arguments:
           n_cols_per_row: 12
           n_rows: 7
-        energy: 0
+        energy: 91
       - arguments:
           n_cols_per_row: 12
           n_rows: 8
-        energy: 0
+        energy: 104
       - arguments:
           n_cols_per_row: 12
           n_rows: 9
-        energy: 0
+        energy: 117
       - arguments:
           n_cols_per_row: 12
           n_rows: 10
-        energy: 0
+        energy: 130
       - arguments:
           n_cols_per_row: 12
           n_rows: 11
-        energy: 0
+        energy: 143
       - arguments:
           n_cols_per_row: 12
           n_rows: 12
-        energy: 0
+        energy: 156
       - arguments:
           n_cols_per_row: 13
           n_rows: 0
@@ -1647,51 +1647,51 @@ ERT:
       - arguments:
           n_cols_per_row: 13
           n_rows: 1
-        energy: 0
+        energy: 14
       - arguments:
           n_cols_per_row: 13
           n_rows: 2
-        energy: 0
+        energy: 28
       - arguments:
           n_cols_per_row: 13
           n_rows: 3
-        energy: 0
+        energy: 42
       - arguments:
           n_cols_per_row: 13
           n_rows: 4
-        energy: 0
+        energy: 56
       - arguments:
           n_cols_per_row: 13
           n_rows: 5
-        energy: 0
+        energy: 70
       - arguments:
           n_cols_per_row: 13
           n_rows: 6
-        energy: 0
+        energy: 84
       - arguments:
           n_cols_per_row: 13
           n_rows: 7
-        energy: 0
+        energy: 98
       - arguments:
           n_cols_per_row: 13
           n_rows: 8
-        energy: 0
+        energy: 112
       - arguments:
           n_cols_per_row: 13
           n_rows: 9
-        energy: 0
+        energy: 126
       - arguments:
           n_cols_per_row: 13
           n_rows: 10
-        energy: 0
+        energy: 140
       - arguments:
           n_cols_per_row: 13
           n_rows: 11
-        energy: 0
+        energy: 154
       - arguments:
           n_cols_per_row: 13
           n_rows: 12
-        energy: 0
+        energy: 168
       - arguments:
           n_cols_per_row: 14
           n_rows: 0
@@ -1699,51 +1699,51 @@ ERT:
       - arguments:
           n_cols_per_row: 14
           n_rows: 1
-        energy: 0
+        energy: 15
       - arguments:
           n_cols_per_row: 14
           n_rows: 2
-        energy: 0
+        energy: 30
       - arguments:
           n_cols_per_row: 14
           n_rows: 3
-        energy: 0
+        energy: 45
       - arguments:
           n_cols_per_row: 14
           n_rows: 4
-        energy: 0
+        energy: 60
       - arguments:
           n_cols_per_row: 14
           n_rows: 5
-        energy: 0
+        energy: 75
       - arguments:
           n_cols_per_row: 14
           n_rows: 6
-        energy: 0
+        energy: 90
       - arguments:
           n_cols_per_row: 14
           n_rows: 7
-        energy: 0
+        energy: 105
       - arguments:
           n_cols_per_row: 14
           n_rows: 8
-        energy: 0
+        energy: 120
       - arguments:
           n_cols_per_row: 14
           n_rows: 9
-        energy: 0
+        energy: 135
       - arguments:
           n_cols_per_row: 14
           n_rows: 10
-        energy: 0
+        energy: 150
       - arguments:
           n_cols_per_row: 14
           n_rows: 11
-        energy: 0
+        energy: 165
       - arguments:
           n_cols_per_row: 14
           n_rows: 12
-        energy: 0
+        energy: 180
     eyeriss_like.psum_read_NoC:
       idle:
         arguments: null
@@ -1752,783 +1752,783 @@ ERT:
       - arguments:
           n_cols_per_row: 0
           n_rows: 0
-        energy: 0
+        energy: 1
       - arguments:
           n_cols_per_row: 0
           n_rows: 1
-        energy: 0
+        energy: 2
       - arguments:
           n_cols_per_row: 0
           n_rows: 2
-        energy: 0
+        energy: 3
       - arguments:
           n_cols_per_row: 0
           n_rows: 3
-        energy: 0
+        energy: 4
       - arguments:
           n_cols_per_row: 0
           n_rows: 4
-        energy: 0
+        energy: 5
       - arguments:
           n_cols_per_row: 0
           n_rows: 5
-        energy: 0
+        energy: 6
       - arguments:
           n_cols_per_row: 0
           n_rows: 6
-        energy: 0
+        energy: 7
       - arguments:
           n_cols_per_row: 0
           n_rows: 7
-        energy: 0
+        energy: 8
       - arguments:
           n_cols_per_row: 0
           n_rows: 8
-        energy: 0
+        energy: 9
       - arguments:
           n_cols_per_row: 0
           n_rows: 9
-        energy: 0
+        energy: 10
       - arguments:
           n_cols_per_row: 0
           n_rows: 10
-        energy: 0
+        energy: 11
       - arguments:
           n_cols_per_row: 0
           n_rows: 11
-        energy: 0
+        energy: 12
       - arguments:
           n_cols_per_row: 0
           n_rows: 12
-        energy: 0
+        energy: 13
       - arguments:
           n_cols_per_row: 1
           n_rows: 0
-        energy: 0
+        energy: 1
       - arguments:
           n_cols_per_row: 1
           n_rows: 1
-        energy: 0
+        energy: 3
       - arguments:
           n_cols_per_row: 1
           n_rows: 2
-        energy: 0
+        energy: 5
       - arguments:
           n_cols_per_row: 1
           n_rows: 3
-        energy: 0
+        energy: 7
       - arguments:
           n_cols_per_row: 1
           n_rows: 4
-        energy: 0
+        energy: 9
       - arguments:
           n_cols_per_row: 1
           n_rows: 5
-        energy: 0
+        energy: 11
       - arguments:
           n_cols_per_row: 1
           n_rows: 6
-        energy: 0
+        energy: 13
       - arguments:
           n_cols_per_row: 1
           n_rows: 7
-        energy: 0
+        energy: 15
       - arguments:
           n_cols_per_row: 1
           n_rows: 8
-        energy: 0
+        energy: 17
       - arguments:
           n_cols_per_row: 1
           n_rows: 9
-        energy: 0
+        energy: 19
       - arguments:
           n_cols_per_row: 1
           n_rows: 10
-        energy: 0
+        energy: 21
       - arguments:
           n_cols_per_row: 1
           n_rows: 11
-        energy: 0
+        energy: 23
       - arguments:
           n_cols_per_row: 1
           n_rows: 12
-        energy: 0
+        energy: 25
       - arguments:
           n_cols_per_row: 2
           n_rows: 0
-        energy: 0
+        energy: 1
       - arguments:
           n_cols_per_row: 2
           n_rows: 1
-        energy: 0
+        energy: 4
       - arguments:
           n_cols_per_row: 2
           n_rows: 2
-        energy: 0
+        energy: 7
       - arguments:
           n_cols_per_row: 2
           n_rows: 3
-        energy: 0
+        energy: 10
       - arguments:
           n_cols_per_row: 2
           n_rows: 4
-        energy: 0
+        energy: 13
       - arguments:
           n_cols_per_row: 2
           n_rows: 5
-        energy: 0
+        energy: 16
       - arguments:
           n_cols_per_row: 2
           n_rows: 6
-        energy: 0
+        energy: 19
       - arguments:
           n_cols_per_row: 2
           n_rows: 7
-        energy: 0
+        energy: 22
       - arguments:
           n_cols_per_row: 2
           n_rows: 8
-        energy: 0
+        energy: 25
       - arguments:
           n_cols_per_row: 2
           n_rows: 9
-        energy: 0
+        energy: 28
       - arguments:
           n_cols_per_row: 2
           n_rows: 10
-        energy: 0
+        energy: 31
       - arguments:
           n_cols_per_row: 2
           n_rows: 11
-        energy: 0
+        energy: 34
       - arguments:
           n_cols_per_row: 2
           n_rows: 12
-        energy: 0
+        energy: 37
       - arguments:
           n_cols_per_row: 3
           n_rows: 0
-        energy: 0
+        energy: 1
       - arguments:
           n_cols_per_row: 3
           n_rows: 1
-        energy: 0
+        energy: 5
       - arguments:
           n_cols_per_row: 3
           n_rows: 2
-        energy: 0
+        energy: 9
       - arguments:
           n_cols_per_row: 3
           n_rows: 3
-        energy: 0
+        energy: 13
       - arguments:
           n_cols_per_row: 3
           n_rows: 4
-        energy: 0
+        energy: 17
       - arguments:
           n_cols_per_row: 3
           n_rows: 5
-        energy: 0
+        energy: 21
       - arguments:
           n_cols_per_row: 3
           n_rows: 6
-        energy: 0
+        energy: 25
       - arguments:
           n_cols_per_row: 3
           n_rows: 7
-        energy: 0
+        energy: 29
       - arguments:
           n_cols_per_row: 3
           n_rows: 8
-        energy: 0
+        energy: 33
       - arguments:
           n_cols_per_row: 3
           n_rows: 9
-        energy: 0
+        energy: 37
       - arguments:
           n_cols_per_row: 3
           n_rows: 10
-        energy: 0
+        energy: 41
       - arguments:
           n_cols_per_row: 3
           n_rows: 11
-        energy: 0
+        energy: 45
       - arguments:
           n_cols_per_row: 3
           n_rows: 12
-        energy: 0
+        energy: 49
       - arguments:
           n_cols_per_row: 4
           n_rows: 0
-        energy: 0
+        energy: 1
       - arguments:
           n_cols_per_row: 4
           n_rows: 1
-        energy: 0
+        energy: 6
       - arguments:
           n_cols_per_row: 4
           n_rows: 2
-        energy: 0
+        energy: 11
       - arguments:
           n_cols_per_row: 4
           n_rows: 3
-        energy: 0
+        energy: 16
       - arguments:
           n_cols_per_row: 4
           n_rows: 4
-        energy: 0
+        energy: 21
       - arguments:
           n_cols_per_row: 4
           n_rows: 5
-        energy: 0
+        energy: 26
       - arguments:
           n_cols_per_row: 4
           n_rows: 6
-        energy: 0
+        energy: 31
       - arguments:
           n_cols_per_row: 4
           n_rows: 7
-        energy: 0
+        energy: 36
       - arguments:
           n_cols_per_row: 4
           n_rows: 8
-        energy: 0
+        energy: 41
       - arguments:
           n_cols_per_row: 4
           n_rows: 9
-        energy: 0
+        energy: 46
       - arguments:
           n_cols_per_row: 4
           n_rows: 10
-        energy: 0
+        energy: 51
       - arguments:
           n_cols_per_row: 4
           n_rows: 11
-        energy: 0
+        energy: 56
       - arguments:
           n_cols_per_row: 4
           n_rows: 12
-        energy: 0
+        energy: 61
       - arguments:
           n_cols_per_row: 5
           n_rows: 0
-        energy: 0
+        energy: 1
       - arguments:
           n_cols_per_row: 5
           n_rows: 1
-        energy: 0
+        energy: 7
       - arguments:
           n_cols_per_row: 5
           n_rows: 2
-        energy: 0
+        energy: 13
       - arguments:
           n_cols_per_row: 5
           n_rows: 3
-        energy: 0
+        energy: 19
       - arguments:
           n_cols_per_row: 5
           n_rows: 4
-        energy: 0
+        energy: 25
       - arguments:
           n_cols_per_row: 5
           n_rows: 5
-        energy: 0
+        energy: 31
       - arguments:
           n_cols_per_row: 5
           n_rows: 6
-        energy: 0
+        energy: 37
       - arguments:
           n_cols_per_row: 5
           n_rows: 7
-        energy: 0
+        energy: 43
       - arguments:
           n_cols_per_row: 5
           n_rows: 8
-        energy: 0
+        energy: 49
       - arguments:
           n_cols_per_row: 5
           n_rows: 9
-        energy: 0
+        energy: 55
       - arguments:
           n_cols_per_row: 5
           n_rows: 10
-        energy: 0
+        energy: 61
       - arguments:
           n_cols_per_row: 5
           n_rows: 11
-        energy: 0
+        energy: 67
       - arguments:
           n_cols_per_row: 5
           n_rows: 12
-        energy: 0
+        energy: 73
       - arguments:
           n_cols_per_row: 6
           n_rows: 0
-        energy: 0
+        energy: 1
       - arguments:
           n_cols_per_row: 6
           n_rows: 1
-        energy: 0
+        energy: 8
       - arguments:
           n_cols_per_row: 6
           n_rows: 2
-        energy: 0
+        energy: 15
       - arguments:
           n_cols_per_row: 6
           n_rows: 3
-        energy: 0
+        energy: 22
       - arguments:
           n_cols_per_row: 6
           n_rows: 4
-        energy: 0
+        energy: 29
       - arguments:
           n_cols_per_row: 6
           n_rows: 5
-        energy: 0
+        energy: 36
       - arguments:
           n_cols_per_row: 6
           n_rows: 6
-        energy: 0
+        energy: 43
       - arguments:
           n_cols_per_row: 6
           n_rows: 7
-        energy: 0
+        energy: 50
       - arguments:
           n_cols_per_row: 6
           n_rows: 8
-        energy: 0
+        energy: 57
       - arguments:
           n_cols_per_row: 6
           n_rows: 9
-        energy: 0
+        energy: 64
       - arguments:
           n_cols_per_row: 6
           n_rows: 10
-        energy: 0
+        energy: 71
       - arguments:
           n_cols_per_row: 6
           n_rows: 11
-        energy: 0
+        energy: 78
       - arguments:
           n_cols_per_row: 6
           n_rows: 12
-        energy: 0
+        energy: 85
       - arguments:
           n_cols_per_row: 7
           n_rows: 0
-        energy: 0
+        energy: 1
       - arguments:
           n_cols_per_row: 7
           n_rows: 1
-        energy: 0
+        energy: 9
       - arguments:
           n_cols_per_row: 7
           n_rows: 2
-        energy: 0
+        energy: 17
       - arguments:
           n_cols_per_row: 7
           n_rows: 3
-        energy: 0
+        energy: 25
       - arguments:
           n_cols_per_row: 7
           n_rows: 4
-        energy: 0
+        energy: 33
       - arguments:
           n_cols_per_row: 7
           n_rows: 5
-        energy: 0
+        energy: 41
       - arguments:
           n_cols_per_row: 7
           n_rows: 6
-        energy: 0
+        energy: 49
       - arguments:
           n_cols_per_row: 7
           n_rows: 7
-        energy: 0
+        energy: 57
       - arguments:
           n_cols_per_row: 7
           n_rows: 8
-        energy: 0
+        energy: 65
       - arguments:
           n_cols_per_row: 7
           n_rows: 9
-        energy: 0
+        energy: 73
       - arguments:
           n_cols_per_row: 7
           n_rows: 10
-        energy: 0
+        energy: 81
       - arguments:
           n_cols_per_row: 7
           n_rows: 11
-        energy: 0
+        energy: 89
       - arguments:
           n_cols_per_row: 7
           n_rows: 12
-        energy: 0
+        energy: 97
       - arguments:
           n_cols_per_row: 8
           n_rows: 0
-        energy: 0
+        energy: 1
       - arguments:
           n_cols_per_row: 8
           n_rows: 1
-        energy: 0
+        energy: 10
       - arguments:
           n_cols_per_row: 8
           n_rows: 2
-        energy: 0
+        energy: 19
       - arguments:
           n_cols_per_row: 8
           n_rows: 3
-        energy: 0
+        energy: 28
       - arguments:
           n_cols_per_row: 8
           n_rows: 4
-        energy: 0
+        energy: 37
       - arguments:
           n_cols_per_row: 8
           n_rows: 5
-        energy: 0
+        energy: 46
       - arguments:
           n_cols_per_row: 8
           n_rows: 6
-        energy: 0
+        energy: 55
       - arguments:
           n_cols_per_row: 8
           n_rows: 7
-        energy: 0
+        energy: 64
       - arguments:
           n_cols_per_row: 8
           n_rows: 8
-        energy: 0
+        energy: 73
       - arguments:
           n_cols_per_row: 8
           n_rows: 9
-        energy: 0
+        energy: 82
       - arguments:
           n_cols_per_row: 8
           n_rows: 10
-        energy: 0
+        energy: 91
       - arguments:
           n_cols_per_row: 8
           n_rows: 11
-        energy: 0
+        energy: 100
       - arguments:
           n_cols_per_row: 8
           n_rows: 12
-        energy: 0
+        energy: 109
       - arguments:
           n_cols_per_row: 9
           n_rows: 0
-        energy: 0
+        energy: 1
       - arguments:
           n_cols_per_row: 9
           n_rows: 1
-        energy: 0
+        energy: 11
       - arguments:
           n_cols_per_row: 9
           n_rows: 2
-        energy: 0
+        energy: 21
       - arguments:
           n_cols_per_row: 9
           n_rows: 3
-        energy: 0
+        energy: 31
       - arguments:
           n_cols_per_row: 9
           n_rows: 4
-        energy: 0
+        energy: 41
       - arguments:
           n_cols_per_row: 9
           n_rows: 5
-        energy: 0
+        energy: 51
       - arguments:
           n_cols_per_row: 9
           n_rows: 6
-        energy: 0
+        energy: 61
       - arguments:
           n_cols_per_row: 9
           n_rows: 7
-        energy: 0
+        energy: 71
       - arguments:
           n_cols_per_row: 9
           n_rows: 8
-        energy: 0
+        energy: 81
       - arguments:
           n_cols_per_row: 9
           n_rows: 9
-        energy: 0
+        energy: 91
       - arguments:
           n_cols_per_row: 9
           n_rows: 10
-        energy: 0
+        energy: 101
       - arguments:
           n_cols_per_row: 9
           n_rows: 11
-        energy: 0
+        energy: 111
       - arguments:
           n_cols_per_row: 9
           n_rows: 12
-        energy: 0
+        energy: 121
       - arguments:
           n_cols_per_row: 10
           n_rows: 0
-        energy: 0
+        energy: 1
       - arguments:
           n_cols_per_row: 10
           n_rows: 1
-        energy: 0
+        energy: 12
       - arguments:
           n_cols_per_row: 10
           n_rows: 2
-        energy: 0
+        energy: 23
       - arguments:
           n_cols_per_row: 10
           n_rows: 3
-        energy: 0
+        energy: 34
       - arguments:
           n_cols_per_row: 10
           n_rows: 4
-        energy: 0
+        energy: 45
       - arguments:
           n_cols_per_row: 10
           n_rows: 5
-        energy: 0
+        energy: 56
       - arguments:
           n_cols_per_row: 10
           n_rows: 6
-        energy: 0
+        energy: 67
       - arguments:
           n_cols_per_row: 10
           n_rows: 7
-        energy: 0
+        energy: 78
       - arguments:
           n_cols_per_row: 10
           n_rows: 8
-        energy: 0
+        energy: 89
       - arguments:
           n_cols_per_row: 10
           n_rows: 9
-        energy: 0
+        energy: 100
       - arguments:
           n_cols_per_row: 10
           n_rows: 10
-        energy: 0
+        energy: 111
       - arguments:
           n_cols_per_row: 10
           n_rows: 11
-        energy: 0
+        energy: 122
       - arguments:
           n_cols_per_row: 10
           n_rows: 12
-        energy: 0
+        energy: 133
       - arguments:
           n_cols_per_row: 11
           n_rows: 0
-        energy: 0
+        energy: 1
       - arguments:
           n_cols_per_row: 11
           n_rows: 1
-        energy: 0
+        energy: 13
       - arguments:
           n_cols_per_row: 11
           n_rows: 2
-        energy: 0
+        energy: 25
       - arguments:
           n_cols_per_row: 11
           n_rows: 3
-        energy: 0
+        energy: 37
       - arguments:
           n_cols_per_row: 11
           n_rows: 4
-        energy: 0
+        energy: 49
       - arguments:
           n_cols_per_row: 11
           n_rows: 5
-        energy: 0
+        energy: 61
       - arguments:
           n_cols_per_row: 11
           n_rows: 6
-        energy: 0
+        energy: 73
       - arguments:
           n_cols_per_row: 11
           n_rows: 7
-        energy: 0
+        energy: 85
       - arguments:
           n_cols_per_row: 11
           n_rows: 8
-        energy: 0
+        energy: 97
       - arguments:
           n_cols_per_row: 11
           n_rows: 9
-        energy: 0
+        energy: 109
       - arguments:
           n_cols_per_row: 11
           n_rows: 10
-        energy: 0
+        energy: 121
       - arguments:
           n_cols_per_row: 11
           n_rows: 11
-        energy: 0
+        energy: 133
       - arguments:
           n_cols_per_row: 11
           n_rows: 12
-        energy: 0
+        energy: 145
       - arguments:
           n_cols_per_row: 12
           n_rows: 0
-        energy: 0
+        energy: 1
       - arguments:
           n_cols_per_row: 12
           n_rows: 1
-        energy: 0
+        energy: 14
       - arguments:
           n_cols_per_row: 12
           n_rows: 2
-        energy: 0
+        energy: 27
       - arguments:
           n_cols_per_row: 12
           n_rows: 3
-        energy: 0
+        energy: 40
       - arguments:
           n_cols_per_row: 12
           n_rows: 4
-        energy: 0
+        energy: 53
       - arguments:
           n_cols_per_row: 12
           n_rows: 5
-        energy: 0
+        energy: 66
       - arguments:
           n_cols_per_row: 12
           n_rows: 6
-        energy: 0
+        energy: 79
       - arguments:
           n_cols_per_row: 12
           n_rows: 7
-        energy: 0
+        energy: 92
       - arguments:
           n_cols_per_row: 12
           n_rows: 8
-        energy: 0
+        energy: 105
       - arguments:
           n_cols_per_row: 12
           n_rows: 9
-        energy: 0
+        energy: 118
       - arguments:
           n_cols_per_row: 12
           n_rows: 10
-        energy: 0
+        energy: 131
       - arguments:
           n_cols_per_row: 12
           n_rows: 11
-        energy: 0
+        energy: 144
       - arguments:
           n_cols_per_row: 12
           n_rows: 12
-        energy: 0
+        energy: 157
       - arguments:
           n_cols_per_row: 13
           n_rows: 0
-        energy: 0
+        energy: 1
       - arguments:
           n_cols_per_row: 13
           n_rows: 1
-        energy: 0
+        energy: 15
       - arguments:
           n_cols_per_row: 13
           n_rows: 2
-        energy: 0
+        energy: 29
       - arguments:
           n_cols_per_row: 13
           n_rows: 3
-        energy: 0
+        energy: 43
       - arguments:
           n_cols_per_row: 13
           n_rows: 4
-        energy: 0
+        energy: 57
       - arguments:
           n_cols_per_row: 13
           n_rows: 5
-        energy: 0
+        energy: 71
       - arguments:
           n_cols_per_row: 13
           n_rows: 6
-        energy: 0
+        energy: 85
       - arguments:
           n_cols_per_row: 13
           n_rows: 7
-        energy: 0
+        energy: 99
       - arguments:
           n_cols_per_row: 13
           n_rows: 8
-        energy: 0
+        energy: 113
       - arguments:
           n_cols_per_row: 13
           n_rows: 9
-        energy: 0
+        energy: 127
       - arguments:
           n_cols_per_row: 13
           n_rows: 10
-        energy: 0
+        energy: 141
       - arguments:
           n_cols_per_row: 13
           n_rows: 11
-        energy: 0
+        energy: 155
       - arguments:
           n_cols_per_row: 13
           n_rows: 12
-        energy: 0
+        energy: 169
       - arguments:
           n_cols_per_row: 14
           n_rows: 0
-        energy: 0
+        energy: 1
       - arguments:
           n_cols_per_row: 14
           n_rows: 1
-        energy: 0
+        energy: 16
       - arguments:
           n_cols_per_row: 14
           n_rows: 2
-        energy: 0
+        energy: 31
       - arguments:
           n_cols_per_row: 14
           n_rows: 3
-        energy: 0
+        energy: 46
       - arguments:
           n_cols_per_row: 14
           n_rows: 4
-        energy: 0
+        energy: 61
       - arguments:
           n_cols_per_row: 14
           n_rows: 5
-        energy: 0
+        energy: 76
       - arguments:
           n_cols_per_row: 14
           n_rows: 6
-        energy: 0
+        energy: 91
       - arguments:
           n_cols_per_row: 14
           n_rows: 7
-        energy: 0
+        energy: 106
       - arguments:
           n_cols_per_row: 14
           n_rows: 8
-        energy: 0
+        energy: 121
       - arguments:
           n_cols_per_row: 14
           n_rows: 9
-        energy: 0
+        energy: 136
       - arguments:
           n_cols_per_row: 14
           n_rows: 10
-        energy: 0
+        energy: 151
       - arguments:
           n_cols_per_row: 14
           n_rows: 11
-        energy: 0
+        energy: 166
       - arguments:
           n_cols_per_row: 14
           n_rows: 12
-        energy: 0
+        energy: 181
       transfer_repeated:
       - arguments:
           n_cols_per_row: 0
@@ -2537,51 +2537,51 @@ ERT:
       - arguments:
           n_cols_per_row: 0
           n_rows: 1
-        energy: 0
+        energy: 1
       - arguments:
           n_cols_per_row: 0
           n_rows: 2
-        energy: 0
+        energy: 2
       - arguments:
           n_cols_per_row: 0
           n_rows: 3
-        energy: 0
+        energy: 3
       - arguments:
           n_cols_per_row: 0
           n_rows: 4
-        energy: 0
+        energy: 4
       - arguments:
           n_cols_per_row: 0
           n_rows: 5
-        energy: 0
+        energy: 5
       - arguments:
           n_cols_per_row: 0
           n_rows: 6
-        energy: 0
+        energy: 6
       - arguments:
           n_cols_per_row: 0
           n_rows: 7
-        energy: 0
+        energy: 7
       - arguments:
           n_cols_per_row: 0
           n_rows: 8
-        energy: 0
+        energy: 8
       - arguments:
           n_cols_per_row: 0
           n_rows: 9
-        energy: 0
+        energy: 9
       - arguments:
           n_cols_per_row: 0
           n_rows: 10
-        energy: 0
+        energy: 10
       - arguments:
           n_cols_per_row: 0
           n_rows: 11
-        energy: 0
+        energy: 11
       - arguments:
           n_cols_per_row: 0
           n_rows: 12
-        energy: 0
+        energy: 12
       - arguments:
           n_cols_per_row: 1
           n_rows: 0
@@ -2589,51 +2589,51 @@ ERT:
       - arguments:
           n_cols_per_row: 1
           n_rows: 1
-        energy: 0
+        energy: 2
       - arguments:
           n_cols_per_row: 1
           n_rows: 2
-        energy: 0
+        energy: 4
       - arguments:
           n_cols_per_row: 1
           n_rows: 3
-        energy: 0
+        energy: 6
       - arguments:
           n_cols_per_row: 1
           n_rows: 4
-        energy: 0
+        energy: 8
       - arguments:
           n_cols_per_row: 1
           n_rows: 5
-        energy: 0
+        energy: 10
       - arguments:
           n_cols_per_row: 1
           n_rows: 6
-        energy: 0
+        energy: 12
       - arguments:
           n_cols_per_row: 1
           n_rows: 7
-        energy: 0
+        energy: 14
       - arguments:
           n_cols_per_row: 1
           n_rows: 8
-        energy: 0
+        energy: 16
       - arguments:
           n_cols_per_row: 1
           n_rows: 9
-        energy: 0
+        energy: 18
       - arguments:
           n_cols_per_row: 1
           n_rows: 10
-        energy: 0
+        energy: 20
       - arguments:
           n_cols_per_row: 1
           n_rows: 11
-        energy: 0
+        energy: 22
       - arguments:
           n_cols_per_row: 1
           n_rows: 12
-        energy: 0
+        energy: 24
       - arguments:
           n_cols_per_row: 2
           n_rows: 0
@@ -2641,51 +2641,51 @@ ERT:
       - arguments:
           n_cols_per_row: 2
           n_rows: 1
-        energy: 0
+        energy: 3
       - arguments:
           n_cols_per_row: 2
           n_rows: 2
-        energy: 0
+        energy: 6
       - arguments:
           n_cols_per_row: 2
           n_rows: 3
-        energy: 0
+        energy: 9
       - arguments:
           n_cols_per_row: 2
           n_rows: 4
-        energy: 0
+        energy: 12
       - arguments:
           n_cols_per_row: 2
           n_rows: 5
-        energy: 0
+        energy: 15
       - arguments:
           n_cols_per_row: 2
           n_rows: 6
-        energy: 0
+        energy: 18
       - arguments:
           n_cols_per_row: 2
           n_rows: 7
-        energy: 0
+        energy: 21
       - arguments:
           n_cols_per_row: 2
           n_rows: 8
-        energy: 0
+        energy: 24
       - arguments:
           n_cols_per_row: 2
           n_rows: 9
-        energy: 0
+        energy: 27
       - arguments:
           n_cols_per_row: 2
           n_rows: 10
-        energy: 0
+        energy: 30
       - arguments:
           n_cols_per_row: 2
           n_rows: 11
-        energy: 0
+        energy: 33
       - arguments:
           n_cols_per_row: 2
           n_rows: 12
-        energy: 0
+        energy: 36
       - arguments:
           n_cols_per_row: 3
           n_rows: 0
@@ -2693,51 +2693,51 @@ ERT:
       - arguments:
           n_cols_per_row: 3
           n_rows: 1
-        energy: 0
+        energy: 4
       - arguments:
           n_cols_per_row: 3
           n_rows: 2
-        energy: 0
+        energy: 8
       - arguments:
           n_cols_per_row: 3
           n_rows: 3
-        energy: 0
+        energy: 12
       - arguments:
           n_cols_per_row: 3
           n_rows: 4
-        energy: 0
+        energy: 16
       - arguments:
           n_cols_per_row: 3
           n_rows: 5
-        energy: 0
+        energy: 20
       - arguments:
           n_cols_per_row: 3
           n_rows: 6
-        energy: 0
+        energy: 24
       - arguments:
           n_cols_per_row: 3
           n_rows: 7
-        energy: 0
+        energy: 28
       - arguments:
           n_cols_per_row: 3
           n_rows: 8
-        energy: 0
+        energy: 32
       - arguments:
           n_cols_per_row: 3
           n_rows: 9
-        energy: 0
+        energy: 36
       - arguments:
           n_cols_per_row: 3
           n_rows: 10
-        energy: 0
+        energy: 40
       - arguments:
           n_cols_per_row: 3
           n_rows: 11
-        energy: 0
+        energy: 44
       - arguments:
           n_cols_per_row: 3
           n_rows: 12
-        energy: 0
+        energy: 48
       - arguments:
           n_cols_per_row: 4
           n_rows: 0
@@ -2745,51 +2745,51 @@ ERT:
       - arguments:
           n_cols_per_row: 4
           n_rows: 1
-        energy: 0
+        energy: 5
       - arguments:
           n_cols_per_row: 4
           n_rows: 2
-        energy: 0
+        energy: 10
       - arguments:
           n_cols_per_row: 4
           n_rows: 3
-        energy: 0
+        energy: 15
       - arguments:
           n_cols_per_row: 4
           n_rows: 4
-        energy: 0
+        energy: 20
       - arguments:
           n_cols_per_row: 4
           n_rows: 5
-        energy: 0
+        energy: 25
       - arguments:
           n_cols_per_row: 4
           n_rows: 6
-        energy: 0
+        energy: 30
       - arguments:
           n_cols_per_row: 4
           n_rows: 7
-        energy: 0
+        energy: 35
       - arguments:
           n_cols_per_row: 4
           n_rows: 8
-        energy: 0
+        energy: 40
       - arguments:
           n_cols_per_row: 4
           n_rows: 9
-        energy: 0
+        energy: 45
       - arguments:
           n_cols_per_row: 4
           n_rows: 10
-        energy: 0
+        energy: 50
       - arguments:
           n_cols_per_row: 4
           n_rows: 11
-        energy: 0
+        energy: 55
       - arguments:
           n_cols_per_row: 4
           n_rows: 12
-        energy: 0
+        energy: 60
       - arguments:
           n_cols_per_row: 5
           n_rows: 0
@@ -2797,51 +2797,51 @@ ERT:
       - arguments:
           n_cols_per_row: 5
           n_rows: 1
-        energy: 0
+        energy: 6
       - arguments:
           n_cols_per_row: 5
           n_rows: 2
-        energy: 0
+        energy: 12
       - arguments:
           n_cols_per_row: 5
           n_rows: 3
-        energy: 0
+        energy: 18
       - arguments:
           n_cols_per_row: 5
           n_rows: 4
-        energy: 0
+        energy: 24
       - arguments:
           n_cols_per_row: 5
           n_rows: 5
-        energy: 0
+        energy: 30
       - arguments:
           n_cols_per_row: 5
           n_rows: 6
-        energy: 0
+        energy: 36
       - arguments:
           n_cols_per_row: 5
           n_rows: 7
-        energy: 0
+        energy: 42
       - arguments:
           n_cols_per_row: 5
           n_rows: 8
-        energy: 0
+        energy: 48
       - arguments:
           n_cols_per_row: 5
           n_rows: 9
-        energy: 0
+        energy: 54
       - arguments:
           n_cols_per_row: 5
           n_rows: 10
-        energy: 0
+        energy: 60
       - arguments:
           n_cols_per_row: 5
           n_rows: 11
-        energy: 0
+        energy: 66
       - arguments:
           n_cols_per_row: 5
           n_rows: 12
-        energy: 0
+        energy: 72
       - arguments:
           n_cols_per_row: 6
           n_rows: 0
@@ -2849,51 +2849,51 @@ ERT:
       - arguments:
           n_cols_per_row: 6
           n_rows: 1
-        energy: 0
+        energy: 7
       - arguments:
           n_cols_per_row: 6
           n_rows: 2
-        energy: 0
+        energy: 14
       - arguments:
           n_cols_per_row: 6
           n_rows: 3
-        energy: 0
+        energy: 21
       - arguments:
           n_cols_per_row: 6
           n_rows: 4
-        energy: 0
+        energy: 28
       - arguments:
           n_cols_per_row: 6
           n_rows: 5
-        energy: 0
+        energy: 35
       - arguments:
           n_cols_per_row: 6
           n_rows: 6
-        energy: 0
+        energy: 42
       - arguments:
           n_cols_per_row: 6
           n_rows: 7
-        energy: 0
+        energy: 49
       - arguments:
           n_cols_per_row: 6
           n_rows: 8
-        energy: 0
+        energy: 56
       - arguments:
           n_cols_per_row: 6
           n_rows: 9
-        energy: 0
+        energy: 63
       - arguments:
           n_cols_per_row: 6
           n_rows: 10
-        energy: 0
+        energy: 70
       - arguments:
           n_cols_per_row: 6
           n_rows: 11
-        energy: 0
+        energy: 77
       - arguments:
           n_cols_per_row: 6
           n_rows: 12
-        energy: 0
+        energy: 84
       - arguments:
           n_cols_per_row: 7
           n_rows: 0
@@ -2901,51 +2901,51 @@ ERT:
       - arguments:
           n_cols_per_row: 7
           n_rows: 1
-        energy: 0
+        energy: 8
       - arguments:
           n_cols_per_row: 7
           n_rows: 2
-        energy: 0
+        energy: 16
       - arguments:
           n_cols_per_row: 7
           n_rows: 3
-        energy: 0
+        energy: 24
       - arguments:
           n_cols_per_row: 7
           n_rows: 4
-        energy: 0
+        energy: 32
       - arguments:
           n_cols_per_row: 7
           n_rows: 5
-        energy: 0
+        energy: 40
       - arguments:
           n_cols_per_row: 7
           n_rows: 6
-        energy: 0
+        energy: 48
       - arguments:
           n_cols_per_row: 7
           n_rows: 7
-        energy: 0
+        energy: 56
       - arguments:
           n_cols_per_row: 7
           n_rows: 8
-        energy: 0
+        energy: 64
       - arguments:
           n_cols_per_row: 7
           n_rows: 9
-        energy: 0
+        energy: 72
       - arguments:
           n_cols_per_row: 7
           n_rows: 10
-        energy: 0
+        energy: 80
       - arguments:
           n_cols_per_row: 7
           n_rows: 11
-        energy: 0
+        energy: 88
       - arguments:
           n_cols_per_row: 7
           n_rows: 12
-        energy: 0
+        energy: 96
       - arguments:
           n_cols_per_row: 8
           n_rows: 0
@@ -2953,51 +2953,51 @@ ERT:
       - arguments:
           n_cols_per_row: 8
           n_rows: 1
-        energy: 0
+        energy: 9
       - arguments:
           n_cols_per_row: 8
           n_rows: 2
-        energy: 0
+        energy: 18
       - arguments:
           n_cols_per_row: 8
           n_rows: 3
-        energy: 0
+        energy: 27
       - arguments:
           n_cols_per_row: 8
           n_rows: 4
-        energy: 0
+        energy: 36
       - arguments:
           n_cols_per_row: 8
           n_rows: 5
-        energy: 0
+        energy: 45
       - arguments:
           n_cols_per_row: 8
           n_rows: 6
-        energy: 0
+        energy: 54
       - arguments:
           n_cols_per_row: 8
           n_rows: 7
-        energy: 0
+        energy: 63
       - arguments:
           n_cols_per_row: 8
           n_rows: 8
-        energy: 0
+        energy: 72
       - arguments:
           n_cols_per_row: 8
           n_rows: 9
-        energy: 0
+        energy: 81
       - arguments:
           n_cols_per_row: 8
           n_rows: 10
-        energy: 0
+        energy: 90
       - arguments:
           n_cols_per_row: 8
           n_rows: 11
-        energy: 0
+        energy: 99
       - arguments:
           n_cols_per_row: 8
           n_rows: 12
-        energy: 0
+        energy: 108
       - arguments:
           n_cols_per_row: 9
           n_rows: 0
@@ -3005,51 +3005,51 @@ ERT:
       - arguments:
           n_cols_per_row: 9
           n_rows: 1
-        energy: 0
+        energy: 10
       - arguments:
           n_cols_per_row: 9
           n_rows: 2
-        energy: 0
+        energy: 20
       - arguments:
           n_cols_per_row: 9
           n_rows: 3
-        energy: 0
+        energy: 30
       - arguments:
           n_cols_per_row: 9
           n_rows: 4
-        energy: 0
+        energy: 40
       - arguments:
           n_cols_per_row: 9
           n_rows: 5
-        energy: 0
+        energy: 50
       - arguments:
           n_cols_per_row: 9
           n_rows: 6
-        energy: 0
+        energy: 60
       - arguments:
           n_cols_per_row: 9
           n_rows: 7
-        energy: 0
+        energy: 70
       - arguments:
           n_cols_per_row: 9
           n_rows: 8
-        energy: 0
+        energy: 80
       - arguments:
           n_cols_per_row: 9
           n_rows: 9
-        energy: 0
+        energy: 90
       - arguments:
           n_cols_per_row: 9
           n_rows: 10
-        energy: 0
+        energy: 100
       - arguments:
           n_cols_per_row: 9
           n_rows: 11
-        energy: 0
+        energy: 110
       - arguments:
           n_cols_per_row: 9
           n_rows: 12
-        energy: 0
+        energy: 120
       - arguments:
           n_cols_per_row: 10
           n_rows: 0
@@ -3057,51 +3057,51 @@ ERT:
       - arguments:
           n_cols_per_row: 10
           n_rows: 1
-        energy: 0
+        energy: 11
       - arguments:
           n_cols_per_row: 10
           n_rows: 2
-        energy: 0
+        energy: 22
       - arguments:
           n_cols_per_row: 10
           n_rows: 3
-        energy: 0
+        energy: 33
       - arguments:
           n_cols_per_row: 10
           n_rows: 4
-        energy: 0
+        energy: 44
       - arguments:
           n_cols_per_row: 10
           n_rows: 5
-        energy: 0
+        energy: 55
       - arguments:
           n_cols_per_row: 10
           n_rows: 6
-        energy: 0
+        energy: 66
       - arguments:
           n_cols_per_row: 10
           n_rows: 7
-        energy: 0
+        energy: 77
       - arguments:
           n_cols_per_row: 10
           n_rows: 8
-        energy: 0
+        energy: 88
       - arguments:
           n_cols_per_row: 10
           n_rows: 9
-        energy: 0
+        energy: 99
       - arguments:
           n_cols_per_row: 10
           n_rows: 10
-        energy: 0
+        energy: 110
       - arguments:
           n_cols_per_row: 10
           n_rows: 11
-        energy: 0
+        energy: 121
       - arguments:
           n_cols_per_row: 10
           n_rows: 12
-        energy: 0
+        energy: 132
       - arguments:
           n_cols_per_row: 11
           n_rows: 0
@@ -3109,51 +3109,51 @@ ERT:
       - arguments:
           n_cols_per_row: 11
           n_rows: 1
-        energy: 0
+        energy: 12
       - arguments:
           n_cols_per_row: 11
           n_rows: 2
-        energy: 0
+        energy: 24
       - arguments:
           n_cols_per_row: 11
           n_rows: 3
-        energy: 0
+        energy: 36
       - arguments:
           n_cols_per_row: 11
           n_rows: 4
-        energy: 0
+        energy: 48
       - arguments:
           n_cols_per_row: 11
           n_rows: 5
-        energy: 0
+        energy: 60
       - arguments:
           n_cols_per_row: 11
           n_rows: 6
-        energy: 0
+        energy: 72
       - arguments:
           n_cols_per_row: 11
           n_rows: 7
-        energy: 0
+        energy: 84
       - arguments:
           n_cols_per_row: 11
           n_rows: 8
-        energy: 0
+        energy: 96
       - arguments:
           n_cols_per_row: 11
           n_rows: 9
-        energy: 0
+        energy: 108
       - arguments:
           n_cols_per_row: 11
           n_rows: 10
-        energy: 0
+        energy: 120
       - arguments:
           n_cols_per_row: 11
           n_rows: 11
-        energy: 0
+        energy: 132
       - arguments:
           n_cols_per_row: 11
           n_rows: 12
-        energy: 0
+        energy: 144
       - arguments:
           n_cols_per_row: 12
           n_rows: 0
@@ -3161,51 +3161,51 @@ ERT:
       - arguments:
           n_cols_per_row: 12
           n_rows: 1
-        energy: 0
+        energy: 13
       - arguments:
           n_cols_per_row: 12
           n_rows: 2
-        energy: 0
+        energy: 26
       - arguments:
           n_cols_per_row: 12
           n_rows: 3
-        energy: 0
+        energy: 39
       - arguments:
           n_cols_per_row: 12
           n_rows: 4
-        energy: 0
+        energy: 52
       - arguments:
           n_cols_per_row: 12
           n_rows: 5
-        energy: 0
+        energy: 65
       - arguments:
           n_cols_per_row: 12
           n_rows: 6
-        energy: 0
+        energy: 78
       - arguments:
           n_cols_per_row: 12
           n_rows: 7
-        energy: 0
+        energy: 91
       - arguments:
           n_cols_per_row: 12
           n_rows: 8
-        energy: 0
+        energy: 104
       - arguments:
           n_cols_per_row: 12
           n_rows: 9
-        energy: 0
+        energy: 117
       - arguments:
           n_cols_per_row: 12
           n_rows: 10
-        energy: 0
+        energy: 130
       - arguments:
           n_cols_per_row: 12
           n_rows: 11
-        energy: 0
+        energy: 143
       - arguments:
           n_cols_per_row: 12
           n_rows: 12
-        energy: 0
+        energy: 156
       - arguments:
           n_cols_per_row: 13
           n_rows: 0
@@ -3213,51 +3213,51 @@ ERT:
       - arguments:
           n_cols_per_row: 13
           n_rows: 1
-        energy: 0
+        energy: 14
       - arguments:
           n_cols_per_row: 13
           n_rows: 2
-        energy: 0
+        energy: 28
       - arguments:
           n_cols_per_row: 13
           n_rows: 3
-        energy: 0
+        energy: 42
       - arguments:
           n_cols_per_row: 13
           n_rows: 4
-        energy: 0
+        energy: 56
       - arguments:
           n_cols_per_row: 13
           n_rows: 5
-        energy: 0
+        energy: 70
       - arguments:
           n_cols_per_row: 13
           n_rows: 6
-        energy: 0
+        energy: 84
       - arguments:
           n_cols_per_row: 13
           n_rows: 7
-        energy: 0
+        energy: 98
       - arguments:
           n_cols_per_row: 13
           n_rows: 8
-        energy: 0
+        energy: 112
       - arguments:
           n_cols_per_row: 13
           n_rows: 9
-        energy: 0
+        energy: 126
       - arguments:
           n_cols_per_row: 13
           n_rows: 10
-        energy: 0
+        energy: 140
       - arguments:
           n_cols_per_row: 13
           n_rows: 11
-        energy: 0
+        energy: 154
       - arguments:
           n_cols_per_row: 13
           n_rows: 12
-        energy: 0
+        energy: 168
       - arguments:
           n_cols_per_row: 14
           n_rows: 0
@@ -3265,51 +3265,51 @@ ERT:
       - arguments:
           n_cols_per_row: 14
           n_rows: 1
-        energy: 0
+        energy: 15
       - arguments:
           n_cols_per_row: 14
           n_rows: 2
-        energy: 0
+        energy: 30
       - arguments:
           n_cols_per_row: 14
           n_rows: 3
-        energy: 0
+        energy: 45
       - arguments:
           n_cols_per_row: 14
           n_rows: 4
-        energy: 0
+        energy: 60
       - arguments:
           n_cols_per_row: 14
           n_rows: 5
-        energy: 0
+        energy: 75
       - arguments:
           n_cols_per_row: 14
           n_rows: 6
-        energy: 0
+        energy: 90
       - arguments:
           n_cols_per_row: 14
           n_rows: 7
-        energy: 0
+        energy: 105
       - arguments:
           n_cols_per_row: 14
           n_rows: 8
-        energy: 0
+        energy: 120
       - arguments:
           n_cols_per_row: 14
           n_rows: 9
-        energy: 0
+        energy: 135
       - arguments:
           n_cols_per_row: 14
           n_rows: 10
-        energy: 0
+        energy: 150
       - arguments:
           n_cols_per_row: 14
           n_rows: 11
-        energy: 0
+        energy: 165
       - arguments:
           n_cols_per_row: 14
           n_rows: 12
-        energy: 0
+        energy: 180
     eyeriss_like.psum_write_NoC:
       idle:
         arguments: null
@@ -3318,783 +3318,783 @@ ERT:
       - arguments:
           n_cols_per_row: 0
           n_rows: 0
-        energy: 0
+        energy: 1
       - arguments:
           n_cols_per_row: 0
           n_rows: 1
-        energy: 0
+        energy: 2
       - arguments:
           n_cols_per_row: 0
           n_rows: 2
-        energy: 0
+        energy: 3
       - arguments:
           n_cols_per_row: 0
           n_rows: 3
-        energy: 0
+        energy: 4
       - arguments:
           n_cols_per_row: 0
           n_rows: 4
-        energy: 0
+        energy: 5
       - arguments:
           n_cols_per_row: 0
           n_rows: 5
-        energy: 0
+        energy: 6
       - arguments:
           n_cols_per_row: 0
           n_rows: 6
-        energy: 0
+        energy: 7
       - arguments:
           n_cols_per_row: 0
           n_rows: 7
-        energy: 0
+        energy: 8
       - arguments:
           n_cols_per_row: 0
           n_rows: 8
-        energy: 0
+        energy: 9
       - arguments:
           n_cols_per_row: 0
           n_rows: 9
-        energy: 0
+        energy: 10
       - arguments:
           n_cols_per_row: 0
           n_rows: 10
-        energy: 0
+        energy: 11
       - arguments:
           n_cols_per_row: 0
           n_rows: 11
-        energy: 0
+        energy: 12
       - arguments:
           n_cols_per_row: 0
           n_rows: 12
-        energy: 0
+        energy: 13
       - arguments:
           n_cols_per_row: 1
           n_rows: 0
-        energy: 0
+        energy: 1
       - arguments:
           n_cols_per_row: 1
           n_rows: 1
-        energy: 0
+        energy: 3
       - arguments:
           n_cols_per_row: 1
           n_rows: 2
-        energy: 0
+        energy: 5
       - arguments:
           n_cols_per_row: 1
           n_rows: 3
-        energy: 0
+        energy: 7
       - arguments:
           n_cols_per_row: 1
           n_rows: 4
-        energy: 0
+        energy: 9
       - arguments:
           n_cols_per_row: 1
           n_rows: 5
-        energy: 0
+        energy: 11
       - arguments:
           n_cols_per_row: 1
           n_rows: 6
-        energy: 0
+        energy: 13
       - arguments:
           n_cols_per_row: 1
           n_rows: 7
-        energy: 0
+        energy: 15
       - arguments:
           n_cols_per_row: 1
           n_rows: 8
-        energy: 0
+        energy: 17
       - arguments:
           n_cols_per_row: 1
           n_rows: 9
-        energy: 0
+        energy: 19
       - arguments:
           n_cols_per_row: 1
           n_rows: 10
-        energy: 0
+        energy: 21
       - arguments:
           n_cols_per_row: 1
           n_rows: 11
-        energy: 0
+        energy: 23
       - arguments:
           n_cols_per_row: 1
           n_rows: 12
-        energy: 0
+        energy: 25
       - arguments:
           n_cols_per_row: 2
           n_rows: 0
-        energy: 0
+        energy: 1
       - arguments:
           n_cols_per_row: 2
           n_rows: 1
-        energy: 0
+        energy: 4
       - arguments:
           n_cols_per_row: 2
           n_rows: 2
-        energy: 0
+        energy: 7
       - arguments:
           n_cols_per_row: 2
           n_rows: 3
-        energy: 0
+        energy: 10
       - arguments:
           n_cols_per_row: 2
           n_rows: 4
-        energy: 0
+        energy: 13
       - arguments:
           n_cols_per_row: 2
           n_rows: 5
-        energy: 0
+        energy: 16
       - arguments:
           n_cols_per_row: 2
           n_rows: 6
-        energy: 0
+        energy: 19
       - arguments:
           n_cols_per_row: 2
           n_rows: 7
-        energy: 0
+        energy: 22
       - arguments:
           n_cols_per_row: 2
           n_rows: 8
-        energy: 0
+        energy: 25
       - arguments:
           n_cols_per_row: 2
           n_rows: 9
-        energy: 0
+        energy: 28
       - arguments:
           n_cols_per_row: 2
           n_rows: 10
-        energy: 0
+        energy: 31
       - arguments:
           n_cols_per_row: 2
           n_rows: 11
-        energy: 0
+        energy: 34
       - arguments:
           n_cols_per_row: 2
           n_rows: 12
-        energy: 0
+        energy: 37
       - arguments:
           n_cols_per_row: 3
           n_rows: 0
-        energy: 0
+        energy: 1
       - arguments:
           n_cols_per_row: 3
           n_rows: 1
-        energy: 0
+        energy: 5
       - arguments:
           n_cols_per_row: 3
           n_rows: 2
-        energy: 0
+        energy: 9
       - arguments:
           n_cols_per_row: 3
           n_rows: 3
-        energy: 0
+        energy: 13
       - arguments:
           n_cols_per_row: 3
           n_rows: 4
-        energy: 0
+        energy: 17
       - arguments:
           n_cols_per_row: 3
           n_rows: 5
-        energy: 0
+        energy: 21
       - arguments:
           n_cols_per_row: 3
           n_rows: 6
-        energy: 0
+        energy: 25
       - arguments:
           n_cols_per_row: 3
           n_rows: 7
-        energy: 0
+        energy: 29
       - arguments:
           n_cols_per_row: 3
           n_rows: 8
-        energy: 0
+        energy: 33
       - arguments:
           n_cols_per_row: 3
           n_rows: 9
-        energy: 0
+        energy: 37
       - arguments:
           n_cols_per_row: 3
           n_rows: 10
-        energy: 0
+        energy: 41
       - arguments:
           n_cols_per_row: 3
           n_rows: 11
-        energy: 0
+        energy: 45
       - arguments:
           n_cols_per_row: 3
           n_rows: 12
-        energy: 0
+        energy: 49
       - arguments:
           n_cols_per_row: 4
           n_rows: 0
-        energy: 0
+        energy: 1
       - arguments:
           n_cols_per_row: 4
           n_rows: 1
-        energy: 0
+        energy: 6
       - arguments:
           n_cols_per_row: 4
           n_rows: 2
-        energy: 0
+        energy: 11
       - arguments:
           n_cols_per_row: 4
           n_rows: 3
-        energy: 0
+        energy: 16
       - arguments:
           n_cols_per_row: 4
           n_rows: 4
-        energy: 0
+        energy: 21
       - arguments:
           n_cols_per_row: 4
           n_rows: 5
-        energy: 0
+        energy: 26
       - arguments:
           n_cols_per_row: 4
           n_rows: 6
-        energy: 0
+        energy: 31
       - arguments:
           n_cols_per_row: 4
           n_rows: 7
-        energy: 0
+        energy: 36
       - arguments:
           n_cols_per_row: 4
           n_rows: 8
-        energy: 0
+        energy: 41
       - arguments:
           n_cols_per_row: 4
           n_rows: 9
-        energy: 0
+        energy: 46
       - arguments:
           n_cols_per_row: 4
           n_rows: 10
-        energy: 0
+        energy: 51
       - arguments:
           n_cols_per_row: 4
           n_rows: 11
-        energy: 0
+        energy: 56
       - arguments:
           n_cols_per_row: 4
           n_rows: 12
-        energy: 0
+        energy: 61
       - arguments:
           n_cols_per_row: 5
           n_rows: 0
-        energy: 0
+        energy: 1
       - arguments:
           n_cols_per_row: 5
           n_rows: 1
-        energy: 0
+        energy: 7
       - arguments:
           n_cols_per_row: 5
           n_rows: 2
-        energy: 0
+        energy: 13
       - arguments:
           n_cols_per_row: 5
           n_rows: 3
-        energy: 0
+        energy: 19
       - arguments:
           n_cols_per_row: 5
           n_rows: 4
-        energy: 0
+        energy: 25
       - arguments:
           n_cols_per_row: 5
           n_rows: 5
-        energy: 0
+        energy: 31
       - arguments:
           n_cols_per_row: 5
           n_rows: 6
-        energy: 0
+        energy: 37
       - arguments:
           n_cols_per_row: 5
           n_rows: 7
-        energy: 0
+        energy: 43
       - arguments:
           n_cols_per_row: 5
           n_rows: 8
-        energy: 0
+        energy: 49
       - arguments:
           n_cols_per_row: 5
           n_rows: 9
-        energy: 0
+        energy: 55
       - arguments:
           n_cols_per_row: 5
           n_rows: 10
-        energy: 0
+        energy: 61
       - arguments:
           n_cols_per_row: 5
           n_rows: 11
-        energy: 0
+        energy: 67
       - arguments:
           n_cols_per_row: 5
           n_rows: 12
-        energy: 0
+        energy: 73
       - arguments:
           n_cols_per_row: 6
           n_rows: 0
-        energy: 0
+        energy: 1
       - arguments:
           n_cols_per_row: 6
           n_rows: 1
-        energy: 0
+        energy: 8
       - arguments:
           n_cols_per_row: 6
           n_rows: 2
-        energy: 0
+        energy: 15
       - arguments:
           n_cols_per_row: 6
           n_rows: 3
-        energy: 0
+        energy: 22
       - arguments:
           n_cols_per_row: 6
           n_rows: 4
-        energy: 0
+        energy: 29
       - arguments:
           n_cols_per_row: 6
           n_rows: 5
-        energy: 0
+        energy: 36
       - arguments:
           n_cols_per_row: 6
           n_rows: 6
-        energy: 0
+        energy: 43
       - arguments:
           n_cols_per_row: 6
           n_rows: 7
-        energy: 0
+        energy: 50
       - arguments:
           n_cols_per_row: 6
           n_rows: 8
-        energy: 0
+        energy: 57
       - arguments:
           n_cols_per_row: 6
           n_rows: 9
-        energy: 0
+        energy: 64
       - arguments:
           n_cols_per_row: 6
           n_rows: 10
-        energy: 0
+        energy: 71
       - arguments:
           n_cols_per_row: 6
           n_rows: 11
-        energy: 0
+        energy: 78
       - arguments:
           n_cols_per_row: 6
           n_rows: 12
-        energy: 0
+        energy: 85
       - arguments:
           n_cols_per_row: 7
           n_rows: 0
-        energy: 0
+        energy: 1
       - arguments:
           n_cols_per_row: 7
           n_rows: 1
-        energy: 0
+        energy: 9
       - arguments:
           n_cols_per_row: 7
           n_rows: 2
-        energy: 0
+        energy: 17
       - arguments:
           n_cols_per_row: 7
           n_rows: 3
-        energy: 0
+        energy: 25
       - arguments:
           n_cols_per_row: 7
           n_rows: 4
-        energy: 0
+        energy: 33
       - arguments:
           n_cols_per_row: 7
           n_rows: 5
-        energy: 0
+        energy: 41
       - arguments:
           n_cols_per_row: 7
           n_rows: 6
-        energy: 0
+        energy: 49
       - arguments:
           n_cols_per_row: 7
           n_rows: 7
-        energy: 0
+        energy: 57
       - arguments:
           n_cols_per_row: 7
           n_rows: 8
-        energy: 0
+        energy: 65
       - arguments:
           n_cols_per_row: 7
           n_rows: 9
-        energy: 0
+        energy: 73
       - arguments:
           n_cols_per_row: 7
           n_rows: 10
-        energy: 0
+        energy: 81
       - arguments:
           n_cols_per_row: 7
           n_rows: 11
-        energy: 0
+        energy: 89
       - arguments:
           n_cols_per_row: 7
           n_rows: 12
-        energy: 0
+        energy: 97
       - arguments:
           n_cols_per_row: 8
           n_rows: 0
-        energy: 0
+        energy: 1
       - arguments:
           n_cols_per_row: 8
           n_rows: 1
-        energy: 0
+        energy: 10
       - arguments:
           n_cols_per_row: 8
           n_rows: 2
-        energy: 0
+        energy: 19
       - arguments:
           n_cols_per_row: 8
           n_rows: 3
-        energy: 0
+        energy: 28
       - arguments:
           n_cols_per_row: 8
           n_rows: 4
-        energy: 0
+        energy: 37
       - arguments:
           n_cols_per_row: 8
           n_rows: 5
-        energy: 0
+        energy: 46
       - arguments:
           n_cols_per_row: 8
           n_rows: 6
-        energy: 0
+        energy: 55
       - arguments:
           n_cols_per_row: 8
           n_rows: 7
-        energy: 0
+        energy: 64
       - arguments:
           n_cols_per_row: 8
           n_rows: 8
-        energy: 0
+        energy: 73
       - arguments:
           n_cols_per_row: 8
           n_rows: 9
-        energy: 0
+        energy: 82
       - arguments:
           n_cols_per_row: 8
           n_rows: 10
-        energy: 0
+        energy: 91
       - arguments:
           n_cols_per_row: 8
           n_rows: 11
-        energy: 0
+        energy: 100
       - arguments:
           n_cols_per_row: 8
           n_rows: 12
-        energy: 0
+        energy: 109
       - arguments:
           n_cols_per_row: 9
           n_rows: 0
-        energy: 0
+        energy: 1
       - arguments:
           n_cols_per_row: 9
           n_rows: 1
-        energy: 0
+        energy: 11
       - arguments:
           n_cols_per_row: 9
           n_rows: 2
-        energy: 0
+        energy: 21
       - arguments:
           n_cols_per_row: 9
           n_rows: 3
-        energy: 0
+        energy: 31
       - arguments:
           n_cols_per_row: 9
           n_rows: 4
-        energy: 0
+        energy: 41
       - arguments:
           n_cols_per_row: 9
           n_rows: 5
-        energy: 0
+        energy: 51
       - arguments:
           n_cols_per_row: 9
           n_rows: 6
-        energy: 0
+        energy: 61
       - arguments:
           n_cols_per_row: 9
           n_rows: 7
-        energy: 0
+        energy: 71
       - arguments:
           n_cols_per_row: 9
           n_rows: 8
-        energy: 0
+        energy: 81
       - arguments:
           n_cols_per_row: 9
           n_rows: 9
-        energy: 0
+        energy: 91
       - arguments:
           n_cols_per_row: 9
           n_rows: 10
-        energy: 0
+        energy: 101
       - arguments:
           n_cols_per_row: 9
           n_rows: 11
-        energy: 0
+        energy: 111
       - arguments:
           n_cols_per_row: 9
           n_rows: 12
-        energy: 0
+        energy: 121
       - arguments:
           n_cols_per_row: 10
           n_rows: 0
-        energy: 0
+        energy: 1
       - arguments:
           n_cols_per_row: 10
           n_rows: 1
-        energy: 0
+        energy: 12
       - arguments:
           n_cols_per_row: 10
           n_rows: 2
-        energy: 0
+        energy: 23
       - arguments:
           n_cols_per_row: 10
           n_rows: 3
-        energy: 0
+        energy: 34
       - arguments:
           n_cols_per_row: 10
           n_rows: 4
-        energy: 0
+        energy: 45
       - arguments:
           n_cols_per_row: 10
           n_rows: 5
-        energy: 0
+        energy: 56
       - arguments:
           n_cols_per_row: 10
           n_rows: 6
-        energy: 0
+        energy: 67
       - arguments:
           n_cols_per_row: 10
           n_rows: 7
-        energy: 0
+        energy: 78
       - arguments:
           n_cols_per_row: 10
           n_rows: 8
-        energy: 0
+        energy: 89
       - arguments:
           n_cols_per_row: 10
           n_rows: 9
-        energy: 0
+        energy: 100
       - arguments:
           n_cols_per_row: 10
           n_rows: 10
-        energy: 0
+        energy: 111
       - arguments:
           n_cols_per_row: 10
           n_rows: 11
-        energy: 0
+        energy: 122
       - arguments:
           n_cols_per_row: 10
           n_rows: 12
-        energy: 0
+        energy: 133
       - arguments:
           n_cols_per_row: 11
           n_rows: 0
-        energy: 0
+        energy: 1
       - arguments:
           n_cols_per_row: 11
           n_rows: 1
-        energy: 0
+        energy: 13
       - arguments:
           n_cols_per_row: 11
           n_rows: 2
-        energy: 0
+        energy: 25
       - arguments:
           n_cols_per_row: 11
           n_rows: 3
-        energy: 0
+        energy: 37
       - arguments:
           n_cols_per_row: 11
           n_rows: 4
-        energy: 0
+        energy: 49
       - arguments:
           n_cols_per_row: 11
           n_rows: 5
-        energy: 0
+        energy: 61
       - arguments:
           n_cols_per_row: 11
           n_rows: 6
-        energy: 0
+        energy: 73
       - arguments:
           n_cols_per_row: 11
           n_rows: 7
-        energy: 0
+        energy: 85
       - arguments:
           n_cols_per_row: 11
           n_rows: 8
-        energy: 0
+        energy: 97
       - arguments:
           n_cols_per_row: 11
           n_rows: 9
-        energy: 0
+        energy: 109
       - arguments:
           n_cols_per_row: 11
           n_rows: 10
-        energy: 0
+        energy: 121
       - arguments:
           n_cols_per_row: 11
           n_rows: 11
-        energy: 0
+        energy: 133
       - arguments:
           n_cols_per_row: 11
           n_rows: 12
-        energy: 0
+        energy: 145
       - arguments:
           n_cols_per_row: 12
           n_rows: 0
-        energy: 0
+        energy: 1
       - arguments:
           n_cols_per_row: 12
           n_rows: 1
-        energy: 0
+        energy: 14
       - arguments:
           n_cols_per_row: 12
           n_rows: 2
-        energy: 0
+        energy: 27
       - arguments:
           n_cols_per_row: 12
           n_rows: 3
-        energy: 0
+        energy: 40
       - arguments:
           n_cols_per_row: 12
           n_rows: 4
-        energy: 0
+        energy: 53
       - arguments:
           n_cols_per_row: 12
           n_rows: 5
-        energy: 0
+        energy: 66
       - arguments:
           n_cols_per_row: 12
           n_rows: 6
-        energy: 0
+        energy: 79
       - arguments:
           n_cols_per_row: 12
           n_rows: 7
-        energy: 0
+        energy: 92
       - arguments:
           n_cols_per_row: 12
           n_rows: 8
-        energy: 0
+        energy: 105
       - arguments:
           n_cols_per_row: 12
           n_rows: 9
-        energy: 0
+        energy: 118
       - arguments:
           n_cols_per_row: 12
           n_rows: 10
-        energy: 0
+        energy: 131
       - arguments:
           n_cols_per_row: 12
           n_rows: 11
-        energy: 0
+        energy: 144
       - arguments:
           n_cols_per_row: 12
           n_rows: 12
-        energy: 0
+        energy: 157
       - arguments:
           n_cols_per_row: 13
           n_rows: 0
-        energy: 0
+        energy: 1
       - arguments:
           n_cols_per_row: 13
           n_rows: 1
-        energy: 0
+        energy: 15
       - arguments:
           n_cols_per_row: 13
           n_rows: 2
-        energy: 0
+        energy: 29
       - arguments:
           n_cols_per_row: 13
           n_rows: 3
-        energy: 0
+        energy: 43
       - arguments:
           n_cols_per_row: 13
           n_rows: 4
-        energy: 0
+        energy: 57
       - arguments:
           n_cols_per_row: 13
           n_rows: 5
-        energy: 0
+        energy: 71
       - arguments:
           n_cols_per_row: 13
           n_rows: 6
-        energy: 0
+        energy: 85
       - arguments:
           n_cols_per_row: 13
           n_rows: 7
-        energy: 0
+        energy: 99
       - arguments:
           n_cols_per_row: 13
           n_rows: 8
-        energy: 0
+        energy: 113
       - arguments:
           n_cols_per_row: 13
           n_rows: 9
-        energy: 0
+        energy: 127
       - arguments:
           n_cols_per_row: 13
           n_rows: 10
-        energy: 0
+        energy: 141
       - arguments:
           n_cols_per_row: 13
           n_rows: 11
-        energy: 0
+        energy: 155
       - arguments:
           n_cols_per_row: 13
           n_rows: 12
-        energy: 0
+        energy: 169
       - arguments:
           n_cols_per_row: 14
           n_rows: 0
-        energy: 0
+        energy: 1
       - arguments:
           n_cols_per_row: 14
           n_rows: 1
-        energy: 0
+        energy: 16
       - arguments:
           n_cols_per_row: 14
           n_rows: 2
-        energy: 0
+        energy: 31
       - arguments:
           n_cols_per_row: 14
           n_rows: 3
-        energy: 0
+        energy: 46
       - arguments:
           n_cols_per_row: 14
           n_rows: 4
-        energy: 0
+        energy: 61
       - arguments:
           n_cols_per_row: 14
           n_rows: 5
-        energy: 0
+        energy: 76
       - arguments:
           n_cols_per_row: 14
           n_rows: 6
-        energy: 0
+        energy: 91
       - arguments:
           n_cols_per_row: 14
           n_rows: 7
-        energy: 0
+        energy: 106
       - arguments:
           n_cols_per_row: 14
           n_rows: 8
-        energy: 0
+        energy: 121
       - arguments:
           n_cols_per_row: 14
           n_rows: 9
-        energy: 0
+        energy: 136
       - arguments:
           n_cols_per_row: 14
           n_rows: 10
-        energy: 0
+        energy: 151
       - arguments:
           n_cols_per_row: 14
           n_rows: 11
-        energy: 0
+        energy: 166
       - arguments:
           n_cols_per_row: 14
           n_rows: 12
-        energy: 0
+        energy: 181
       transfer_repeated:
       - arguments:
           n_cols_per_row: 0
@@ -4103,51 +4103,51 @@ ERT:
       - arguments:
           n_cols_per_row: 0
           n_rows: 1
-        energy: 0
+        energy: 1
       - arguments:
           n_cols_per_row: 0
           n_rows: 2
-        energy: 0
+        energy: 2
       - arguments:
           n_cols_per_row: 0
           n_rows: 3
-        energy: 0
+        energy: 3
       - arguments:
           n_cols_per_row: 0
           n_rows: 4
-        energy: 0
+        energy: 4
       - arguments:
           n_cols_per_row: 0
           n_rows: 5
-        energy: 0
+        energy: 5
       - arguments:
           n_cols_per_row: 0
           n_rows: 6
-        energy: 0
+        energy: 6
       - arguments:
           n_cols_per_row: 0
           n_rows: 7
-        energy: 0
+        energy: 7
       - arguments:
           n_cols_per_row: 0
           n_rows: 8
-        energy: 0
+        energy: 8
       - arguments:
           n_cols_per_row: 0
           n_rows: 9
-        energy: 0
+        energy: 9
       - arguments:
           n_cols_per_row: 0
           n_rows: 10
-        energy: 0
+        energy: 10
       - arguments:
           n_cols_per_row: 0
           n_rows: 11
-        energy: 0
+        energy: 11
       - arguments:
           n_cols_per_row: 0
           n_rows: 12
-        energy: 0
+        energy: 12
       - arguments:
           n_cols_per_row: 1
           n_rows: 0
@@ -4155,51 +4155,51 @@ ERT:
       - arguments:
           n_cols_per_row: 1
           n_rows: 1
-        energy: 0
+        energy: 2
       - arguments:
           n_cols_per_row: 1
           n_rows: 2
-        energy: 0
+        energy: 4
       - arguments:
           n_cols_per_row: 1
           n_rows: 3
-        energy: 0
+        energy: 6
       - arguments:
           n_cols_per_row: 1
           n_rows: 4
-        energy: 0
+        energy: 8
       - arguments:
           n_cols_per_row: 1
           n_rows: 5
-        energy: 0
+        energy: 10
       - arguments:
           n_cols_per_row: 1
           n_rows: 6
-        energy: 0
+        energy: 12
       - arguments:
           n_cols_per_row: 1
           n_rows: 7
-        energy: 0
+        energy: 14
       - arguments:
           n_cols_per_row: 1
           n_rows: 8
-        energy: 0
+        energy: 16
       - arguments:
           n_cols_per_row: 1
           n_rows: 9
-        energy: 0
+        energy: 18
       - arguments:
           n_cols_per_row: 1
           n_rows: 10
-        energy: 0
+        energy: 20
       - arguments:
           n_cols_per_row: 1
           n_rows: 11
-        energy: 0
+        energy: 22
       - arguments:
           n_cols_per_row: 1
           n_rows: 12
-        energy: 0
+        energy: 24
       - arguments:
           n_cols_per_row: 2
           n_rows: 0
@@ -4207,51 +4207,51 @@ ERT:
       - arguments:
           n_cols_per_row: 2
           n_rows: 1
-        energy: 0
+        energy: 3
       - arguments:
           n_cols_per_row: 2
           n_rows: 2
-        energy: 0
+        energy: 6
       - arguments:
           n_cols_per_row: 2
           n_rows: 3
-        energy: 0
+        energy: 9
       - arguments:
           n_cols_per_row: 2
           n_rows: 4
-        energy: 0
+        energy: 12
       - arguments:
           n_cols_per_row: 2
           n_rows: 5
-        energy: 0
+        energy: 15
       - arguments:
           n_cols_per_row: 2
           n_rows: 6
-        energy: 0
+        energy: 18
       - arguments:
           n_cols_per_row: 2
           n_rows: 7
-        energy: 0
+        energy: 21
       - arguments:
           n_cols_per_row: 2
           n_rows: 8
-        energy: 0
+        energy: 24
       - arguments:
           n_cols_per_row: 2
           n_rows: 9
-        energy: 0
+        energy: 27
       - arguments:
           n_cols_per_row: 2
           n_rows: 10
-        energy: 0
+        energy: 30
       - arguments:
           n_cols_per_row: 2
           n_rows: 11
-        energy: 0
+        energy: 33
       - arguments:
           n_cols_per_row: 2
           n_rows: 12
-        energy: 0
+        energy: 36
       - arguments:
           n_cols_per_row: 3
           n_rows: 0
@@ -4259,51 +4259,51 @@ ERT:
       - arguments:
           n_cols_per_row: 3
           n_rows: 1
-        energy: 0
+        energy: 4
       - arguments:
           n_cols_per_row: 3
           n_rows: 2
-        energy: 0
+        energy: 8
       - arguments:
           n_cols_per_row: 3
           n_rows: 3
-        energy: 0
+        energy: 12
       - arguments:
           n_cols_per_row: 3
           n_rows: 4
-        energy: 0
+        energy: 16
       - arguments:
           n_cols_per_row: 3
           n_rows: 5
-        energy: 0
+        energy: 20
       - arguments:
           n_cols_per_row: 3
           n_rows: 6
-        energy: 0
+        energy: 24
       - arguments:
           n_cols_per_row: 3
           n_rows: 7
-        energy: 0
+        energy: 28
       - arguments:
           n_cols_per_row: 3
           n_rows: 8
-        energy: 0
+        energy: 32
       - arguments:
           n_cols_per_row: 3
           n_rows: 9
-        energy: 0
+        energy: 36
       - arguments:
           n_cols_per_row: 3
           n_rows: 10
-        energy: 0
+        energy: 40
       - arguments:
           n_cols_per_row: 3
           n_rows: 11
-        energy: 0
+        energy: 44
       - arguments:
           n_cols_per_row: 3
           n_rows: 12
-        energy: 0
+        energy: 48
       - arguments:
           n_cols_per_row: 4
           n_rows: 0
@@ -4311,51 +4311,51 @@ ERT:
       - arguments:
           n_cols_per_row: 4
           n_rows: 1
-        energy: 0
+        energy: 5
       - arguments:
           n_cols_per_row: 4
           n_rows: 2
-        energy: 0
+        energy: 10
       - arguments:
           n_cols_per_row: 4
           n_rows: 3
-        energy: 0
+        energy: 15
       - arguments:
           n_cols_per_row: 4
           n_rows: 4
-        energy: 0
+        energy: 20
       - arguments:
           n_cols_per_row: 4
           n_rows: 5
-        energy: 0
+        energy: 25
       - arguments:
           n_cols_per_row: 4
           n_rows: 6
-        energy: 0
+        energy: 30
       - arguments:
           n_cols_per_row: 4
           n_rows: 7
-        energy: 0
+        energy: 35
       - arguments:
           n_cols_per_row: 4
           n_rows: 8
-        energy: 0
+        energy: 40
       - arguments:
           n_cols_per_row: 4
           n_rows: 9
-        energy: 0
+        energy: 45
       - arguments:
           n_cols_per_row: 4
           n_rows: 10
-        energy: 0
+        energy: 50
       - arguments:
           n_cols_per_row: 4
           n_rows: 11
-        energy: 0
+        energy: 55
       - arguments:
           n_cols_per_row: 4
           n_rows: 12
-        energy: 0
+        energy: 60
       - arguments:
           n_cols_per_row: 5
           n_rows: 0
@@ -4363,51 +4363,51 @@ ERT:
       - arguments:
           n_cols_per_row: 5
           n_rows: 1
-        energy: 0
+        energy: 6
       - arguments:
           n_cols_per_row: 5
           n_rows: 2
-        energy: 0
+        energy: 12
       - arguments:
           n_cols_per_row: 5
           n_rows: 3
-        energy: 0
+        energy: 18
       - arguments:
           n_cols_per_row: 5
           n_rows: 4
-        energy: 0
+        energy: 24
       - arguments:
           n_cols_per_row: 5
           n_rows: 5
-        energy: 0
+        energy: 30
       - arguments:
           n_cols_per_row: 5
           n_rows: 6
-        energy: 0
+        energy: 36
       - arguments:
           n_cols_per_row: 5
           n_rows: 7
-        energy: 0
+        energy: 42
       - arguments:
           n_cols_per_row: 5
           n_rows: 8
-        energy: 0
+        energy: 48
       - arguments:
           n_cols_per_row: 5
           n_rows: 9
-        energy: 0
+        energy: 54
       - arguments:
           n_cols_per_row: 5
           n_rows: 10
-        energy: 0
+        energy: 60
       - arguments:
           n_cols_per_row: 5
           n_rows: 11
-        energy: 0
+        energy: 66
       - arguments:
           n_cols_per_row: 5
           n_rows: 12
-        energy: 0
+        energy: 72
       - arguments:
           n_cols_per_row: 6
           n_rows: 0
@@ -4415,51 +4415,51 @@ ERT:
       - arguments:
           n_cols_per_row: 6
           n_rows: 1
-        energy: 0
+        energy: 7
       - arguments:
           n_cols_per_row: 6
           n_rows: 2
-        energy: 0
+        energy: 14
       - arguments:
           n_cols_per_row: 6
           n_rows: 3
-        energy: 0
+        energy: 21
       - arguments:
           n_cols_per_row: 6
           n_rows: 4
-        energy: 0
+        energy: 28
       - arguments:
           n_cols_per_row: 6
           n_rows: 5
-        energy: 0
+        energy: 35
       - arguments:
           n_cols_per_row: 6
           n_rows: 6
-        energy: 0
+        energy: 42
       - arguments:
           n_cols_per_row: 6
           n_rows: 7
-        energy: 0
+        energy: 49
       - arguments:
           n_cols_per_row: 6
           n_rows: 8
-        energy: 0
+        energy: 56
       - arguments:
           n_cols_per_row: 6
           n_rows: 9
-        energy: 0
+        energy: 63
       - arguments:
           n_cols_per_row: 6
           n_rows: 10
-        energy: 0
+        energy: 70
       - arguments:
           n_cols_per_row: 6
           n_rows: 11
-        energy: 0
+        energy: 77
       - arguments:
           n_cols_per_row: 6
           n_rows: 12
-        energy: 0
+        energy: 84
       - arguments:
           n_cols_per_row: 7
           n_rows: 0
@@ -4467,51 +4467,51 @@ ERT:
       - arguments:
           n_cols_per_row: 7
           n_rows: 1
-        energy: 0
+        energy: 8
       - arguments:
           n_cols_per_row: 7
           n_rows: 2
-        energy: 0
+        energy: 16
       - arguments:
           n_cols_per_row: 7
           n_rows: 3
-        energy: 0
+        energy: 24
       - arguments:
           n_cols_per_row: 7
           n_rows: 4
-        energy: 0
+        energy: 32
       - arguments:
           n_cols_per_row: 7
           n_rows: 5
-        energy: 0
+        energy: 40
       - arguments:
           n_cols_per_row: 7
           n_rows: 6
-        energy: 0
+        energy: 48
       - arguments:
           n_cols_per_row: 7
           n_rows: 7
-        energy: 0
+        energy: 56
       - arguments:
           n_cols_per_row: 7
           n_rows: 8
-        energy: 0
+        energy: 64
       - arguments:
           n_cols_per_row: 7
           n_rows: 9
-        energy: 0
+        energy: 72
       - arguments:
           n_cols_per_row: 7
           n_rows: 10
-        energy: 0
+        energy: 80
       - arguments:
           n_cols_per_row: 7
           n_rows: 11
-        energy: 0
+        energy: 88
       - arguments:
           n_cols_per_row: 7
           n_rows: 12
-        energy: 0
+        energy: 96
       - arguments:
           n_cols_per_row: 8
           n_rows: 0
@@ -4519,51 +4519,51 @@ ERT:
       - arguments:
           n_cols_per_row: 8
           n_rows: 1
-        energy: 0
+        energy: 9
       - arguments:
           n_cols_per_row: 8
           n_rows: 2
-        energy: 0
+        energy: 18
       - arguments:
           n_cols_per_row: 8
           n_rows: 3
-        energy: 0
+        energy: 27
       - arguments:
           n_cols_per_row: 8
           n_rows: 4
-        energy: 0
+        energy: 36
       - arguments:
           n_cols_per_row: 8
           n_rows: 5
-        energy: 0
+        energy: 45
       - arguments:
           n_cols_per_row: 8
           n_rows: 6
-        energy: 0
+        energy: 54
       - arguments:
           n_cols_per_row: 8
           n_rows: 7
-        energy: 0
+        energy: 63
       - arguments:
           n_cols_per_row: 8
           n_rows: 8
-        energy: 0
+        energy: 72
       - arguments:
           n_cols_per_row: 8
           n_rows: 9
-        energy: 0
+        energy: 81
       - arguments:
           n_cols_per_row: 8
           n_rows: 10
-        energy: 0
+        energy: 90
       - arguments:
           n_cols_per_row: 8
           n_rows: 11
-        energy: 0
+        energy: 99
       - arguments:
           n_cols_per_row: 8
           n_rows: 12
-        energy: 0
+        energy: 108
       - arguments:
           n_cols_per_row: 9
           n_rows: 0
@@ -4571,51 +4571,51 @@ ERT:
       - arguments:
           n_cols_per_row: 9
           n_rows: 1
-        energy: 0
+        energy: 10
       - arguments:
           n_cols_per_row: 9
           n_rows: 2
-        energy: 0
+        energy: 20
       - arguments:
           n_cols_per_row: 9
           n_rows: 3
-        energy: 0
+        energy: 30
       - arguments:
           n_cols_per_row: 9
           n_rows: 4
-        energy: 0
+        energy: 40
       - arguments:
           n_cols_per_row: 9
           n_rows: 5
-        energy: 0
+        energy: 50
       - arguments:
           n_cols_per_row: 9
           n_rows: 6
-        energy: 0
+        energy: 60
       - arguments:
           n_cols_per_row: 9
           n_rows: 7
-        energy: 0
+        energy: 70
       - arguments:
           n_cols_per_row: 9
           n_rows: 8
-        energy: 0
+        energy: 80
       - arguments:
           n_cols_per_row: 9
           n_rows: 9
-        energy: 0
+        energy: 90
       - arguments:
           n_cols_per_row: 9
           n_rows: 10
-        energy: 0
+        energy: 100
       - arguments:
           n_cols_per_row: 9
           n_rows: 11
-        energy: 0
+        energy: 110
       - arguments:
           n_cols_per_row: 9
           n_rows: 12
-        energy: 0
+        energy: 120
       - arguments:
           n_cols_per_row: 10
           n_rows: 0
@@ -4623,51 +4623,51 @@ ERT:
       - arguments:
           n_cols_per_row: 10
           n_rows: 1
-        energy: 0
+        energy: 11
       - arguments:
           n_cols_per_row: 10
           n_rows: 2
-        energy: 0
+        energy: 22
       - arguments:
           n_cols_per_row: 10
           n_rows: 3
-        energy: 0
+        energy: 33
       - arguments:
           n_cols_per_row: 10
           n_rows: 4
-        energy: 0
+        energy: 44
       - arguments:
           n_cols_per_row: 10
           n_rows: 5
-        energy: 0
+        energy: 55
       - arguments:
           n_cols_per_row: 10
           n_rows: 6
-        energy: 0
+        energy: 66
       - arguments:
           n_cols_per_row: 10
           n_rows: 7
-        energy: 0
+        energy: 77
       - arguments:
           n_cols_per_row: 10
           n_rows: 8
-        energy: 0
+        energy: 88
       - arguments:
           n_cols_per_row: 10
           n_rows: 9
-        energy: 0
+        energy: 99
       - arguments:
           n_cols_per_row: 10
           n_rows: 10
-        energy: 0
+        energy: 110
       - arguments:
           n_cols_per_row: 10
           n_rows: 11
-        energy: 0
+        energy: 121
       - arguments:
           n_cols_per_row: 10
           n_rows: 12
-        energy: 0
+        energy: 132
       - arguments:
           n_cols_per_row: 11
           n_rows: 0
@@ -4675,51 +4675,51 @@ ERT:
       - arguments:
           n_cols_per_row: 11
           n_rows: 1
-        energy: 0
+        energy: 12
       - arguments:
           n_cols_per_row: 11
           n_rows: 2
-        energy: 0
+        energy: 24
       - arguments:
           n_cols_per_row: 11
           n_rows: 3
-        energy: 0
+        energy: 36
       - arguments:
           n_cols_per_row: 11
           n_rows: 4
-        energy: 0
+        energy: 48
       - arguments:
           n_cols_per_row: 11
           n_rows: 5
-        energy: 0
+        energy: 60
       - arguments:
           n_cols_per_row: 11
           n_rows: 6
-        energy: 0
+        energy: 72
       - arguments:
           n_cols_per_row: 11
           n_rows: 7
-        energy: 0
+        energy: 84
       - arguments:
           n_cols_per_row: 11
           n_rows: 8
-        energy: 0
+        energy: 96
       - arguments:
           n_cols_per_row: 11
           n_rows: 9
-        energy: 0
+        energy: 108
       - arguments:
           n_cols_per_row: 11
           n_rows: 10
-        energy: 0
+        energy: 120
       - arguments:
           n_cols_per_row: 11
           n_rows: 11
-        energy: 0
+        energy: 132
       - arguments:
           n_cols_per_row: 11
           n_rows: 12
-        energy: 0
+        energy: 144
       - arguments:
           n_cols_per_row: 12
           n_rows: 0
@@ -4727,51 +4727,51 @@ ERT:
       - arguments:
           n_cols_per_row: 12
           n_rows: 1
-        energy: 0
+        energy: 13
       - arguments:
           n_cols_per_row: 12
           n_rows: 2
-        energy: 0
+        energy: 26
       - arguments:
           n_cols_per_row: 12
           n_rows: 3
-        energy: 0
+        energy: 39
       - arguments:
           n_cols_per_row: 12
           n_rows: 4
-        energy: 0
+        energy: 52
       - arguments:
           n_cols_per_row: 12
           n_rows: 5
-        energy: 0
+        energy: 65
       - arguments:
           n_cols_per_row: 12
           n_rows: 6
-        energy: 0
+        energy: 78
       - arguments:
           n_cols_per_row: 12
           n_rows: 7
-        energy: 0
+        energy: 91
       - arguments:
           n_cols_per_row: 12
           n_rows: 8
-        energy: 0
+        energy: 104
       - arguments:
           n_cols_per_row: 12
           n_rows: 9
-        energy: 0
+        energy: 117
       - arguments:
           n_cols_per_row: 12
           n_rows: 10
-        energy: 0
+        energy: 130
       - arguments:
           n_cols_per_row: 12
           n_rows: 11
-        energy: 0
+        energy: 143
       - arguments:
           n_cols_per_row: 12
           n_rows: 12
-        energy: 0
+        energy: 156
       - arguments:
           n_cols_per_row: 13
           n_rows: 0
@@ -4779,51 +4779,51 @@ ERT:
       - arguments:
           n_cols_per_row: 13
           n_rows: 1
-        energy: 0
+        energy: 14
       - arguments:
           n_cols_per_row: 13
           n_rows: 2
-        energy: 0
+        energy: 28
       - arguments:
           n_cols_per_row: 13
           n_rows: 3
-        energy: 0
+        energy: 42
       - arguments:
           n_cols_per_row: 13
           n_rows: 4
-        energy: 0
+        energy: 56
       - arguments:
           n_cols_per_row: 13
           n_rows: 5
-        energy: 0
+        energy: 70
       - arguments:
           n_cols_per_row: 13
           n_rows: 6
-        energy: 0
+        energy: 84
       - arguments:
           n_cols_per_row: 13
           n_rows: 7
-        energy: 0
+        energy: 98
       - arguments:
           n_cols_per_row: 13
           n_rows: 8
-        energy: 0
+        energy: 112
       - arguments:
           n_cols_per_row: 13
           n_rows: 9
-        energy: 0
+        energy: 126
       - arguments:
           n_cols_per_row: 13
           n_rows: 10
-        energy: 0
+        energy: 140
       - arguments:
           n_cols_per_row: 13
           n_rows: 11
-        energy: 0
+        energy: 154
       - arguments:
           n_cols_per_row: 13
           n_rows: 12
-        energy: 0
+        energy: 168
       - arguments:
           n_cols_per_row: 14
           n_rows: 0
@@ -4831,51 +4831,51 @@ ERT:
       - arguments:
           n_cols_per_row: 14
           n_rows: 1
-        energy: 0
+        energy: 15
       - arguments:
           n_cols_per_row: 14
           n_rows: 2
-        energy: 0
+        energy: 30
       - arguments:
           n_cols_per_row: 14
           n_rows: 3
-        energy: 0
+        energy: 45
       - arguments:
           n_cols_per_row: 14
           n_rows: 4
-        energy: 0
+        energy: 60
       - arguments:
           n_cols_per_row: 14
           n_rows: 5
-        energy: 0
+        energy: 75
       - arguments:
           n_cols_per_row: 14
           n_rows: 6
-        energy: 0
+        energy: 90
       - arguments:
           n_cols_per_row: 14
           n_rows: 7
-        energy: 0
+        energy: 105
       - arguments:
           n_cols_per_row: 14
           n_rows: 8
-        energy: 0
+        energy: 120
       - arguments:
           n_cols_per_row: 14
           n_rows: 9
-        energy: 0
+        energy: 135
       - arguments:
           n_cols_per_row: 14
           n_rows: 10
-        energy: 0
+        energy: 150
       - arguments:
           n_cols_per_row: 14
           n_rows: 11
-        energy: 0
+        energy: 165
       - arguments:
           n_cols_per_row: 14
           n_rows: 12
-        energy: 0
+        energy: 180
     eyeriss_like.shared_glb:
       fill:
       - arguments:
@@ -5515,783 +5515,783 @@ ERT:
       - arguments:
           n_cols_per_row: 0
           n_rows: 0
-        energy: 0
+        energy: 1
       - arguments:
           n_cols_per_row: 0
           n_rows: 1
-        energy: 0
+        energy: 2
       - arguments:
           n_cols_per_row: 0
           n_rows: 2
-        energy: 0
+        energy: 3
       - arguments:
           n_cols_per_row: 0
           n_rows: 3
-        energy: 0
+        energy: 4
       - arguments:
           n_cols_per_row: 0
           n_rows: 4
-        energy: 0
+        energy: 5
       - arguments:
           n_cols_per_row: 0
           n_rows: 5
-        energy: 0
+        energy: 6
       - arguments:
           n_cols_per_row: 0
           n_rows: 6
-        energy: 0
+        energy: 7
       - arguments:
           n_cols_per_row: 0
           n_rows: 7
-        energy: 0
+        energy: 8
       - arguments:
           n_cols_per_row: 0
           n_rows: 8
-        energy: 0
+        energy: 9
       - arguments:
           n_cols_per_row: 0
           n_rows: 9
-        energy: 0
+        energy: 10
       - arguments:
           n_cols_per_row: 0
           n_rows: 10
-        energy: 0
+        energy: 11
       - arguments:
           n_cols_per_row: 0
           n_rows: 11
-        energy: 0
+        energy: 12
       - arguments:
           n_cols_per_row: 0
           n_rows: 12
-        energy: 0
+        energy: 13
       - arguments:
           n_cols_per_row: 1
           n_rows: 0
-        energy: 0
+        energy: 1
       - arguments:
           n_cols_per_row: 1
           n_rows: 1
-        energy: 0
+        energy: 3
       - arguments:
           n_cols_per_row: 1
           n_rows: 2
-        energy: 0
+        energy: 5
       - arguments:
           n_cols_per_row: 1
           n_rows: 3
-        energy: 0
+        energy: 7
       - arguments:
           n_cols_per_row: 1
           n_rows: 4
-        energy: 0
+        energy: 9
       - arguments:
           n_cols_per_row: 1
           n_rows: 5
-        energy: 0
+        energy: 11
       - arguments:
           n_cols_per_row: 1
           n_rows: 6
-        energy: 0
+        energy: 13
       - arguments:
           n_cols_per_row: 1
           n_rows: 7
-        energy: 0
+        energy: 15
       - arguments:
           n_cols_per_row: 1
           n_rows: 8
-        energy: 0
+        energy: 17
       - arguments:
           n_cols_per_row: 1
           n_rows: 9
-        energy: 0
+        energy: 19
       - arguments:
           n_cols_per_row: 1
           n_rows: 10
-        energy: 0
+        energy: 21
       - arguments:
           n_cols_per_row: 1
           n_rows: 11
-        energy: 0
+        energy: 23
       - arguments:
           n_cols_per_row: 1
           n_rows: 12
-        energy: 0
+        energy: 25
       - arguments:
           n_cols_per_row: 2
           n_rows: 0
-        energy: 0
+        energy: 1
       - arguments:
           n_cols_per_row: 2
           n_rows: 1
-        energy: 0
+        energy: 4
       - arguments:
           n_cols_per_row: 2
           n_rows: 2
-        energy: 0
+        energy: 7
       - arguments:
           n_cols_per_row: 2
           n_rows: 3
-        energy: 0
+        energy: 10
       - arguments:
           n_cols_per_row: 2
           n_rows: 4
-        energy: 0
+        energy: 13
       - arguments:
           n_cols_per_row: 2
           n_rows: 5
-        energy: 0
+        energy: 16
       - arguments:
           n_cols_per_row: 2
           n_rows: 6
-        energy: 0
+        energy: 19
       - arguments:
           n_cols_per_row: 2
           n_rows: 7
-        energy: 0
+        energy: 22
       - arguments:
           n_cols_per_row: 2
           n_rows: 8
-        energy: 0
+        energy: 25
       - arguments:
           n_cols_per_row: 2
           n_rows: 9
-        energy: 0
+        energy: 28
       - arguments:
           n_cols_per_row: 2
           n_rows: 10
-        energy: 0
+        energy: 31
       - arguments:
           n_cols_per_row: 2
           n_rows: 11
-        energy: 0
+        energy: 34
       - arguments:
           n_cols_per_row: 2
           n_rows: 12
-        energy: 0
+        energy: 37
       - arguments:
           n_cols_per_row: 3
           n_rows: 0
-        energy: 0
+        energy: 1
       - arguments:
           n_cols_per_row: 3
           n_rows: 1
-        energy: 0
+        energy: 5
       - arguments:
           n_cols_per_row: 3
           n_rows: 2
-        energy: 0
+        energy: 9
       - arguments:
           n_cols_per_row: 3
           n_rows: 3
-        energy: 0
+        energy: 13
       - arguments:
           n_cols_per_row: 3
           n_rows: 4
-        energy: 0
+        energy: 17
       - arguments:
           n_cols_per_row: 3
           n_rows: 5
-        energy: 0
+        energy: 21
       - arguments:
           n_cols_per_row: 3
           n_rows: 6
-        energy: 0
+        energy: 25
       - arguments:
           n_cols_per_row: 3
           n_rows: 7
-        energy: 0
+        energy: 29
       - arguments:
           n_cols_per_row: 3
           n_rows: 8
-        energy: 0
+        energy: 33
       - arguments:
           n_cols_per_row: 3
           n_rows: 9
-        energy: 0
+        energy: 37
       - arguments:
           n_cols_per_row: 3
           n_rows: 10
-        energy: 0
+        energy: 41
       - arguments:
           n_cols_per_row: 3
           n_rows: 11
-        energy: 0
+        energy: 45
       - arguments:
           n_cols_per_row: 3
           n_rows: 12
-        energy: 0
+        energy: 49
       - arguments:
           n_cols_per_row: 4
           n_rows: 0
-        energy: 0
+        energy: 1
       - arguments:
           n_cols_per_row: 4
           n_rows: 1
-        energy: 0
+        energy: 6
       - arguments:
           n_cols_per_row: 4
           n_rows: 2
-        energy: 0
+        energy: 11
       - arguments:
           n_cols_per_row: 4
           n_rows: 3
-        energy: 0
+        energy: 16
       - arguments:
           n_cols_per_row: 4
           n_rows: 4
-        energy: 0
+        energy: 21
       - arguments:
           n_cols_per_row: 4
           n_rows: 5
-        energy: 0
+        energy: 26
       - arguments:
           n_cols_per_row: 4
           n_rows: 6
-        energy: 0
+        energy: 31
       - arguments:
           n_cols_per_row: 4
           n_rows: 7
-        energy: 0
+        energy: 36
       - arguments:
           n_cols_per_row: 4
           n_rows: 8
-        energy: 0
+        energy: 41
       - arguments:
           n_cols_per_row: 4
           n_rows: 9
-        energy: 0
+        energy: 46
       - arguments:
           n_cols_per_row: 4
           n_rows: 10
-        energy: 0
+        energy: 51
       - arguments:
           n_cols_per_row: 4
           n_rows: 11
-        energy: 0
+        energy: 56
       - arguments:
           n_cols_per_row: 4
           n_rows: 12
-        energy: 0
+        energy: 61
       - arguments:
           n_cols_per_row: 5
           n_rows: 0
-        energy: 0
+        energy: 1
       - arguments:
           n_cols_per_row: 5
           n_rows: 1
-        energy: 0
+        energy: 7
       - arguments:
           n_cols_per_row: 5
           n_rows: 2
-        energy: 0
+        energy: 13
       - arguments:
           n_cols_per_row: 5
           n_rows: 3
-        energy: 0
+        energy: 19
       - arguments:
           n_cols_per_row: 5
           n_rows: 4
-        energy: 0
+        energy: 25
       - arguments:
           n_cols_per_row: 5
           n_rows: 5
-        energy: 0
+        energy: 31
       - arguments:
           n_cols_per_row: 5
           n_rows: 6
-        energy: 0
+        energy: 37
       - arguments:
           n_cols_per_row: 5
           n_rows: 7
-        energy: 0
+        energy: 43
       - arguments:
           n_cols_per_row: 5
           n_rows: 8
-        energy: 0
+        energy: 49
       - arguments:
           n_cols_per_row: 5
           n_rows: 9
-        energy: 0
+        energy: 55
       - arguments:
           n_cols_per_row: 5
           n_rows: 10
-        energy: 0
+        energy: 61
       - arguments:
           n_cols_per_row: 5
           n_rows: 11
-        energy: 0
+        energy: 67
       - arguments:
           n_cols_per_row: 5
           n_rows: 12
-        energy: 0
+        energy: 73
       - arguments:
           n_cols_per_row: 6
           n_rows: 0
-        energy: 0
+        energy: 1
       - arguments:
           n_cols_per_row: 6
           n_rows: 1
-        energy: 0
+        energy: 8
       - arguments:
           n_cols_per_row: 6
           n_rows: 2
-        energy: 0
+        energy: 15
       - arguments:
           n_cols_per_row: 6
           n_rows: 3
-        energy: 0
+        energy: 22
       - arguments:
           n_cols_per_row: 6
           n_rows: 4
-        energy: 0
+        energy: 29
       - arguments:
           n_cols_per_row: 6
           n_rows: 5
-        energy: 0
+        energy: 36
       - arguments:
           n_cols_per_row: 6
           n_rows: 6
-        energy: 0
+        energy: 43
       - arguments:
           n_cols_per_row: 6
           n_rows: 7
-        energy: 0
+        energy: 50
       - arguments:
           n_cols_per_row: 6
           n_rows: 8
-        energy: 0
+        energy: 57
       - arguments:
           n_cols_per_row: 6
           n_rows: 9
-        energy: 0
+        energy: 64
       - arguments:
           n_cols_per_row: 6
           n_rows: 10
-        energy: 0
+        energy: 71
       - arguments:
           n_cols_per_row: 6
           n_rows: 11
-        energy: 0
+        energy: 78
       - arguments:
           n_cols_per_row: 6
           n_rows: 12
-        energy: 0
+        energy: 85
       - arguments:
           n_cols_per_row: 7
           n_rows: 0
-        energy: 0
+        energy: 1
       - arguments:
           n_cols_per_row: 7
           n_rows: 1
-        energy: 0
+        energy: 9
       - arguments:
           n_cols_per_row: 7
           n_rows: 2
-        energy: 0
+        energy: 17
       - arguments:
           n_cols_per_row: 7
           n_rows: 3
-        energy: 0
+        energy: 25
       - arguments:
           n_cols_per_row: 7
           n_rows: 4
-        energy: 0
+        energy: 33
       - arguments:
           n_cols_per_row: 7
           n_rows: 5
-        energy: 0
+        energy: 41
       - arguments:
           n_cols_per_row: 7
           n_rows: 6
-        energy: 0
+        energy: 49
       - arguments:
           n_cols_per_row: 7
           n_rows: 7
-        energy: 0
+        energy: 57
       - arguments:
           n_cols_per_row: 7
           n_rows: 8
-        energy: 0
+        energy: 65
       - arguments:
           n_cols_per_row: 7
           n_rows: 9
-        energy: 0
+        energy: 73
       - arguments:
           n_cols_per_row: 7
           n_rows: 10
-        energy: 0
+        energy: 81
       - arguments:
           n_cols_per_row: 7
           n_rows: 11
-        energy: 0
+        energy: 89
       - arguments:
           n_cols_per_row: 7
           n_rows: 12
-        energy: 0
+        energy: 97
       - arguments:
           n_cols_per_row: 8
           n_rows: 0
-        energy: 0
+        energy: 1
       - arguments:
           n_cols_per_row: 8
           n_rows: 1
-        energy: 0
+        energy: 10
       - arguments:
           n_cols_per_row: 8
           n_rows: 2
-        energy: 0
+        energy: 19
       - arguments:
           n_cols_per_row: 8
           n_rows: 3
-        energy: 0
+        energy: 28
       - arguments:
           n_cols_per_row: 8
           n_rows: 4
-        energy: 0
+        energy: 37
       - arguments:
           n_cols_per_row: 8
           n_rows: 5
-        energy: 0
+        energy: 46
       - arguments:
           n_cols_per_row: 8
           n_rows: 6
-        energy: 0
+        energy: 55
       - arguments:
           n_cols_per_row: 8
           n_rows: 7
-        energy: 0
+        energy: 64
       - arguments:
           n_cols_per_row: 8
           n_rows: 8
-        energy: 0
+        energy: 73
       - arguments:
           n_cols_per_row: 8
           n_rows: 9
-        energy: 0
+        energy: 82
       - arguments:
           n_cols_per_row: 8
           n_rows: 10
-        energy: 0
+        energy: 91
       - arguments:
           n_cols_per_row: 8
           n_rows: 11
-        energy: 0
+        energy: 100
       - arguments:
           n_cols_per_row: 8
           n_rows: 12
-        energy: 0
+        energy: 109
       - arguments:
           n_cols_per_row: 9
           n_rows: 0
-        energy: 0
+        energy: 1
       - arguments:
           n_cols_per_row: 9
           n_rows: 1
-        energy: 0
+        energy: 11
       - arguments:
           n_cols_per_row: 9
           n_rows: 2
-        energy: 0
+        energy: 21
       - arguments:
           n_cols_per_row: 9
           n_rows: 3
-        energy: 0
+        energy: 31
       - arguments:
           n_cols_per_row: 9
           n_rows: 4
-        energy: 0
+        energy: 41
       - arguments:
           n_cols_per_row: 9
           n_rows: 5
-        energy: 0
+        energy: 51
       - arguments:
           n_cols_per_row: 9
           n_rows: 6
-        energy: 0
+        energy: 61
       - arguments:
           n_cols_per_row: 9
           n_rows: 7
-        energy: 0
+        energy: 71
       - arguments:
           n_cols_per_row: 9
           n_rows: 8
-        energy: 0
+        energy: 81
       - arguments:
           n_cols_per_row: 9
           n_rows: 9
-        energy: 0
+        energy: 91
       - arguments:
           n_cols_per_row: 9
           n_rows: 10
-        energy: 0
+        energy: 101
       - arguments:
           n_cols_per_row: 9
           n_rows: 11
-        energy: 0
+        energy: 111
       - arguments:
           n_cols_per_row: 9
           n_rows: 12
-        energy: 0
+        energy: 121
       - arguments:
           n_cols_per_row: 10
           n_rows: 0
-        energy: 0
+        energy: 1
       - arguments:
           n_cols_per_row: 10
           n_rows: 1
-        energy: 0
+        energy: 12
       - arguments:
           n_cols_per_row: 10
           n_rows: 2
-        energy: 0
+        energy: 23
       - arguments:
           n_cols_per_row: 10
           n_rows: 3
-        energy: 0
+        energy: 34
       - arguments:
           n_cols_per_row: 10
           n_rows: 4
-        energy: 0
+        energy: 45
       - arguments:
           n_cols_per_row: 10
           n_rows: 5
-        energy: 0
+        energy: 56
       - arguments:
           n_cols_per_row: 10
           n_rows: 6
-        energy: 0
+        energy: 67
       - arguments:
           n_cols_per_row: 10
           n_rows: 7
-        energy: 0
+        energy: 78
       - arguments:
           n_cols_per_row: 10
           n_rows: 8
-        energy: 0
+        energy: 89
       - arguments:
           n_cols_per_row: 10
           n_rows: 9
-        energy: 0
+        energy: 100
       - arguments:
           n_cols_per_row: 10
           n_rows: 10
-        energy: 0
+        energy: 111
       - arguments:
           n_cols_per_row: 10
           n_rows: 11
-        energy: 0
+        energy: 122
       - arguments:
           n_cols_per_row: 10
           n_rows: 12
-        energy: 0
+        energy: 133
       - arguments:
           n_cols_per_row: 11
           n_rows: 0
-        energy: 0
+        energy: 1
       - arguments:
           n_cols_per_row: 11
           n_rows: 1
-        energy: 0
+        energy: 13
       - arguments:
           n_cols_per_row: 11
           n_rows: 2
-        energy: 0
+        energy: 25
       - arguments:
           n_cols_per_row: 11
           n_rows: 3
-        energy: 0
+        energy: 37
       - arguments:
           n_cols_per_row: 11
           n_rows: 4
-        energy: 0
+        energy: 49
       - arguments:
           n_cols_per_row: 11
           n_rows: 5
-        energy: 0
+        energy: 61
       - arguments:
           n_cols_per_row: 11
           n_rows: 6
-        energy: 0
+        energy: 73
       - arguments:
           n_cols_per_row: 11
           n_rows: 7
-        energy: 0
+        energy: 85
       - arguments:
           n_cols_per_row: 11
           n_rows: 8
-        energy: 0
+        energy: 97
       - arguments:
           n_cols_per_row: 11
           n_rows: 9
-        energy: 0
+        energy: 109
       - arguments:
           n_cols_per_row: 11
           n_rows: 10
-        energy: 0
+        energy: 121
       - arguments:
           n_cols_per_row: 11
           n_rows: 11
-        energy: 0
+        energy: 133
       - arguments:
           n_cols_per_row: 11
           n_rows: 12
-        energy: 0
+        energy: 145
       - arguments:
           n_cols_per_row: 12
           n_rows: 0
-        energy: 0
+        energy: 1
       - arguments:
           n_cols_per_row: 12
           n_rows: 1
-        energy: 0
+        energy: 14
       - arguments:
           n_cols_per_row: 12
           n_rows: 2
-        energy: 0
+        energy: 27
       - arguments:
           n_cols_per_row: 12
           n_rows: 3
-        energy: 0
+        energy: 40
       - arguments:
           n_cols_per_row: 12
           n_rows: 4
-        energy: 0
+        energy: 53
       - arguments:
           n_cols_per_row: 12
           n_rows: 5
-        energy: 0
+        energy: 66
       - arguments:
           n_cols_per_row: 12
           n_rows: 6
-        energy: 0
+        energy: 79
       - arguments:
           n_cols_per_row: 12
           n_rows: 7
-        energy: 0
+        energy: 92
       - arguments:
           n_cols_per_row: 12
           n_rows: 8
-        energy: 0
+        energy: 105
       - arguments:
           n_cols_per_row: 12
           n_rows: 9
-        energy: 0
+        energy: 118
       - arguments:
           n_cols_per_row: 12
           n_rows: 10
-        energy: 0
+        energy: 131
       - arguments:
           n_cols_per_row: 12
           n_rows: 11
-        energy: 0
+        energy: 144
       - arguments:
           n_cols_per_row: 12
           n_rows: 12
-        energy: 0
+        energy: 157
       - arguments:
           n_cols_per_row: 13
           n_rows: 0
-        energy: 0
+        energy: 1
       - arguments:
           n_cols_per_row: 13
           n_rows: 1
-        energy: 0
+        energy: 15
       - arguments:
           n_cols_per_row: 13
           n_rows: 2
-        energy: 0
+        energy: 29
       - arguments:
           n_cols_per_row: 13
           n_rows: 3
-        energy: 0
+        energy: 43
       - arguments:
           n_cols_per_row: 13
           n_rows: 4
-        energy: 0
+        energy: 57
       - arguments:
           n_cols_per_row: 13
           n_rows: 5
-        energy: 0
+        energy: 71
       - arguments:
           n_cols_per_row: 13
           n_rows: 6
-        energy: 0
+        energy: 85
       - arguments:
           n_cols_per_row: 13
           n_rows: 7
-        energy: 0
+        energy: 99
       - arguments:
           n_cols_per_row: 13
           n_rows: 8
-        energy: 0
+        energy: 113
       - arguments:
           n_cols_per_row: 13
           n_rows: 9
-        energy: 0
+        energy: 127
       - arguments:
           n_cols_per_row: 13
           n_rows: 10
-        energy: 0
+        energy: 141
       - arguments:
           n_cols_per_row: 13
           n_rows: 11
-        energy: 0
+        energy: 155
       - arguments:
           n_cols_per_row: 13
           n_rows: 12
-        energy: 0
+        energy: 169
       - arguments:
           n_cols_per_row: 14
           n_rows: 0
-        energy: 0
+        energy: 1
       - arguments:
           n_cols_per_row: 14
           n_rows: 1
-        energy: 0
+        energy: 16
       - arguments:
           n_cols_per_row: 14
           n_rows: 2
-        energy: 0
+        energy: 31
       - arguments:
           n_cols_per_row: 14
           n_rows: 3
-        energy: 0
+        energy: 46
       - arguments:
           n_cols_per_row: 14
           n_rows: 4
-        energy: 0
+        energy: 61
       - arguments:
           n_cols_per_row: 14
           n_rows: 5
-        energy: 0
+        energy: 76
       - arguments:
           n_cols_per_row: 14
           n_rows: 6
-        energy: 0
+        energy: 91
       - arguments:
           n_cols_per_row: 14
           n_rows: 7
-        energy: 0
+        energy: 106
       - arguments:
           n_cols_per_row: 14
           n_rows: 8
-        energy: 0
+        energy: 121
       - arguments:
           n_cols_per_row: 14
           n_rows: 9
-        energy: 0
+        energy: 136
       - arguments:
           n_cols_per_row: 14
           n_rows: 10
-        energy: 0
+        energy: 151
       - arguments:
           n_cols_per_row: 14
           n_rows: 11
-        energy: 0
+        energy: 166
       - arguments:
           n_cols_per_row: 14
           n_rows: 12
-        energy: 0
+        energy: 181
       transfer_repeated:
       - arguments:
           n_cols_per_row: 0
@@ -6300,51 +6300,51 @@ ERT:
       - arguments:
           n_cols_per_row: 0
           n_rows: 1
-        energy: 0
+        energy: 1
       - arguments:
           n_cols_per_row: 0
           n_rows: 2
-        energy: 0
+        energy: 2
       - arguments:
           n_cols_per_row: 0
           n_rows: 3
-        energy: 0
+        energy: 3
       - arguments:
           n_cols_per_row: 0
           n_rows: 4
-        energy: 0
+        energy: 4
       - arguments:
           n_cols_per_row: 0
           n_rows: 5
-        energy: 0
+        energy: 5
       - arguments:
           n_cols_per_row: 0
           n_rows: 6
-        energy: 0
+        energy: 6
       - arguments:
           n_cols_per_row: 0
           n_rows: 7
-        energy: 0
+        energy: 7
       - arguments:
           n_cols_per_row: 0
           n_rows: 8
-        energy: 0
+        energy: 8
       - arguments:
           n_cols_per_row: 0
           n_rows: 9
-        energy: 0
+        energy: 9
       - arguments:
           n_cols_per_row: 0
           n_rows: 10
-        energy: 0
+        energy: 10
       - arguments:
           n_cols_per_row: 0
           n_rows: 11
-        energy: 0
+        energy: 11
       - arguments:
           n_cols_per_row: 0
           n_rows: 12
-        energy: 0
+        energy: 12
       - arguments:
           n_cols_per_row: 1
           n_rows: 0
@@ -6352,51 +6352,51 @@ ERT:
       - arguments:
           n_cols_per_row: 1
           n_rows: 1
-        energy: 0
+        energy: 2
       - arguments:
           n_cols_per_row: 1
           n_rows: 2
-        energy: 0
+        energy: 4
       - arguments:
           n_cols_per_row: 1
           n_rows: 3
-        energy: 0
+        energy: 6
       - arguments:
           n_cols_per_row: 1
           n_rows: 4
-        energy: 0
+        energy: 8
       - arguments:
           n_cols_per_row: 1
           n_rows: 5
-        energy: 0
+        energy: 10
       - arguments:
           n_cols_per_row: 1
           n_rows: 6
-        energy: 0
+        energy: 12
       - arguments:
           n_cols_per_row: 1
           n_rows: 7
-        energy: 0
+        energy: 14
       - arguments:
           n_cols_per_row: 1
           n_rows: 8
-        energy: 0
+        energy: 16
       - arguments:
           n_cols_per_row: 1
           n_rows: 9
-        energy: 0
+        energy: 18
       - arguments:
           n_cols_per_row: 1
           n_rows: 10
-        energy: 0
+        energy: 20
       - arguments:
           n_cols_per_row: 1
           n_rows: 11
-        energy: 0
+        energy: 22
       - arguments:
           n_cols_per_row: 1
           n_rows: 12
-        energy: 0
+        energy: 24
       - arguments:
           n_cols_per_row: 2
           n_rows: 0
@@ -6404,51 +6404,51 @@ ERT:
       - arguments:
           n_cols_per_row: 2
           n_rows: 1
-        energy: 0
+        energy: 3
       - arguments:
           n_cols_per_row: 2
           n_rows: 2
-        energy: 0
+        energy: 6
       - arguments:
           n_cols_per_row: 2
           n_rows: 3
-        energy: 0
+        energy: 9
       - arguments:
           n_cols_per_row: 2
           n_rows: 4
-        energy: 0
+        energy: 12
       - arguments:
           n_cols_per_row: 2
           n_rows: 5
-        energy: 0
+        energy: 15
       - arguments:
           n_cols_per_row: 2
           n_rows: 6
-        energy: 0
+        energy: 18
       - arguments:
           n_cols_per_row: 2
           n_rows: 7
-        energy: 0
+        energy: 21
       - arguments:
           n_cols_per_row: 2
           n_rows: 8
-        energy: 0
+        energy: 24
       - arguments:
           n_cols_per_row: 2
           n_rows: 9
-        energy: 0
+        energy: 27
       - arguments:
           n_cols_per_row: 2
           n_rows: 10
-        energy: 0
+        energy: 30
       - arguments:
           n_cols_per_row: 2
           n_rows: 11
-        energy: 0
+        energy: 33
       - arguments:
           n_cols_per_row: 2
           n_rows: 12
-        energy: 0
+        energy: 36
       - arguments:
           n_cols_per_row: 3
           n_rows: 0
@@ -6456,51 +6456,51 @@ ERT:
       - arguments:
           n_cols_per_row: 3
           n_rows: 1
-        energy: 0
+        energy: 4
       - arguments:
           n_cols_per_row: 3
           n_rows: 2
-        energy: 0
+        energy: 8
       - arguments:
           n_cols_per_row: 3
           n_rows: 3
-        energy: 0
+        energy: 12
       - arguments:
           n_cols_per_row: 3
           n_rows: 4
-        energy: 0
+        energy: 16
       - arguments:
           n_cols_per_row: 3
           n_rows: 5
-        energy: 0
+        energy: 20
       - arguments:
           n_cols_per_row: 3
           n_rows: 6
-        energy: 0
+        energy: 24
       - arguments:
           n_cols_per_row: 3
           n_rows: 7
-        energy: 0
+        energy: 28
       - arguments:
           n_cols_per_row: 3
           n_rows: 8
-        energy: 0
+        energy: 32
       - arguments:
           n_cols_per_row: 3
           n_rows: 9
-        energy: 0
+        energy: 36
       - arguments:
           n_cols_per_row: 3
           n_rows: 10
-        energy: 0
+        energy: 40
       - arguments:
           n_cols_per_row: 3
           n_rows: 11
-        energy: 0
+        energy: 44
       - arguments:
           n_cols_per_row: 3
           n_rows: 12
-        energy: 0
+        energy: 48
       - arguments:
           n_cols_per_row: 4
           n_rows: 0
@@ -6508,51 +6508,51 @@ ERT:
       - arguments:
           n_cols_per_row: 4
           n_rows: 1
-        energy: 0
+        energy: 5
       - arguments:
           n_cols_per_row: 4
           n_rows: 2
-        energy: 0
+        energy: 10
       - arguments:
           n_cols_per_row: 4
           n_rows: 3
-        energy: 0
+        energy: 15
       - arguments:
           n_cols_per_row: 4
           n_rows: 4
-        energy: 0
+        energy: 20
       - arguments:
           n_cols_per_row: 4
           n_rows: 5
-        energy: 0
+        energy: 25
       - arguments:
           n_cols_per_row: 4
           n_rows: 6
-        energy: 0
+        energy: 30
       - arguments:
           n_cols_per_row: 4
           n_rows: 7
-        energy: 0
+        energy: 35
       - arguments:
           n_cols_per_row: 4
           n_rows: 8
-        energy: 0
+        energy: 40
       - arguments:
           n_cols_per_row: 4
           n_rows: 9
-        energy: 0
+        energy: 45
       - arguments:
           n_cols_per_row: 4
           n_rows: 10
-        energy: 0
+        energy: 50
       - arguments:
           n_cols_per_row: 4
           n_rows: 11
-        energy: 0
+        energy: 55
       - arguments:
           n_cols_per_row: 4
           n_rows: 12
-        energy: 0
+        energy: 60
       - arguments:
           n_cols_per_row: 5
           n_rows: 0
@@ -6560,51 +6560,51 @@ ERT:
       - arguments:
           n_cols_per_row: 5
           n_rows: 1
-        energy: 0
+        energy: 6
       - arguments:
           n_cols_per_row: 5
           n_rows: 2
-        energy: 0
+        energy: 12
       - arguments:
           n_cols_per_row: 5
           n_rows: 3
-        energy: 0
+        energy: 18
       - arguments:
           n_cols_per_row: 5
           n_rows: 4
-        energy: 0
+        energy: 24
       - arguments:
           n_cols_per_row: 5
           n_rows: 5
-        energy: 0
+        energy: 30
       - arguments:
           n_cols_per_row: 5
           n_rows: 6
-        energy: 0
+        energy: 36
       - arguments:
           n_cols_per_row: 5
           n_rows: 7
-        energy: 0
+        energy: 42
       - arguments:
           n_cols_per_row: 5
           n_rows: 8
-        energy: 0
+        energy: 48
       - arguments:
           n_cols_per_row: 5
           n_rows: 9
-        energy: 0
+        energy: 54
       - arguments:
           n_cols_per_row: 5
           n_rows: 10
-        energy: 0
+        energy: 60
       - arguments:
           n_cols_per_row: 5
           n_rows: 11
-        energy: 0
+        energy: 66
       - arguments:
           n_cols_per_row: 5
           n_rows: 12
-        energy: 0
+        energy: 72
       - arguments:
           n_cols_per_row: 6
           n_rows: 0
@@ -6612,51 +6612,51 @@ ERT:
       - arguments:
           n_cols_per_row: 6
           n_rows: 1
-        energy: 0
+        energy: 7
       - arguments:
           n_cols_per_row: 6
           n_rows: 2
-        energy: 0
+        energy: 14
       - arguments:
           n_cols_per_row: 6
           n_rows: 3
-        energy: 0
+        energy: 21
       - arguments:
           n_cols_per_row: 6
           n_rows: 4
-        energy: 0
+        energy: 28
       - arguments:
           n_cols_per_row: 6
           n_rows: 5
-        energy: 0
+        energy: 35
       - arguments:
           n_cols_per_row: 6
           n_rows: 6
-        energy: 0
+        energy: 42
       - arguments:
           n_cols_per_row: 6
           n_rows: 7
-        energy: 0
+        energy: 49
       - arguments:
           n_cols_per_row: 6
           n_rows: 8
-        energy: 0
+        energy: 56
       - arguments:
           n_cols_per_row: 6
           n_rows: 9
-        energy: 0
+        energy: 63
       - arguments:
           n_cols_per_row: 6
           n_rows: 10
-        energy: 0
+        energy: 70
       - arguments:
           n_cols_per_row: 6
           n_rows: 11
-        energy: 0
+        energy: 77
       - arguments:
           n_cols_per_row: 6
           n_rows: 12
-        energy: 0
+        energy: 84
       - arguments:
           n_cols_per_row: 7
           n_rows: 0
@@ -6664,51 +6664,51 @@ ERT:
       - arguments:
           n_cols_per_row: 7
           n_rows: 1
-        energy: 0
+        energy: 8
       - arguments:
           n_cols_per_row: 7
           n_rows: 2
-        energy: 0
+        energy: 16
       - arguments:
           n_cols_per_row: 7
           n_rows: 3
-        energy: 0
+        energy: 24
       - arguments:
           n_cols_per_row: 7
           n_rows: 4
-        energy: 0
+        energy: 32
       - arguments:
           n_cols_per_row: 7
           n_rows: 5
-        energy: 0
+        energy: 40
       - arguments:
           n_cols_per_row: 7
           n_rows: 6
-        energy: 0
+        energy: 48
       - arguments:
           n_cols_per_row: 7
           n_rows: 7
-        energy: 0
+        energy: 56
       - arguments:
           n_cols_per_row: 7
           n_rows: 8
-        energy: 0
+        energy: 64
       - arguments:
           n_cols_per_row: 7
           n_rows: 9
-        energy: 0
+        energy: 72
       - arguments:
           n_cols_per_row: 7
           n_rows: 10
-        energy: 0
+        energy: 80
       - arguments:
           n_cols_per_row: 7
           n_rows: 11
-        energy: 0
+        energy: 88
       - arguments:
           n_cols_per_row: 7
           n_rows: 12
-        energy: 0
+        energy: 96
       - arguments:
           n_cols_per_row: 8
           n_rows: 0
@@ -6716,51 +6716,51 @@ ERT:
       - arguments:
           n_cols_per_row: 8
           n_rows: 1
-        energy: 0
+        energy: 9
       - arguments:
           n_cols_per_row: 8
           n_rows: 2
-        energy: 0
+        energy: 18
       - arguments:
           n_cols_per_row: 8
           n_rows: 3
-        energy: 0
+        energy: 27
       - arguments:
           n_cols_per_row: 8
           n_rows: 4
-        energy: 0
+        energy: 36
       - arguments:
           n_cols_per_row: 8
           n_rows: 5
-        energy: 0
+        energy: 45
       - arguments:
           n_cols_per_row: 8
           n_rows: 6
-        energy: 0
+        energy: 54
       - arguments:
           n_cols_per_row: 8
           n_rows: 7
-        energy: 0
+        energy: 63
       - arguments:
           n_cols_per_row: 8
           n_rows: 8
-        energy: 0
+        energy: 72
       - arguments:
           n_cols_per_row: 8
           n_rows: 9
-        energy: 0
+        energy: 81
       - arguments:
           n_cols_per_row: 8
           n_rows: 10
-        energy: 0
+        energy: 90
       - arguments:
           n_cols_per_row: 8
           n_rows: 11
-        energy: 0
+        energy: 99
       - arguments:
           n_cols_per_row: 8
           n_rows: 12
-        energy: 0
+        energy: 108
       - arguments:
           n_cols_per_row: 9
           n_rows: 0
@@ -6768,51 +6768,51 @@ ERT:
       - arguments:
           n_cols_per_row: 9
           n_rows: 1
-        energy: 0
+        energy: 10
       - arguments:
           n_cols_per_row: 9
           n_rows: 2
-        energy: 0
+        energy: 20
       - arguments:
           n_cols_per_row: 9
           n_rows: 3
-        energy: 0
+        energy: 30
       - arguments:
           n_cols_per_row: 9
           n_rows: 4
-        energy: 0
+        energy: 40
       - arguments:
           n_cols_per_row: 9
           n_rows: 5
-        energy: 0
+        energy: 50
       - arguments:
           n_cols_per_row: 9
           n_rows: 6
-        energy: 0
+        energy: 60
       - arguments:
           n_cols_per_row: 9
           n_rows: 7
-        energy: 0
+        energy: 70
       - arguments:
           n_cols_per_row: 9
           n_rows: 8
-        energy: 0
+        energy: 80
       - arguments:
           n_cols_per_row: 9
           n_rows: 9
-        energy: 0
+        energy: 90
       - arguments:
           n_cols_per_row: 9
           n_rows: 10
-        energy: 0
+        energy: 100
       - arguments:
           n_cols_per_row: 9
           n_rows: 11
-        energy: 0
+        energy: 110
       - arguments:
           n_cols_per_row: 9
           n_rows: 12
-        energy: 0
+        energy: 120
       - arguments:
           n_cols_per_row: 10
           n_rows: 0
@@ -6820,51 +6820,51 @@ ERT:
       - arguments:
           n_cols_per_row: 10
           n_rows: 1
-        energy: 0
+        energy: 11
       - arguments:
           n_cols_per_row: 10
           n_rows: 2
-        energy: 0
+        energy: 22
       - arguments:
           n_cols_per_row: 10
           n_rows: 3
-        energy: 0
+        energy: 33
       - arguments:
           n_cols_per_row: 10
           n_rows: 4
-        energy: 0
+        energy: 44
       - arguments:
           n_cols_per_row: 10
           n_rows: 5
-        energy: 0
+        energy: 55
       - arguments:
           n_cols_per_row: 10
           n_rows: 6
-        energy: 0
+        energy: 66
       - arguments:
           n_cols_per_row: 10
           n_rows: 7
-        energy: 0
+        energy: 77
       - arguments:
           n_cols_per_row: 10
           n_rows: 8
-        energy: 0
+        energy: 88
       - arguments:
           n_cols_per_row: 10
           n_rows: 9
-        energy: 0
+        energy: 99
       - arguments:
           n_cols_per_row: 10
           n_rows: 10
-        energy: 0
+        energy: 110
       - arguments:
           n_cols_per_row: 10
           n_rows: 11
-        energy: 0
+        energy: 121
       - arguments:
           n_cols_per_row: 10
           n_rows: 12
-        energy: 0
+        energy: 132
       - arguments:
           n_cols_per_row: 11
           n_rows: 0
@@ -6872,51 +6872,51 @@ ERT:
       - arguments:
           n_cols_per_row: 11
           n_rows: 1
-        energy: 0
+        energy: 12
       - arguments:
           n_cols_per_row: 11
           n_rows: 2
-        energy: 0
+        energy: 24
       - arguments:
           n_cols_per_row: 11
           n_rows: 3
-        energy: 0
+        energy: 36
       - arguments:
           n_cols_per_row: 11
           n_rows: 4
-        energy: 0
+        energy: 48
       - arguments:
           n_cols_per_row: 11
           n_rows: 5
-        energy: 0
+        energy: 60
       - arguments:
           n_cols_per_row: 11
           n_rows: 6
-        energy: 0
+        energy: 72
       - arguments:
           n_cols_per_row: 11
           n_rows: 7
-        energy: 0
+        energy: 84
       - arguments:
           n_cols_per_row: 11
           n_rows: 8
-        energy: 0
+        energy: 96
       - arguments:
           n_cols_per_row: 11
           n_rows: 9
-        energy: 0
+        energy: 108
       - arguments:
           n_cols_per_row: 11
           n_rows: 10
-        energy: 0
+        energy: 120
       - arguments:
           n_cols_per_row: 11
           n_rows: 11
-        energy: 0
+        energy: 132
       - arguments:
           n_cols_per_row: 11
           n_rows: 12
-        energy: 0
+        energy: 144
       - arguments:
           n_cols_per_row: 12
           n_rows: 0
@@ -6924,51 +6924,51 @@ ERT:
       - arguments:
           n_cols_per_row: 12
           n_rows: 1
-        energy: 0
+        energy: 13
       - arguments:
           n_cols_per_row: 12
           n_rows: 2
-        energy: 0
+        energy: 26
       - arguments:
           n_cols_per_row: 12
           n_rows: 3
-        energy: 0
+        energy: 39
       - arguments:
           n_cols_per_row: 12
           n_rows: 4
-        energy: 0
+        energy: 52
       - arguments:
           n_cols_per_row: 12
           n_rows: 5
-        energy: 0
+        energy: 65
       - arguments:
           n_cols_per_row: 12
           n_rows: 6
-        energy: 0
+        energy: 78
       - arguments:
           n_cols_per_row: 12
           n_rows: 7
-        energy: 0
+        energy: 91
       - arguments:
           n_cols_per_row: 12
           n_rows: 8
-        energy: 0
+        energy: 104
       - arguments:
           n_cols_per_row: 12
           n_rows: 9
-        energy: 0
+        energy: 117
       - arguments:
           n_cols_per_row: 12
           n_rows: 10
-        energy: 0
+        energy: 130
       - arguments:
           n_cols_per_row: 12
           n_rows: 11
-        energy: 0
+        energy: 143
       - arguments:
           n_cols_per_row: 12
           n_rows: 12
-        energy: 0
+        energy: 156
       - arguments:
           n_cols_per_row: 13
           n_rows: 0
@@ -6976,51 +6976,51 @@ ERT:
       - arguments:
           n_cols_per_row: 13
           n_rows: 1
-        energy: 0
+        energy: 14
       - arguments:
           n_cols_per_row: 13
           n_rows: 2
-        energy: 0
+        energy: 28
       - arguments:
           n_cols_per_row: 13
           n_rows: 3
-        energy: 0
+        energy: 42
       - arguments:
           n_cols_per_row: 13
           n_rows: 4
-        energy: 0
+        energy: 56
       - arguments:
           n_cols_per_row: 13
           n_rows: 5
-        energy: 0
+        energy: 70
       - arguments:
           n_cols_per_row: 13
           n_rows: 6
-        energy: 0
+        energy: 84
       - arguments:
           n_cols_per_row: 13
           n_rows: 7
-        energy: 0
+        energy: 98
       - arguments:
           n_cols_per_row: 13
           n_rows: 8
-        energy: 0
+        energy: 112
       - arguments:
           n_cols_per_row: 13
           n_rows: 9
-        energy: 0
+        energy: 126
       - arguments:
           n_cols_per_row: 13
           n_rows: 10
-        energy: 0
+        energy: 140
       - arguments:
           n_cols_per_row: 13
           n_rows: 11
-        energy: 0
+        energy: 154
       - arguments:
           n_cols_per_row: 13
           n_rows: 12
-        energy: 0
+        energy: 168
       - arguments:
           n_cols_per_row: 14
           n_rows: 0
@@ -7028,51 +7028,51 @@ ERT:
       - arguments:
           n_cols_per_row: 14
           n_rows: 1
-        energy: 0
+        energy: 15
       - arguments:
           n_cols_per_row: 14
           n_rows: 2
-        energy: 0
+        energy: 30
       - arguments:
           n_cols_per_row: 14
           n_rows: 3
-        energy: 0
+        energy: 45
       - arguments:
           n_cols_per_row: 14
           n_rows: 4
-        energy: 0
+        energy: 60
       - arguments:
           n_cols_per_row: 14
           n_rows: 5
-        energy: 0
+        energy: 75
       - arguments:
           n_cols_per_row: 14
           n_rows: 6
-        energy: 0
+        energy: 90
       - arguments:
           n_cols_per_row: 14
           n_rows: 7
-        energy: 0
+        energy: 105
       - arguments:
           n_cols_per_row: 14
           n_rows: 8
-        energy: 0
+        energy: 120
       - arguments:
           n_cols_per_row: 14
           n_rows: 9
-        energy: 0
+        energy: 135
       - arguments:
           n_cols_per_row: 14
           n_rows: 10
-        energy: 0
+        energy: 150
       - arguments:
           n_cols_per_row: 14
           n_rows: 11
-        energy: 0
+        energy: 165
       - arguments:
           n_cols_per_row: 14
           n_rows: 12
-        energy: 0
+        energy: 180
     eyeriss_like.weights_glb:
       fill:
       - arguments:

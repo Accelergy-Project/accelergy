@@ -19,8 +19,8 @@ architecture:
           attributes:
             memory_width: 64
             n_banks: 25
-            bank_width: 512
-            memory_depth: bank_width * n_banks
+            bank_depth: 512
+            memory_depth: bank_depth * n_banks
             n_buffets: 2
             update_fifo_depth: 2
         - name: ifmap_NoC
@@ -40,7 +40,7 @@ architecture:
           class: XY_NoC
           attributes:
             datawidth: 64
-            Y_X_wire_avg_length: 6mm
+            Y_X_wire_avg_length: 4mm
       subtree:
       - name: PE[0..167]
         attributes:

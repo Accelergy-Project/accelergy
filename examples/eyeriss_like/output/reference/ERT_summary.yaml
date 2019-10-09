@@ -58,34 +58,34 @@ ERT_summary:
       idle:
         energy: 0
       transfer_random:
-        average energy: 0.0
-        max energy: 0
-        min energy: 0
+        average energy: 49.0
+        max energy: 181
+        min energy: 1
       transfer_repeated:
-        average energy: 0.0
-        max energy: 0
+        average energy: 48.0
+        max energy: 180
         min energy: 0
     eyeriss_like.psum_read_NoC:
       idle:
         energy: 0
       transfer_random:
-        average energy: 0.0
-        max energy: 0
-        min energy: 0
+        average energy: 49.0
+        max energy: 181
+        min energy: 1
       transfer_repeated:
-        average energy: 0.0
-        max energy: 0
+        average energy: 48.0
+        max energy: 180
         min energy: 0
     eyeriss_like.psum_write_NoC:
       idle:
         energy: 0
       transfer_random:
-        average energy: 0.0
-        max energy: 0
-        min energy: 0
+        average energy: 49.0
+        max energy: 181
+        min energy: 1
       transfer_repeated:
-        average energy: 0.0
-        max energy: 0
+        average energy: 48.0
+        max energy: 180
         min energy: 0
     eyeriss_like.shared_glb:
       fill:
@@ -106,12 +106,12 @@ ERT_summary:
       idle:
         energy: 0
       transfer_random:
-        average energy: 0.0
-        max energy: 0
-        min energy: 0
+        average energy: 49.0
+        max energy: 181
+        min energy: 1
       transfer_repeated:
-        average energy: 0.0
-        max energy: 0
+        average energy: 48.0
+        max energy: 180
         min energy: 0
     eyeriss_like.weights_glb:
       fill:

@@ -17,7 +17,7 @@ compound_components:
           technology: technology
           depth: memory_depth
           width: memory_width
-          scoreboard_depth: buffet_manager_depth
+          scoreboard_depth: scoreboard_depth
       - name: storage
         class: SRAM
         attributes:

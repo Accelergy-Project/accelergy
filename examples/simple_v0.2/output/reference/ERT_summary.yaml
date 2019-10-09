@@ -1,0 +1,14 @@
+ERT_summary:
+  ERT summaries:
+    simple.glb[0..4]:
+      idle:
+        energy: 0
+      read:
+        average energy: 2.0
+        max energy: 4
+        min energy: 0
+      write:
+        average energy: 2.0
+        max energy: 4
+        min energy: 0
+  version: 0.2

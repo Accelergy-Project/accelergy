@@ -2,16 +2,16 @@ flattened_architecture:
   components:
     simple.glb[0..4]:
       attributes:
+        technology: 65nm
+        nbanks: 3
         bank_depth: 224
         bank_width: 16
-        n_bank_rd_ports: 1
-        n_bank_rdwr_ports: 2
-        n_bank_wr_ports: 1
         n_rd_ports: 2
         n_wr_ports: 2
-        nbanks: 3
-        num_glbs: 5
-        technology: 65nm
+        n_bank_rd_ports: 1
+        n_bank_wr_ports: 1
+        n_bank_rdwr_ports: 2
         voltage: 1
+        num_glbs: 5
       class: shared_SRAM
   version: 0.2

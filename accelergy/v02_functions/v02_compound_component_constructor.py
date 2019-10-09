@@ -175,15 +175,16 @@ def v02_compound_component_constructor(self, compound_component_info):
 
 @register_function
 def v02_check_subcomponent_name_in_action_def(self, action_def, subcomponent_names, compound_attributes):
+    returned_action_def = deepcopy(action_def)
     new_subcomponents = deepcopy(action_def['subcomponents'])
-    for sub_component in action_def['subcomponents']:
+    for sub_component in returned_action_def['subcomponents']:
         sub_cname = sub_component['name']
         # check if the subcomponent name is a list
         list_length, name_base = v02_is_component_list(sub_cname, compound_attributes)
         if list_length == -1:
            new_subcomponents.remove(sub_component)
-           WARN(sub_cname, ' in "', action_def['name'],
-                '" interpreted as negative list length --> subcomponent ignored')
+           # WARN(sub_cname, ' in "', returned_action_def['name'],
+           #      '" interpreted as negative list length --> subcomponent ignored')
         elif name_base is not None:
             new_subcomponents.remove(sub_component)
             for item_idx in range(list_length):
@@ -193,12 +194,12 @@ def v02_check_subcomponent_name_in_action_def(self, action_def, subcomponent_nam
                 new_subcomponents.append(new_sub_comp)
                 if new_sub_cname not in subcomponent_names:
                     ERROR_CLEAN_EXIT('v0.2 error: compound class description...\n',
-                                     'Cannot parse action "%s"\n'% action_def['name'],
+                                     'Cannot parse action "%s"\n'% returned_action_def['name'],
                                      'Cannot find "%s" in compound component definition'%new_sub_cname )
         else:
             if sub_cname not in subcomponent_names:
                 ERROR_CLEAN_EXIT('v0.2 error: compound class description...\n',
-                                 'Cannot parse action "%s"\n' % action_def['name'],
+                                 'Cannot parse action "%s"\n' % returned_action_def['name'],
                                  'Cannot find "%s" in compound component definition' % sub_cname)
-    action_def['subcomponents'] = new_subcomponents
-    return action_def
+    returned_action_def['subcomponents'] = new_subcomponents
+    return returned_action_def
