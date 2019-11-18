@@ -330,10 +330,23 @@ class EnergyReferenceTableGenerator(object):
                       for arg_name, arg_range in action['arguments'].items():
                           idx_start = arg_range.split('..')[0]
                           idx_end = arg_range.split('..')[1]
-                          if idx_end in component_info['attributes']:
-                              idx_end = component_info['attributes'][idx_end]
-                          if idx_start in component_info['attributes']:
-                              idx_start = component_info['attributes'][idx_start]
+
+                          if type(idx_start) is str:
+                              optype_start, op1_start, op2_start = parse_expression_for_arithmetic(idx_start, component_info['attributes'])
+                              if optype_start is not None:
+                                  idx_start = process_arithmetic(op1_start, op2_start, optype_start)
+                              else:
+                                if idx_start in component_info['attributes']:
+                                  idx_start = component_info['attributes'][idx_start]
+
+                          if type(idx_end) is str:
+                              optype_end, op1_end, op2_end = parse_expression_for_arithmetic(idx_end, component_info['attributes'])
+                              if optype_end is not None:
+                                  idx_end = process_arithmetic(op1_end, op2_end, optype_end)
+                              else:
+                                  if idx_end in component_info['attributes']:
+                                      idx_end = component_info['attributes'][idx_end]
+
                           action['arguments'][arg_name] = str(idx_start) + '..' + str(idx_end)
             else:
               action_list = component_info['actions']
@@ -563,6 +576,7 @@ class EnergyReferenceTableGenerator(object):
         # load in the stored primitive classes
         primitive_class_paths = self.config['primitive_components']
         for pc_path in primitive_class_paths:
+            print(pc_path)
             # primitive component library file is directly specified
             if '.yaml' in pc_path:
                 self.expand_primitive_component_lib_info(pc_path)
@@ -585,24 +599,22 @@ class EnergyReferenceTableGenerator(object):
         for compound_class_name, compound_class_info in self.compound_class_description.items():
             if 'primitive_type' in compound_class_info:
                 primitive_type= compound_class_info['primitive_type']
-                if primitive_type in self.primitive_class_description:
-                    ERROR_CLEAN_EXIT(primitive_type, ': primitive type of a compound component class has the same name as primitive component class')
                 self.primitive_class_description[primitive_type] = {'name': primitive_type}
-                self.primitive_class_description[primitive_type]['attributes'] = []
+                self.primitive_class_description[primitive_type]['attributes'] = {}
                 for attr_name, default_attr_val in compound_class_info['attributes'].items():
                     if type(default_attr_val) is str:
                         # attributes can be computed in terms of other compound attributes
                         op_type, op1, op2 = parse_expression_for_arithmetic(default_attr_val, compound_class_info['attributes'])
                         if op_type is not None:
                             default_attr_val = process_arithmetic(op1, op2, op_type)
-                    self.primitive_class_description[primitive_type]['attributes'].append({attr_name,default_attr_val})
+                    self.primitive_class_description[primitive_type]['attributes'][attr_name] = default_attr_val
                 self.primitive_class_description[primitive_type]['actions'] = []
                 for action_info in compound_class_info['actions']:
                     primitive_action_info = {'name': deepcopy(action_info['name'])}
                     if 'arguments' in action_info:
                         primitive_action_info['arguments'] = deepcopy(action_info['arguments'])
                     self.primitive_class_description[primitive_type]['actions'].append(primitive_action_info)
-                INFO('ERT_generator... Identify the primtive type:', compound_class_info['primtive_type'],
+                INFO('ERT_generator... Identify the primitive type:', compound_class_info['primitive_type'],
                      'of compound component class:', compound_class_name)
 
     def ERT_existed(self, component_name):

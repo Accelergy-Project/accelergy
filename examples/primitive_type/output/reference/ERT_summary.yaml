@@ -1,0 +1,14 @@
+ERT_summary:
+  components:
+    simple.glb[0..4]:
+      idle:
+        energy: 0
+      read:
+        average energy: 1.0
+        max energy: 1
+        min energy: 1
+      write:
+        average energy: 1.0
+        max energy: 1
+        min energy: 1
+  version: 0.2

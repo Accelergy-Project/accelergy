@@ -1,0 +1,4 @@
+energy_estimation:
+  components:
+    simple.glb[0]: 270
+  version: 0.2
