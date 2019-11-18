@@ -581,6 +581,30 @@ class EnergyReferenceTableGenerator(object):
                                 self.primitive_class_description[pc_name] = primitive_component_list['classes'][idx]
                             INFO('primitive component file parsed: ', pc_path)
 
+        # add the primitive types of the compound classes (if any) to the primitive component library
+        for compound_class_name, compound_class_info in self.compound_class_description.items():
+            if 'primitive_type' in compound_class_info:
+                primitive_type= compound_class_info['primitive_type']
+                if primitive_type in self.primitive_class_description:
+                    ERROR_CLEAN_EXIT(primitive_type, ': primitive type of a compound component class has the same name as primitive component class')
+                self.primitive_class_description[primitive_type] = {'name': primitive_type}
+                self.primitive_class_description[primitive_type]['attributes'] = []
+                for attr_name, default_attr_val in compound_class_info['attributes'].items():
+                    if type(default_attr_val) is str:
+                        # attributes can be computed in terms of other compound attributes
+                        op_type, op1, op2 = parse_expression_for_arithmetic(default_attr_val, compound_class_info['attributes'])
+                        if op_type is not None:
+                            default_attr_val = process_arithmetic(op1, op2, op_type)
+                    self.primitive_class_description[primitive_type]['attributes'].append({attr_name,default_attr_val})
+                self.primitive_class_description[primitive_type]['actions'] = []
+                for action_info in compound_class_info['actions']:
+                    primitive_action_info = {'name': deepcopy(action_info['name'])}
+                    if 'arguments' in action_info:
+                        primitive_action_info['arguments'] = deepcopy(action_info['arguments'])
+                    self.primitive_class_description[primitive_type]['actions'].append(primitive_action_info)
+                INFO('ERT_generator... Identify the primtive type:', compound_class_info['primtive_type'],
+                     'of compound component class:', compound_class_name)
+
     def ERT_existed(self, component_name):
         """
         Component that belongs to a list shares ERT with other identical components in the list
@@ -597,6 +621,8 @@ class EnergyReferenceTableGenerator(object):
         if component_name_to_be_recorded not in self.energy_reference_table:
             ERT_existed = False
         return ERT_existed, component_name_to_be_recorded
+
+
     def generate_ERTs_for_architecture(self):
         """
         For each component in the architecture, generate an ERT if needed
@@ -611,6 +637,8 @@ class EnergyReferenceTableGenerator(object):
                 ERT = self.generate_component_ert(component_info, is_primitive_class)
                 self.energy_reference_table[ERT_check_result[1]] = ERT
                 INFO(component_info['name'], ' ---> New ERT generated')
+
+
     def construct_compound_class_description(self):
         """
         checks if there are duplicated compound component class names
@@ -635,6 +663,8 @@ class EnergyReferenceTableGenerator(object):
         self.compound_class_version = self.raw_compound_class_description['version']
         self.compound_component_constructor = 'v' + str(self.compound_class_version).replace('.', '') + \
                                           '_compound_component_constructor'
+
+
     def construct_save_architecture_description(self):
         if 'version' not in self.raw_architecture_description:
             ERROR_CLEAN_EXIT('please specify the version of parser your input format adheres to using '
@@ -643,6 +673,8 @@ class EnergyReferenceTableGenerator(object):
         architecture_description_parser = 'v' + str(self.arch_version).replace('.', '') + \
                                  '_parse_architecture_description'
         getattr(self, architecture_description_parser)(self.raw_architecture_description)
+
+
     def generate_ERT_summary(self, ERT_entry_name):
         ERTs = self.energy_reference_table[ERT_entry_name]
         ERT_suammry = {}
@@ -664,6 +696,7 @@ class EnergyReferenceTableGenerator(object):
                 avg = round(total / len(action_ERT), self.decimal_place)
                 ERT_suammry[action_name] = {'average energy': avg, 'max energy': maxE, 'min energy': minE}
         return ERT_suammry
+
     def generate_easy_to_read_flattened_architecture_ERT_summary(self):
         easy_to_read_flattened_architecture = {}
         list_names = {}
@@ -801,7 +834,7 @@ class EnergyReferenceTableGenerator(object):
         # Parse the architecture description and save the parsed version if flag high
         self.construct_save_architecture_description()
 
-        # Instantiate the estimation plug-ins as intances of the corresponding plug-in classes
+        # Instantiate the estimation plug-ins as instances of the corresponding plug-in classes
         self.instantiate_estimator_plug_ins()
         ASSERT_MSG(not len(self.estimator_plug_ins) == 0, 'No estimation plug-in found, '
                                                       'please check if the paths in config file are correct')
