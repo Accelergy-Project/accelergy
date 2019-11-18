@@ -714,13 +714,16 @@ class EnergyReferenceTableGenerator(object):
             ERT_summary_file = {'ERT_summary': {'version': self.compound_class_version,
                                                 'components': ERT_summary}}
             write_yaml_file(self.output_path + '/ERT_summary.yaml', ERT_summary_file)
-            INFO('ERT summary saved to ', self.output_path + '/ERT_summary.yaml')
+            INFO('ERT summary saved to ', os.path.join(self.output_path,'ERT_summary.yaml'))
+
         if self.flattened_arch:
             arch_file_path = self.output_path + '/' + 'flattened_architecture.yaml'
             flattened_architecture_yaml = {'flattened_architecture': {'version': self.arch_version,
                                                                       'components': easy_to_read_flattened_architecture}}
             write_yaml_file(arch_file_path, flattened_architecture_yaml)
             INFO('Architecture flattened ... saved to ', arch_file_path)
+
+
     def interpret_input_path(self, file_path):
         file = load(open(file_path), accelergy_loader)
         for key in file:
@@ -753,6 +756,8 @@ class EnergyReferenceTableGenerator(object):
                                'File content not legal: %s, Versions of two compound class description '
                                'related file do not match'%file_path)
                     self.raw_compound_class_description['classes'].append(file[key]['classes'])
+
+
     def generate_ERTs(self, raw_architecture_description, raw_compound_class_description
                       ,output_path, precision, flatten_arch_flag, verbose, show_ERT_summary):
         """

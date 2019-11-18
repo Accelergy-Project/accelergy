@@ -84,10 +84,10 @@ def main():
 
     elif raw_architecture_description is not None:
         if raw_action_counts is None:
-            INFO('Accelergy found ARCHITECTURE and COMPOUND COMPONENT but NO ERT or ACTION COUNTS  '
+            INFO('Accelergy found ARCHITECTURE but NO ERT or ACTION COUNTS  '
                  '\n---------->  PERFORM ERT GENERATION')
         else:
-            INFO('Accelergy found ARCHITECTURE, COMPOUND COMPONENT, and ACTION COUNTS but NO ERT  '
+            INFO('Accelergy found ARCHITECTURE, and ACTION COUNTS but NO ERT  '
                  '\n----------> PERFORM ERT GENERATION AND ENERGY ESTIMATION')
 
         generator = EnergyReferenceTableGenerator()
