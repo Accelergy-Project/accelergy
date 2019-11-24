@@ -15,10 +15,6 @@ class DummyTable(object):
     def __init__(self):
         self.estimator_name =  "dummy_table"
 
-        # example primitive classes supported by this estimator
-        self.supported_pc = ['SRAM', 'regfile','counter', 'mac', 'wire', 'crossbar',
-                             'bitwise', 'fpmac', 'adder', 'multiplier', 'FIFO']
-
     def primitive_action_supported(self, interface):
         """
         :param interface:

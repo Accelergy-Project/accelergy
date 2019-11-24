@@ -2,7 +2,7 @@ compound_components:
   version: 0.2
   classes:
   - name: shared_SRAM
-    primitive_type: sharedSRAM # primtive component type of the compound component class
+    primitive_type: shared_SRAM_primitive # primtive component type of the compound component class
     attributes:
       technology: 15
       nbanks: 10

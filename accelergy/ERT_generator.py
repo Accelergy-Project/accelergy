@@ -60,6 +60,7 @@ class EnergyReferenceTableGenerator(object):
         self.verbose                         = 0
         self.show_ERT_summary                = 1
         self.ERT_summary                     = {}
+        self.compound_class_primitive_type   = {}
     @staticmethod
     def parse_arg_range(arg_range):
         if type(arg_range) is not str or '..' not in arg_range:
@@ -111,6 +112,7 @@ class EnergyReferenceTableGenerator(object):
             name = EnergyReferenceTableGenerator.remove_brackets(name)
             return name
     def is_primitive_class(self, class_name):
+        """check if the class is primitive class """
         if class_name in self.primitive_class_description :
             return True
         else:
@@ -616,6 +618,11 @@ class EnergyReferenceTableGenerator(object):
                     self.primitive_class_description[primitive_type]['actions'].append(primitive_action_info)
                 INFO('ERT_generator... Identify the primitive type:', compound_class_info['primitive_type'],
                      'of compound component class:', compound_class_name)
+                # setup an entry for recording
+                #     (1) correspondence between compound component class name and its primitive type name
+                #     (2) whether a primitive type can be supported or not
+                #     initialize to None, update to True or False in self.is_primitive_class
+                self.compound_class_primitive_type[compound_class_name] = [primitive_type, None]
 
     def ERT_existed(self, component_name):
         """
@@ -645,10 +652,61 @@ class EnergyReferenceTableGenerator(object):
             ERT_check_result = self.ERT_existed(component_name)
             if not ERT_check_result[0]:
                 INFO(component_info['name'], ' ---> Generating new ERT')
-                is_primitive_class = True if self.is_primitive_class(component_info['class']) else False
+                # not simply checking if the class is primitive or compound, you need to check if the primitive type
+                # of compound is supported or not
+                class_name = component_info['class']
+                is_primitive_class = True if self.is_primitive_class(class_name) else False
+                if is_primitive_class is False and class_name in self.compound_class_primitive_type:
+                    if self.compound_class_primitive_type[class_name][1] is None:
+                        supported = self.is_primitive_type_supported(component_info)
+                        self.compound_class_primitive_type[class_name][1] = supported
+                    else:
+                        supported = self.compound_class_primitive_type[class_name][1]
+                else:
+                    supported = 0
+                if supported == 1:
+                    is_primitive_class = True
+                    component_info['class'] = self.compound_class_primitive_type[class_name][0]
+                    INFO('ERT generator... Treat', component_name, 'as its primitive type: ', component_info['class'])
                 ERT = self.generate_component_ert(component_info, is_primitive_class)
                 self.energy_reference_table[ERT_check_result[1]] = ERT
                 INFO(component_info['name'], ' ---> New ERT generated')
+
+    def is_primitive_type_supported(self, component_info):
+        supported = 1
+        primitive_type = self.compound_class_primitive_type[component_info['class']][0]
+        for attr_name, attr_default_val in \
+                self.primitive_class_description[primitive_type]['attributes'].items():
+            if attr_name not in component_info['attributes']:
+                component_info['attributes'][attr_name] = attr_default_val
+
+        action_info = deepcopy(self.primitive_class_description[primitive_type]['actions'])
+        for action in action_info:
+            estimator_plug_in_interface = {'class_name': primitive_type,
+                                           'attributes': component_info['attributes'],
+                                           'action_name': action,
+                                           'arguments': None}
+            if 'arguments' in action:
+                estimator_plug_in_interface['arguments'] = {}
+                for arg_name, arg_range in action['arguments'].items():
+                    idx_start = arg_range.split('..')[0]
+                    if idx_start in component_info['attributes']:
+                        idx_start = component_info['attributes'][idx_start]
+                    estimator_plug_in_interface['arguments'][arg_name] = idx_start # test one argument value will be enough
+
+            best_accuracy = 0
+            best_estimator = None
+            for estimator in self.estimator_plug_ins:
+                accuracy = estimator.primitive_action_supported(estimator_plug_in_interface)
+                ASSERT_MSG(type(accuracy) is int or type(accuracy) is float,
+                           'Wrong plug-in accuracy: %s ...  Returned accuracy must be integers or floats' % (estimator))
+                if accuracy > best_accuracy:
+                    best_accuracy = accuracy
+                    best_estimator = estimator
+            if best_estimator is None:
+                supported = 0
+                return supported
+        return supported
 
 
     def construct_compound_class_description(self):
@@ -762,7 +820,7 @@ class EnergyReferenceTableGenerator(object):
             INFO('ERT summary saved to ', os.path.join(self.output_path,'ERT_summary.yaml'))
 
         if self.flattened_arch:
-            arch_file_path = self.output_path + '/' + 'flattened_architecture.yaml'
+            arch_file_path = os.path.join(self.output_path, 'flattened_architecture.yaml')
             flattened_architecture_yaml = {'flattened_architecture': {'version': self.arch_version,
                                                                       'components': easy_to_read_flattened_architecture}}
             write_yaml_file(arch_file_path, flattened_architecture_yaml)
