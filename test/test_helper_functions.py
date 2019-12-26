@@ -27,7 +27,7 @@ class TestHelperFunctions(unittest.TestCase):
     def test_oneD_quad_interpolation(self):
         """ quadratic interpolation on one hardware attribute """
 
-        # Rough estimation of simple tree multiplier: E_mult = E_full_adder * bitwidth^2 + E_misc
+        # Rough estimation of simple array multiplier: E_mult = E_full_adder * bitwidth^2 + E_misc
 
         E_full_adder = 4
         E_misc = 2
