@@ -570,6 +570,20 @@ class EnergyReferenceTableGenerator(object):
                             estimator_obj = getattr(estimator_module, class_name)(estimator_info['parameters'])
 
                         self.estimator_plug_ins.append(estimator_obj)
+   
+    
+    # load primitive class file and parse
+    def expand_primitive_component_lib_info(self, pc_path):
+        primitive_component_list = load(open(pc_path), accelergy_loader)
+        syntax_validators.validate_primitive_classes(primitive_component_list)
+        for idx in range(len(primitive_component_list['classes'])):
+            pc_name = primitive_component_list['classes'][idx]['name']
+            if pc_name in self.primitive_class_description:
+                WARN(pc_name, 'redefined in', pc_path)
+            self.primitive_class_description[pc_name] = primitive_component_list['classes'][idx]
+        INFO('primitive component file parsed: ', pc_path)
+
+
     def construct_primitive_class_description(self):
         """
         construct a dictionary for primitive classes Accelergy
@@ -588,14 +602,7 @@ class EnergyReferenceTableGenerator(object):
                     for file_name in file_names:
                         if '.lib.yaml' in file_name:
                             pc_path = root + os.sep + file_name
-                            primitive_component_list = load(open(pc_path), accelergy_loader)
-                            syntax_validators.validate_primitive_classes(primitive_component_list)
-                            for idx in range(len(primitive_component_list['classes'])):
-                                pc_name = primitive_component_list['classes'][idx]['name']
-                                if pc_name in self.primitive_class_description:
-                                    WARN(pc_name, 'redefined in', pc_path)
-                                self.primitive_class_description[pc_name] = primitive_component_list['classes'][idx]
-                            INFO('primitive component file parsed: ', pc_path)
+                            self.expand_primitive_component_lib_info(pc_path)
 
         # add the primitive types of the compound classes (if any) to the primitive component library
         for compound_class_name, compound_class_info in self.compound_class_description.items():
