@@ -1,0 +1,49 @@
+# accelergy's dict representation of the arch spec
+#  1. flattens all the component names
+#  2. projects all the shared attributes
+#  3. DO NOT perform mappings/arithmetic operations of the attributes,
+#      as default attributes from the classes are not available from just parsing the input arch yaml file
+
+version: 0.2
+components:
+  design.GLB:
+    name: design.GLB
+    class: SRAM
+    attributes:
+      technology: 65nm
+      n_PEs: 3
+      word_width: 16
+      n_words: 4
+      width: word_width * n_words
+      depth: 2560
+      nbanks: 5
+  design.PE[0..2].byte_sp:
+    name: design.PE[0..2].byte_sp
+    class: regfile
+    attributes:
+      technology: 65nm
+      n_PEs: 3
+      width: datawidth
+      depth: 12
+      datawidth: 8
+  design.PE[0..2].mac[0..1]:
+    name: design.PE[0..2].mac[0..1]
+    class: intmac
+    attributes:
+      technology: 65nm
+      n_PEs: 3
+      datawidth: 8
+  design.PE[0..2].arithmetic_units.adder:
+    name: design.PE[0..2].arithmetic_units.adder
+    class: intadder
+    attributes:
+      technology: 65nm
+      n_PEs: 3
+      datawidth: 8
+  design.PE[0..2].arithmetic_units.mac[0..1]:
+    name: design.PE[0..2].arithmetic_units.mac[0..1]
+    class: intmac
+    attributes:
+      technology: 65nm
+      n_PEs: 3
+      datawidth: 8

@@ -1,5 +1,5 @@
 compound_components:
-  version: 0.2
+  version: 0.3
   classes:
   - name: buffet
     attributes:
@@ -15,12 +15,12 @@ compound_components:
           technology: technology
           depth: scoreboard_depth
           width: 1
-      - name: data_fifos[0..3]
+      - name: data_fifos[0..2]
         class: FIFO
         attributes:
           technology: technology
           datawidth: width
-      - name: addr_fifos[0..3]
+      - name: addr_fifos[0..2]
         class: FIFO
         attributes:
           technology: technology

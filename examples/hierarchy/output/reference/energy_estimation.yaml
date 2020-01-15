@@ -1,0 +1,15 @@
+energy_estimation:
+  version: 0.3
+  components:
+  - name: hierarchy.GLB
+    energy: 1500
+  - name: hierarchy.PE_large[2].channel[0]
+    energy: 40
+  - name: hierarchy.PE_large[2].arithmetic_units.mac[0]
+    energy: 70
+  - name: hierarchy.PE_large[2].arithmetic_units.mac[1]
+    energy: 70
+  - name: hierarchy.PE_small[0].mac[0]
+    energy: 70
+  - name: hierarchy.PE_small[0].byte_sp
+    energy: 500

@@ -1,0 +1,27 @@
+action_counts:
+  version: 0.2
+  subtree:
+    - name: design
+      local:
+        - name: scratchpad[4]
+          action_counts:
+            - name: idle
+              counts: 100
+            - name: fill
+              arguments:
+                address_delta: 0
+                data_delta: 0
+              counts: 1150
+            - name: fill
+              arguments:
+                address_delta: 1
+                data_delta: 1
+              counts: 24
+  local:
+    - name: design.mac
+      action_counts:
+        - name: mac_random
+          counts: 50
+        - name: mac_gated
+          counts: 100
+

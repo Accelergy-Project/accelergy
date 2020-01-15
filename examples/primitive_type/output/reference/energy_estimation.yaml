@@ -1,0 +1,5 @@
+energy_estimation:
+  version: 0.3
+  components:
+  - name: simple.glb[0]
+    energy: 270

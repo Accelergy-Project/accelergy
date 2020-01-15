@@ -1,0 +1,29 @@
+# ================================================
+# Action Counts
+# ================================================
+action_counts:
+  version: 0.3
+  subtree:
+    - name: hierarchy.PE_large[2]
+      local:
+        - name: channel[0]
+          action_counts:
+            - name: push
+              counts: 20
+            - name: pop
+              counts: 20
+      subtree:
+        - name: arithmetic_units
+          local:
+            - name: mac[0]
+              action_counts:
+              - name: mac_random
+                counts: 15
+              - name: mac_gated
+                counts: 55
+            - name: mac[1]
+              action_counts:
+                - name: mac_random
+                  counts: 50
+                - name: mac_gated
+                  counts: 20

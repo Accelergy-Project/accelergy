@@ -1,0 +1,29 @@
+# ================================================
+# Action Counts
+# ================================================
+action_counts:
+  version: 0.3
+  local:
+    - name: hierarchy.PE_small[0].mac[0]
+      action_counts:
+        - name: mac_random
+          counts: 20
+        - name: mac_gated
+          counts: 50
+    - name: hierarchy.PE_small[0].byte_sp
+      action_counts:
+        - name: fill
+          arguments:
+            data_delta: 1
+            address_delta: 1
+          counts: 20
+        - name: read
+          arguments:
+            data_delta: 1
+            address_delta: 1
+          counts: 20
+        - name: read
+          arguments:
+            data_delta: 0
+            address_delta: 0
+          counts: 50

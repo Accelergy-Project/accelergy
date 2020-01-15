@@ -1,0 +1,83 @@
+architecture:
+  version: 0.3
+  local:
+  - name: hierarchy.PE_small[0..1].byte_sp
+    class: smartbuffer_RF
+    attributes:
+      buffet_manager_depth: 12.0
+      datawidth: 8
+      memory_depth: 12
+      memory_width: 8
+      n_banks: 1
+      n_buffets: 1
+      n_rdwr_ports: 2
+      technology: 40nm
+      update_fifo_depth: 0
+  - name: hierarchy.PE_small[0..1].mac[0..1]
+    class: intmac
+    attributes:
+      datawidth: 8
+      latency: 5ns
+      num_pipeline_stages: 2
+      technology: 40nm
+  - name: hierarchy.PE_large[0..2].arithmetic_units.adder
+    class: intadder
+    attributes:
+      datawidth: 16
+      latency: 5ns
+      num_pipeline_stages: 1
+      technology: 40nm
+  - name: hierarchy.PE_large[0..2].arithmetic_units.mac[0..1]
+    class: intmac
+    attributes:
+      datawidth: 16
+      latency: 5ns
+      num_pipeline_stages: 2
+      technology: 40nm
+  - name: hierarchy.PE_large[0..2].memory_storage.double_buffer_sp
+    class: smartbuffer_RF
+    memory_depth: 12
+    attributes:
+      buffet_manager_depth: 12.0
+      datawidth: 16
+      memory_depth: 12
+      memory_width: 16
+      n_banks: 1
+      n_buffets: 1
+      n_rdwr_ports: 2
+      technology: 40nm
+      update_fifo_depth: 0
+  - name: hierarchy.PE_large[0..2].memory_storage.two_byte_sp
+    class: smartbuffer_RF
+    memory_depth: 12
+    attributes:
+      buffet_manager_depth: 12.0
+      datawidth: 16
+      memory_depth: 12
+      memory_width: 16
+      n_banks: 1
+      n_buffets: 1
+      n_rdwr_ports: 2
+      technology: 40nm
+      update_fifo_depth: 0
+  - name: hierarchy.PE_large[0..2].channel[0..1]
+    class: FIFO
+    attributes:
+      datawidth: 16
+      depth: 2
+      latency: 5ns
+      technology: 40nm
+  - name: hierarchy.GLB
+    class: smartbuffer_SRAM
+    attributes:
+      buffet_manager_depth: 2560.0
+      memory_depth: 2560
+      memory_width: 64
+      n_banks: 1
+      n_buffets: 1
+      n_rdwr_ports: 2
+      n_words: 4
+      nbanks: 5
+      technology: 40nm
+      update_fifo_depth: 0
+      word_width: 16

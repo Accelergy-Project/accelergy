@@ -51,3 +51,34 @@ class DummyTable(object):
             return 0 # dummy returns 0 for all idle actions
         return 1 # dummy returns 1 for all non-idle actions
 
+    def primitive_area_supported(self, interface):
+        """
+        :param interface:
+        - contains two keys:
+        1. class_name : string
+        2. attributes: dictionary of name: value
+
+        :type interface: dict
+
+        :return return the accuracy if supported, return 0 if not
+        :rtype: int
+
+        """
+        supported = 1 # dummy support everything
+        return 0.1  if supported \
+                    else 0  # if not supported, accuracy is 0
+
+    def estimate_area(self, interface):
+        """
+        :param interface:
+        - contains two keys:
+        1. class_name : string
+        2. attributes: dictionary of name: value
+
+        :type interface: dict
+
+        :return the estimated area
+        :rtype: float
+
+        """
+        return 1 # dummy returns 1 for all areas

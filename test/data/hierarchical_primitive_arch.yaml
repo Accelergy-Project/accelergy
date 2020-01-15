@@ -1,0 +1,35 @@
+architecture:
+  version: 0.2
+  subtree:
+    - name: design
+      attributes:
+        technology: 65nm
+        n_PEs: 3
+      local:
+        - name: GLB
+          class: SRAM
+          attributes:
+            word_width: 16
+            n_words: 4
+            width: word_width * n_words  # attribute values with arithmetic mapping to same-level attributes
+            depth: 2560
+            nbanks: 5
+      subtree:
+        - name: PE[0..n_PEs-1]  # list name with arithmetic mapping to shared attributes
+          attributes:
+            datawidth: 8
+          local:
+            - name: byte_sp
+              class: regfile
+              attributes:
+                width: datawidth # binded mapping to shared attributes
+                depth: 12
+            - name: mac[0..1]
+              class: intmac
+          subtree:
+            - name: arithmetic_units
+              local:
+                - name: adder
+                  class: intadder
+                - name: mac[0..1]
+                  class: intmac

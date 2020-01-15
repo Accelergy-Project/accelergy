@@ -1,0 +1,5 @@
+ART:
+  version: 0.3
+  tables:
+  - name: simple.glb[0..4]
+    area: 4

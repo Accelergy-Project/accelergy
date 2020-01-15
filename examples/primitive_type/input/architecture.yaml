@@ -2,7 +2,7 @@ architecture:
 # ============================================================
 # Architecture Description
 # ============================================================
-  version: 0.2
+  version: 0.3
   subtree:
     - name: simple              # top-level name key has the value as your design name, there can be only one component is the top level list, which is the design
       attributes:               # shared attributes for all subcomponents in design

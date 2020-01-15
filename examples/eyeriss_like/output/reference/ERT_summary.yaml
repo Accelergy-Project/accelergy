@@ -1,131 +1,377 @@
 ERT_summary:
-  components:
-    eyeriss_like.PE[0..167].ifmap_spad:
-      fill:
-        average energy: 5.0
-        max energy: 7
-        min energy: 3
-      idle:
-        energy: 0
-      read:
-        average energy: 6.0
-        max energy: 8
-        min energy: 4
-      update:
-        average energy: 5.0
-        max energy: 7
-        min energy: 3
-    eyeriss_like.PE[0..167].mac:
-      idle:
-        energy: 0
-      mac_gated:
-        energy: 1
-      mac_random:
-        energy: 1
-      mac_reused:
-        energy: 1
-    eyeriss_like.PE[0..167].psum_spad:
-      fill:
-        average energy: 5.0
-        max energy: 7
-        min energy: 3
-      idle:
-        energy: 0
-      read:
-        average energy: 6.0
-        max energy: 8
-        min energy: 4
-      update:
-        average energy: 5.0
-        max energy: 7
-        min energy: 3
-    eyeriss_like.PE[0..167].weights_spad:
-      fill:
-        average energy: 5.0
-        max energy: 7
-        min energy: 3
-      idle:
-        energy: 0
-      read:
-        average energy: 6.0
-        max energy: 8
-        min energy: 4
-      update:
-        average energy: 5.0
-        max energy: 7
-        min energy: 3
-    eyeriss_like.ifmap_NoC:
-      idle:
-        energy: 0
-      transfer_random:
-        average energy: 49.0
-        max energy: 181
-        min energy: 1
-      transfer_repeated:
-        average energy: 48.0
-        max energy: 180
-        min energy: 0
-    eyeriss_like.psum_read_NoC:
-      idle:
-        energy: 0
-      transfer_random:
-        average energy: 49.0
-        max energy: 181
-        min energy: 1
-      transfer_repeated:
-        average energy: 48.0
-        max energy: 180
-        min energy: 0
-    eyeriss_like.psum_write_NoC:
-      idle:
-        energy: 0
-      transfer_random:
-        average energy: 49.0
-        max energy: 181
-        min energy: 1
-      transfer_repeated:
-        average energy: 48.0
-        max energy: 180
-        min energy: 0
-    eyeriss_like.shared_glb:
-      fill:
-        average energy: 5.0
-        max energy: 7
-        min energy: 3
-      idle:
-        energy: 0
-      read:
-        average energy: 6.0
-        max energy: 8
-        min energy: 4
-      update:
-        average energy: 5.0
-        max energy: 7
-        min energy: 3
-    eyeriss_like.weights_NoC:
-      idle:
-        energy: 0
-      transfer_random:
-        average energy: 49.0
-        max energy: 181
-        min energy: 1
-      transfer_repeated:
-        average energy: 48.0
-        max energy: 180
-        min energy: 0
-    eyeriss_like.weights_glb:
-      fill:
-        average energy: 4.667
-        max energy: 7
-        min energy: 3
-      idle:
-        energy: 0
-      read:
-        average energy: 5.667
-        max energy: 8
-        min energy: 4
-      update:
-        average energy: 4.667
-        max energy: 7
-        min energy: 3
-  version: 0.2
+  version: 0.3
+  table_summary:
+  - name: eyeriss_like.PE[0..167].mac
+    actions:
+    - name: mac_random
+      energy: 1
+    - name: mac_reused
+      energy: 1
+    - name: mac_gated
+      energy: 1
+    - name: idle
+      energy: 0
+    primitive_estimation(s):
+    - name: eyeriss_like.PE[0..167].mac
+      estimator: dummy_table
+  - name: eyeriss_like.PE[0..167].ifmap_spad
+    actions:
+    - name: fill
+      average_energy: 5.0
+      max_energy: 7
+      min_energy: 3
+    - name: read
+      average_energy: 6.0
+      max_energy: 8
+      min_energy: 4
+    - name: update
+      average_energy: 5.0
+      max_energy: 7
+      min_energy: 3
+    - name: idle
+      energy: 0
+    primitive_estimation(s):
+    - name: buffet_collection.buffet[0].scoreboard
+      estimator: dummy_table
+    - name: buffet_collection.buffet[0].data_fifos[0]
+      estimator: dummy_table
+    - name: buffet_collection.buffet[0].addr_fifos[0]
+      estimator: dummy_table
+    - name: buffet_collection.storage
+      estimator: dummy_table
+    - name: address_generators[0]
+      estimator: dummy_table
+    - name: address_generators[1]
+      estimator: dummy_table
+    - name: address_generators[2]
+      estimator: dummy_table
+    - name: buffet_collection.buffet[0..0].scoreboard
+      estimator: dummy_table
+    - name: buffet_collection.buffet[0..0].data_fifos[0..2]
+      estimator: dummy_table
+    - name: buffet_collection.buffet[0..0].addr_fifos[0..2]
+      estimator: dummy_table
+    - name: address_generators[0..2]
+      estimator: dummy_table
+  - name: eyeriss_like.PE[0..167].weights_spad
+    actions:
+    - name: fill
+      average_energy: 5.0
+      max_energy: 7
+      min_energy: 3
+    - name: read
+      average_energy: 6.0
+      max_energy: 8
+      min_energy: 4
+    - name: update
+      average_energy: 5.0
+      max_energy: 7
+      min_energy: 3
+    - name: idle
+      energy: 0
+    primitive_estimation(s):
+    - name: buffet_collection.buffet[0].scoreboard
+      estimator: dummy_table
+    - name: buffet_collection.buffet[0].data_fifos[0]
+      estimator: dummy_table
+    - name: buffet_collection.buffet[0].addr_fifos[0]
+      estimator: dummy_table
+    - name: buffet_collection.storage
+      estimator: dummy_table
+    - name: address_generators[0]
+      estimator: dummy_table
+    - name: address_generators[1]
+      estimator: dummy_table
+    - name: address_generators[2]
+      estimator: dummy_table
+    - name: buffet_collection.buffet[0..0].scoreboard
+      estimator: dummy_table
+    - name: buffet_collection.buffet[0..0].data_fifos[0..2]
+      estimator: dummy_table
+    - name: buffet_collection.buffet[0..0].addr_fifos[0..2]
+      estimator: dummy_table
+  - name: eyeriss_like.PE[0..167].psum_spad
+    actions:
+    - name: fill
+      average_energy: 5.0
+      max_energy: 7
+      min_energy: 3
+    - name: read
+      average_energy: 6.0
+      max_energy: 8
+      min_energy: 4
+    - name: update
+      average_energy: 5.0
+      max_energy: 7
+      min_energy: 3
+    - name: idle
+      energy: 0
+    primitive_estimation(s):
+    - name: buffet_collection.buffet[0].scoreboard
+      estimator: dummy_table
+    - name: buffet_collection.buffet[0].data_fifos[0]
+      estimator: dummy_table
+    - name: buffet_collection.buffet[0].addr_fifos[0]
+      estimator: dummy_table
+    - name: buffet_collection.storage
+      estimator: dummy_table
+    - name: address_generators[0]
+      estimator: dummy_table
+    - name: address_generators[1]
+      estimator: dummy_table
+    - name: address_generators[2]
+      estimator: dummy_table
+    - name: buffet_collection.buffet[0..0].scoreboard
+      estimator: dummy_table
+    - name: buffet_collection.buffet[0..0].data_fifos[0..2]
+      estimator: dummy_table
+    - name: buffet_collection.buffet[0..0].addr_fifos[0..2]
+      estimator: dummy_table
+    - name: address_generators[0..2]
+      estimator: dummy_table
+  - name: eyeriss_like.weights_glb
+    actions:
+    - name: fill
+      average_energy: 4.667
+      max_energy: 7
+      min_energy: 3
+    - name: read
+      average_energy: 5.667
+      max_energy: 8
+      min_energy: 4
+    - name: update
+      average_energy: 4.667
+      max_energy: 7
+      min_energy: 3
+    - name: idle
+      energy: 0
+    primitive_estimation(s):
+    - name: buffet_collection.buffet[0].scoreboard
+      estimator: dummy_table
+    - name: buffet_collection.buffet[0].data_fifos[0]
+      estimator: dummy_table
+    - name: buffet_collection.buffet[0].addr_fifos[0]
+      estimator: dummy_table
+    - name: buffet_collection.storage
+      estimator: dummy_table
+    - name: address_generators[0]
+      estimator: dummy_table
+    - name: address_generators[1]
+      estimator: dummy_table
+    - name: address_generators[2]
+      estimator: dummy_table
+    - name: buffet_collection.buffet[0..0].scoreboard
+      estimator: dummy_table
+    - name: buffet_collection.buffet[0..0].data_fifos[0..2]
+      estimator: dummy_table
+    - name: buffet_collection.buffet[0..0].addr_fifos[0..2]
+      estimator: dummy_table
+  - name: eyeriss_like.shared_glb
+    actions:
+    - name: fill
+      average_energy: 5.0
+      max_energy: 7
+      min_energy: 3
+    - name: read
+      average_energy: 6.0
+      max_energy: 8
+      min_energy: 4
+    - name: update
+      average_energy: 5.0
+      max_energy: 7
+      min_energy: 3
+    - name: idle
+      energy: 0
+    primitive_estimation(s):
+    - name: buffet_collection.buffet[0].scoreboard
+      estimator: dummy_table
+    - name: buffet_collection.buffet[0].data_fifos[0]
+      estimator: dummy_table
+    - name: buffet_collection.buffet[0].addr_fifos[0]
+      estimator: dummy_table
+    - name: buffet_collection.storage
+      estimator: dummy_table
+    - name: address_generators[0]
+      estimator: dummy_table
+    - name: address_generators[1]
+      estimator: dummy_table
+    - name: address_generators[2]
+      estimator: dummy_table
+    - name: buffet_collection.buffet[0..1].scoreboard
+      estimator: dummy_table
+    - name: buffet_collection.buffet[0..1].data_fifos[0..2]
+      estimator: dummy_table
+    - name: buffet_collection.buffet[0..1].addr_fifos[0..2]
+      estimator: dummy_table
+  - name: eyeriss_like.ifmap_NoC
+    actions:
+    - name: transfer_random
+      average_energy: 56.25
+      max_energy: 181
+      min_energy: 3
+    - name: transfer_repeated
+      average_energy: 55.25
+      max_energy: 180
+      min_energy: 2
+    - name: idle
+      energy: 0
+    primitive_estimation(s):
+    - name: Y_memory_controller[0..0]
+      estimator: dummy_table
+    - name: X_memory_controller[0]
+      estimator: dummy_table
+    - name: Y_X_wire
+      estimator: dummy_table
+    - name: Y_memory_controller[0..1]
+      estimator: dummy_table
+    - name: Y_memory_controller[0..2]
+      estimator: dummy_table
+    - name: Y_memory_controller[0..3]
+      estimator: dummy_table
+    - name: Y_memory_controller[0..4]
+      estimator: dummy_table
+    - name: Y_memory_controller[0..5]
+      estimator: dummy_table
+    - name: Y_memory_controller[0..6]
+      estimator: dummy_table
+    - name: Y_memory_controller[0..7]
+      estimator: dummy_table
+    - name: Y_memory_controller[0..8]
+      estimator: dummy_table
+    - name: Y_memory_controller[0..9]
+      estimator: dummy_table
+    - name: Y_memory_controller[0..10]
+      estimator: dummy_table
+    - name: Y_memory_controller[0..11]
+      estimator: dummy_table
+    - name: X_memory_controller[0..167]
+      estimator: dummy_table
+  - name: eyeriss_like.weights_NoC
+    actions:
+    - name: transfer_random
+      average_energy: 56.25
+      max_energy: 181
+      min_energy: 3
+    - name: transfer_repeated
+      average_energy: 55.25
+      max_energy: 180
+      min_energy: 2
+    - name: idle
+      energy: 0
+    primitive_estimation(s):
+    - name: Y_memory_controller[0..0]
+      estimator: dummy_table
+    - name: X_memory_controller[0]
+      estimator: dummy_table
+    - name: Y_X_wire
+      estimator: dummy_table
+    - name: Y_memory_controller[0..1]
+      estimator: dummy_table
+    - name: Y_memory_controller[0..2]
+      estimator: dummy_table
+    - name: Y_memory_controller[0..3]
+      estimator: dummy_table
+    - name: Y_memory_controller[0..4]
+      estimator: dummy_table
+    - name: Y_memory_controller[0..5]
+      estimator: dummy_table
+    - name: Y_memory_controller[0..6]
+      estimator: dummy_table
+    - name: Y_memory_controller[0..7]
+      estimator: dummy_table
+    - name: Y_memory_controller[0..8]
+      estimator: dummy_table
+    - name: Y_memory_controller[0..9]
+      estimator: dummy_table
+    - name: Y_memory_controller[0..10]
+      estimator: dummy_table
+    - name: Y_memory_controller[0..11]
+      estimator: dummy_table
+    - name: X_memory_controller[0..167]
+      estimator: dummy_table
+  - name: eyeriss_like.psum_write_NoC
+    actions:
+    - name: transfer_random
+      average_energy: 56.25
+      max_energy: 181
+      min_energy: 3
+    - name: transfer_repeated
+      average_energy: 55.25
+      max_energy: 180
+      min_energy: 2
+    - name: idle
+      energy: 0
+    primitive_estimation(s):
+    - name: Y_memory_controller[0..0]
+      estimator: dummy_table
+    - name: X_memory_controller[0]
+      estimator: dummy_table
+    - name: Y_X_wire
+      estimator: dummy_table
+    - name: Y_memory_controller[0..1]
+      estimator: dummy_table
+    - name: Y_memory_controller[0..2]
+      estimator: dummy_table
+    - name: Y_memory_controller[0..3]
+      estimator: dummy_table
+    - name: Y_memory_controller[0..4]
+      estimator: dummy_table
+    - name: Y_memory_controller[0..5]
+      estimator: dummy_table
+    - name: Y_memory_controller[0..6]
+      estimator: dummy_table
+    - name: Y_memory_controller[0..7]
+      estimator: dummy_table
+    - name: Y_memory_controller[0..8]
+      estimator: dummy_table
+    - name: Y_memory_controller[0..9]
+      estimator: dummy_table
+    - name: Y_memory_controller[0..10]
+      estimator: dummy_table
+    - name: Y_memory_controller[0..11]
+      estimator: dummy_table
+    - name: X_memory_controller[0..167]
+      estimator: dummy_table
+  - name: eyeriss_like.psum_read_NoC
+    actions:
+    - name: transfer_random
+      average_energy: 56.25
+      max_energy: 181
+      min_energy: 3
+    - name: transfer_repeated
+      average_energy: 55.25
+      max_energy: 180
+      min_energy: 2
+    - name: idle
+      energy: 0
+    primitive_estimation(s):
+    - name: Y_memory_controller[0..0]
+      estimator: dummy_table
+    - name: X_memory_controller[0]
+      estimator: dummy_table
+    - name: Y_X_wire
+      estimator: dummy_table
+    - name: Y_memory_controller[0..1]
+      estimator: dummy_table
+    - name: Y_memory_controller[0..2]
+      estimator: dummy_table
+    - name: Y_memory_controller[0..3]
+      estimator: dummy_table
+    - name: Y_memory_controller[0..4]
+      estimator: dummy_table
+    - name: Y_memory_controller[0..5]
+      estimator: dummy_table
+    - name: Y_memory_controller[0..6]
+      estimator: dummy_table
+    - name: Y_memory_controller[0..7]
+      estimator: dummy_table
+    - name: Y_memory_controller[0..8]
+      estimator: dummy_table
+    - name: Y_memory_controller[0..9]
+      estimator: dummy_table
+    - name: Y_memory_controller[0..10]
+      estimator: dummy_table
+    - name: Y_memory_controller[0..11]
+      estimator: dummy_table
+    - name: X_memory_controller[0..167]
+      estimator: dummy_table

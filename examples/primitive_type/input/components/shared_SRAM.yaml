@@ -1,5 +1,5 @@
 compound_components:
-  version: 0.2
+  version: 0.3
   classes:
   - name: shared_SRAM
     primitive_type: shared_SRAM_primitive # primtive component type of the compound component class

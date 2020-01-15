@@ -1,0 +1,203 @@
+ERT_summary:
+  version: 0.3
+  table_summary:
+  - name: hierarchy.PE_small[0..1].mac[0..1]
+    actions:
+    - name: mac_random
+      energy: 1
+    - name: mac_reused
+      energy: 1
+    - name: mac_gated
+      energy: 1
+    - name: idle
+      energy: 0
+    primitive_estimation(s):
+    - name: hierarchy.PE_small[0..1].mac[0..1]
+      estimator: dummy_table
+  - name: hierarchy.PE_large[0..2].arithmetic_units.adder
+    actions:
+    - name: add
+      energy: 1
+    - name: idle
+      energy: 0
+    primitive_estimation(s):
+    - name: hierarchy.PE_large[0..2].arithmetic_units.adder
+      estimator: dummy_table
+  - name: hierarchy.PE_large[0..2].arithmetic_units.mac[0..1]
+    actions:
+    - name: mac_random
+      energy: 1
+    - name: mac_reused
+      energy: 1
+    - name: mac_gated
+      energy: 1
+    - name: idle
+      energy: 0
+    primitive_estimation(s):
+    - name: hierarchy.PE_large[0..2].arithmetic_units.mac[0..1]
+      estimator: dummy_table
+  - name: hierarchy.PE_large[0..2].channel[0..1]
+    actions:
+    - name: push
+      energy: 1
+    - name: pop
+      energy: 1
+    - name: idle
+      energy: 0
+    primitive_estimation(s):
+    - name: hierarchy.PE_large[0..2].channel[0..1]
+      estimator: dummy_table
+  - name: hierarchy.PE_small[0..1].byte_sp
+    actions:
+    - name: fill
+      average_energy: 5.0
+      max_energy: 7
+      min_energy: 3
+    - name: read
+      average_energy: 6.0
+      max_energy: 8
+      min_energy: 4
+    - name: update
+      average_energy: 5.0
+      max_energy: 7
+      min_energy: 3
+    - name: idle
+      energy: 0
+    primitive_estimation(s):
+    - name: buffet_collection.buffet[0].scoreboard
+      estimator: dummy_table
+    - name: buffet_collection.buffet[0].data_fifos[0]
+      estimator: dummy_table
+    - name: buffet_collection.buffet[0].addr_fifos[0]
+      estimator: dummy_table
+    - name: buffet_collection.storage
+      estimator: dummy_table
+    - name: address_generators[0]
+      estimator: dummy_table
+    - name: address_generators[1]
+      estimator: dummy_table
+    - name: address_generators[2]
+      estimator: dummy_table
+    - name: buffet_collection.buffet[0..0].scoreboard
+      estimator: dummy_table
+    - name: buffet_collection.buffet[0..0].data_fifos[0..2]
+      estimator: dummy_table
+    - name: buffet_collection.buffet[0..0].addr_fifos[0..2]
+      estimator: dummy_table
+    - name: address_generators[0..2]
+      estimator: dummy_table
+  - name: hierarchy.PE_large[0..2].memory_storage.double_buffer_sp
+    actions:
+    - name: fill
+      average_energy: 5.0
+      max_energy: 7
+      min_energy: 3
+    - name: read
+      average_energy: 6.0
+      max_energy: 8
+      min_energy: 4
+    - name: update
+      average_energy: 5.0
+      max_energy: 7
+      min_energy: 3
+    - name: idle
+      energy: 0
+    primitive_estimation(s):
+    - name: buffet_collection.buffet[0].scoreboard
+      estimator: dummy_table
+    - name: buffet_collection.buffet[0].data_fifos[0]
+      estimator: dummy_table
+    - name: buffet_collection.buffet[0].addr_fifos[0]
+      estimator: dummy_table
+    - name: buffet_collection.storage
+      estimator: dummy_table
+    - name: address_generators[0]
+      estimator: dummy_table
+    - name: address_generators[1]
+      estimator: dummy_table
+    - name: address_generators[2]
+      estimator: dummy_table
+    - name: buffet_collection.buffet[0..0].scoreboard
+      estimator: dummy_table
+    - name: buffet_collection.buffet[0..0].data_fifos[0..2]
+      estimator: dummy_table
+    - name: buffet_collection.buffet[0..0].addr_fifos[0..2]
+      estimator: dummy_table
+    - name: address_generators[0..2]
+      estimator: dummy_table
+  - name: hierarchy.PE_large[0..2].memory_storage.two_byte_sp
+    actions:
+    - name: fill
+      average_energy: 5.0
+      max_energy: 7
+      min_energy: 3
+    - name: read
+      average_energy: 6.0
+      max_energy: 8
+      min_energy: 4
+    - name: update
+      average_energy: 5.0
+      max_energy: 7
+      min_energy: 3
+    - name: idle
+      energy: 0
+    primitive_estimation(s):
+    - name: buffet_collection.buffet[0].scoreboard
+      estimator: dummy_table
+    - name: buffet_collection.buffet[0].data_fifos[0]
+      estimator: dummy_table
+    - name: buffet_collection.buffet[0].addr_fifos[0]
+      estimator: dummy_table
+    - name: buffet_collection.storage
+      estimator: dummy_table
+    - name: address_generators[0]
+      estimator: dummy_table
+    - name: address_generators[1]
+      estimator: dummy_table
+    - name: address_generators[2]
+      estimator: dummy_table
+    - name: buffet_collection.buffet[0..0].scoreboard
+      estimator: dummy_table
+    - name: buffet_collection.buffet[0..0].data_fifos[0..2]
+      estimator: dummy_table
+    - name: buffet_collection.buffet[0..0].addr_fifos[0..2]
+      estimator: dummy_table
+    - name: address_generators[0..2]
+      estimator: dummy_table
+  - name: hierarchy.GLB
+    actions:
+    - name: fill
+      average_energy: 5.0
+      max_energy: 7
+      min_energy: 3
+    - name: read
+      average_energy: 6.0
+      max_energy: 8
+      min_energy: 4
+    - name: update
+      average_energy: 5.0
+      max_energy: 7
+      min_energy: 3
+    - name: idle
+      energy: 0
+    primitive_estimation(s):
+    - name: buffet_collection.buffet[0].scoreboard
+      estimator: dummy_table
+    - name: buffet_collection.buffet[0].data_fifos[0]
+      estimator: dummy_table
+    - name: buffet_collection.buffet[0].addr_fifos[0]
+      estimator: dummy_table
+    - name: buffet_collection.storage
+      estimator: dummy_table
+    - name: address_generators[0]
+      estimator: dummy_table
+    - name: address_generators[1]
+      estimator: dummy_table
+    - name: address_generators[2]
+      estimator: dummy_table
+    - name: buffet_collection.buffet[0..0].scoreboard
+      estimator: dummy_table
+    - name: buffet_collection.buffet[0..0].data_fifos[0..2]
+      estimator: dummy_table
+    - name: buffet_collection.buffet[0..0].addr_fifos[0..2]
+      estimator: dummy_table

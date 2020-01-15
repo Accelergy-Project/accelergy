@@ -7,7 +7,7 @@ def readme():
 
 setup(
     name='accelergy',
-      version='0.2',
+      version='0.3',
       description='Accelergy Estimation Framework',
       classifiers=[
         'Development Status :: 3 - Alpha',
@@ -19,7 +19,7 @@ setup(
       author='Yannan Wu',
       author_email='nelliewu@mit.edu',
       license='MIT',
-      packages=['accelergy', 'accelergy.v01_functions', 'accelergy.v02_functions'],
+      packages=['accelergy'],
       install_requires = ['pyYAML >= 1.1', 'yamlordereddictloader >= 0.4'],
       python_requires = '>=3.6',
       data_files=[('share/accelergy/primitive_component_libs/',

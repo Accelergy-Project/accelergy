@@ -1,0 +1,18 @@
+# ================================================
+# Action Counts
+# ================================================
+action_counts:
+  version: 0.3
+  local:
+    - name: hierarchy.GLB
+      action_counts:
+        - name: read
+          arguments:
+            data_delta: 1
+            address_delta: 1
+          counts: 100
+        - name: fill
+          arguments:
+            data_delta: 1
+            address_delta: 1
+          counts: 100

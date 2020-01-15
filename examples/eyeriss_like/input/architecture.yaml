@@ -2,7 +2,7 @@ architecture:
   # ============================================================
   # Architecture Description
   # ============================================================
-  version: 0.2
+  version: 0.3
   subtree:
     - name: eyeriss_like
       attributes:

@@ -2,7 +2,7 @@ action_counts:
   # ================================================
   # Action Counts
   # ================================================
-  version: 0.2
+  version: 0.3
   subtree:
     - name: simple
       local:

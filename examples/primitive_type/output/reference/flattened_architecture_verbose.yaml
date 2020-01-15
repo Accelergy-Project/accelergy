@@ -1,0 +1,533 @@
+architecture:
+  version: 0.3
+  local:
+  - name: simple.glb[0..4]
+    class: shared_SRAM
+    attributes:
+      bank_depth: 224
+      bank_width: 16
+      n_bank_rd_ports: 1
+      n_bank_rdwr_ports: 2
+      n_bank_wr_ports: 1
+      n_rd_ports: 2
+      n_wr_ports: 2
+      nbanks: 1
+      num_glbs: 5
+      technology: 65nm
+      voltage: 1
+    primitive_components:
+    - name: SRAM_bank[0..1]
+      class: SRAM
+      attributes:
+        technology: 65nm
+        width: 16
+        depth: 224
+        n_rdwr_ports: 2
+        latency: 5ns
+        n_wr_ports: 0
+        n_banks: 1
+        n_rd_ports: 0
+    - name: rd_crossbar
+      class: crossbar
+      attributes:
+        technology: 65nm
+        n_inputs: 2.0
+        n_outputs: 1
+        latency: 5ns
+        datawidth: 16
+    - name: wr_crossbar
+      class: crossbar
+      attributes:
+        technology: 65nm
+        n_inputs: 2.0
+        n_outputs: 1
+        latency: 5ns
+        datawidth: 16
+    actions:
+    - name: read
+      arguments:
+        active_banks: 0
+        address_delta: 0
+        data_delta: 0
+      primitive_actions:
+      - name: SRAM_bank[0]
+        action: read
+        arguments:
+          address_delta: 0
+          data_delta: 0
+        repeat: 0
+      - name: SRAM_bank[0]
+        action: idle
+        arguments: null
+        repeat: 1
+      - name: rd_crossbar
+        action: transfer
+        arguments: null
+        repeat: 0
+    - name: read
+      arguments:
+        active_banks: 0
+        address_delta: 0
+        data_delta: 1
+      primitive_actions:
+      - name: SRAM_bank[0]
+        action: read
+        arguments:
+          address_delta: 0
+          data_delta: 1
+        repeat: 0
+      - name: SRAM_bank[0]
+        action: idle
+        arguments: null
+        repeat: 1
+      - name: rd_crossbar
+        action: transfer
+        arguments: null
+        repeat: 0
+    - name: read
+      arguments:
+        active_banks: 0
+        address_delta: 1
+        data_delta: 0
+      primitive_actions:
+      - name: SRAM_bank[0]
+        action: read
+        arguments:
+          address_delta: 1
+          data_delta: 0
+        repeat: 0
+      - name: SRAM_bank[0]
+        action: idle
+        arguments: null
+        repeat: 1
+      - name: rd_crossbar
+        action: transfer
+        arguments: null
+        repeat: 0
+    - name: read
+      arguments:
+        active_banks: 0
+        address_delta: 1
+        data_delta: 1
+      primitive_actions:
+      - name: SRAM_bank[0]
+        action: read
+        arguments:
+          address_delta: 1
+          data_delta: 1
+        repeat: 0
+      - name: SRAM_bank[0]
+        action: idle
+        arguments: null
+        repeat: 1
+      - name: rd_crossbar
+        action: transfer
+        arguments: null
+        repeat: 0
+    - name: read
+      arguments:
+        active_banks: 1
+        address_delta: 0
+        data_delta: 0
+      primitive_actions:
+      - name: SRAM_bank[0]
+        action: read
+        arguments:
+          address_delta: 0
+          data_delta: 0
+        repeat: 1
+      - name: SRAM_bank[0]
+        action: idle
+        arguments: null
+        repeat: 0
+      - name: rd_crossbar
+        action: transfer
+        arguments: null
+        repeat: 1
+    - name: read
+      arguments:
+        active_banks: 1
+        address_delta: 0
+        data_delta: 1
+      primitive_actions:
+      - name: SRAM_bank[0]
+        action: read
+        arguments:
+          address_delta: 0
+          data_delta: 1
+        repeat: 1
+      - name: SRAM_bank[0]
+        action: idle
+        arguments: null
+        repeat: 0
+      - name: rd_crossbar
+        action: transfer
+        arguments: null
+        repeat: 1
+    - name: read
+      arguments:
+        active_banks: 1
+        address_delta: 1
+        data_delta: 0
+      primitive_actions:
+      - name: SRAM_bank[0]
+        action: read
+        arguments:
+          address_delta: 1
+          data_delta: 0
+        repeat: 1
+      - name: SRAM_bank[0]
+        action: idle
+        arguments: null
+        repeat: 0
+      - name: rd_crossbar
+        action: transfer
+        arguments: null
+        repeat: 1
+    - name: read
+      arguments:
+        active_banks: 1
+        address_delta: 1
+        data_delta: 1
+      primitive_actions:
+      - name: SRAM_bank[0]
+        action: read
+        arguments:
+          address_delta: 1
+          data_delta: 1
+        repeat: 1
+      - name: SRAM_bank[0]
+        action: idle
+        arguments: null
+        repeat: 0
+      - name: rd_crossbar
+        action: transfer
+        arguments: null
+        repeat: 1
+    - name: read
+      arguments:
+        active_banks: 2
+        address_delta: 0
+        data_delta: 0
+      primitive_actions:
+      - name: SRAM_bank[0]
+        action: read
+        arguments:
+          address_delta: 0
+          data_delta: 0
+        repeat: 2
+      - name: SRAM_bank[0]
+        action: idle
+        arguments: null
+        repeat: -1
+      - name: rd_crossbar
+        action: transfer
+        arguments: null
+        repeat: 2
+    - name: read
+      arguments:
+        active_banks: 2
+        address_delta: 0
+        data_delta: 1
+      primitive_actions:
+      - name: SRAM_bank[0]
+        action: read
+        arguments:
+          address_delta: 0
+          data_delta: 1
+        repeat: 2
+      - name: SRAM_bank[0]
+        action: idle
+        arguments: null
+        repeat: -1
+      - name: rd_crossbar
+        action: transfer
+        arguments: null
+        repeat: 2
+    - name: read
+      arguments:
+        active_banks: 2
+        address_delta: 1
+        data_delta: 0
+      primitive_actions:
+      - name: SRAM_bank[0]
+        action: read
+        arguments:
+          address_delta: 1
+          data_delta: 0
+        repeat: 2
+      - name: SRAM_bank[0]
+        action: idle
+        arguments: null
+        repeat: -1
+      - name: rd_crossbar
+        action: transfer
+        arguments: null
+        repeat: 2
+    - name: read
+      arguments:
+        active_banks: 2
+        address_delta: 1
+        data_delta: 1
+      primitive_actions:
+      - name: SRAM_bank[0]
+        action: read
+        arguments:
+          address_delta: 1
+          data_delta: 1
+        repeat: 2
+      - name: SRAM_bank[0]
+        action: idle
+        arguments: null
+        repeat: -1
+      - name: rd_crossbar
+        action: transfer
+        arguments: null
+        repeat: 2
+    - name: write
+      arguments:
+        active_banks: 0
+        address_delta: 0
+        data_delta: 0
+      primitive_actions:
+      - name: SRAM_bank[0]
+        action: write
+        arguments:
+          address_delta: 0
+          data_delta: 0
+        repeat: 0
+      - name: SRAM_bank[0]
+        action: idle
+        arguments: null
+        repeat: 1
+      - name: wr_crossbar
+        action: transfer
+        arguments: null
+        repeat: 0
+    - name: write
+      arguments:
+        active_banks: 0
+        address_delta: 0
+        data_delta: 1
+      primitive_actions:
+      - name: SRAM_bank[0]
+        action: write
+        arguments:
+          address_delta: 0
+          data_delta: 1
+        repeat: 0
+      - name: SRAM_bank[0]
+        action: idle
+        arguments: null
+        repeat: 1
+      - name: wr_crossbar
+        action: transfer
+        arguments: null
+        repeat: 0
+    - name: write
+      arguments:
+        active_banks: 0
+        address_delta: 1
+        data_delta: 0
+      primitive_actions:
+      - name: SRAM_bank[0]
+        action: write
+        arguments:
+          address_delta: 1
+          data_delta: 0
+        repeat: 0
+      - name: SRAM_bank[0]
+        action: idle
+        arguments: null
+        repeat: 1
+      - name: wr_crossbar
+        action: transfer
+        arguments: null
+        repeat: 0
+    - name: write
+      arguments:
+        active_banks: 0
+        address_delta: 1
+        data_delta: 1
+      primitive_actions:
+      - name: SRAM_bank[0]
+        action: write
+        arguments:
+          address_delta: 1
+          data_delta: 1
+        repeat: 0
+      - name: SRAM_bank[0]
+        action: idle
+        arguments: null
+        repeat: 1
+      - name: wr_crossbar
+        action: transfer
+        arguments: null
+        repeat: 0
+    - name: write
+      arguments:
+        active_banks: 1
+        address_delta: 0
+        data_delta: 0
+      primitive_actions:
+      - name: SRAM_bank[0]
+        action: write
+        arguments:
+          address_delta: 0
+          data_delta: 0
+        repeat: 1
+      - name: SRAM_bank[0]
+        action: idle
+        arguments: null
+        repeat: 0
+      - name: wr_crossbar
+        action: transfer
+        arguments: null
+        repeat: 1
+    - name: write
+      arguments:
+        active_banks: 1
+        address_delta: 0
+        data_delta: 1
+      primitive_actions:
+      - name: SRAM_bank[0]
+        action: write
+        arguments:
+          address_delta: 0
+          data_delta: 1
+        repeat: 1
+      - name: SRAM_bank[0]
+        action: idle
+        arguments: null
+        repeat: 0
+      - name: wr_crossbar
+        action: transfer
+        arguments: null
+        repeat: 1
+    - name: write
+      arguments:
+        active_banks: 1
+        address_delta: 1
+        data_delta: 0
+      primitive_actions:
+      - name: SRAM_bank[0]
+        action: write
+        arguments:
+          address_delta: 1
+          data_delta: 0
+        repeat: 1
+      - name: SRAM_bank[0]
+        action: idle
+        arguments: null
+        repeat: 0
+      - name: wr_crossbar
+        action: transfer
+        arguments: null
+        repeat: 1
+    - name: write
+      arguments:
+        active_banks: 1
+        address_delta: 1
+        data_delta: 1
+      primitive_actions:
+      - name: SRAM_bank[0]
+        action: write
+        arguments:
+          address_delta: 1
+          data_delta: 1
+        repeat: 1
+      - name: SRAM_bank[0]
+        action: idle
+        arguments: null
+        repeat: 0
+      - name: wr_crossbar
+        action: transfer
+        arguments: null
+        repeat: 1
+    - name: write
+      arguments:
+        active_banks: 2
+        address_delta: 0
+        data_delta: 0
+      primitive_actions:
+      - name: SRAM_bank[0]
+        action: write
+        arguments:
+          address_delta: 0
+          data_delta: 0
+        repeat: 2
+      - name: SRAM_bank[0]
+        action: idle
+        arguments: null
+        repeat: -1
+      - name: wr_crossbar
+        action: transfer
+        arguments: null
+        repeat: 2
+    - name: write
+      arguments:
+        active_banks: 2
+        address_delta: 0
+        data_delta: 1
+      primitive_actions:
+      - name: SRAM_bank[0]
+        action: write
+        arguments:
+          address_delta: 0
+          data_delta: 1
+        repeat: 2
+      - name: SRAM_bank[0]
+        action: idle
+        arguments: null
+        repeat: -1
+      - name: wr_crossbar
+        action: transfer
+        arguments: null
+        repeat: 2
+    - name: write
+      arguments:
+        active_banks: 2
+        address_delta: 1
+        data_delta: 0
+      primitive_actions:
+      - name: SRAM_bank[0]
+        action: write
+        arguments:
+          address_delta: 1
+          data_delta: 0
+        repeat: 2
+      - name: SRAM_bank[0]
+        action: idle
+        arguments: null
+        repeat: -1
+      - name: wr_crossbar
+        action: transfer
+        arguments: null
+        repeat: 2
+    - name: write
+      arguments:
+        active_banks: 2
+        address_delta: 1
+        data_delta: 1
+      primitive_actions:
+      - name: SRAM_bank[0]
+        action: write
+        arguments:
+          address_delta: 1
+          data_delta: 1
+        repeat: 2
+      - name: SRAM_bank[0]
+        action: idle
+        arguments: null
+        repeat: -1
+      - name: wr_crossbar
+        action: transfer
+        arguments: null
+        repeat: 2
+    - name: idle
+      arguments: null
+      primitive_actions:
+      - name: SRAM_bank[0]
+        action: idle
+        arguments: null
+        repeat: 1

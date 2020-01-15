@@ -21,6 +21,7 @@
 import os, sys
 import glob
 import yaml
+from copy import deepcopy
 from yaml import dump
 import yamlordereddictloader
 
@@ -128,6 +129,12 @@ def create_folder(directory):
         print ('ERROR: Creating directory. ' +  directory)
         sys.exit()
         
+def merge_dicts(dict1, dict2):
+    merge_dict = deepcopy(dict1)
+    merge_dict.update(dict2)
+    return merge_dict
+
+
 def write_yaml_file(filepath, content):
     """
     if file exists at filepath, overwite the file, if not, create a new file
@@ -140,6 +147,16 @@ def write_yaml_file(filepath, content):
     create_folder(os.path.dirname(filepath))
     out_file = open(filepath, 'a')
     out_file.write(dump( content, default_flow_style= False, Dumper= accelergy_dumper))
+
+def get_yaml_format(content):
+    return dump( content, default_flow_style= False, Dumper= accelergy_dumper)
+
+def write_file(filepath, content):
+    if os.path.exists(filepath):
+        os.remove(filepath)
+    create_folder(os.path.dirname(filepath))
+    out_file = open(filepath, 'a')
+    out_file.write(content)
 
 def remove_quotes(filepath):
     """
@@ -172,7 +189,7 @@ def ERROR_CLEAN_EXIT(*argv):
         else:
             msg_str += arg + ' '
     print(msg_str)
-    exit(1)
+    sys.exit(1)
 
 def WARN(*argv):
     msg_str = 'Warn: '
@@ -210,3 +227,14 @@ def add_functions_as_methods(functions):
 def register_function(sequence, function):
     sequence.append(function)
     return function
+
+def remove_brackets(name):
+    """Removes the brackets from a component name in a list"""
+    if '[' not in name and ']' not in name:
+        return name
+    if '[' in name and ']' in name:
+        start_idx = name.find('[')
+        end_idx = name.find(']')
+        name = name[:start_idx] + name[end_idx + 1:]
+        name = remove_brackets(name)
+        return name

@@ -1,0 +1,51 @@
+architecture:
+# ============================================================
+# Architecture Description
+# ============================================================
+  version: 0.3
+  subtree:
+    - name: hierarchy            # top-level name key has the value as your design name, there can be only one component is the top level list, whic is the design
+      attributes:                # shared attributes for all subcomponents in design
+        technology: 40nm
+      local:                     # list of components in this level
+        - name: GLB
+          class: smartbuffer_SRAM # class signifies that this is a leaf node, i.e., component
+          attributes:            # hardware attributes that are different from default values
+            word_width: 16
+            n_words: 4
+            memory_width: word_width * n_words # arithmetic expressions (amongst its own attributes, including projected ones, space does not matter)
+            memory_depth: 2560
+            nbanks: 5
+      subtree:                 # internal nodes in parallel with local nodes
+        - name: PE_small[0..1]
+          attributes:
+            datawidth: 8
+          local:                 # list of components under each PE
+            - name: byte_sp
+              class: smartbuffer_RF
+              attributes:
+                memory_width: datawidth
+                memory_depth: 12
+            - name: mac[0..1]
+              class: intmac         # default attributes should be applied
+        - name: PE_large[0..2]
+          attributes:
+            datawidth: 16
+          local:
+            - name: channel[0..1]
+              class: FIFO
+          subtree:
+            - name: arithmetic_units
+              local:
+                - name: adder
+                  class: intadder
+                - name: mac[0..1]
+                  class: intmac
+            - name: memory_storage
+              local:
+                - name: double_buffer_sp
+                  class: smartbuffer_RF
+                  memory_depth: 12
+                - name: two_byte_sp
+                  class: smartbuffer_RF
+                  memory_depth: 12

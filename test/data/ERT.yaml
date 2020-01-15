@@ -1,0 +1,62 @@
+ERT:
+  version: 0.3
+  tables:
+  - name: design.mac
+    actions:
+    - name: mac_random
+      arguments: null
+      energy: 3
+    - name: mac_reused
+      arguments: null
+      energy: 2
+    - name: mac_gated
+      arguments: null
+      energy: 1
+    - name: idle
+      arguments: null
+      energy: 0
+  - name: design.scratchpad[0..2]
+    actions:
+    - name: fill
+      arguments:
+        address_delta: 0
+        data_delta: 0
+      energy: 3
+    - name: fill
+      arguments:
+        address_delta: 0
+        data_delta: 1
+      energy: 6
+    - name: fill
+      arguments:
+        address_delta: 1
+        data_delta: 0
+      energy: 5
+    - name: fill
+      arguments:
+        address_delta: 1
+        data_delta: 1
+      energy: 7
+    - name: read
+      arguments:
+        address_delta: 0
+        data_delta: 0
+      energy: 4
+    - name: read
+      arguments:
+        address_delta: 0
+        data_delta: 1
+      energy: 7
+    - name: read
+      arguments:
+        address_delta: 1
+        data_delta: 0
+      energy: 6
+    - name: read
+      arguments:
+        address_delta: 1
+        data_delta: 1
+      energy: 8
+    - name: idle
+      arguments: null
+      energy: 0

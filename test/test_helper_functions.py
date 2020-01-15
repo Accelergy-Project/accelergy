@@ -45,5 +45,5 @@ class TestHelperFunctions(unittest.TestCase):
         self.assertEqual(energy_interpolated, energy_desired)
 
 
-    if __name__ == '__main__':
-        unittest.main()
+if __name__ == '__main__':
+    unittest.main()

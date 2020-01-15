@@ -1,7 +1,11 @@
-# Accelergy infrastructure (version 0.2)
+# Accelergy infrastructure (version 0.3)
 
-An infrastructure for architecture-level energy estimations of accelerator designs. Project website: http://accelergy.mit.edu
+An infrastructure for architecture-level energy/area estimations of accelerator designs. Project website: http://accelergy.mit.edu
 
+## Major updates from V0.2
+- Addition of area reference table generation
+- Updated command line flags
+- The **ERT** and **energy_estimation** output format has been updated.
 ## Get started 
 - Infrastructure tested on RedHat Linux, Ubuntu, MacOS
 - Required packages
@@ -20,18 +24,20 @@ An infrastructure for architecture-level energy estimations of accelerator desig
 
 ## Run an example evaluation
 
-```accelergy``` generates the appropriate outputs according to the available input files. 
-``` 
-# To run both ERT generator and energy calculator
-cd examples/simple_v0.2/input
-accelergy -o ../output/ *.yaml components/*.yaml 
-
-# To run just the ERT generator
-accelergy -o ../otuput/ design.yaml components/*.yaml 
-
-# To run just the energy calculator
-accelergy -o ../output ../output/ERT.yaml action_counts.yaml
+#### Area and Energy Estimations
+Accelergy is capable of generating energy and area estimations of various accelerator designs. The following example
+command generates the energy and area estimation of the design and saves the outputs in the ```../output``` folder.
 ```
+cd examples/hierarchy/input
+accelergy -o ../output/ *.yaml components/*.yaml -v 1
+```
+ ### Input flags
+   Accelergy accepts several optional flags:
+   - ```-o or --output``` : specifies the output directory. Default is current directory
+   - ```-p  or --precision``` : specifies the precision of the calculated ERTs and estimations. Default is 3.
+   - ```-f or --output_files```: specifies a list of desired output files. Default is ```['all']```.
+   Options include: flattened_arch, ERT, ERT_summary, ART, ART_summary, energy_estimation.
+   - ```-v or --verbose```: once set to 1, it allows Accelergy to output the more detailed descriptions of the desired outputs.
 
 ### Input files
 
@@ -39,14 +45,14 @@ accelergy -o ../output ../output/ERT.yaml action_counts.yaml
   - architecture description (unique)
     ```yaml
     artchitecture_description:  # required top-key
-      version: 0.2              # required version number
+      version: 0.3              # required version number
       subtree:                  # required architecture tree root
         ...
     ```
   - compound component class description (can be composed of multiple files)
     ```yaml
     compound_components: # required top-key
-      version: 0.2       # required version number
+      version: 0.3       # required version number
       classes:           # required list identifier
         - name: ...      # various compound component classes specified as a list
         ...
@@ -54,35 +60,23 @@ accelergy -o ../output ../output/ERT.yaml action_counts.yaml
   - action counts (can be composed of multiple files)
     ```yaml
     compound_components: # required top-key
-      version: 0.2       # required version number
+      version: 0.3       # required version number
       subtree:           # required architecture tree root
         - name: ...      # various action counts specified as a list
         ...
     ```
   Accelergy parses the input files and decide what operations to perform:
-  - Providing **all three types of inputs** will allow Accelergy to generate the ERTs for the components in the design, 
+  - Providing **all three types of inputs** will allow Accelergy to generate the ERTs/ARTs for the components in the design, 
   and perform energy estimations using the workload-generated action counts.
   
   - Providing just the **architecture description** and **compound component class description** allows Accelergy to generate 
-  the ERTs for the components in the design.
+  the ERTs/ARTs for the components in the design.
   
   - Providing the **generated ERTs** and the **action counts** allows Accelergy to directly generate energy estimations 
   if the components in the design.
   
-  ### Input flags
-   Accelergy accepts several optional flags:
-   - ```-o``` : specifies the output directory. Default is current directory
-   - ```-p``` : specified the precision of the calculated ERTs and estimations. Default is 3.
-   - ```-v```: once set to 1, it allows Accelergy to output the interactions with the estimation plug-ins, including the
-     primitive component information, the selected estimation plug-in name, and the estimated energy returned from the plug-in.
-   - ```-s```: once set to 1, it allows Accelergy to output an ERT summary that contains the avg, min, and max for the 
-               actions of the components in the architecture.
-   - ```--enable_flattened_arch ```: once set to 1, it allows Accelergy to output an architecture summary in the output 
-   directory and check the validity of component names in the action counts file. 
-   The flattened architecture includes all the interpreted attribute values and classes for all the components
-   in the design. Default is 0.
-   
-
+ 
+  
 ## File Structure
 - accelergy : package source
 - share: contains directories for default primitive component libraries and dummy estimation pug-ins

@@ -1,0 +1,310 @@
+ERT:
+  version: 0.3
+  tables:
+  - name: hierarchy.PE_small[0..1].mac[0..1]
+    actions:
+    - name: mac_random
+      arguments: null
+      energy: 1
+    - name: mac_reused
+      arguments: null
+      energy: 1
+    - name: mac_gated
+      arguments: null
+      energy: 1
+    - name: idle
+      arguments: null
+      energy: 0
+  - name: hierarchy.PE_large[0..2].arithmetic_units.adder
+    actions:
+    - name: add
+      arguments: null
+      energy: 1
+    - name: idle
+      arguments: null
+      energy: 0
+  - name: hierarchy.PE_large[0..2].arithmetic_units.mac[0..1]
+    actions:
+    - name: mac_random
+      arguments: null
+      energy: 1
+    - name: mac_reused
+      arguments: null
+      energy: 1
+    - name: mac_gated
+      arguments: null
+      energy: 1
+    - name: idle
+      arguments: null
+      energy: 0
+  - name: hierarchy.PE_large[0..2].channel[0..1]
+    actions:
+    - name: push
+      arguments: null
+      energy: 1
+    - name: pop
+      arguments: null
+      energy: 1
+    - name: idle
+      arguments: null
+      energy: 0
+  - name: hierarchy.PE_small[0..1].byte_sp
+    actions:
+    - name: fill
+      arguments:
+        address_delta: 0
+        data_delta: 0
+      energy: 3
+    - name: fill
+      arguments:
+        address_delta: 0
+        data_delta: 1
+      energy: 5
+    - name: fill
+      arguments:
+        address_delta: 1
+        data_delta: 0
+      energy: 5
+    - name: fill
+      arguments:
+        address_delta: 1
+        data_delta: 1
+      energy: 7
+    - name: read
+      arguments:
+        address_delta: 0
+        data_delta: 0
+      energy: 4
+    - name: read
+      arguments:
+        address_delta: 0
+        data_delta: 1
+      energy: 6
+    - name: read
+      arguments:
+        address_delta: 1
+        data_delta: 0
+      energy: 6
+    - name: read
+      arguments:
+        address_delta: 1
+        data_delta: 1
+      energy: 8
+    - name: update
+      arguments:
+        address_delta: 0
+        data_delta: 0
+      energy: 3
+    - name: update
+      arguments:
+        address_delta: 0
+        data_delta: 1
+      energy: 5
+    - name: update
+      arguments:
+        address_delta: 1
+        data_delta: 0
+      energy: 5
+    - name: update
+      arguments:
+        address_delta: 1
+        data_delta: 1
+      energy: 7
+    - name: idle
+      arguments: null
+      energy: 0
+  - name: hierarchy.PE_large[0..2].memory_storage.double_buffer_sp
+    actions:
+    - name: fill
+      arguments:
+        address_delta: 0
+        data_delta: 0
+      energy: 3
+    - name: fill
+      arguments:
+        address_delta: 0
+        data_delta: 1
+      energy: 5
+    - name: fill
+      arguments:
+        address_delta: 1
+        data_delta: 0
+      energy: 5
+    - name: fill
+      arguments:
+        address_delta: 1
+        data_delta: 1
+      energy: 7
+    - name: read
+      arguments:
+        address_delta: 0
+        data_delta: 0
+      energy: 4
+    - name: read
+      arguments:
+        address_delta: 0
+        data_delta: 1
+      energy: 6
+    - name: read
+      arguments:
+        address_delta: 1
+        data_delta: 0
+      energy: 6
+    - name: read
+      arguments:
+        address_delta: 1
+        data_delta: 1
+      energy: 8
+    - name: update
+      arguments:
+        address_delta: 0
+        data_delta: 0
+      energy: 3
+    - name: update
+      arguments:
+        address_delta: 0
+        data_delta: 1
+      energy: 5
+    - name: update
+      arguments:
+        address_delta: 1
+        data_delta: 0
+      energy: 5
+    - name: update
+      arguments:
+        address_delta: 1
+        data_delta: 1
+      energy: 7
+    - name: idle
+      arguments: null
+      energy: 0
+  - name: hierarchy.PE_large[0..2].memory_storage.two_byte_sp
+    actions:
+    - name: fill
+      arguments:
+        address_delta: 0
+        data_delta: 0
+      energy: 3
+    - name: fill
+      arguments:
+        address_delta: 0
+        data_delta: 1
+      energy: 5
+    - name: fill
+      arguments:
+        address_delta: 1
+        data_delta: 0
+      energy: 5
+    - name: fill
+      arguments:
+        address_delta: 1
+        data_delta: 1
+      energy: 7
+    - name: read
+      arguments:
+        address_delta: 0
+        data_delta: 0
+      energy: 4
+    - name: read
+      arguments:
+        address_delta: 0
+        data_delta: 1
+      energy: 6
+    - name: read
+      arguments:
+        address_delta: 1
+        data_delta: 0
+      energy: 6
+    - name: read
+      arguments:
+        address_delta: 1
+        data_delta: 1
+      energy: 8
+    - name: update
+      arguments:
+        address_delta: 0
+        data_delta: 0
+      energy: 3
+    - name: update
+      arguments:
+        address_delta: 0
+        data_delta: 1
+      energy: 5
+    - name: update
+      arguments:
+        address_delta: 1
+        data_delta: 0
+      energy: 5
+    - name: update
+      arguments:
+        address_delta: 1
+        data_delta: 1
+      energy: 7
+    - name: idle
+      arguments: null
+      energy: 0
+  - name: hierarchy.GLB
+    actions:
+    - name: fill
+      arguments:
+        address_delta: 0
+        data_delta: 0
+      energy: 3
+    - name: fill
+      arguments:
+        address_delta: 0
+        data_delta: 1
+      energy: 5
+    - name: fill
+      arguments:
+        address_delta: 1
+        data_delta: 0
+      energy: 5
+    - name: fill
+      arguments:
+        address_delta: 1
+        data_delta: 1
+      energy: 7
+    - name: read
+      arguments:
+        address_delta: 0
+        data_delta: 0
+      energy: 4
+    - name: read
+      arguments:
+        address_delta: 0
+        data_delta: 1
+      energy: 6
+    - name: read
+      arguments:
+        address_delta: 1
+        data_delta: 0
+      energy: 6
+    - name: read
+      arguments:
+        address_delta: 1
+        data_delta: 1
+      energy: 8
+    - name: update
+      arguments:
+        address_delta: 0
+        data_delta: 0
+      energy: 3
+    - name: update
+      arguments:
+        address_delta: 0
+        data_delta: 1
+      energy: 5
+    - name: update
+      arguments:
+        address_delta: 1
+        data_delta: 0
+      energy: 5
+    - name: update
+      arguments:
+        address_delta: 1
+        data_delta: 1
+      energy: 7
+    - name: idle
+      arguments: null
+      energy: 0
