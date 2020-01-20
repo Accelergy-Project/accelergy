@@ -4,7 +4,7 @@
 #  3. DO NOT perform mappings/arithmetic operations of the attributes,
 #      as default attributes from the classes are not available from just parsing the input arch yaml file
 
-version: 0.2
+version: 0.3
 components:
   design.GLB:
     name: design.GLB

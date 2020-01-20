@@ -1,4 +1,4 @@
-version: 0.2
+version: 0.3
 components:
   design.GLB:
     name: design.GLB
