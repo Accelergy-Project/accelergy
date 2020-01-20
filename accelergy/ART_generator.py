@@ -55,10 +55,12 @@ class AreaReferenceTableGenerator:
             estimation_plug_in_interface = {'class_name': subcomp_obj.get_class_name(),
                                             'attributes': subcomp_obj.get_attributes()}
             estimated_area, estimator_name = self.eval_primitive_area(estimation_plug_in_interface)
-            cc_area += estimated_area * count_num_identical_comps(subcomp_name)
+            factored_estimated_area = estimated_area * subcomp_obj.get_area_share()
+            cc_area += factored_estimated_area * count_num_identical_comps(subcomp_name)
             estimators.append(OrderedDict({'name': subcomp_name,
                                            'estimator': estimator_name,
-                                           'area': estimated_area}))
+                                           'area': estimated_area,
+                                           'area_share': subcomp_obj.get_area_share()}))
         self.ART.add_entry({'comp_name': cc_name,
                             'area': cc_area,
                             'estimator': estimators})

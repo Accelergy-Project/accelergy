@@ -46,10 +46,6 @@ class CompoundComponent:
     def get_attributes(self):
         return self.attributes
 
-    def get_attribute_val(self, attr_name):
-        ASSERT_MSG(attr_name in self.attributes, '%s attribute not defined'%(attr_name))
-        return self.attributes[attr_name]
-
     def get_actions(self):
         return self._actions
 
@@ -91,13 +87,13 @@ class CompoundComponent:
             sub_class_type = 'compound' if subclass_name in cc_classes else 'primitive'
             if sub_class_type == 'compound':
                 subclass_def = cc_classes[subclass_name]
-                defined_subcomponent = CompoundComponent.define_attrs_for_subcomponent(subcomponent, compound_attributes, subclass_def)
+                defined_subcomponent = CompoundComponent.define_attrs_area_share_for_subcomponent(subcomponent, compound_attributes, subclass_def)
                 list_of_new_defined_primitive_components = self.process_subcomponents(defined_subcomponent, cc_classes, pc_classes)
                 for new_defined_pc in list_of_new_defined_primitive_components:
                     list_of_primitive_components.append(new_defined_pc)
             else:
                 subclass_def = pc_classes[subclass_name]
-                defined_subcomponent = CompoundComponent.define_attrs_for_subcomponent(subcomponent, compound_attributes, subclass_def)
+                defined_subcomponent = CompoundComponent.define_attrs_area_share_for_subcomponent(subcomponent, compound_attributes, subclass_def)
                 list_of_primitive_components.append(defined_subcomponent)
             self.all_possible_subcomponents[subname] = defined_subcomponent
 
@@ -226,7 +222,7 @@ class CompoundComponent:
 
 
     @staticmethod
-    def define_attrs_for_subcomponent(subcomponent, compound_attributes, subclass):
+    def define_attrs_area_share_for_subcomponent(subcomponent, compound_attributes, subclass):
         for attr_name, attr_val in subcomponent.get_attributes().items():
             if type(attr_val) is str:
                 if attr_val in compound_attributes:
@@ -238,6 +234,15 @@ class CompoundComponent:
         attrs_to_be_applied = subclass.get_default_attr_to_apply(subcomponent.get_attributes())
         subcomponent.add_new_attr(attrs_to_be_applied)
         CompoundComponent.apply_internal_bindings(subcomponent)
+        if type(subcomponent.get_area_share()) is str:
+            combined_attributes = merge_dicts(compound_attributes, subcomponent.get_attributes())
+            op_type, op1, op2 = parse_expression_for_arithmetic(subcomponent.get_area_share(), combined_attributes)
+            if op_type is not None:
+                subcomponent.set_area_share(process_arithmetic(op1,op2, op_type))
+            else:
+                ASSERT_MSG(subcomponent.get_area_share() in combined_attributes,
+                           'Unable to interpret the area share for subcomponent: %s' %(subcomponent.get_name()))
+                subcomponent.set_area_share(combined_attributes[subcomponent.get_area_share()])
         return subcomponent
 
     @staticmethod
@@ -247,7 +252,7 @@ class CompoundComponent:
         for attr_name, attr_val in component.get_attributes().items():
             if type(attr_val) is str:
                 if attr_val in component.get_attributes():
-                    component.add_new_attr({attr_name: component.get_attribute_val(attr_val)})
+                    component.add_new_attr({attr_name: component.get_attributes[attr_val]})
                 else:
                     op_type, op1, op2  = parse_expression_for_arithmetic(attr_val, component.get_attributes())
                     if op_type is not None: component.add_new_attr({attr_name:process_arithmetic(op1, op2, op_type)})
@@ -274,7 +279,9 @@ class CompoundComponent:
     def get_subcomponents_as_dict(self):
         subcomp_dict = {}
         for sub_name, sub_obj in self._subcomponents.items():
-            subcomp_dict[sub_name] = {'class': sub_obj.get_class_name(), 'attributes': sub_obj.get_attributes()}
+            subcomp_dict[sub_name] = {'class': sub_obj.get_class_name(),
+                                      'attributes': sub_obj.get_attributes(),
+                                      'area_share': sub_obj.get_area_share()}
         return subcomp_dict
 
     def get_dict_representation(self):

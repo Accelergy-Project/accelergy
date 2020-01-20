@@ -7,7 +7,6 @@ def arch_dict_2_obj(arch_dict, cc_classes, pc_classes):
 def fully_define_arch_dict(arch_dict, cc_classes, pc_classes):
     for cname, cinfo in arch_dict['components'].items():
         class_name = cinfo['class']
-        ASSERT_MSG(class_name in cc_classes or class_name in pc_classes, "component class name: %s does not exist"%(class_name))
         class_obj = cc_classes[class_name] if class_name in cc_classes else pc_classes[class_name]
         attrs_to_be_applied = class_obj.get_default_attr_to_apply(cinfo['attributes'])
         for attr_name, attr_val in attrs_to_be_applied.items():

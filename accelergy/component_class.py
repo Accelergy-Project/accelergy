@@ -1,6 +1,7 @@
 from copy import deepcopy
 from accelergy.utils import *
 from accelergy.action import Action
+from accelergy.subcomponent import Subcomponent
 
 class ComponentClass:
     def __init__(self, class_dict):
@@ -59,27 +60,3 @@ class ComponentClass:
 
     def get_primitive_type(self):
         return self._primitive_type
-
-
-class Subcomponent:
-    def __init__(self, comp_def):
-        self.dict_reprsentation = comp_def
-
-    def set_name(self, name):
-        self.dict_reprsentation['name'] = name
-
-    def get_name(self):
-        return self.dict_reprsentation['name']
-
-    def get_class_name(self):
-        return self.dict_reprsentation['class']
-
-    def get_attributes(self):
-        return self.dict_reprsentation['attributes']
-
-    def add_new_attr(self, attr_dict):
-        self.dict_reprsentation['attributes'].update(attr_dict)
-
-    def get_attribute_val(self, attr_name):
-        ASSERT_MSG(attr_name in self.dict_reprsentation['attributes'], 'attribute name %s not found'%(attr_name))
-        return self.dict_reprsentation['attributes'][attr_name]

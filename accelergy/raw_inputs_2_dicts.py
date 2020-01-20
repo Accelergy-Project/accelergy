@@ -29,12 +29,12 @@ class RawInputs2Dicts():
                            'input parser version for %s is v%s, cannot be parsed by current accelergy v%s'
                            %(input_file_path, input_parser_version, self.parser_version))
 
-            if input_parser_version < self.parser_version:
-                WARN('Your %s input file has an older version. The most up-to-date version is %s '
-                     '--> Only the value of the "version" key needs to be updated '
-                     '(the syntax of the content does not need to be updated) '
-                     '\n --- OK'
-                     %(input_file_path, self.parser_version))
+            # if input_parser_version < self.parser_version:
+            #     WARN('Your %s input file has an older version. The most up-to-date version is %s '
+            #          '--> Only the value of the "version" key needs to be updated '
+            #          '(the syntax of the content does not need to be updated) '
+            #          '\n --- OK'
+            #          %(input_file_path, self.parser_version))
         else:
             ASSERT_MSG(input_parser_version == 0.3,
                        'ERT input file is version v%s, cannot be parsed by Accelergy v%s. '
@@ -43,25 +43,37 @@ class RawInputs2Dicts():
                        %(input_parser_version, self.parser_version))
 
     def load_and_construct_dicts(self):
-
         # load and classify input files
-        for file_path in self.path_arglist:
-            file_obj = open(file_path)
-            file = load(file_obj, accelergy_loader)
-            top_key = list(file.keys())[0]
-            if top_key not in self.possible_top_keys:
-                WARN('Cannot recognize the top key %s in file %s'%(top_key, file_path))
+        for path in self.path_arglist:
+            if os.path.isfile(path):
+                self.load_file(path)
+            elif os.path.isdir(path):
+                for root, directories, file_names in os.walk(path):
+                    for file_name in file_names:
+                        file_path = os.path.join(root, file_name)
+                        self.load_file(file_path)
             else:
-                YAML_parser_fname = top_key + '_input_parser'
-                file_info = {'content': file, 'path': file_path}
-                getattr(self, YAML_parser_fname)(file_info)
-            file_obj.close()
+                ERROR_CLEAN_EXIT('Cannot recognize input path: ', path)
 
         # construct new or parse existing config file
         self.construct_parse_config_file()
 
         # construct primitive classes dictionary
         self.primitive_classes_input_parser()
+
+    def load_file(self, file_path):
+        if '.yaml' in file_path:
+            file_obj = open(file_path)
+            file = load(file_obj, accelergy_loader)
+            top_key = list(file.keys())[0]
+            if top_key not in self.possible_top_keys:
+                WARN('Cannot recognize the top key %s in file %s' % (top_key, file_path))
+            else:
+                INFO('Parsing file %s for %s info' % (file_path, top_key))
+                YAML_parser_fname = top_key + '_input_parser'
+                file_info = {'content': file, 'path': file_path}
+                getattr(self, YAML_parser_fname)(file_info)
+            file_obj.close()
 
     def architecture_input_parser(self, file_info):
         """responsible for parsing the loaded architecture YAML file """
@@ -178,10 +190,29 @@ class RawInputs2Dicts():
         # check syntax of each specified cc class and add into the cc_class_dict
         cc_classes_list = content[top_key]['classes']
         for cc_class in cc_classes_list:
-            ASSERT_MSG('name' and 'attributes' and 'actions' and 'subcomponents' in cc_class.keys(),
+            ASSERT_MSG('name' in cc_class.keys() and 'attributes' in cc_class.keys()
+                       and 'actions' in cc_class.keys() and 'subcomponents' in cc_class.keys(),
                        'missing required keys in compound component class description: \n %s' % cc_class)
             if cc_class['name'] in self.cc_classes_dict:
                 WARN('Redefined compound component class %s in file %s'%(cc_class['name'], file_path))
+            for subcomponent_info in cc_class['subcomponents']:
+                ASSERT_MSG('name' in subcomponent_info.keys() and 'class' in subcomponent_info.keys(),
+                           '"name" and "subcomponents" keys must be specified for compound component class: %s'%(cc_class['name']))
+                if 'area_share' not in subcomponent_info:
+                    subcomponent_info['area_share'] = 1 # default area share is 1
+            for action_info in cc_class['actions']:
+                ASSERT_MSG('name' in action_info.keys() and 'subcomponents' in action_info.keys(),
+                           '"name" and "subcomponents" keys must be specified for compound action %s'%(action_info['name']))
+                for subcomponent_actions in action_info['subcomponents']:
+                    ASSERT_MSG('actions' in subcomponent_actions and 'name' in subcomponent_actions,
+                               '"name" and "actions" keys of the subcomponent must be specified for compound action'
+                               ' %s'%(action_info['name']))
+                    for subcomponent_action in subcomponent_actions['actions']:
+                        ASSERT_MSG('name' in subcomponent_action,
+                                   '"name" key of the subcomponent action needs to be specified for '
+                                   'compound action: %s, subcomponent: %s' %(action_info['name'], subcomponent_actions['name']))
+                        if 'action_share' not in subcomponent_action:
+                            subcomponent_action['action_share'] = 1 # default action share is 1
             self.cc_classes_dict[cc_class['name']] = deepcopy(cc_class)
 
 
