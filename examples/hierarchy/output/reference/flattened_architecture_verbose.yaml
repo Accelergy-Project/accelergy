@@ -21,6 +21,7 @@ architecture:
         depth: 12.0
         width: 1
         latency: 5ns
+      area_share: 1
     - name: buffet_collection.buffet[0..0].data_fifos[0..2]
       class: FIFO
       attributes:
@@ -28,6 +29,7 @@ architecture:
         datawidth: 8
         latency: 5ns
         depth: 2
+      area_share: 1
     - name: buffet_collection.buffet[0..0].addr_fifos[0..2]
       class: FIFO
       attributes:
@@ -35,6 +37,7 @@ architecture:
         datawidth: 4
         latency: 5ns
         depth: 2
+      area_share: 1
     - name: buffet_collection.storage
       class: regfile
       attributes:
@@ -44,12 +47,14 @@ architecture:
         n_rdwr_ports: 2
         n_banks: 1
         latency: 5ns
+      area_share: 1
     - name: address_generators[0..2]
       class: counter
       attributes:
         technology: 40nm
         width: 4
         latency: 5ns
+      area_share: 1
     actions:
     - name: fill
       arguments:
@@ -61,33 +66,33 @@ architecture:
         arguments:
           address_delta: 1
           data_delta: 1
-        repeat: 1
+        action_share: 1
       - name: buffet_collection.buffet[0].data_fifos[0]
         action: push
         arguments: null
-        repeat: 0
+        action_share: 0
       - name: buffet_collection.buffet[0].data_fifos[0]
         action: pop
         arguments: null
-        repeat: 0
+        action_share: 0
       - name: buffet_collection.buffet[0].addr_fifos[0]
         action: push
         arguments: null
-        repeat: 0
+        action_share: 0
       - name: buffet_collection.buffet[0].addr_fifos[0]
         action: pop
         arguments: null
-        repeat: 0
+        action_share: 0
       - name: buffet_collection.storage
         action: write
         arguments:
           address_delta: 0
           data_delta: 0
-        repeat: 1
+        action_share: 1
       - name: address_generators[0]
         action: count
         arguments: null
-        repeat: 1
+        action_share: 1
     - name: fill
       arguments:
         address_delta: 0
@@ -98,33 +103,33 @@ architecture:
         arguments:
           address_delta: 1
           data_delta: 1
-        repeat: 1
+        action_share: 1
       - name: buffet_collection.buffet[0].data_fifos[0]
         action: push
         arguments: null
-        repeat: 1
+        action_share: 1
       - name: buffet_collection.buffet[0].data_fifos[0]
         action: pop
         arguments: null
-        repeat: 1
+        action_share: 1
       - name: buffet_collection.buffet[0].addr_fifos[0]
         action: push
         arguments: null
-        repeat: 0
+        action_share: 0
       - name: buffet_collection.buffet[0].addr_fifos[0]
         action: pop
         arguments: null
-        repeat: 0
+        action_share: 0
       - name: buffet_collection.storage
         action: write
         arguments:
           address_delta: 0
           data_delta: 1
-        repeat: 1
+        action_share: 1
       - name: address_generators[0]
         action: count
         arguments: null
-        repeat: 1
+        action_share: 1
     - name: fill
       arguments:
         address_delta: 1
@@ -135,33 +140,33 @@ architecture:
         arguments:
           address_delta: 1
           data_delta: 1
-        repeat: 1
+        action_share: 1
       - name: buffet_collection.buffet[0].data_fifos[0]
         action: push
         arguments: null
-        repeat: 0
+        action_share: 0
       - name: buffet_collection.buffet[0].data_fifos[0]
         action: pop
         arguments: null
-        repeat: 0
+        action_share: 0
       - name: buffet_collection.buffet[0].addr_fifos[0]
         action: push
         arguments: null
-        repeat: 1
+        action_share: 1
       - name: buffet_collection.buffet[0].addr_fifos[0]
         action: pop
         arguments: null
-        repeat: 1
+        action_share: 1
       - name: buffet_collection.storage
         action: write
         arguments:
           address_delta: 1
           data_delta: 0
-        repeat: 1
+        action_share: 1
       - name: address_generators[0]
         action: count
         arguments: null
-        repeat: 1
+        action_share: 1
     - name: fill
       arguments:
         address_delta: 1
@@ -172,33 +177,33 @@ architecture:
         arguments:
           address_delta: 1
           data_delta: 1
-        repeat: 1
+        action_share: 1
       - name: buffet_collection.buffet[0].data_fifos[0]
         action: push
         arguments: null
-        repeat: 1
+        action_share: 1
       - name: buffet_collection.buffet[0].data_fifos[0]
         action: pop
         arguments: null
-        repeat: 1
+        action_share: 1
       - name: buffet_collection.buffet[0].addr_fifos[0]
         action: push
         arguments: null
-        repeat: 1
+        action_share: 1
       - name: buffet_collection.buffet[0].addr_fifos[0]
         action: pop
         arguments: null
-        repeat: 1
+        action_share: 1
       - name: buffet_collection.storage
         action: write
         arguments:
           address_delta: 1
           data_delta: 1
-        repeat: 1
+        action_share: 1
       - name: address_generators[0]
         action: count
         arguments: null
-        repeat: 1
+        action_share: 1
     - name: read
       arguments:
         address_delta: 0
@@ -209,39 +214,39 @@ architecture:
         arguments:
           address_delta: 0
           data_delta: 1
-        repeat: 1
+        action_share: 1
       - name: buffet_collection.buffet[0].scoreboard
         action: write
         arguments:
           address_delta: 0
           data_delta: 1
-        repeat: 1
+        action_share: 1
       - name: buffet_collection.buffet[0].data_fifos[0]
         action: push
         arguments: null
-        repeat: 0
+        action_share: 0
       - name: buffet_collection.buffet[0].data_fifos[0]
         action: pop
         arguments: null
-        repeat: 0
+        action_share: 0
       - name: buffet_collection.buffet[0].addr_fifos[0]
         action: push
         arguments: null
-        repeat: 0
+        action_share: 0
       - name: buffet_collection.buffet[0].addr_fifos[0]
         action: pop
         arguments: null
-        repeat: 0
+        action_share: 0
       - name: buffet_collection.storage
         action: read
         arguments:
           address_delta: 0
           data_delta: 0
-        repeat: 1
+        action_share: 1
       - name: address_generators[1]
         action: count
         arguments: null
-        repeat: 1
+        action_share: 1
     - name: read
       arguments:
         address_delta: 0
@@ -252,39 +257,39 @@ architecture:
         arguments:
           address_delta: 0
           data_delta: 1
-        repeat: 1
+        action_share: 1
       - name: buffet_collection.buffet[0].scoreboard
         action: write
         arguments:
           address_delta: 0
           data_delta: 1
-        repeat: 1
+        action_share: 1
       - name: buffet_collection.buffet[0].data_fifos[0]
         action: push
         arguments: null
-        repeat: 1
+        action_share: 1
       - name: buffet_collection.buffet[0].data_fifos[0]
         action: pop
         arguments: null
-        repeat: 1
+        action_share: 1
       - name: buffet_collection.buffet[0].addr_fifos[0]
         action: push
         arguments: null
-        repeat: 0
+        action_share: 0
       - name: buffet_collection.buffet[0].addr_fifos[0]
         action: pop
         arguments: null
-        repeat: 0
+        action_share: 0
       - name: buffet_collection.storage
         action: read
         arguments:
           address_delta: 0
           data_delta: 1
-        repeat: 1
+        action_share: 1
       - name: address_generators[1]
         action: count
         arguments: null
-        repeat: 1
+        action_share: 1
     - name: read
       arguments:
         address_delta: 1
@@ -295,39 +300,39 @@ architecture:
         arguments:
           address_delta: 1
           data_delta: 1
-        repeat: 1
+        action_share: 1
       - name: buffet_collection.buffet[0].scoreboard
         action: write
         arguments:
           address_delta: 1
           data_delta: 1
-        repeat: 1
+        action_share: 1
       - name: buffet_collection.buffet[0].data_fifos[0]
         action: push
         arguments: null
-        repeat: 0
+        action_share: 0
       - name: buffet_collection.buffet[0].data_fifos[0]
         action: pop
         arguments: null
-        repeat: 0
+        action_share: 0
       - name: buffet_collection.buffet[0].addr_fifos[0]
         action: push
         arguments: null
-        repeat: 1
+        action_share: 1
       - name: buffet_collection.buffet[0].addr_fifos[0]
         action: pop
         arguments: null
-        repeat: 1
+        action_share: 1
       - name: buffet_collection.storage
         action: read
         arguments:
           address_delta: 1
           data_delta: 0
-        repeat: 1
+        action_share: 1
       - name: address_generators[1]
         action: count
         arguments: null
-        repeat: 1
+        action_share: 1
     - name: read
       arguments:
         address_delta: 1
@@ -338,39 +343,39 @@ architecture:
         arguments:
           address_delta: 1
           data_delta: 1
-        repeat: 1
+        action_share: 1
       - name: buffet_collection.buffet[0].scoreboard
         action: write
         arguments:
           address_delta: 1
           data_delta: 1
-        repeat: 1
+        action_share: 1
       - name: buffet_collection.buffet[0].data_fifos[0]
         action: push
         arguments: null
-        repeat: 1
+        action_share: 1
       - name: buffet_collection.buffet[0].data_fifos[0]
         action: pop
         arguments: null
-        repeat: 1
+        action_share: 1
       - name: buffet_collection.buffet[0].addr_fifos[0]
         action: push
         arguments: null
-        repeat: 1
+        action_share: 1
       - name: buffet_collection.buffet[0].addr_fifos[0]
         action: pop
         arguments: null
-        repeat: 1
+        action_share: 1
       - name: buffet_collection.storage
         action: read
         arguments:
           address_delta: 1
           data_delta: 1
-        repeat: 1
+        action_share: 1
       - name: address_generators[1]
         action: count
         arguments: null
-        repeat: 1
+        action_share: 1
     - name: update
       arguments:
         address_delta: 0
@@ -381,33 +386,33 @@ architecture:
         arguments:
           address_delta: 1
           data_delta: 1
-        repeat: 1
+        action_share: 1
       - name: buffet_collection.buffet[0].data_fifos[0]
         action: push
         arguments: null
-        repeat: 0
+        action_share: 0
       - name: buffet_collection.buffet[0].data_fifos[0]
         action: pop
         arguments: null
-        repeat: 0
+        action_share: 0
       - name: buffet_collection.buffet[0].addr_fifos[0]
         action: push
         arguments: null
-        repeat: 0
+        action_share: 0
       - name: buffet_collection.buffet[0].addr_fifos[0]
         action: pop
         arguments: null
-        repeat: 0
+        action_share: 0
       - name: buffet_collection.storage
         action: write
         arguments:
           address_delta: 0
           data_delta: 0
-        repeat: 1
+        action_share: 1
       - name: address_generators[2]
         action: count
         arguments: null
-        repeat: 1
+        action_share: 1
     - name: update
       arguments:
         address_delta: 0
@@ -418,33 +423,33 @@ architecture:
         arguments:
           address_delta: 1
           data_delta: 1
-        repeat: 1
+        action_share: 1
       - name: buffet_collection.buffet[0].data_fifos[0]
         action: push
         arguments: null
-        repeat: 1
+        action_share: 1
       - name: buffet_collection.buffet[0].data_fifos[0]
         action: pop
         arguments: null
-        repeat: 1
+        action_share: 1
       - name: buffet_collection.buffet[0].addr_fifos[0]
         action: push
         arguments: null
-        repeat: 0
+        action_share: 0
       - name: buffet_collection.buffet[0].addr_fifos[0]
         action: pop
         arguments: null
-        repeat: 0
+        action_share: 0
       - name: buffet_collection.storage
         action: write
         arguments:
           address_delta: 0
           data_delta: 1
-        repeat: 1
+        action_share: 1
       - name: address_generators[2]
         action: count
         arguments: null
-        repeat: 1
+        action_share: 1
     - name: update
       arguments:
         address_delta: 1
@@ -455,33 +460,33 @@ architecture:
         arguments:
           address_delta: 1
           data_delta: 1
-        repeat: 1
+        action_share: 1
       - name: buffet_collection.buffet[0].data_fifos[0]
         action: push
         arguments: null
-        repeat: 0
+        action_share: 0
       - name: buffet_collection.buffet[0].data_fifos[0]
         action: pop
         arguments: null
-        repeat: 0
+        action_share: 0
       - name: buffet_collection.buffet[0].addr_fifos[0]
         action: push
         arguments: null
-        repeat: 1
+        action_share: 1
       - name: buffet_collection.buffet[0].addr_fifos[0]
         action: pop
         arguments: null
-        repeat: 1
+        action_share: 1
       - name: buffet_collection.storage
         action: write
         arguments:
           address_delta: 1
           data_delta: 0
-        repeat: 1
+        action_share: 1
       - name: address_generators[2]
         action: count
         arguments: null
-        repeat: 1
+        action_share: 1
     - name: update
       arguments:
         address_delta: 1
@@ -492,56 +497,56 @@ architecture:
         arguments:
           address_delta: 1
           data_delta: 1
-        repeat: 1
+        action_share: 1
       - name: buffet_collection.buffet[0].data_fifos[0]
         action: push
         arguments: null
-        repeat: 1
+        action_share: 1
       - name: buffet_collection.buffet[0].data_fifos[0]
         action: pop
         arguments: null
-        repeat: 1
+        action_share: 1
       - name: buffet_collection.buffet[0].addr_fifos[0]
         action: push
         arguments: null
-        repeat: 1
+        action_share: 1
       - name: buffet_collection.buffet[0].addr_fifos[0]
         action: pop
         arguments: null
-        repeat: 1
+        action_share: 1
       - name: buffet_collection.storage
         action: write
         arguments:
           address_delta: 1
           data_delta: 1
-        repeat: 1
+        action_share: 1
       - name: address_generators[2]
         action: count
         arguments: null
-        repeat: 1
+        action_share: 1
     - name: idle
       arguments: null
       primitive_actions:
       - name: buffet_collection.buffet[0..0].scoreboard
         action: idle
         arguments: null
-        repeat: 1
+        action_share: 1
       - name: buffet_collection.buffet[0..0].data_fifos[0..2]
         action: idle
         arguments: null
-        repeat: 1
+        action_share: 1
       - name: buffet_collection.buffet[0..0].addr_fifos[0..2]
         action: idle
         arguments: null
-        repeat: 1
+        action_share: 1
       - name: buffet_collection.storage
         action: idle
         arguments: null
-        repeat: 1
+        action_share: 1
       - name: address_generators[0..2]
         action: idle
         arguments: null
-        repeat: 1
+        action_share: 1
   - name: hierarchy.PE_large[0..2].memory_storage.double_buffer_sp
     class: smartbuffer_RF
     attributes:
@@ -562,6 +567,7 @@ architecture:
         depth: 12.0
         width: 1
         latency: 5ns
+      area_share: 1
     - name: buffet_collection.buffet[0..0].data_fifos[0..2]
       class: FIFO
       attributes:
@@ -569,6 +575,7 @@ architecture:
         datawidth: 16
         latency: 5ns
         depth: 2
+      area_share: 1
     - name: buffet_collection.buffet[0..0].addr_fifos[0..2]
       class: FIFO
       attributes:
@@ -576,6 +583,7 @@ architecture:
         datawidth: 4
         latency: 5ns
         depth: 2
+      area_share: 1
     - name: buffet_collection.storage
       class: regfile
       attributes:
@@ -585,12 +593,14 @@ architecture:
         n_rdwr_ports: 2
         n_banks: 1
         latency: 5ns
+      area_share: 1
     - name: address_generators[0..2]
       class: counter
       attributes:
         technology: 40nm
         width: 4
         latency: 5ns
+      area_share: 1
     actions:
     - name: fill
       arguments:
@@ -602,33 +612,33 @@ architecture:
         arguments:
           address_delta: 1
           data_delta: 1
-        repeat: 1
+        action_share: 1
       - name: buffet_collection.buffet[0].data_fifos[0]
         action: push
         arguments: null
-        repeat: 0
+        action_share: 0
       - name: buffet_collection.buffet[0].data_fifos[0]
         action: pop
         arguments: null
-        repeat: 0
+        action_share: 0
       - name: buffet_collection.buffet[0].addr_fifos[0]
         action: push
         arguments: null
-        repeat: 0
+        action_share: 0
       - name: buffet_collection.buffet[0].addr_fifos[0]
         action: pop
         arguments: null
-        repeat: 0
+        action_share: 0
       - name: buffet_collection.storage
         action: write
         arguments:
           address_delta: 0
           data_delta: 0
-        repeat: 1
+        action_share: 1
       - name: address_generators[0]
         action: count
         arguments: null
-        repeat: 1
+        action_share: 1
     - name: fill
       arguments:
         address_delta: 0
@@ -639,33 +649,33 @@ architecture:
         arguments:
           address_delta: 1
           data_delta: 1
-        repeat: 1
+        action_share: 1
       - name: buffet_collection.buffet[0].data_fifos[0]
         action: push
         arguments: null
-        repeat: 1
+        action_share: 1
       - name: buffet_collection.buffet[0].data_fifos[0]
         action: pop
         arguments: null
-        repeat: 1
+        action_share: 1
       - name: buffet_collection.buffet[0].addr_fifos[0]
         action: push
         arguments: null
-        repeat: 0
+        action_share: 0
       - name: buffet_collection.buffet[0].addr_fifos[0]
         action: pop
         arguments: null
-        repeat: 0
+        action_share: 0
       - name: buffet_collection.storage
         action: write
         arguments:
           address_delta: 0
           data_delta: 1
-        repeat: 1
+        action_share: 1
       - name: address_generators[0]
         action: count
         arguments: null
-        repeat: 1
+        action_share: 1
     - name: fill
       arguments:
         address_delta: 1
@@ -676,33 +686,33 @@ architecture:
         arguments:
           address_delta: 1
           data_delta: 1
-        repeat: 1
+        action_share: 1
       - name: buffet_collection.buffet[0].data_fifos[0]
         action: push
         arguments: null
-        repeat: 0
+        action_share: 0
       - name: buffet_collection.buffet[0].data_fifos[0]
         action: pop
         arguments: null
-        repeat: 0
+        action_share: 0
       - name: buffet_collection.buffet[0].addr_fifos[0]
         action: push
         arguments: null
-        repeat: 1
+        action_share: 1
       - name: buffet_collection.buffet[0].addr_fifos[0]
         action: pop
         arguments: null
-        repeat: 1
+        action_share: 1
       - name: buffet_collection.storage
         action: write
         arguments:
           address_delta: 1
           data_delta: 0
-        repeat: 1
+        action_share: 1
       - name: address_generators[0]
         action: count
         arguments: null
-        repeat: 1
+        action_share: 1
     - name: fill
       arguments:
         address_delta: 1
@@ -713,33 +723,33 @@ architecture:
         arguments:
           address_delta: 1
           data_delta: 1
-        repeat: 1
+        action_share: 1
       - name: buffet_collection.buffet[0].data_fifos[0]
         action: push
         arguments: null
-        repeat: 1
+        action_share: 1
       - name: buffet_collection.buffet[0].data_fifos[0]
         action: pop
         arguments: null
-        repeat: 1
+        action_share: 1
       - name: buffet_collection.buffet[0].addr_fifos[0]
         action: push
         arguments: null
-        repeat: 1
+        action_share: 1
       - name: buffet_collection.buffet[0].addr_fifos[0]
         action: pop
         arguments: null
-        repeat: 1
+        action_share: 1
       - name: buffet_collection.storage
         action: write
         arguments:
           address_delta: 1
           data_delta: 1
-        repeat: 1
+        action_share: 1
       - name: address_generators[0]
         action: count
         arguments: null
-        repeat: 1
+        action_share: 1
     - name: read
       arguments:
         address_delta: 0
@@ -750,39 +760,39 @@ architecture:
         arguments:
           address_delta: 0
           data_delta: 1
-        repeat: 1
+        action_share: 1
       - name: buffet_collection.buffet[0].scoreboard
         action: write
         arguments:
           address_delta: 0
           data_delta: 1
-        repeat: 1
+        action_share: 1
       - name: buffet_collection.buffet[0].data_fifos[0]
         action: push
         arguments: null
-        repeat: 0
+        action_share: 0
       - name: buffet_collection.buffet[0].data_fifos[0]
         action: pop
         arguments: null
-        repeat: 0
+        action_share: 0
       - name: buffet_collection.buffet[0].addr_fifos[0]
         action: push
         arguments: null
-        repeat: 0
+        action_share: 0
       - name: buffet_collection.buffet[0].addr_fifos[0]
         action: pop
         arguments: null
-        repeat: 0
+        action_share: 0
       - name: buffet_collection.storage
         action: read
         arguments:
           address_delta: 0
           data_delta: 0
-        repeat: 1
+        action_share: 1
       - name: address_generators[1]
         action: count
         arguments: null
-        repeat: 1
+        action_share: 1
     - name: read
       arguments:
         address_delta: 0
@@ -793,39 +803,39 @@ architecture:
         arguments:
           address_delta: 0
           data_delta: 1
-        repeat: 1
+        action_share: 1
       - name: buffet_collection.buffet[0].scoreboard
         action: write
         arguments:
           address_delta: 0
           data_delta: 1
-        repeat: 1
+        action_share: 1
       - name: buffet_collection.buffet[0].data_fifos[0]
         action: push
         arguments: null
-        repeat: 1
+        action_share: 1
       - name: buffet_collection.buffet[0].data_fifos[0]
         action: pop
         arguments: null
-        repeat: 1
+        action_share: 1
       - name: buffet_collection.buffet[0].addr_fifos[0]
         action: push
         arguments: null
-        repeat: 0
+        action_share: 0
       - name: buffet_collection.buffet[0].addr_fifos[0]
         action: pop
         arguments: null
-        repeat: 0
+        action_share: 0
       - name: buffet_collection.storage
         action: read
         arguments:
           address_delta: 0
           data_delta: 1
-        repeat: 1
+        action_share: 1
       - name: address_generators[1]
         action: count
         arguments: null
-        repeat: 1
+        action_share: 1
     - name: read
       arguments:
         address_delta: 1
@@ -836,39 +846,39 @@ architecture:
         arguments:
           address_delta: 1
           data_delta: 1
-        repeat: 1
+        action_share: 1
       - name: buffet_collection.buffet[0].scoreboard
         action: write
         arguments:
           address_delta: 1
           data_delta: 1
-        repeat: 1
+        action_share: 1
       - name: buffet_collection.buffet[0].data_fifos[0]
         action: push
         arguments: null
-        repeat: 0
+        action_share: 0
       - name: buffet_collection.buffet[0].data_fifos[0]
         action: pop
         arguments: null
-        repeat: 0
+        action_share: 0
       - name: buffet_collection.buffet[0].addr_fifos[0]
         action: push
         arguments: null
-        repeat: 1
+        action_share: 1
       - name: buffet_collection.buffet[0].addr_fifos[0]
         action: pop
         arguments: null
-        repeat: 1
+        action_share: 1
       - name: buffet_collection.storage
         action: read
         arguments:
           address_delta: 1
           data_delta: 0
-        repeat: 1
+        action_share: 1
       - name: address_generators[1]
         action: count
         arguments: null
-        repeat: 1
+        action_share: 1
     - name: read
       arguments:
         address_delta: 1
@@ -879,39 +889,39 @@ architecture:
         arguments:
           address_delta: 1
           data_delta: 1
-        repeat: 1
+        action_share: 1
       - name: buffet_collection.buffet[0].scoreboard
         action: write
         arguments:
           address_delta: 1
           data_delta: 1
-        repeat: 1
+        action_share: 1
       - name: buffet_collection.buffet[0].data_fifos[0]
         action: push
         arguments: null
-        repeat: 1
+        action_share: 1
       - name: buffet_collection.buffet[0].data_fifos[0]
         action: pop
         arguments: null
-        repeat: 1
+        action_share: 1
       - name: buffet_collection.buffet[0].addr_fifos[0]
         action: push
         arguments: null
-        repeat: 1
+        action_share: 1
       - name: buffet_collection.buffet[0].addr_fifos[0]
         action: pop
         arguments: null
-        repeat: 1
+        action_share: 1
       - name: buffet_collection.storage
         action: read
         arguments:
           address_delta: 1
           data_delta: 1
-        repeat: 1
+        action_share: 1
       - name: address_generators[1]
         action: count
         arguments: null
-        repeat: 1
+        action_share: 1
     - name: update
       arguments:
         address_delta: 0
@@ -922,33 +932,33 @@ architecture:
         arguments:
           address_delta: 1
           data_delta: 1
-        repeat: 1
+        action_share: 1
       - name: buffet_collection.buffet[0].data_fifos[0]
         action: push
         arguments: null
-        repeat: 0
+        action_share: 0
       - name: buffet_collection.buffet[0].data_fifos[0]
         action: pop
         arguments: null
-        repeat: 0
+        action_share: 0
       - name: buffet_collection.buffet[0].addr_fifos[0]
         action: push
         arguments: null
-        repeat: 0
+        action_share: 0
       - name: buffet_collection.buffet[0].addr_fifos[0]
         action: pop
         arguments: null
-        repeat: 0
+        action_share: 0
       - name: buffet_collection.storage
         action: write
         arguments:
           address_delta: 0
           data_delta: 0
-        repeat: 1
+        action_share: 1
       - name: address_generators[2]
         action: count
         arguments: null
-        repeat: 1
+        action_share: 1
     - name: update
       arguments:
         address_delta: 0
@@ -959,33 +969,33 @@ architecture:
         arguments:
           address_delta: 1
           data_delta: 1
-        repeat: 1
+        action_share: 1
       - name: buffet_collection.buffet[0].data_fifos[0]
         action: push
         arguments: null
-        repeat: 1
+        action_share: 1
       - name: buffet_collection.buffet[0].data_fifos[0]
         action: pop
         arguments: null
-        repeat: 1
+        action_share: 1
       - name: buffet_collection.buffet[0].addr_fifos[0]
         action: push
         arguments: null
-        repeat: 0
+        action_share: 0
       - name: buffet_collection.buffet[0].addr_fifos[0]
         action: pop
         arguments: null
-        repeat: 0
+        action_share: 0
       - name: buffet_collection.storage
         action: write
         arguments:
           address_delta: 0
           data_delta: 1
-        repeat: 1
+        action_share: 1
       - name: address_generators[2]
         action: count
         arguments: null
-        repeat: 1
+        action_share: 1
     - name: update
       arguments:
         address_delta: 1
@@ -996,33 +1006,33 @@ architecture:
         arguments:
           address_delta: 1
           data_delta: 1
-        repeat: 1
+        action_share: 1
       - name: buffet_collection.buffet[0].data_fifos[0]
         action: push
         arguments: null
-        repeat: 0
+        action_share: 0
       - name: buffet_collection.buffet[0].data_fifos[0]
         action: pop
         arguments: null
-        repeat: 0
+        action_share: 0
       - name: buffet_collection.buffet[0].addr_fifos[0]
         action: push
         arguments: null
-        repeat: 1
+        action_share: 1
       - name: buffet_collection.buffet[0].addr_fifos[0]
         action: pop
         arguments: null
-        repeat: 1
+        action_share: 1
       - name: buffet_collection.storage
         action: write
         arguments:
           address_delta: 1
           data_delta: 0
-        repeat: 1
+        action_share: 1
       - name: address_generators[2]
         action: count
         arguments: null
-        repeat: 1
+        action_share: 1
     - name: update
       arguments:
         address_delta: 1
@@ -1033,56 +1043,56 @@ architecture:
         arguments:
           address_delta: 1
           data_delta: 1
-        repeat: 1
+        action_share: 1
       - name: buffet_collection.buffet[0].data_fifos[0]
         action: push
         arguments: null
-        repeat: 1
+        action_share: 1
       - name: buffet_collection.buffet[0].data_fifos[0]
         action: pop
         arguments: null
-        repeat: 1
+        action_share: 1
       - name: buffet_collection.buffet[0].addr_fifos[0]
         action: push
         arguments: null
-        repeat: 1
+        action_share: 1
       - name: buffet_collection.buffet[0].addr_fifos[0]
         action: pop
         arguments: null
-        repeat: 1
+        action_share: 1
       - name: buffet_collection.storage
         action: write
         arguments:
           address_delta: 1
           data_delta: 1
-        repeat: 1
+        action_share: 1
       - name: address_generators[2]
         action: count
         arguments: null
-        repeat: 1
+        action_share: 1
     - name: idle
       arguments: null
       primitive_actions:
       - name: buffet_collection.buffet[0..0].scoreboard
         action: idle
         arguments: null
-        repeat: 1
+        action_share: 1
       - name: buffet_collection.buffet[0..0].data_fifos[0..2]
         action: idle
         arguments: null
-        repeat: 1
+        action_share: 1
       - name: buffet_collection.buffet[0..0].addr_fifos[0..2]
         action: idle
         arguments: null
-        repeat: 1
+        action_share: 1
       - name: buffet_collection.storage
         action: idle
         arguments: null
-        repeat: 1
+        action_share: 1
       - name: address_generators[0..2]
         action: idle
         arguments: null
-        repeat: 1
+        action_share: 1
   - name: hierarchy.PE_large[0..2].memory_storage.two_byte_sp
     class: smartbuffer_RF
     attributes:
@@ -1103,6 +1113,7 @@ architecture:
         depth: 12.0
         width: 1
         latency: 5ns
+      area_share: 1
     - name: buffet_collection.buffet[0..0].data_fifos[0..2]
       class: FIFO
       attributes:
@@ -1110,6 +1121,7 @@ architecture:
         datawidth: 16
         latency: 5ns
         depth: 2
+      area_share: 1
     - name: buffet_collection.buffet[0..0].addr_fifos[0..2]
       class: FIFO
       attributes:
@@ -1117,6 +1129,7 @@ architecture:
         datawidth: 4
         latency: 5ns
         depth: 2
+      area_share: 1
     - name: buffet_collection.storage
       class: regfile
       attributes:
@@ -1126,12 +1139,14 @@ architecture:
         n_rdwr_ports: 2
         n_banks: 1
         latency: 5ns
+      area_share: 1
     - name: address_generators[0..2]
       class: counter
       attributes:
         technology: 40nm
         width: 4
         latency: 5ns
+      area_share: 1
     actions:
     - name: fill
       arguments:
@@ -1143,33 +1158,33 @@ architecture:
         arguments:
           address_delta: 1
           data_delta: 1
-        repeat: 1
+        action_share: 1
       - name: buffet_collection.buffet[0].data_fifos[0]
         action: push
         arguments: null
-        repeat: 0
+        action_share: 0
       - name: buffet_collection.buffet[0].data_fifos[0]
         action: pop
         arguments: null
-        repeat: 0
+        action_share: 0
       - name: buffet_collection.buffet[0].addr_fifos[0]
         action: push
         arguments: null
-        repeat: 0
+        action_share: 0
       - name: buffet_collection.buffet[0].addr_fifos[0]
         action: pop
         arguments: null
-        repeat: 0
+        action_share: 0
       - name: buffet_collection.storage
         action: write
         arguments:
           address_delta: 0
           data_delta: 0
-        repeat: 1
+        action_share: 1
       - name: address_generators[0]
         action: count
         arguments: null
-        repeat: 1
+        action_share: 1
     - name: fill
       arguments:
         address_delta: 0
@@ -1180,33 +1195,33 @@ architecture:
         arguments:
           address_delta: 1
           data_delta: 1
-        repeat: 1
+        action_share: 1
       - name: buffet_collection.buffet[0].data_fifos[0]
         action: push
         arguments: null
-        repeat: 1
+        action_share: 1
       - name: buffet_collection.buffet[0].data_fifos[0]
         action: pop
         arguments: null
-        repeat: 1
+        action_share: 1
       - name: buffet_collection.buffet[0].addr_fifos[0]
         action: push
         arguments: null
-        repeat: 0
+        action_share: 0
       - name: buffet_collection.buffet[0].addr_fifos[0]
         action: pop
         arguments: null
-        repeat: 0
+        action_share: 0
       - name: buffet_collection.storage
         action: write
         arguments:
           address_delta: 0
           data_delta: 1
-        repeat: 1
+        action_share: 1
       - name: address_generators[0]
         action: count
         arguments: null
-        repeat: 1
+        action_share: 1
     - name: fill
       arguments:
         address_delta: 1
@@ -1217,33 +1232,33 @@ architecture:
         arguments:
           address_delta: 1
           data_delta: 1
-        repeat: 1
+        action_share: 1
       - name: buffet_collection.buffet[0].data_fifos[0]
         action: push
         arguments: null
-        repeat: 0
+        action_share: 0
       - name: buffet_collection.buffet[0].data_fifos[0]
         action: pop
         arguments: null
-        repeat: 0
+        action_share: 0
       - name: buffet_collection.buffet[0].addr_fifos[0]
         action: push
         arguments: null
-        repeat: 1
+        action_share: 1
       - name: buffet_collection.buffet[0].addr_fifos[0]
         action: pop
         arguments: null
-        repeat: 1
+        action_share: 1
       - name: buffet_collection.storage
         action: write
         arguments:
           address_delta: 1
           data_delta: 0
-        repeat: 1
+        action_share: 1
       - name: address_generators[0]
         action: count
         arguments: null
-        repeat: 1
+        action_share: 1
     - name: fill
       arguments:
         address_delta: 1
@@ -1254,33 +1269,33 @@ architecture:
         arguments:
           address_delta: 1
           data_delta: 1
-        repeat: 1
+        action_share: 1
       - name: buffet_collection.buffet[0].data_fifos[0]
         action: push
         arguments: null
-        repeat: 1
+        action_share: 1
       - name: buffet_collection.buffet[0].data_fifos[0]
         action: pop
         arguments: null
-        repeat: 1
+        action_share: 1
       - name: buffet_collection.buffet[0].addr_fifos[0]
         action: push
         arguments: null
-        repeat: 1
+        action_share: 1
       - name: buffet_collection.buffet[0].addr_fifos[0]
         action: pop
         arguments: null
-        repeat: 1
+        action_share: 1
       - name: buffet_collection.storage
         action: write
         arguments:
           address_delta: 1
           data_delta: 1
-        repeat: 1
+        action_share: 1
       - name: address_generators[0]
         action: count
         arguments: null
-        repeat: 1
+        action_share: 1
     - name: read
       arguments:
         address_delta: 0
@@ -1291,39 +1306,39 @@ architecture:
         arguments:
           address_delta: 0
           data_delta: 1
-        repeat: 1
+        action_share: 1
       - name: buffet_collection.buffet[0].scoreboard
         action: write
         arguments:
           address_delta: 0
           data_delta: 1
-        repeat: 1
+        action_share: 1
       - name: buffet_collection.buffet[0].data_fifos[0]
         action: push
         arguments: null
-        repeat: 0
+        action_share: 0
       - name: buffet_collection.buffet[0].data_fifos[0]
         action: pop
         arguments: null
-        repeat: 0
+        action_share: 0
       - name: buffet_collection.buffet[0].addr_fifos[0]
         action: push
         arguments: null
-        repeat: 0
+        action_share: 0
       - name: buffet_collection.buffet[0].addr_fifos[0]
         action: pop
         arguments: null
-        repeat: 0
+        action_share: 0
       - name: buffet_collection.storage
         action: read
         arguments:
           address_delta: 0
           data_delta: 0
-        repeat: 1
+        action_share: 1
       - name: address_generators[1]
         action: count
         arguments: null
-        repeat: 1
+        action_share: 1
     - name: read
       arguments:
         address_delta: 0
@@ -1334,39 +1349,39 @@ architecture:
         arguments:
           address_delta: 0
           data_delta: 1
-        repeat: 1
+        action_share: 1
       - name: buffet_collection.buffet[0].scoreboard
         action: write
         arguments:
           address_delta: 0
           data_delta: 1
-        repeat: 1
+        action_share: 1
       - name: buffet_collection.buffet[0].data_fifos[0]
         action: push
         arguments: null
-        repeat: 1
+        action_share: 1
       - name: buffet_collection.buffet[0].data_fifos[0]
         action: pop
         arguments: null
-        repeat: 1
+        action_share: 1
       - name: buffet_collection.buffet[0].addr_fifos[0]
         action: push
         arguments: null
-        repeat: 0
+        action_share: 0
       - name: buffet_collection.buffet[0].addr_fifos[0]
         action: pop
         arguments: null
-        repeat: 0
+        action_share: 0
       - name: buffet_collection.storage
         action: read
         arguments:
           address_delta: 0
           data_delta: 1
-        repeat: 1
+        action_share: 1
       - name: address_generators[1]
         action: count
         arguments: null
-        repeat: 1
+        action_share: 1
     - name: read
       arguments:
         address_delta: 1
@@ -1377,39 +1392,39 @@ architecture:
         arguments:
           address_delta: 1
           data_delta: 1
-        repeat: 1
+        action_share: 1
       - name: buffet_collection.buffet[0].scoreboard
         action: write
         arguments:
           address_delta: 1
           data_delta: 1
-        repeat: 1
+        action_share: 1
       - name: buffet_collection.buffet[0].data_fifos[0]
         action: push
         arguments: null
-        repeat: 0
+        action_share: 0
       - name: buffet_collection.buffet[0].data_fifos[0]
         action: pop
         arguments: null
-        repeat: 0
+        action_share: 0
       - name: buffet_collection.buffet[0].addr_fifos[0]
         action: push
         arguments: null
-        repeat: 1
+        action_share: 1
       - name: buffet_collection.buffet[0].addr_fifos[0]
         action: pop
         arguments: null
-        repeat: 1
+        action_share: 1
       - name: buffet_collection.storage
         action: read
         arguments:
           address_delta: 1
           data_delta: 0
-        repeat: 1
+        action_share: 1
       - name: address_generators[1]
         action: count
         arguments: null
-        repeat: 1
+        action_share: 1
     - name: read
       arguments:
         address_delta: 1
@@ -1420,39 +1435,39 @@ architecture:
         arguments:
           address_delta: 1
           data_delta: 1
-        repeat: 1
+        action_share: 1
       - name: buffet_collection.buffet[0].scoreboard
         action: write
         arguments:
           address_delta: 1
           data_delta: 1
-        repeat: 1
+        action_share: 1
       - name: buffet_collection.buffet[0].data_fifos[0]
         action: push
         arguments: null
-        repeat: 1
+        action_share: 1
       - name: buffet_collection.buffet[0].data_fifos[0]
         action: pop
         arguments: null
-        repeat: 1
+        action_share: 1
       - name: buffet_collection.buffet[0].addr_fifos[0]
         action: push
         arguments: null
-        repeat: 1
+        action_share: 1
       - name: buffet_collection.buffet[0].addr_fifos[0]
         action: pop
         arguments: null
-        repeat: 1
+        action_share: 1
       - name: buffet_collection.storage
         action: read
         arguments:
           address_delta: 1
           data_delta: 1
-        repeat: 1
+        action_share: 1
       - name: address_generators[1]
         action: count
         arguments: null
-        repeat: 1
+        action_share: 1
     - name: update
       arguments:
         address_delta: 0
@@ -1463,33 +1478,33 @@ architecture:
         arguments:
           address_delta: 1
           data_delta: 1
-        repeat: 1
+        action_share: 1
       - name: buffet_collection.buffet[0].data_fifos[0]
         action: push
         arguments: null
-        repeat: 0
+        action_share: 0
       - name: buffet_collection.buffet[0].data_fifos[0]
         action: pop
         arguments: null
-        repeat: 0
+        action_share: 0
       - name: buffet_collection.buffet[0].addr_fifos[0]
         action: push
         arguments: null
-        repeat: 0
+        action_share: 0
       - name: buffet_collection.buffet[0].addr_fifos[0]
         action: pop
         arguments: null
-        repeat: 0
+        action_share: 0
       - name: buffet_collection.storage
         action: write
         arguments:
           address_delta: 0
           data_delta: 0
-        repeat: 1
+        action_share: 1
       - name: address_generators[2]
         action: count
         arguments: null
-        repeat: 1
+        action_share: 1
     - name: update
       arguments:
         address_delta: 0
@@ -1500,33 +1515,33 @@ architecture:
         arguments:
           address_delta: 1
           data_delta: 1
-        repeat: 1
+        action_share: 1
       - name: buffet_collection.buffet[0].data_fifos[0]
         action: push
         arguments: null
-        repeat: 1
+        action_share: 1
       - name: buffet_collection.buffet[0].data_fifos[0]
         action: pop
         arguments: null
-        repeat: 1
+        action_share: 1
       - name: buffet_collection.buffet[0].addr_fifos[0]
         action: push
         arguments: null
-        repeat: 0
+        action_share: 0
       - name: buffet_collection.buffet[0].addr_fifos[0]
         action: pop
         arguments: null
-        repeat: 0
+        action_share: 0
       - name: buffet_collection.storage
         action: write
         arguments:
           address_delta: 0
           data_delta: 1
-        repeat: 1
+        action_share: 1
       - name: address_generators[2]
         action: count
         arguments: null
-        repeat: 1
+        action_share: 1
     - name: update
       arguments:
         address_delta: 1
@@ -1537,33 +1552,33 @@ architecture:
         arguments:
           address_delta: 1
           data_delta: 1
-        repeat: 1
+        action_share: 1
       - name: buffet_collection.buffet[0].data_fifos[0]
         action: push
         arguments: null
-        repeat: 0
+        action_share: 0
       - name: buffet_collection.buffet[0].data_fifos[0]
         action: pop
         arguments: null
-        repeat: 0
+        action_share: 0
       - name: buffet_collection.buffet[0].addr_fifos[0]
         action: push
         arguments: null
-        repeat: 1
+        action_share: 1
       - name: buffet_collection.buffet[0].addr_fifos[0]
         action: pop
         arguments: null
-        repeat: 1
+        action_share: 1
       - name: buffet_collection.storage
         action: write
         arguments:
           address_delta: 1
           data_delta: 0
-        repeat: 1
+        action_share: 1
       - name: address_generators[2]
         action: count
         arguments: null
-        repeat: 1
+        action_share: 1
     - name: update
       arguments:
         address_delta: 1
@@ -1574,56 +1589,56 @@ architecture:
         arguments:
           address_delta: 1
           data_delta: 1
-        repeat: 1
+        action_share: 1
       - name: buffet_collection.buffet[0].data_fifos[0]
         action: push
         arguments: null
-        repeat: 1
+        action_share: 1
       - name: buffet_collection.buffet[0].data_fifos[0]
         action: pop
         arguments: null
-        repeat: 1
+        action_share: 1
       - name: buffet_collection.buffet[0].addr_fifos[0]
         action: push
         arguments: null
-        repeat: 1
+        action_share: 1
       - name: buffet_collection.buffet[0].addr_fifos[0]
         action: pop
         arguments: null
-        repeat: 1
+        action_share: 1
       - name: buffet_collection.storage
         action: write
         arguments:
           address_delta: 1
           data_delta: 1
-        repeat: 1
+        action_share: 1
       - name: address_generators[2]
         action: count
         arguments: null
-        repeat: 1
+        action_share: 1
     - name: idle
       arguments: null
       primitive_actions:
       - name: buffet_collection.buffet[0..0].scoreboard
         action: idle
         arguments: null
-        repeat: 1
+        action_share: 1
       - name: buffet_collection.buffet[0..0].data_fifos[0..2]
         action: idle
         arguments: null
-        repeat: 1
+        action_share: 1
       - name: buffet_collection.buffet[0..0].addr_fifos[0..2]
         action: idle
         arguments: null
-        repeat: 1
+        action_share: 1
       - name: buffet_collection.storage
         action: idle
         arguments: null
-        repeat: 1
+        action_share: 1
       - name: address_generators[0..2]
         action: idle
         arguments: null
-        repeat: 1
+        action_share: 1
   - name: hierarchy.GLB
     class: smartbuffer_SRAM
     attributes:
@@ -1646,6 +1661,7 @@ architecture:
         depth: 2560.0
         width: 1
         latency: 5ns
+      area_share: 1
     - name: buffet_collection.buffet[0..0].data_fifos[0..2]
       class: FIFO
       attributes:
@@ -1653,6 +1669,7 @@ architecture:
         datawidth: 64
         latency: 5ns
         depth: 2
+      area_share: 1
     - name: buffet_collection.buffet[0..0].addr_fifos[0..2]
       class: FIFO
       attributes:
@@ -1660,6 +1677,7 @@ architecture:
         datawidth: 12
         latency: 5ns
         depth: 2
+      area_share: 1
     - name: buffet_collection.storage
       class: SRAM
       attributes:
@@ -1671,12 +1689,14 @@ architecture:
         n_rd_ports: 0
         latency: 5ns
         n_wr_ports: 0
+      area_share: 1
     - name: address_generators[0..2]
       class: counter
       attributes:
         technology: 40nm
         width: 12
         latency: 5ns
+      area_share: 1
     actions:
     - name: fill
       arguments:
@@ -1688,33 +1708,33 @@ architecture:
         arguments:
           address_delta: 1
           data_delta: 1
-        repeat: 1
+        action_share: 1
       - name: buffet_collection.buffet[0].data_fifos[0]
         action: push
         arguments: null
-        repeat: 0
+        action_share: 0
       - name: buffet_collection.buffet[0].data_fifos[0]
         action: pop
         arguments: null
-        repeat: 0
+        action_share: 0
       - name: buffet_collection.buffet[0].addr_fifos[0]
         action: push
         arguments: null
-        repeat: 0
+        action_share: 0
       - name: buffet_collection.buffet[0].addr_fifos[0]
         action: pop
         arguments: null
-        repeat: 0
+        action_share: 0
       - name: buffet_collection.storage
         action: write
         arguments:
           address_delta: 0
           data_delta: 0
-        repeat: 1
+        action_share: 1
       - name: address_generators[0]
         action: count
         arguments: null
-        repeat: 1
+        action_share: 1
     - name: fill
       arguments:
         address_delta: 0
@@ -1725,33 +1745,33 @@ architecture:
         arguments:
           address_delta: 1
           data_delta: 1
-        repeat: 1
+        action_share: 1
       - name: buffet_collection.buffet[0].data_fifos[0]
         action: push
         arguments: null
-        repeat: 1
+        action_share: 1
       - name: buffet_collection.buffet[0].data_fifos[0]
         action: pop
         arguments: null
-        repeat: 1
+        action_share: 1
       - name: buffet_collection.buffet[0].addr_fifos[0]
         action: push
         arguments: null
-        repeat: 0
+        action_share: 0
       - name: buffet_collection.buffet[0].addr_fifos[0]
         action: pop
         arguments: null
-        repeat: 0
+        action_share: 0
       - name: buffet_collection.storage
         action: write
         arguments:
           address_delta: 0
           data_delta: 1
-        repeat: 1
+        action_share: 1
       - name: address_generators[0]
         action: count
         arguments: null
-        repeat: 1
+        action_share: 1
     - name: fill
       arguments:
         address_delta: 1
@@ -1762,33 +1782,33 @@ architecture:
         arguments:
           address_delta: 1
           data_delta: 1
-        repeat: 1
+        action_share: 1
       - name: buffet_collection.buffet[0].data_fifos[0]
         action: push
         arguments: null
-        repeat: 0
+        action_share: 0
       - name: buffet_collection.buffet[0].data_fifos[0]
         action: pop
         arguments: null
-        repeat: 0
+        action_share: 0
       - name: buffet_collection.buffet[0].addr_fifos[0]
         action: push
         arguments: null
-        repeat: 1
+        action_share: 1
       - name: buffet_collection.buffet[0].addr_fifos[0]
         action: pop
         arguments: null
-        repeat: 1
+        action_share: 1
       - name: buffet_collection.storage
         action: write
         arguments:
           address_delta: 1
           data_delta: 0
-        repeat: 1
+        action_share: 1
       - name: address_generators[0]
         action: count
         arguments: null
-        repeat: 1
+        action_share: 1
     - name: fill
       arguments:
         address_delta: 1
@@ -1799,33 +1819,33 @@ architecture:
         arguments:
           address_delta: 1
           data_delta: 1
-        repeat: 1
+        action_share: 1
       - name: buffet_collection.buffet[0].data_fifos[0]
         action: push
         arguments: null
-        repeat: 1
+        action_share: 1
       - name: buffet_collection.buffet[0].data_fifos[0]
         action: pop
         arguments: null
-        repeat: 1
+        action_share: 1
       - name: buffet_collection.buffet[0].addr_fifos[0]
         action: push
         arguments: null
-        repeat: 1
+        action_share: 1
       - name: buffet_collection.buffet[0].addr_fifos[0]
         action: pop
         arguments: null
-        repeat: 1
+        action_share: 1
       - name: buffet_collection.storage
         action: write
         arguments:
           address_delta: 1
           data_delta: 1
-        repeat: 1
+        action_share: 1
       - name: address_generators[0]
         action: count
         arguments: null
-        repeat: 1
+        action_share: 1
     - name: read
       arguments:
         address_delta: 0
@@ -1836,39 +1856,39 @@ architecture:
         arguments:
           address_delta: 0
           data_delta: 1
-        repeat: 1
+        action_share: 1
       - name: buffet_collection.buffet[0].scoreboard
         action: write
         arguments:
           address_delta: 0
           data_delta: 1
-        repeat: 1
+        action_share: 1
       - name: buffet_collection.buffet[0].data_fifos[0]
         action: push
         arguments: null
-        repeat: 0
+        action_share: 0
       - name: buffet_collection.buffet[0].data_fifos[0]
         action: pop
         arguments: null
-        repeat: 0
+        action_share: 0
       - name: buffet_collection.buffet[0].addr_fifos[0]
         action: push
         arguments: null
-        repeat: 0
+        action_share: 0
       - name: buffet_collection.buffet[0].addr_fifos[0]
         action: pop
         arguments: null
-        repeat: 0
+        action_share: 0
       - name: buffet_collection.storage
         action: read
         arguments:
           address_delta: 0
           data_delta: 0
-        repeat: 1
+        action_share: 1
       - name: address_generators[1]
         action: count
         arguments: null
-        repeat: 1
+        action_share: 1
     - name: read
       arguments:
         address_delta: 0
@@ -1879,39 +1899,39 @@ architecture:
         arguments:
           address_delta: 0
           data_delta: 1
-        repeat: 1
+        action_share: 1
       - name: buffet_collection.buffet[0].scoreboard
         action: write
         arguments:
           address_delta: 0
           data_delta: 1
-        repeat: 1
+        action_share: 1
       - name: buffet_collection.buffet[0].data_fifos[0]
         action: push
         arguments: null
-        repeat: 1
+        action_share: 1
       - name: buffet_collection.buffet[0].data_fifos[0]
         action: pop
         arguments: null
-        repeat: 1
+        action_share: 1
       - name: buffet_collection.buffet[0].addr_fifos[0]
         action: push
         arguments: null
-        repeat: 0
+        action_share: 0
       - name: buffet_collection.buffet[0].addr_fifos[0]
         action: pop
         arguments: null
-        repeat: 0
+        action_share: 0
       - name: buffet_collection.storage
         action: read
         arguments:
           address_delta: 0
           data_delta: 1
-        repeat: 1
+        action_share: 1
       - name: address_generators[1]
         action: count
         arguments: null
-        repeat: 1
+        action_share: 1
     - name: read
       arguments:
         address_delta: 1
@@ -1922,39 +1942,39 @@ architecture:
         arguments:
           address_delta: 1
           data_delta: 1
-        repeat: 1
+        action_share: 1
       - name: buffet_collection.buffet[0].scoreboard
         action: write
         arguments:
           address_delta: 1
           data_delta: 1
-        repeat: 1
+        action_share: 1
       - name: buffet_collection.buffet[0].data_fifos[0]
         action: push
         arguments: null
-        repeat: 0
+        action_share: 0
       - name: buffet_collection.buffet[0].data_fifos[0]
         action: pop
         arguments: null
-        repeat: 0
+        action_share: 0
       - name: buffet_collection.buffet[0].addr_fifos[0]
         action: push
         arguments: null
-        repeat: 1
+        action_share: 1
       - name: buffet_collection.buffet[0].addr_fifos[0]
         action: pop
         arguments: null
-        repeat: 1
+        action_share: 1
       - name: buffet_collection.storage
         action: read
         arguments:
           address_delta: 1
           data_delta: 0
-        repeat: 1
+        action_share: 1
       - name: address_generators[1]
         action: count
         arguments: null
-        repeat: 1
+        action_share: 1
     - name: read
       arguments:
         address_delta: 1
@@ -1965,39 +1985,39 @@ architecture:
         arguments:
           address_delta: 1
           data_delta: 1
-        repeat: 1
+        action_share: 1
       - name: buffet_collection.buffet[0].scoreboard
         action: write
         arguments:
           address_delta: 1
           data_delta: 1
-        repeat: 1
+        action_share: 1
       - name: buffet_collection.buffet[0].data_fifos[0]
         action: push
         arguments: null
-        repeat: 1
+        action_share: 1
       - name: buffet_collection.buffet[0].data_fifos[0]
         action: pop
         arguments: null
-        repeat: 1
+        action_share: 1
       - name: buffet_collection.buffet[0].addr_fifos[0]
         action: push
         arguments: null
-        repeat: 1
+        action_share: 1
       - name: buffet_collection.buffet[0].addr_fifos[0]
         action: pop
         arguments: null
-        repeat: 1
+        action_share: 1
       - name: buffet_collection.storage
         action: read
         arguments:
           address_delta: 1
           data_delta: 1
-        repeat: 1
+        action_share: 1
       - name: address_generators[1]
         action: count
         arguments: null
-        repeat: 1
+        action_share: 1
     - name: update
       arguments:
         address_delta: 0
@@ -2008,33 +2028,33 @@ architecture:
         arguments:
           address_delta: 1
           data_delta: 1
-        repeat: 1
+        action_share: 1
       - name: buffet_collection.buffet[0].data_fifos[0]
         action: push
         arguments: null
-        repeat: 0
+        action_share: 0
       - name: buffet_collection.buffet[0].data_fifos[0]
         action: pop
         arguments: null
-        repeat: 0
+        action_share: 0
       - name: buffet_collection.buffet[0].addr_fifos[0]
         action: push
         arguments: null
-        repeat: 0
+        action_share: 0
       - name: buffet_collection.buffet[0].addr_fifos[0]
         action: pop
         arguments: null
-        repeat: 0
+        action_share: 0
       - name: buffet_collection.storage
         action: write
         arguments:
           address_delta: 0
           data_delta: 0
-        repeat: 1
+        action_share: 1
       - name: address_generators[2]
         action: count
         arguments: null
-        repeat: 1
+        action_share: 1
     - name: update
       arguments:
         address_delta: 0
@@ -2045,33 +2065,33 @@ architecture:
         arguments:
           address_delta: 1
           data_delta: 1
-        repeat: 1
+        action_share: 1
       - name: buffet_collection.buffet[0].data_fifos[0]
         action: push
         arguments: null
-        repeat: 1
+        action_share: 1
       - name: buffet_collection.buffet[0].data_fifos[0]
         action: pop
         arguments: null
-        repeat: 1
+        action_share: 1
       - name: buffet_collection.buffet[0].addr_fifos[0]
         action: push
         arguments: null
-        repeat: 0
+        action_share: 0
       - name: buffet_collection.buffet[0].addr_fifos[0]
         action: pop
         arguments: null
-        repeat: 0
+        action_share: 0
       - name: buffet_collection.storage
         action: write
         arguments:
           address_delta: 0
           data_delta: 1
-        repeat: 1
+        action_share: 1
       - name: address_generators[2]
         action: count
         arguments: null
-        repeat: 1
+        action_share: 1
     - name: update
       arguments:
         address_delta: 1
@@ -2082,33 +2102,33 @@ architecture:
         arguments:
           address_delta: 1
           data_delta: 1
-        repeat: 1
+        action_share: 1
       - name: buffet_collection.buffet[0].data_fifos[0]
         action: push
         arguments: null
-        repeat: 0
+        action_share: 0
       - name: buffet_collection.buffet[0].data_fifos[0]
         action: pop
         arguments: null
-        repeat: 0
+        action_share: 0
       - name: buffet_collection.buffet[0].addr_fifos[0]
         action: push
         arguments: null
-        repeat: 1
+        action_share: 1
       - name: buffet_collection.buffet[0].addr_fifos[0]
         action: pop
         arguments: null
-        repeat: 1
+        action_share: 1
       - name: buffet_collection.storage
         action: write
         arguments:
           address_delta: 1
           data_delta: 0
-        repeat: 1
+        action_share: 1
       - name: address_generators[2]
         action: count
         arguments: null
-        repeat: 1
+        action_share: 1
     - name: update
       arguments:
         address_delta: 1
@@ -2119,52 +2139,52 @@ architecture:
         arguments:
           address_delta: 1
           data_delta: 1
-        repeat: 1
+        action_share: 1
       - name: buffet_collection.buffet[0].data_fifos[0]
         action: push
         arguments: null
-        repeat: 1
+        action_share: 1
       - name: buffet_collection.buffet[0].data_fifos[0]
         action: pop
         arguments: null
-        repeat: 1
+        action_share: 1
       - name: buffet_collection.buffet[0].addr_fifos[0]
         action: push
         arguments: null
-        repeat: 1
+        action_share: 1
       - name: buffet_collection.buffet[0].addr_fifos[0]
         action: pop
         arguments: null
-        repeat: 1
+        action_share: 1
       - name: buffet_collection.storage
         action: write
         arguments:
           address_delta: 1
           data_delta: 1
-        repeat: 1
+        action_share: 1
       - name: address_generators[2]
         action: count
         arguments: null
-        repeat: 1
+        action_share: 1
     - name: idle
       arguments: null
       primitive_actions:
       - name: buffet_collection.buffet[0..0].scoreboard
         action: idle
         arguments: null
-        repeat: 1
+        action_share: 1
       - name: buffet_collection.buffet[0..0].data_fifos[0..2]
         action: idle
         arguments: null
-        repeat: 1
+        action_share: 1
       - name: buffet_collection.buffet[0..0].addr_fifos[0..2]
         action: idle
         arguments: null
-        repeat: 1
+        action_share: 1
       - name: buffet_collection.storage
         action: idle
         arguments: null
-        repeat: 1
+        action_share: 1
   - name: hierarchy.PE_small[0..1].mac[0..1]
     class: intmac
     actions:

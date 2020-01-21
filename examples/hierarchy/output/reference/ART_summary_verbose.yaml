@@ -19,69 +19,89 @@ ART_summary:
     - name: buffet_collection.buffet[0..0].scoreboard
       estimator: dummy_table
       area: 1
+      area_share: 1
     - name: buffet_collection.buffet[0..0].data_fifos[0..2]
       estimator: dummy_table
       area: 1
+      area_share: 1
     - name: buffet_collection.buffet[0..0].addr_fifos[0..2]
       estimator: dummy_table
       area: 1
+      area_share: 1
     - name: buffet_collection.storage
       estimator: dummy_table
       area: 1
+      area_share: 1
     - name: address_generators[0..2]
       estimator: dummy_table
       area: 1
+      area_share: 1
   - name: hierarchy.PE_large[0..2].memory_storage.double_buffer_sp
     area: 11
     primitive_estimations:
     - name: buffet_collection.buffet[0..0].scoreboard
       estimator: dummy_table
       area: 1
+      area_share: 1
     - name: buffet_collection.buffet[0..0].data_fifos[0..2]
       estimator: dummy_table
       area: 1
+      area_share: 1
     - name: buffet_collection.buffet[0..0].addr_fifos[0..2]
       estimator: dummy_table
       area: 1
+      area_share: 1
     - name: buffet_collection.storage
       estimator: dummy_table
       area: 1
+      area_share: 1
     - name: address_generators[0..2]
       estimator: dummy_table
       area: 1
+      area_share: 1
   - name: hierarchy.PE_large[0..2].memory_storage.two_byte_sp
     area: 11
     primitive_estimations:
     - name: buffet_collection.buffet[0..0].scoreboard
       estimator: dummy_table
       area: 1
+      area_share: 1
     - name: buffet_collection.buffet[0..0].data_fifos[0..2]
       estimator: dummy_table
       area: 1
+      area_share: 1
     - name: buffet_collection.buffet[0..0].addr_fifos[0..2]
       estimator: dummy_table
       area: 1
+      area_share: 1
     - name: buffet_collection.storage
       estimator: dummy_table
       area: 1
+      area_share: 1
     - name: address_generators[0..2]
       estimator: dummy_table
       area: 1
+      area_share: 1
   - name: hierarchy.GLB
     area: 11
     primitive_estimations:
     - name: buffet_collection.buffet[0..0].scoreboard
       estimator: dummy_table
       area: 1
+      area_share: 1
     - name: buffet_collection.buffet[0..0].data_fifos[0..2]
       estimator: dummy_table
       area: 1
+      area_share: 1
     - name: buffet_collection.buffet[0..0].addr_fifos[0..2]
       estimator: dummy_table
       area: 1
+      area_share: 1
     - name: buffet_collection.storage
       estimator: dummy_table
       area: 1
+      area_share: 1
     - name: address_generators[0..2]
       estimator: dummy_table
       area: 1
+      area_share: 1
