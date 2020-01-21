@@ -108,9 +108,6 @@ def generate_output_files(system_state):
         write_yaml_file(path, system_state.energy_estimations.get_energy_estimate_as_dict())
         INFO('energy estimations are saved to:', path)
 
-
-
-
     if system_state.flags['ART']:
         # Generate ART
         path = os.path.join(output_path, 'ART.yaml')

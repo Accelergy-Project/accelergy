@@ -82,7 +82,6 @@ def main():
         arch_obj = arch_dict_2_obj(raw_dicts.get_arch_spec_dict(), system_state.cc_classes, system_state.pc_classes)
         system_state.set_arch_spec(arch_obj)
 
-
     if (compute_ERT and 'ERT' not in available_inputs) or compute_ART:
         # ERT/ERT_summary/energy estimates/ART/ART summary need to be generated without provided ERT
         #        ----> all components need to be defined

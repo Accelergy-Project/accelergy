@@ -17,10 +17,13 @@ class Action(object):
         self._subcomponents = None
         self.set_subcomponents(action_def_dict)
 
-        self._repeat = None
+        # repeat has the same meaning as action share
         if 'repeat' in action_def_dict:
-            self._repeat = action_def_dict['repeat']
-
+            self._action_share = action_def_dict['repeat']
+        elif 'action_share' in action_def_dict:
+            self._action_share = action_def_dict['action_share']
+        else:
+            self._action_share = None
         # only compound actions will later set this property
         self._primitive_list = None
 
@@ -42,9 +45,9 @@ class Action(object):
     def set_primitive_list(self, primitive_list):
         self._primitive_list = primitive_list
 
-    def set_repeat(self, new_repeat):
-        """update the parsed repeat value"""
-        self._repeat = new_repeat
+    def set_action_share(self, new_action_share):
+        """update the parsed repeat/action_share value"""
+        self._action_share = new_action_share
 
     def set_argument(self, new_arg_dict):
         """ update one or more argument name-val pairs"""
@@ -56,11 +59,14 @@ class Action(object):
     def get_name(self):
         return self.name
 
-    def get_repeat(self):
-        return self._repeat
+    def get_action_share(self):
+        return self._action_share
 
     def get_arguments(self):
         return self._arguments
+
+    def get_argument(self, arg_name):
+        return self._arguments[arg_name]
 
     def get_subcomps(self):
         ASSERT_MSG(self._subcomponents is not None, 'action does not have defined subcomponents')

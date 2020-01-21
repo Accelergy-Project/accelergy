@@ -80,9 +80,9 @@ class EnergyReferenceTableGenerator:
         cc_name = cc.get_name()
         primitive_type = cc.get_primitive_type()
         sub_base_name_map = self.construct_sub_base_name_map(cc)
-        primitive_action_estimations = []
 
         for cc_action_obj in cc.get_actions():
+            primitive_action_estimations = []
             cc_action_name = cc_action_obj.get_name()
             cc_arguments = cc_action_obj.get_arguments()
             if primitive_type is not None:
@@ -113,8 +113,8 @@ class EnergyReferenceTableGenerator:
                     estimated_energy, estimator_name = self.eval_primitive_action_energy(estimation_plug_in_interface)
                     # check if the subcomponent name is a list, if so, take it into account using list length
                     total_identical_comps = count_num_identical_comps(subcomp_name)
-                    # accumulate energy (consider repeat and # of identical subactions)
-                    energy += estimated_energy * subaction_obj.get_repeat() * total_identical_comps
+                    # accumulate energy (consider action_share and # of identical subactions)
+                    energy += estimated_energy * subaction_obj.get_action_share() * total_identical_comps
                     primitive_action_estimations.append((subcomp_name, subaction_obj, estimator_name, estimated_energy))
 
             self.ERT.add_action_entry({'name': cc_name,
@@ -226,9 +226,9 @@ class ComponentERTEntry:
 
         arguments = action_dict['arguments']
         energy = action_dict['energy']
-        self.action_entries[action_name].append({'arguments': arguments, 'energy': energy, })
 
         # if the entry is for a compound component, interpret the estimations for the primitive component actions
+        subaction_estimations = []
         if isinstance(action_dict['estimator'], list):
             for primitive_estimation_info in action_dict['estimator']:
                 subcomponent_name = primitive_estimation_info[0]
@@ -236,18 +236,20 @@ class ComponentERTEntry:
                 estimator_name = primitive_estimation_info[2]
                 estimated_energy = primitive_estimation_info[3]
                 if subcomponent_name not in self.estimator_s:
-                    self.estimator_s[subcomponent_name] = {'estimator': estimator_name, 'actions':{}}
-                action_key = (subaction_obj.get_name(),)
-                if subaction_obj.get_arguments() is not None:
-                    for arg_val in subaction_obj.get_arguments().values(): action_key = action_key + (arg_val,)
-                if action_key not in self.estimator_s[subcomponent_name]['actions']:
-                    self.estimator_s[subcomponent_name]['actions'][action_key] \
-                        = {'name': subaction_obj.get_name(),
-                           'arguments': subaction_obj.get_arguments(),
-                           'energy': estimated_energy}
+                    self.estimator_s[subcomponent_name] = {'estimator': estimator_name}
+                subaction_estimations.append(OrderedDict({'subcomponent_name': subcomponent_name,
+                                                          'subaction_name': subaction_obj.get_name(),
+                                                          'arguments': subaction_obj.get_arguments(),
+                                                          'energy': estimated_energy,
+                                                          'action_share': subaction_obj.get_action_share(),
+                                                          'estimator': estimator_name}))
+            self.action_entries[action_name].append(
+                {'arguments': arguments, 'energy': energy, 'subaction_estimations': subaction_estimations})
         else:
             if self.estimator_s == {}:
                 self.estimator_s = {self.component_name: {'estimator': action_dict['estimator']}}
+            self.action_entries[action_name].append({'arguments': arguments, 'energy': energy})
+
 
     def get_component_name(self):
         return self.component_name
@@ -269,14 +271,15 @@ class ComponentERTEntry:
         ASSERT_MSG(matched, 'cannot find corresponding action energy in ERT for component "%s" '
                          'action "%s", argument "%s"'%(self.component_name, action_name, action_arguments))
 
-
     def get_ERT_entry_dict_rep(self):
         ERT_entry_dict_rep = OrderedDict({'name': self.component_name, 'actions':{}})
         action_list = []
         for action_name, action_info_list in self.action_entries.items():
             for argument_combo in action_info_list:
                 action_item = OrderedDict({'name': action_name})
-                action_item.update(argument_combo)
+                for key, val in argument_combo.items():
+                    if not key == 'subaction_estimations':
+                        action_item[key] = val
                 action_list.append(action_item)
         ERT_entry_dict_rep['actions'] = action_list
         return ERT_entry_dict_rep
@@ -290,18 +293,21 @@ class ComponentERTEntry:
         return ERT_entry_summary
 
     def get_ERT_summary_verbose_dict_rep(self):
-        ERT_entry_verbose_summary = OrderedDict({'name': self.component_name, 'actions': None, 'primitive_estimation(s)': None})
-        ERT_entry_verbose_summary['primitive_estimation(s)'] = []
-        for key, val in self.estimator_s.items():
-            if len(val) == 1:
-                ERT_entry_verbose_summary['primitive_estimation(s)'].append\
-                                    (OrderedDict({'name': key, 'estimator': val['estimator']}))
-            else:
-                verbose_summary_item = OrderedDict({'name': key, 'estimator': val['estimator'], 'actions': []})
-                for action_name, action_estimate in val['actions'].items():
-                    verbose_summary_item['actions'].append(OrderedDict(action_estimate))
-                ERT_entry_verbose_summary['primitive_estimation(s)'].append(verbose_summary_item)
+        ERT_entry_verbose_summary = OrderedDict({'name': self.component_name,
+                                                 'actions': None,
+                                                 'primitive_estimation(s)': None})
+
         ERT_entry_verbose_summary['actions'] = self.get_actions_energy_min_max_avg_as_list()
+        ERT_entry_verbose_summary['primitive_estimation(s)'] = []
+        for action_name, action_info in self.action_entries.items():
+            for arg_combo in action_info:
+                if 'subaction_estimations' in arg_combo:
+                    dict = OrderedDict({'action_name': action_name, 'arguments': arg_combo['arguments'],'energy': arg_combo['energy'],
+                                        'subaction_estimations': arg_combo['subaction_estimations']})
+                    ERT_entry_verbose_summary['primitive_estimation(s)'].append(dict)
+                else:
+                    if ERT_entry_verbose_summary['primitive_estimation(s)'] == []:
+                        ERT_entry_verbose_summary['primitive_estimation(s)'].append(self.estimator_s)
         return ERT_entry_verbose_summary
 
     def get_actions_energy_min_max_avg_as_list(self):
@@ -321,5 +327,4 @@ class ComponentERTEntry:
                 init_dict['average_energy'] = round(accumulator/len(action_info), self.precision)
                 actions.append(init_dict)
         return actions
-
 

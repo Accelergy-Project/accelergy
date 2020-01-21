@@ -212,7 +212,10 @@ class RawInputs2Dicts():
                                    '"name" key of the subcomponent action needs to be specified for '
                                    'compound action: %s, subcomponent: %s' %(action_info['name'], subcomponent_actions['name']))
                         if 'action_share' not in subcomponent_action:
-                            subcomponent_action['action_share'] = 1 # default action share is 1
+                            if 'repeat' in subcomponent_action:
+                                subcomponent_action['action_share'] = subcomponent_action['repeat']
+                            else:
+                                subcomponent_action['action_share'] = 1 # default action share is 1
             self.cc_classes_dict[cc_class['name']] = deepcopy(cc_class)
 
 

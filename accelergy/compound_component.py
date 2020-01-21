@@ -149,8 +149,8 @@ class CompoundComponent:
     def define_subactions(subactions, aggregated_dict):
         defined_subactions = []
         for subaction in subactions:
-            parsed_repeat = CompoundComponent.parse_repeat(subaction, aggregated_dict)
-            subaction.set_repeat(parsed_repeat)
+            parsed_action_share = CompoundComponent.parse_action_share(subaction, aggregated_dict)
+            subaction.set_action_share(parsed_action_share)
             if subaction.get_arguments() is not None:
                 for subarg_name, subarg_val in subaction.get_arguments().items():
                     if type(subarg_val) is str:
@@ -169,36 +169,34 @@ class CompoundComponent:
         return defined_subactions
 
     @staticmethod
-    def parse_repeat(action, upper_level_binding):
+    def parse_action_share(action, upper_level_binding):
         """
-        evaluates the values of repeat of a sub-component action
-        - default value of repeat is 1
+        evaluates the values of action_share of a sub-component action
+        - default value of action_share is 1
         - string bindings are allowed, and bindings can be from:
             1. compound attributes
             2. compound action arguments (its own upper-level action)
-        - arithemtic operations are allowed in specifying repeat value
+        - arithemtic operations are allowed in specifying action_share value
 
         """
-        repeat = action.get_repeat()
-        if repeat is not None:
-            if type(repeat) is not int:
-                if repeat == 'address_delta':
-                    stop = 1
-                op_type, op1, op2 = parse_expression_for_arithmetic(repeat, upper_level_binding)
+        action_share = action.get_action_share()
+        if action_share is not None:
+            if type(action_share) is not int:
+                op_type, op1, op2 = parse_expression_for_arithmetic(action_share, upper_level_binding)
                 if op_type is not None:
-                    parsed_repeat = process_arithmetic(op1, op2, op_type)
+                    parsed_action_share = process_arithmetic(op1, op2, op_type)
                 else:
-                    if repeat in upper_level_binding:
-                       parsed_repeat = upper_level_binding[repeat]
+                    if action_share in upper_level_binding:
+                       parsed_action_share = upper_level_binding[action_share]
                     else:
-                        parsed_repeat = None
-                        ERROR_CLEAN_EXIT('repeat value for primitive action cannot be parsed, ',
+                        parsed_action_share = None
+                        ERROR_CLEAN_EXIT('action_share/repeat value for primitive action cannot be parsed, ',
                                       'no binding found in compound arguments/ attributes',action,
                                          'available binding:', upper_level_binding)
-                return parsed_repeat
-            # return the actual value if repeat is an integer
-            return repeat
-        # default repeat value is 1
+                return parsed_action_share
+            # return the actual value if action_share is an integer
+            return action_share
+        # default action_share value is 1
         return 1
 
     def flatten_top_level_action_list(self, component_class):
@@ -314,6 +312,6 @@ class CompoundComponent:
                     OrderedDict({'name': pc_action_tuple[0],
                                  'action': pc_action_tuple[1].get_name(),
                                  'arguments': pc_action_tuple[1].get_arguments(),
-                                 'repeat': pc_action_tuple[1].get_repeat()}))
+                                 'action_share': pc_action_tuple[1].get_action_share()}))
             idx = idx + 1
         return cc_dict
