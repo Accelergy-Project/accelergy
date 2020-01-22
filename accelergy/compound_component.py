@@ -250,7 +250,7 @@ class CompoundComponent:
         for attr_name, attr_val in component.get_attributes().items():
             if type(attr_val) is str:
                 if attr_val in component.get_attributes():
-                    component.add_new_attr({attr_name: component.get_attributes[attr_val]})
+                    component.add_new_attr({attr_name: component.get_attributes()[attr_val]})
                 else:
                     op_type, op1, op2  = parse_expression_for_arithmetic(attr_val, component.get_attributes())
                     if op_type is not None: component.add_new_attr({attr_name:process_arithmetic(op1, op2, op_type)})
