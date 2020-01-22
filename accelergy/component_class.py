@@ -2,6 +2,7 @@ from copy import deepcopy
 from accelergy.utils import *
 from accelergy.action import Action
 from accelergy.subcomponent import Subcomponent
+from collections import OrderedDict
 
 class ComponentClass:
     def __init__(self, class_dict):
@@ -34,11 +35,14 @@ class ComponentClass:
         return self._name
 
     def get_default_attr_to_apply(self, obj_attr_name_list):
-        attr_to_be_applied = {}
-        diffList = list(set(self._get_attr_name_list()) - set(obj_attr_name_list))
-        for attrName in diffList:
-            attr_to_be_applied[attrName] =  self._get_attr_default_val(attrName)
+        attr_to_be_applied = OrderedDict()
+        for attr_name, attr_val in self._get_default_attrs().items():
+            if attr_name not in obj_attr_name_list:
+                attr_to_be_applied[attr_name] = attr_val
         return attr_to_be_applied
+
+    def _get_default_attrs(self):
+        return self._default_attributes
 
     def _get_attr_name_list(self):
         return list(self._default_attributes.keys())

@@ -139,6 +139,7 @@ def parse_expression_for_arithmetic(expression, binding_dictionary):
 
 def process_arithmetic(op1, op2, op_type):
     """ Turns string expression into arithmetic operation"""
+    ASSERT_MSG(type(op1) is not str and type(op2) is not str, 'operands have strings %s, %s'%(op1, op2))
     if op_type == '*':
         result = op1 * op2
     elif op_type == '/':
