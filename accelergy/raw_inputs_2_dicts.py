@@ -197,7 +197,8 @@ class RawInputs2Dicts():
                 WARN('Redefined compound component class %s in file %s'%(cc_class['name'], file_path))
             for subcomponent_info in cc_class['subcomponents']:
                 ASSERT_MSG('name' in subcomponent_info.keys() and 'class' in subcomponent_info.keys(),
-                           '"name" and "subcomponents" keys must be specified for compound component class: %s'%(cc_class['name']))
+                           '"name" and "class" keys must be specified for the subcomponents of the '
+                           'compound component class: %s'%(cc_class['name']))
                 if 'area_share' not in subcomponent_info:
                     subcomponent_info['area_share'] = 1 # default area share is 1
             for action_info in cc_class['actions']:
