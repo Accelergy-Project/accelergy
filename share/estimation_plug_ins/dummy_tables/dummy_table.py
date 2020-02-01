@@ -47,8 +47,6 @@ class DummyTable(object):
        :rtype float
 
         """
-        if 'DRAM' in interface['class_name']:
-            return 0 # allow zero energy place_holder class
         if interface['action_name'] == 'idle':
             return 0 # dummy returns 0 for all idle actions
         return 1 # dummy returns 1 for all non-idle actions
