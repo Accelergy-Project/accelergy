@@ -237,7 +237,7 @@ class ComponentERTEntry:
                 estimated_energy = primitive_estimation_info[3]
                 if subcomponent_name not in self.estimator_s:
                     self.estimator_s[subcomponent_name] = {'estimator': estimator_name}
-                interpreted_energy = estimated_energy * subaction_obj.get_action_share() * count_num_identical_comps(subaction_obj.get_name())
+                interpreted_energy = estimated_energy * subaction_obj.get_action_share() * count_num_identical_comps(subcomponent_name)
                 percentage = 0 if energy == 0 else round(100*interpreted_energy/energy,2)
                 subaction_estimations.append(OrderedDict({'subcomponent_name': subcomponent_name,
                                                           'subaction_name': subaction_obj.get_name(),
