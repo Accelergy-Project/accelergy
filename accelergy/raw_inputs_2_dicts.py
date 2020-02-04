@@ -65,14 +65,14 @@ class RawInputs2Dicts():
         if '.yaml' in file_path:
             file_obj = open(file_path)
             file = load(file_obj, accelergy_loader)
-            top_key = list(file.keys())[0]
-            if top_key not in self.possible_top_keys:
-                WARN('Cannot recognize the top key %s in file %s' % (top_key, file_path))
-            else:
-                INFO('Parsing file %s for %s info' % (file_path, top_key))
-                YAML_parser_fname = top_key + '_input_parser'
-                file_info = {'content': file, 'path': file_path}
-                getattr(self, YAML_parser_fname)(file_info)
+            for top_key in file.keys():
+                if top_key not in self.possible_top_keys:
+                    WARN('Cannot recognize the top key "%s" in file %s' % (top_key, file_path))
+                else:
+                    INFO('Parsing file %s for %s info' % (file_path, top_key))
+                    YAML_parser_fname = top_key + '_input_parser'
+                    file_info = {'content': file, 'path': file_path}
+                    getattr(self, YAML_parser_fname)(file_info)
             file_obj.close()
 
     def architecture_input_parser(self, file_info):
