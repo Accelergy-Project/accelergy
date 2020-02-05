@@ -2,7 +2,7 @@ from yaml import load
 from importlib.machinery import SourceFileLoader
 from accelergy.utils import *
 
-def plug_in_path_to_obj(path_list):
+def plug_in_path_to_obj(path_list, output_prefix):
     """
     instantiate a list of estimator plug-in objects for later queries
     estimator plug-in paths are specified in config file
@@ -23,8 +23,12 @@ def plug_in_path_to_obj(path_list):
                     estimator_module = SourceFileLoader(class_name, file_path).load_module()
 
                     if 'parameters' not in estimator_info:
-                        estimator_obj = getattr(estimator_module, class_name)()
+                        if not module_name == 'cacti_wrapper':
+                            estimator_obj = getattr(estimator_module, class_name)()
+                        else:
+                            # for CACTI to use prefix to avoid contention
+                            estimator_obj = getattr(estimator_module, class_name)(output_prefix)
                     else:
-                        estimator_obj = getattr(estimator_module, class_name)(estimator_info['parameters'])
+                        estimator_obj = getattr(estimator_module, class_name)( estimator_info['parameters'])
                     estimator_plug_ins.append(estimator_obj)
     return estimator_plug_ins

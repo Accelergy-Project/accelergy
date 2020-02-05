@@ -38,6 +38,7 @@ def main():
 
     # ----- Interpret Commandline Arguments
     args = parse_commandline_args()
+    output_prefix = args.oprefix
     path_arglist = args.files
     precision = args.precision
     desired_output_files = args.output_files
@@ -45,6 +46,7 @@ def main():
     oflags = {'ERT': 0, 'ERT_summary': 0, 'ART': 0, 'ART_summary': 0, 'energy_estimation': 0, 'flattened_arch': 0}
     for key, val in oflags.items():
         if 'all' in desired_output_files or key in desired_output_files: oflags[key] = 1
+    oflags['output_prefix'] = output_prefix
     # interpret the types of processing that need to be performed
     flatten_architecture = 1 if oflags['flattened_arch'] else 0
     compute_ERT = 1 if oflags['ERT'] or oflags['ERT_summary'] or oflags['energy_estimation'] else 0
@@ -98,7 +100,7 @@ def main():
                 ERROR_CLEAN_EXIT('Cannot find class name %s specified in architecture'%arch_component.get_class())
 
         # ----- Add all available plug-ins
-        system_state.add_plug_ins(plug_in_path_to_obj(raw_dicts.get_estimation_plug_in_paths()))
+        system_state.add_plug_ins(plug_in_path_to_obj(raw_dicts.get_estimation_plug_in_paths(), output_prefix))
 
     if compute_ERT and 'ERT' in available_inputs:
         # ERT/ ERT_summary/ energy estimates need to be generated with provided ERT

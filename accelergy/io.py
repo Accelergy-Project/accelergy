@@ -48,6 +48,8 @@ def parse_commandline_args():
                          help= 'list that contains the desired output files.'
                                ' Options include: ERT, ERT_summary, ART, ART_summary, estimations, flattened_arch,'
                                ' and all (which refers to all possible outputs)')
+    parser.add_argument('--oprefix', type =str, default = '',
+                         help= 'prefix that will be added to the output files names.')
     parser.add_argument('files', nargs='*',
                         help= 'list of input files in arbitrary order.'
                               'Accelergy parses the top keys of the files to decide the type of input the file describes, '
@@ -63,11 +65,13 @@ def generate_output_files(system_state):
     output_path = system_state.flags['output_path']
     verbose = system_state.flags['verbose']
     parser_version = system_state.parser_version
+    output_prefix = system_state.flags['output_prefix']
+    print(type(output_prefix))
 
     # Generate Flattened Architecture
     if system_state.flags['flattened_arch']:
         if not verbose:
-            path = os.path.join(output_path, 'flattened_architecture.yaml')
+            path = os.path.join(output_path, output_prefix + 'flattened_architecture.yaml')
             write_yaml_file(path, system_state.arch_spec.generate_flattened_arch())
             INFO('flattened architecture is saved to:', path)
         else:
@@ -82,45 +86,45 @@ def generate_output_files(system_state):
             all_flattened_components_w_headers = {'architecture':OrderedDict({'version': parser_version,
                                                                               'local': all_flattened_components})}
 
-            path = os.path.join(output_path, 'flattened_architecture_verbose.yaml')
+            path = os.path.join(output_path, output_prefix + 'flattened_architecture_verbose.yaml')
             write_yaml_file(path, all_flattened_components_w_headers)
             INFO('verbose flattened architecture is saved to:', path)
 
     if system_state.flags['ERT'] :
         # Generate ERT
-        path = os.path.join(output_path, 'ERT.yaml')
+        path = os.path.join(output_path, output_prefix + 'ERT.yaml')
         write_yaml_file(path, system_state.ERT.get_ERT())
         INFO('energy reference table is saved to:', path)
 
     if system_state.flags['ERT_summary']:
         if not verbose:
-            path = os.path.join(output_path, 'ERT_summary.yaml')
+            path = os.path.join(output_path, output_prefix + 'ERT_summary.yaml')
             write_yaml_file(path, system_state.ERT.get_ERT_summary())
             INFO('energy reference table summary is saved to:', path)
         else:
-            path = os.path.join(output_path, 'ERT_summary_verbose.yaml')
+            path = os.path.join(output_path, output_prefix + 'ERT_summary_verbose.yaml')
             write_yaml_file(path, system_state.ERT.get_ERT_summary_verbose())
             INFO('verbose energy reference table summary is saved to:', path)
 
     if system_state.flags['energy_estimation']:
         # Generate energy estimates
-        path = os.path.join(output_path, 'energy_estimation.yaml')
+        path = os.path.join(output_path, output_prefix + 'energy_estimation.yaml')
         write_yaml_file(path, system_state.energy_estimations.get_energy_estimate_as_dict())
         INFO('energy estimations are saved to:', path)
 
     if system_state.flags['ART']:
         # Generate ART
-        path = os.path.join(output_path, 'ART.yaml')
+        path = os.path.join(output_path, output_prefix + 'ART.yaml')
         write_yaml_file(path, system_state.ART.get_ART())
         INFO('area reference table is saved to:', path)
 
     if system_state.flags['ART_summary']:
         if not verbose:
-            path = os.path.join(output_path, 'ART_summary.yaml')
+            path = os.path.join(output_path, output_prefix + 'ART_summary.yaml')
             write_yaml_file(path, system_state.ART.get_ART_summary())
             INFO('area reference table summary is saved to:', path)
         else:
-            path = os.path.join(output_path, 'ART_summary_verbose.yaml')
+            path = os.path.join(output_path, output_prefix + 'ART_summary_verbose.yaml')
             write_yaml_file(path, system_state.ART.get_ART_summary_verbose())
             INFO('verbose area reference table summary is saved to:', path)
 
