@@ -119,6 +119,15 @@ class RawInputs2Dicts():
         :param node_attrs: a dictionary that contains the explicitly specified attributes and the projected upper level shared attributes
         :return: None
         """
+        # interpret the mapping and arithmetic operations in the raw description
+        for attr_name, attr_val in node_attrs.items():
+            if type(attr_val) is str:
+                if attr_val in node_attrs: node_attrs[attr_name] = node_attrs[attr_val]
+                else:
+                    op_type, op1, op2 = parse_expression_for_arithmetic(attr_val, node_attrs)
+                    if op_type is not None:
+                        node_attrs[attr_name] = process_arithmetic(op1, op2, op_type)
+
         if 'subtree' in node_description:
             ASSERT_MSG(isinstance(node_description['subtree'], list),"%s.subtree has to be a list" % prefix)
             self.flatten_architecture_subtree(prefix, node_description['subtree'], node_attrs)

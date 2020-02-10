@@ -65,6 +65,7 @@ classes:
       technology: 65nm
       width: 16
       depth: 1
+      n_ports: 2
       latency: 5ns
     actions:
       - name: read

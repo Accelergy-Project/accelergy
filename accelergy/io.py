@@ -66,7 +66,6 @@ def generate_output_files(system_state):
     verbose = system_state.flags['verbose']
     parser_version = system_state.parser_version
     output_prefix = system_state.flags['output_prefix']
-    print(type(output_prefix))
 
     # Generate Flattened Architecture
     if system_state.flags['flattened_arch']:
