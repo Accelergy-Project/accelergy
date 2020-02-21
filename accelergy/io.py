@@ -22,14 +22,12 @@
 import argparse
 from collections import OrderedDict
 from accelergy.utils import *
+import pyfiglet
 
 def parse_commandline_args():
+    ascii_banner = pyfiglet.figlet_format("Accelergy")
+    print(ascii_banner)
     """parse command line inputs"""
-
-    print('\n#===================================================================================#')
-    print('#=========================== Running Accelergy =====================================#')
-    print('#===================================================================================#\n')
-
     parser = argparse.ArgumentParser(
         description='Accelergy is an architecture-level energy estimator for accelerator designs. Accelergy allows '
                     ' users to describe the architecture of a design with user-defined compound components and generates energy '

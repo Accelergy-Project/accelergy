@@ -1,6 +1,8 @@
 class Subcomponent:
     def __init__(self, comp_def):
         self.dict_reprsentation = comp_def
+        if 'attributes' not in self.dict_reprsentation:
+            self.dict_reprsentation['attributes'] = {}
 
     def set_name(self, name):
         self.dict_reprsentation['name'] = name
@@ -13,6 +15,7 @@ class Subcomponent:
 
     def get_attributes(self):
         return self.dict_reprsentation['attributes']
+
 
     def get_area_share(self):
         return self.dict_reprsentation['area_share']
