@@ -2,10 +2,12 @@ from yaml import load
 from copy import deepcopy
 from accelergy.parsing_utils import *
 
+
 class RawInputs2Dicts():
     def __init__(self, input_info):
         self.parser_version = input_info['parser_version']
-        self.possible_top_keys = {'architecture', 'compound_components', 'action_counts', 'ERT','flattened_architecture'}
+        self.possible_top_keys = {'architecture', 'compound_components', 'action_counts', 'ERT',
+                                  'flattened_architecture'}
         self.path_arglist = input_info['path_arglist']
         self.arch_spec_dict = {}
         self.cc_classes_dict = {}
@@ -23,11 +25,11 @@ class RawInputs2Dicts():
                            'config file version outdated. Latest version is v.%s \
                             \n Please delete the original file, and run accelergy to create a new default config file.\
                             \n Please ADD YOUR USER_DEFINED file paths BACK to the updated config file at \
-                            ~/.config/accelergy/accelergy_config.yaml'% self.parser_version)
+                            ~/.config/accelergy/accelergy_config.yaml' % self.parser_version)
             else:
                 ASSERT_MSG(input_parser_version == 0.2 or input_parser_version == 0.3,
                            'input parser version for %s is v%s, cannot be parsed by current accelergy v%s'
-                           %(input_file_path, input_parser_version, self.parser_version))
+                           % (input_file_path, input_parser_version, self.parser_version))
 
             # if input_parser_version < self.parser_version:
             #     WARN('Your %s input file has an older version. The most up-to-date version is %s '
@@ -40,7 +42,7 @@ class RawInputs2Dicts():
                        'ERT input file is version v%s, cannot be parsed by Accelergy v%s. '
                        '\n---> Please use Accelergy v0.2/ update your ERT input file format/ '
                        'regenerate the ERT using your design description'
-                       %(input_parser_version, self.parser_version))
+                       % (input_parser_version, self.parser_version))
 
     def load_and_construct_dicts(self):
         # load and classify input files
@@ -93,10 +95,10 @@ class RawInputs2Dicts():
 
         if 'subtree' in content[top_key]:
             ASSERT_MSG(type(content[top_key]['subtree']) is list,
-                       'File content not legal: %s, subtree key must have value of type list'%(file_path))
+                       'File content not legal: %s, subtree key must have value of type list' % (file_path))
         elif 'local' in content[top_key]:
             ASSERT_MSG(type(content[top_key]['local']) is list,
-                       'File content not legal: %s, local key must have value of type list'%(file_path))
+                       'File content not legal: %s, local key must have value of type list' % (file_path))
         else:
             ERROR_CLEAN_EXIT('Architecture Description must contain subtree or local key at top-level')
 
@@ -107,6 +109,9 @@ class RawInputs2Dicts():
             arch_name = arch_comp_list['subtree'][0]['name']
             global_attributes = {} if 'attributes' not in arch_comp_list['subtree'][0] \
                 else arch_comp_list['subtree'][0]['attributes']
+            if 'attributes' in arch_comp_list['subtree']:
+                ASSERT_MSG(type(arch_comp_list['subtree'['attributes']]) is dict,
+                           'attributes must be specified in dictionary format')
             self.tree_node_classification(arch_comp_list['subtree'][0], arch_name, global_attributes)
         else:
             self.tree_node_classification(arch_comp_list, None, {})
@@ -122,14 +127,15 @@ class RawInputs2Dicts():
         # interpret the mapping and arithmetic operations in the raw description
         for attr_name, attr_val in node_attrs.items():
             if type(attr_val) is str:
-                if attr_val in node_attrs: node_attrs[attr_name] = node_attrs[attr_val]
+                if attr_val in node_attrs:
+                    node_attrs[attr_name] = node_attrs[attr_val]
                 else:
                     op_type, op1, op2 = parse_expression_for_arithmetic(attr_val, node_attrs)
                     if op_type is not None:
                         node_attrs[attr_name] = process_arithmetic(op1, op2, op_type)
 
         if 'subtree' in node_description:
-            ASSERT_MSG(isinstance(node_description['subtree'], list),"%s.subtree has to be a list" % prefix)
+            ASSERT_MSG(isinstance(node_description['subtree'], list), "%s.subtree has to be a list" % prefix)
             self.flatten_architecture_subtree(prefix, node_description['subtree'], node_attrs)
 
         if 'local' in node_description:
@@ -137,9 +143,12 @@ class RawInputs2Dicts():
                        "error: %s.local has to be a list of components" % prefix)
             for c_id in range(len(node_description['local'])):
                 node_info = node_description['local'][c_id]
-
+                ASSERT_MSG('name' in node_info, 'name must be specified for each node')
                 if 'attributes' not in node_info:
                     node_info['attributes'] = {}
+                else:
+                    ASSERT_MSG(type(node_info['attributes']) is dict,
+                               '%s: attributes must be specified in dictionary format' % (node_info['name']))
 
                 for attr_name, attr_val in node_attrs.items():
                     if attr_name not in node_info['attributes']:
@@ -153,11 +162,11 @@ class RawInputs2Dicts():
                 node_info['name'] = local_node_name
                 self.arch_spec_dict['components'][local_node_name] = node_info
 
-        if 'subtree'not in node_description and 'local' not in node_description:
+        if 'subtree' not in node_description and 'local' not in node_description:
             ERROR_CLEAN_EXIT('Unrecognized tree node type', node_description)
 
     def flatten_architecture_subtree(self, prefix, subtree_description, shared_attributes_dict=None):
-        ASSERT_MSG(isinstance(subtree_description, list),'%s.subtree needs to be a list' % prefix)
+        ASSERT_MSG(isinstance(subtree_description, list), '%s.subtree needs to be a list' % prefix)
         for subtree_item_description in subtree_description:
             if 'name' not in subtree_item_description:
                 ERROR_CLEAN_EXIT('error: architecture description...',
@@ -203,31 +212,32 @@ class RawInputs2Dicts():
                        and 'actions' in cc_class.keys() and 'subcomponents' in cc_class.keys(),
                        'missing required keys in compound component class description: \n %s' % cc_class)
             if cc_class['name'] in self.cc_classes_dict:
-                WARN('Redefined compound component class %s in file %s'%(cc_class['name'], file_path))
+                WARN('Redefined compound component class %s in file %s' % (cc_class['name'], file_path))
             for subcomponent_info in cc_class['subcomponents']:
                 ASSERT_MSG('name' in subcomponent_info.keys() and 'class' in subcomponent_info.keys(),
                            '"name" and "class" keys must be specified for the subcomponents of the '
-                           'compound component class: %s'%(cc_class['name']))
+                           'compound component class: %s' % (cc_class['name']))
                 if 'area_share' not in subcomponent_info:
-                    subcomponent_info['area_share'] = 1 # default area share is 1
+                    subcomponent_info['area_share'] = 1  # default area share is 1
             for action_info in cc_class['actions']:
                 ASSERT_MSG('name' in action_info.keys() and 'subcomponents' in action_info.keys(),
-                           '"name" and "subcomponents" keys must be specified for compound action %s'%(action_info['name']))
+                           '"name" and "subcomponents" keys must be specified for compound action %s' % (
+                           action_info['name']))
                 for subcomponent_actions in action_info['subcomponents']:
                     ASSERT_MSG('actions' in subcomponent_actions and 'name' in subcomponent_actions,
                                '"name" and "actions" keys of the subcomponent must be specified for compound action'
-                               ' %s'%(action_info['name']))
+                               ' %s' % (action_info['name']))
                     for subcomponent_action in subcomponent_actions['actions']:
                         ASSERT_MSG('name' in subcomponent_action,
                                    '"name" key of the subcomponent action needs to be specified for '
-                                   'compound action: %s, subcomponent: %s' %(action_info['name'], subcomponent_actions['name']))
+                                   'compound action: %s, subcomponent: %s' % (
+                                   action_info['name'], subcomponent_actions['name']))
                         if 'action_share' not in subcomponent_action:
                             if 'repeat' in subcomponent_action:
                                 subcomponent_action['action_share'] = subcomponent_action['repeat']
                             else:
-                                subcomponent_action['action_share'] = 1 # default action share is 1
+                                subcomponent_action['action_share'] = 1  # default action share is 1
             self.cc_classes_dict[cc_class['name']] = deepcopy(cc_class)
-
 
     def construct_parse_config_file(self):
         """load exisiting config file content (if any)/ create a default config file"""
@@ -238,7 +248,7 @@ class RawInputs2Dicts():
             if os.path.exists(possible_dir + config_file_name):
                 original_config_file_path = possible_dir + config_file_name
                 original_content_obj = open(original_config_file_path)
-                original_content = load( original_content_obj, accelergy_loader)
+                original_content = load(original_content_obj, accelergy_loader)
                 original_content_obj.close()
                 INFO('config file located:', original_config_file_path)
                 print('config file content: \n', original_content)
@@ -263,7 +273,6 @@ class RawInputs2Dicts():
         write_yaml_file(config_file_path, config_file_content)
         self.config = config_file_content
 
-    
     def primitive_classes_input_parser(self):
         """construct a dictionary for primitive classes"""
         primitive_class_paths = self.config['primitive_components']
@@ -277,7 +286,7 @@ class RawInputs2Dicts():
                         self.expand_primitive_component_lib_info(pc_path)
 
         ASSERT_MSG(not len(self.pc_classes_dict) == 0, 'No primitive component class found, '
-                   'please check if the paths in config file are correct')
+                                                       'please check if the paths in config file are correct')
 
     def expand_primitive_component_lib_info(self, pc_path):
         primitive_component_list_obj = open(pc_path)
@@ -289,7 +298,6 @@ class RawInputs2Dicts():
                 WARN(pc_description['name'], 'redefined in', pc_path)
             self.pc_classes_dict[pc_description['name']] = deepcopy(pc_description)
         INFO('primitive component file parsed: ', pc_path)
-
 
     def ERT_input_parser(self, file_info):
         top_key = 'ERT'
@@ -312,15 +320,15 @@ class RawInputs2Dicts():
                 action_dict_summary[action['name']].append(action)
             self.ERT_dict[component_name] = action_dict_summary
 
-
     def action_counts_input_parser(self, file_info):
         top_key = 'action_counts'
         file_path = file_info['path']
-        ASSERT_MSG('version' in file_info['content'][top_key], 'Please specify the version of the action counts file: %s'%(file_path))
+        ASSERT_MSG('version' in file_info['content'][top_key],
+                   'Please specify the version of the action counts file: %s' % (file_path))
         self.check_input_parser_version(file_info['content'][top_key]['version'], 'action counts', file_path)
         action_counts_dict = file_info['content'][top_key]
         ASSERT_MSG('subtree' in action_counts_dict or 'local' in action_counts_dict,
-                   'the action counts must contain the "subtree" key or "local" key at the top level: %s'% file_path)
+                   'the action counts must contain the "subtree" key or "local" key at the top level: %s' % file_path)
         self.flatten_action_counts(None, action_counts_dict)
 
     def flatten_action_counts(self, prefix, node_description):
@@ -329,7 +337,7 @@ class RawInputs2Dicts():
             ASSERT_MSG(isinstance(local_nodes, list), 'local nodes are not specified in list format in action counts')
             for local_node in local_nodes:
                 ASSERT_MSG("name" and 'action_counts' in local_node, '"name" and "action_counts" need to be '
-                            'specified as a keys in action count local node descriptions: %s'%local_node)
+                                                                     'specified as a keys in action count local node descriptions: %s' % local_node)
                 if prefix is None:
                     full_name = local_node['name']
                 else:
@@ -338,7 +346,8 @@ class RawInputs2Dicts():
 
         if 'subtree' in node_description:
             subtree_nodes = node_description['subtree']
-            ASSERT_MSG(isinstance(subtree_nodes, list), 'subtree nodes are not specified in list format in action counts')
+            ASSERT_MSG(isinstance(subtree_nodes, list),
+                       'subtree nodes are not specified in list format in action counts')
             for subtree_node_description in subtree_nodes:
                 ASSERT_MSG("name" in subtree_node_description, ' "name" need to be specified in the subtree node: %s'
                            % subtree_node_description)
@@ -348,9 +357,8 @@ class RawInputs2Dicts():
                     subtree_prefix = prefix + '.' + subtree_node_description['name']
                 self.flatten_action_counts(subtree_prefix, subtree_node_description)
 
-
     def get_arch_spec_dict(self):
-        ASSERT_MSG(not self.arch_spec_dict == {}, 'Cannot get architecture spec from raw inputs' )
+        ASSERT_MSG(not self.arch_spec_dict == {}, 'Cannot get architecture spec from raw inputs')
         return self.arch_spec_dict
 
     def get_pc_classses(self):
@@ -363,7 +371,8 @@ class RawInputs2Dicts():
         return self.cc_classes_dict
 
     def get_estimation_plug_in_paths(self):
-        ASSERT_MSG(self.config is not None and 'estimator_plug_ins' in self.config, 'config is not properly defined \n %s'%self.config)
+        ASSERT_MSG(self.config is not None and 'estimator_plug_ins' in self.config,
+                   'config is not properly defined \n %s' % self.config)
         path_list = self.config['estimator_plug_ins']
         return path_list
 

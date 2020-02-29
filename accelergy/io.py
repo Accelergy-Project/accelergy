@@ -106,8 +106,12 @@ def generate_output_files(system_state):
     if system_state.flags['energy_estimation']:
         # Generate energy estimates
         path = os.path.join(output_path, output_prefix + 'energy_estimation.yaml')
-        write_yaml_file(path, system_state.energy_estimations.get_energy_estimate_as_dict())
-        INFO('energy estimations are saved to:', path)
+        energy_estimation_dict = system_state.energy_estimations.get_energy_estimate_as_dict()
+        if not energy_estimation_dict["energy_estimation"]["components"] == []:
+            write_yaml_file(path, energy_estimation_dict)
+            INFO('energy estimations are saved to:', path)
+        else:
+            WARN('no runtime energy estimations are generated... not generating energy_estimation.yaml')
 
     if system_state.flags['ART']:
         # Generate ART
