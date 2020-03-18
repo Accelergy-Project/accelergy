@@ -23,7 +23,8 @@ setup(
       install_requires = ['pyYAML >= 1.1', 'yamlordereddictloader >= 0.4', 'pyfiglet'],
       python_requires = '>=3.6',
       data_files=[('share/accelergy/primitive_component_libs/',
-                    ['share/primitive_component_libs/primitive_component.lib.yaml']),
+                    ['share/primitive_component_libs/primitive_component.lib.yaml',
+                     'share/primitive_component_libs/pim_primitive_component.lib.yaml']),
                   ('share/accelergy/estimation_plug_ins/dummy_tables',
                     ['share/estimation_plug_ins/dummy_tables/dummy.estimator.yaml',
                      'share/estimation_plug_ins/dummy_tables/dummy_table.py'])

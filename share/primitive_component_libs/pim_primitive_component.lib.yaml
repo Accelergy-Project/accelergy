@@ -1,0 +1,79 @@
+version: 0.3
+classes:
+  - name: eDRAM
+    attributes:
+      technology: 32nm
+      width: 256
+      depth: 2048
+      n_rdwr_ports: 2
+      nbanks: 1
+      latency: 1ns
+    actions:
+      - name: read
+      - name: write
+      - name: idle
+  - name: ReRAMcell_storage
+    attributes:
+      technology: memristor
+      cellwidth: 2
+      latency: 1ns
+    actions:
+      - name: read
+      - name: write
+      - name: idle
+  - name: ReRAMcell_compute
+    attributes:
+      technology: memristor
+      cellwidth: 2
+      latency: 1ns
+    actions:
+      - name: compute
+      - name: idle
+  - name: DAC
+    attributes:
+      technology: 32nm
+      datawidth: 1
+      latency: 1ns
+      type: R2R
+    actions:
+      - name: convert
+      - name: idle
+  - name: sample_and_hold
+    attributes:
+      technology: 32nm
+      latency: 1ns
+    actions:
+      - name: sample_and_hold
+      - name: idle
+  - name: ADC
+    attributes:
+      technology: 32nm
+      datawidth: 1
+      latency: 1ns
+      type: flash
+    actions:
+      - name: convert
+      - name: idle
+  - name: shift_and_add
+    attributes:
+      technology: 32nm
+      datawidth: 16
+      latency: 1ns
+    actions:
+      - name: shift_and_add
+      - name: idle
+  - name: place_holder_storage
+    attributes:
+      technology: 65nm
+      type: LPDDR4
+      width: 64
+    actions:
+      - name: read
+      - name: write
+      - name: idle
+  - name: sense_amplifier
+    attributes:
+      technology: 65nm
+      latency: 1ns
+    actions:
+      - name: convert
