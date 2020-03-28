@@ -107,6 +107,9 @@ class RawInputs2Dicts():
             arch_name = arch_comp_list['subtree'][0]['name']
             global_attributes = {} if 'attributes' not in arch_comp_list['subtree'][0] \
                 else arch_comp_list['subtree'][0]['attributes']
+            if 'attributes' in arch_comp_list['subtree']:
+                ASSERT_MSG(type(arch_comp_list['subtree'['attributes']]) is dict,
+                           'attributes must be specified in dictionary format')
             self.tree_node_classification(arch_comp_list['subtree'][0], arch_name, global_attributes)
         else:
             self.tree_node_classification(arch_comp_list, None, {})
@@ -137,9 +140,12 @@ class RawInputs2Dicts():
                        "error: %s.local has to be a list of components" % prefix)
             for c_id in range(len(node_description['local'])):
                 node_info = node_description['local'][c_id]
-
+                ASSERT_MSG('name' in node_info, 'name must be specified for each node')
                 if 'attributes' not in node_info:
                     node_info['attributes'] = {}
+                else:
+                    ASSERT_MSG(type(node_info['attributes']) is dict,
+                               '%s: attributes must be specified in dictionary format'%(node_info['name']))
 
                 for attr_name, attr_val in node_attrs.items():
                     if attr_name not in node_info['attributes']:
