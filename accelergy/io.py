@@ -48,6 +48,10 @@ def parse_commandline_args():
                                ' and all (which refers to all possible outputs)')
     parser.add_argument('--oprefix', type =str, default = '',
                          help= 'prefix that will be added to the output files names.')
+    parser.add_argument('-d', '--define_input_arch_only', type=int, default=False,
+                        help='If set to 1, accelergy will only interpret the input arch description '
+                             '(i.e. define all the provided attributes and names) '
+                             'without performing any other operations')
     parser.add_argument('files', nargs='*',
                         help= 'list of input files in arbitrary order.'
                               'Accelergy parses the top keys of the files to decide the type of input the file describes, '
@@ -64,6 +68,11 @@ def generate_output_files(system_state):
     verbose = system_state.flags['verbose']
     parser_version = system_state.parser_version
     output_prefix = system_state.flags['output_prefix']
+
+    if system_state.flags['define_input_arch_only']:
+        path = os.path.join(output_path, output_prefix + 'defined_input_architecture.yaml')
+        write_yaml_file(path, system_state.interpreted_input_arch)
+        INFO('defined input architecture is saved to:', path)
 
     # Generate Flattened Architecture
     if system_state.flags['flattened_arch']:
@@ -106,8 +115,12 @@ def generate_output_files(system_state):
     if system_state.flags['energy_estimation']:
         # Generate energy estimates
         path = os.path.join(output_path, output_prefix + 'energy_estimation.yaml')
-        write_yaml_file(path, system_state.energy_estimations.get_energy_estimate_as_dict())
-        INFO('energy estimations are saved to:', path)
+        energy_estimation_dict = system_state.energy_estimations.get_energy_estimate_as_dict()
+        if not energy_estimation_dict["energy_estimation"]["components"] == []:
+            write_yaml_file(path, energy_estimation_dict)
+            INFO('energy estimations are saved to:', path)
+        else:
+            WARN('no runtime energy estimations are generated... not generating energy_estimation.yaml')
 
     if system_state.flags['ART']:
         # Generate ART
@@ -124,6 +137,3 @@ def generate_output_files(system_state):
             path = os.path.join(output_path, output_prefix + 'ART_summary_verbose.yaml')
             write_yaml_file(path, system_state.ART.get_ART_summary_verbose())
             INFO('verbose area reference table summary is saved to:', path)
-
-
-

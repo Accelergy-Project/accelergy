@@ -1,5 +1,5 @@
 # values of the attributes are defaults, can be replaced if other values are assigned to the attributes
-version: 0.2
+version: 0.3
 classes:
   - name: bitwise
     attributes:
@@ -77,6 +77,14 @@ classes:
           data_delta: 0..1
           address_delta: 0..1
       - name: idle
+
+  - name: reg
+    attributes:
+      technology: 65nm
+      datawidth: 16
+      latency: 5ns
+    actions:
+      - name: access
 
   - name: SRAM
     attributes:
