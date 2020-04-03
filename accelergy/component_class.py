@@ -37,6 +37,10 @@ class ComponentClass:
     def get_default_attr_to_apply(self, obj_attr_name_list):
         attr_to_be_applied = OrderedDict()
         for attr_name, attr_val in self._get_default_attrs().items():
+            if attr_val == "must_specify":
+                ASSERT_MSG(attr_name in obj_attr_name_list,
+                           "attributes %s for compound class %s must be specified in architecture description"
+                           %(attr_name, self.get_name()))
             if attr_name not in obj_attr_name_list:
                 attr_to_be_applied[attr_name] = attr_val
         return attr_to_be_applied
