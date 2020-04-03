@@ -30,7 +30,8 @@ setup(
                   ],
       include_package_data = True,
       entry_points = {
-        'console_scripts': ['accelergy=accelergy.accelergy_console:main'],
+        'console_scripts': ['accelergy=accelergy.accelergy_console:main',
+                            'accelergyDefineArch=accelergy.accelergy_define_arch_console:main'],
       },
       zip_safe = False,
 

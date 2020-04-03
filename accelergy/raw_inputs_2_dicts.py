@@ -1,6 +1,7 @@
 from yaml import load
 from copy import deepcopy
 from accelergy.parsing_utils import *
+from collections import OrderedDict
 
 
 class RawInputs2Dicts():
@@ -9,7 +10,8 @@ class RawInputs2Dicts():
         self.possible_top_keys = {'architecture', 'compound_components', 'action_counts', 'ERT',
                                   'flattened_architecture'}
         self.path_arglist = input_info['path_arglist']
-        self.arch_spec_dict = {}
+        self.flatten_arch_spec_dict = {}
+        self.hier_arch_spec_dict = {}
         self.cc_classes_dict = {}
         self.pc_classes_dict = {}
         self.ERT_dict = {}
@@ -85,7 +87,7 @@ class RawInputs2Dicts():
         file_path = file_info['path']
 
         # only one arch file is allowed
-        ASSERT_MSG(self.arch_spec_dict == {},
+        ASSERT_MSG(self.hier_arch_spec_dict == {},
                    'Second architecture description detected at %s ... '
                    'Only one architecture is allowed...' % (file_path))
 
@@ -103,7 +105,8 @@ class RawInputs2Dicts():
             ERROR_CLEAN_EXIT('Architecture Description must contain subtree or local key at top-level')
 
         # create arch spec dict
-        self.arch_spec_dict = {'version': self.parser_version, 'components': {}}
+        self.hier_arch_spec_dict = {'architecture': {}}
+        self.flatten_arch_spec_dict = {'version': self.parser_version, 'components': {}}
         arch_comp_list = content[top_key]
         if 'subtree' in arch_comp_list:
             arch_name = arch_comp_list['subtree'][0]['name']
@@ -112,9 +115,10 @@ class RawInputs2Dicts():
             if 'attributes' in arch_comp_list['subtree']:
                 ASSERT_MSG(type(arch_comp_list['subtree'['attributes']]) is dict,
                            'attributes must be specified in dictionary format')
-            self.tree_node_classification(arch_comp_list['subtree'][0], arch_name, global_attributes)
+            arch_comp_list['subtree'][0] = self.tree_node_classification(OrderedDict(arch_comp_list['subtree'][0]), arch_name, global_attributes)
         else:
-            self.tree_node_classification(arch_comp_list, None, {})
+            arch_comp_list = self.tree_node_classification(arch_comp_list, None, {})
+        self.hier_arch_spec_dict['architecture'] = OrderedDict(arch_comp_list)
 
     def tree_node_classification(self, node_description, prefix, node_attrs):
         """
@@ -135,12 +139,12 @@ class RawInputs2Dicts():
                         node_attrs[attr_name] = process_arithmetic(op1, op2, op_type)
 
         if 'subtree' in node_description:
-            ASSERT_MSG(isinstance(node_description['subtree'], list), "%s.subtree has to be a list" % prefix)
-            self.flatten_architecture_subtree(prefix, node_description['subtree'], node_attrs)
+            ASSERT_MSG(isinstance(node_description['subtree'], list), " %s.subtree has to be a list"%(prefix))
+            node_description['subtree'] = self.parse_architecture_subtree(node_description['subtree'], prefix, node_attrs)
 
         if 'local' in node_description:
             ASSERT_MSG(isinstance(node_description['local'], list),
-                       "error: %s.local has to be a list of components" % prefix)
+                       "error: %s.local has to be a list of components"%prefix)
             for c_id in range(len(node_description['local'])):
                 node_info = node_description['local'][c_id]
                 ASSERT_MSG('name' in node_info, 'name must be specified for each node')
@@ -165,16 +169,23 @@ class RawInputs2Dicts():
                 if list_suffix is not None:
                     node_info['name'] = name_base + list_suffix
 
+                node_description['local'][c_id] = OrderedDict(node_info)
+
+                # generate the flattened version of the architecture
                 local_node_name = prefix + '.' + node_info['name'] if prefix is not None else node_info['name']
                 node_info['name'] = local_node_name
-                self.arch_spec_dict['components'][local_node_name] = node_info
+                self.flatten_arch_spec_dict['components'][local_node_name] = node_info
 
         if 'subtree' not in node_description and 'local' not in node_description:
             ERROR_CLEAN_EXIT('Unrecognized tree node type', node_description)
 
-    def flatten_architecture_subtree(self, prefix, subtree_description, shared_attributes_dict=None):
-        ASSERT_MSG(isinstance(subtree_description, list), '%s.subtree needs to be a list' % prefix)
-        for subtree_item_description in subtree_description:
+        return node_description
+
+    def parse_architecture_subtree(self, subtree_description, prefix, shared_attributes_dict=None):
+        ASSERT_MSG(isinstance(subtree_description, list), '%s.subtree needs to be a list'%prefix)
+
+        for subtree_idx in range(len(subtree_description)):
+            subtree_item_description = subtree_description[subtree_idx]
             if 'name' not in subtree_item_description:
                 ERROR_CLEAN_EXIT('error: architecture description...',
                                  ' "name" needs to be specified as a key in node description', subtree_item_description)
@@ -193,8 +204,10 @@ class RawInputs2Dicts():
             name_base, list_suffix, list_length = interpret_component_list(node_name, node_attrs)
             if list_suffix is not None:
                 node_name = name_base + list_suffix
-            item_prefix = prefix + '.' + node_name
-            self.tree_node_classification(subtree_item_description, item_prefix, node_attrs)
+            subtree_item_description['name'] = node_name
+            item_prefix = prefix + '.' + node_name  # generated for the flattened arch
+            subtree_description[subtree_idx] = OrderedDict(self.tree_node_classification(subtree_item_description, item_prefix, node_attrs))
+        return subtree_description  # accumulated hierarchical info for the hierarchical arch
 
     def compound_components_input_parser(self, file_info):
         """responsible for parsing the loaded compound component description YAML files """
@@ -364,9 +377,13 @@ class RawInputs2Dicts():
                     subtree_prefix = prefix + '.' + subtree_node_description['name']
                 self.flatten_action_counts(subtree_prefix, subtree_node_description)
 
-    def get_arch_spec_dict(self):
-        ASSERT_MSG(not self.arch_spec_dict == {}, 'Cannot get architecture spec from raw inputs')
-        return self.arch_spec_dict
+    def get_hier_arch_spec_dict(self):
+        ASSERT_MSG(not self.hier_arch_spec_dict == {}, 'Cannot get hierarchical architecture spec from raw inputs')
+        return self.hier_arch_spec_dict
+
+    def get_flatten_arch_spec_dict(self):
+        ASSERT_MSG(not self.flatten_arch_spec_dict == {}, 'Cannot get architecture spec from raw inputs')
+        return self.flatten_arch_spec_dict
 
     def get_pc_classses(self):
         ASSERT_MSG(not self.pc_classes_dict == {}, 'Cannot get primitive component class from raw inputs')
@@ -395,7 +412,7 @@ class RawInputs2Dicts():
 
     def get_available_inputs(self):
         available_inputs = []
-        if not self.arch_spec_dict == {}:
+        if not self.flatten_arch_spec_dict == {}:
             available_inputs.append('architecture_spec')
         if not self.cc_classes_dict == {}:
             available_inputs.append('compound_component_classes')

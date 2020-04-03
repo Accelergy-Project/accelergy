@@ -48,10 +48,6 @@ def parse_commandline_args():
                                ' and all (which refers to all possible outputs)')
     parser.add_argument('--oprefix', type =str, default = '',
                          help= 'prefix that will be added to the output files names.')
-    parser.add_argument('-d', '--define_input_arch_only', type=int, default=False,
-                        help='If set to 1, accelergy will only interpret the input arch description '
-                             '(i.e. define all the provided attributes and names) '
-                             'without performing any other operations')
     parser.add_argument('files', nargs='*',
                         help= 'list of input files in arbitrary order.'
                               'Accelergy parses the top keys of the files to decide the type of input the file describes, '
@@ -69,10 +65,6 @@ def generate_output_files(system_state):
     parser_version = system_state.parser_version
     output_prefix = system_state.flags['output_prefix']
 
-    if system_state.flags['define_input_arch_only']:
-        path = os.path.join(output_path, output_prefix + 'defined_input_architecture.yaml')
-        write_yaml_file(path, system_state.interpreted_input_arch)
-        INFO('defined input architecture is saved to:', path)
 
     # Generate Flattened Architecture
     if system_state.flags['flattened_arch']:

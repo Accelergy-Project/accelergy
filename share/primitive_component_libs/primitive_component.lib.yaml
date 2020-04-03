@@ -10,7 +10,6 @@ classes:
     actions:
       - name: process
       - name: idle
-
   - name: intadder
     attributes:
       technology: 65nm

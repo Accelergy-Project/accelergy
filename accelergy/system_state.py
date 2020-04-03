@@ -4,7 +4,7 @@ class SystemState():
         self.cc_classes = {}
         self.pc_classes = {}
         self.arch_spec = None
-        self.interpreted_input_arch = None
+        self.hier_arch_spec = None
         self.ccs = {}
         self.pcs = {}
         self.action_counts = None
@@ -21,9 +21,9 @@ class SystemState():
     def set_accelergy_version(self, version):
         self.parser_version = version
 
-    def set_interpreted_input_arch(self, arch_dict):
-        ASSERT_MSG(self.interpreted_input_arch is None, 'interpreted input arch is set')
-        self.interpreted_input_arch = arch_dict
+    def set_hier_arch_spec(self, arch_dict):
+        ASSERT_MSG(self.hier_arch_spec is None, 'interpreted input arch is set')
+        self.hier_arch_spec = arch_dict
 
     def set_arch_spec(self, arch_spec):
         ASSERT_MSG(self.arch_spec is None, 'architecture spec is already set')

@@ -42,15 +42,11 @@ def main():
     path_arglist = args.files
     precision = args.precision
     desired_output_files = args.output_files
-    define_input_arch_only = args.define_input_arch_only
     # interpret desired output files
     oflags = {'ERT': 0, 'ERT_summary': 0, 'ART': 0, 'ART_summary': 0,
-              'energy_estimation': 0, 'flattened_arch': 0, 'define_input_arch_only': 1}
-    if not define_input_arch_only:
-        for key, val in oflags.items():
-            if 'all' in desired_output_files or key in desired_output_files: oflags[key] = 1
-    else:
-        oflags['define_input_arch_only'] = 1
+              'energy_estimation': 0, 'flattened_arch': 0}
+    for key, val in oflags.items():
+        if 'all' in desired_output_files or key in desired_output_files: oflags[key] = 1
 
     oflags['output_prefix'] = output_prefix
     # interpret the types of processing that need to be performed
@@ -74,9 +70,8 @@ def main():
     # ----- Determine what operations should be performed
     available_inputs = raw_dicts.get_available_inputs()
 
-
-    # ----- Interpret the input architecture description using only the input information (w/o class defintions)
-    system_state.set_interpreted_input_arch(raw_dicts.get_arch_spec_dict())
+    # ----- Interpret the input architecture description using only the input information (w/o class definitions)
+    system_state.set_hier_arch_spec(raw_dicts.get_hier_arch_spec_dict())
 
     if flatten_architecture or (compute_ERT and 'ERT' not in available_inputs) or compute_ART:
         # architecture needs to be defined if
@@ -91,7 +86,7 @@ def main():
             system_state.add_cc_class(ComponentClass(cc_info))
 
         # ----- Set Architecture Spec (all attributes defined)
-        arch_obj = arch_dict_2_obj(system_state.interpreted_input_arch, system_state.cc_classes, system_state.pc_classes)
+        arch_obj = arch_dict_2_obj(raw_dicts.get_flatten_arch_spec_dict(), system_state.cc_classes, system_state.pc_classes)
         system_state.set_arch_spec(arch_obj)
 
     if (compute_ERT and 'ERT' not in available_inputs) or compute_ART:
