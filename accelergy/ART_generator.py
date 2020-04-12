@@ -43,7 +43,7 @@ class AreaReferenceTableGenerator:
         estimation_plug_in_interface = {'class_name': pc.get_class_name(),
                                         'attributes': pc.get_attributes()}
         estimated_area, estimator_name = self.eval_primitive_area(estimation_plug_in_interface)
-        self.ART.add_entry({'comp_name': remove_brackets(pc_name),
+        self.ART.add_entry({'comp_name': pc_name,
                             'area': estimated_area,
                             'estimator': estimator_name})
 
