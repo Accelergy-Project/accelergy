@@ -24,7 +24,8 @@ setup(
       python_requires = '>=3.6',
       data_files=[('share/accelergy/primitive_component_libs/',
                     ['share/primitive_component_libs/primitive_component.lib.yaml',
-                     'share/primitive_component_libs/pim_primitive_component.lib.yaml']),
+                     'share/primitive_component_libs/pim_primitive_component.lib.yaml',
+                     'share/primitive_component_libs/gem5_primitives.lib.yaml']),
                   ('share/accelergy/estimation_plug_ins/dummy_tables',
                     ['share/estimation_plug_ins/dummy_tables/dummy.estimator.yaml',
                      'share/estimation_plug_ins/dummy_tables/dummy_table.py'])
