@@ -1,16 +1,16 @@
 ART_summary:
   version: 0.3
   table_summary:
-  - name: hierarchy.PE_small.mac
+  - name: hierarchy.PE_small[0..1].mac[0..1]
     area: 1
     primitive_estimations: dummy_table
-  - name: hierarchy.PE_large.arithmetic_units.adder
+  - name: hierarchy.PE_large[0..2].arithmetic_units.adder
     area: 1
     primitive_estimations: dummy_table
-  - name: hierarchy.PE_large.arithmetic_units.mac
+  - name: hierarchy.PE_large[0..2].arithmetic_units.mac[0..1]
     area: 1
     primitive_estimations: dummy_table
-  - name: hierarchy.PE_large.channel
+  - name: hierarchy.PE_large[0..2].channel[0..1]
     area: 1
     primitive_estimations: dummy_table
   - name: hierarchy.PE_small[0..1].byte_sp
@@ -20,22 +20,27 @@ ART_summary:
       estimator: dummy_table
       area: 1
       area_share: 1
+      total_component_area: 1
     - name: buffet_collection.buffet[0..0].data_fifos[0..2]
       estimator: dummy_table
       area: 1
       area_share: 1
+      total_component_area: 3
     - name: buffet_collection.buffet[0..0].addr_fifos[0..2]
       estimator: dummy_table
       area: 1
       area_share: 1
+      total_component_area: 3
     - name: buffet_collection.storage
       estimator: dummy_table
       area: 1
       area_share: 1
+      total_component_area: 1
     - name: address_generators[0..2]
       estimator: dummy_table
       area: 1
       area_share: 1
+      total_component_area: 3
   - name: hierarchy.PE_large[0..2].memory_storage.double_buffer_sp
     area: 11
     primitive_estimations:
@@ -43,22 +48,27 @@ ART_summary:
       estimator: dummy_table
       area: 1
       area_share: 1
+      total_component_area: 1
     - name: buffet_collection.buffet[0..0].data_fifos[0..2]
       estimator: dummy_table
       area: 1
       area_share: 1
+      total_component_area: 3
     - name: buffet_collection.buffet[0..0].addr_fifos[0..2]
       estimator: dummy_table
       area: 1
       area_share: 1
+      total_component_area: 3
     - name: buffet_collection.storage
       estimator: dummy_table
       area: 1
       area_share: 1
+      total_component_area: 1
     - name: address_generators[0..2]
       estimator: dummy_table
       area: 1
       area_share: 1
+      total_component_area: 3
   - name: hierarchy.PE_large[0..2].memory_storage.two_byte_sp
     area: 11
     primitive_estimations:
@@ -66,22 +76,27 @@ ART_summary:
       estimator: dummy_table
       area: 1
       area_share: 1
+      total_component_area: 1
     - name: buffet_collection.buffet[0..0].data_fifos[0..2]
       estimator: dummy_table
       area: 1
       area_share: 1
+      total_component_area: 3
     - name: buffet_collection.buffet[0..0].addr_fifos[0..2]
       estimator: dummy_table
       area: 1
       area_share: 1
+      total_component_area: 3
     - name: buffet_collection.storage
       estimator: dummy_table
       area: 1
       area_share: 1
+      total_component_area: 1
     - name: address_generators[0..2]
       estimator: dummy_table
       area: 1
       area_share: 1
+      total_component_area: 3
   - name: hierarchy.GLB
     area: 11
     primitive_estimations:
@@ -89,19 +104,24 @@ ART_summary:
       estimator: dummy_table
       area: 1
       area_share: 1
+      total_component_area: 1
     - name: buffet_collection.buffet[0..0].data_fifos[0..2]
       estimator: dummy_table
       area: 1
       area_share: 1
+      total_component_area: 3
     - name: buffet_collection.buffet[0..0].addr_fifos[0..2]
       estimator: dummy_table
       area: 1
       area_share: 1
+      total_component_area: 3
     - name: buffet_collection.storage
       estimator: dummy_table
       area: 1
       area_share: 1
+      total_component_area: 1
     - name: address_generators[0..2]
       estimator: dummy_table
       area: 1
       area_share: 1
+      total_component_area: 3

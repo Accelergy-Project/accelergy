@@ -7,9 +7,15 @@ ART_summary:
     - name: SRAM_bank[0..1]
       estimator: dummy_table
       area: 1
+      area_share: 1
+      total_component_area: 2
     - name: rd_crossbar
       estimator: dummy_table
       area: 1
+      area_share: 1
+      total_component_area: 1
     - name: wr_crossbar
       estimator: dummy_table
       area: 1
+      area_share: 1
+      total_component_area: 1

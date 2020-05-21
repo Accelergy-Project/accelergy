@@ -18,7 +18,7 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-
+import sys
 from accelergy.raw_inputs_2_dicts import RawInputs2Dicts
 from accelergy.system_state import SystemState
 from accelergy.component_class import ComponentClass
@@ -48,6 +48,10 @@ def main():
     for key, val in oflags.items():
         if 'all' in desired_output_files or key in desired_output_files: oflags[key] = 1
 
+    INFO("generating outputs according to the following specified output flags... \n "
+         "Please use the -f flag to update the preference (default to all output files)")
+    print(oflags)
+
     oflags['output_prefix'] = output_prefix
     # interpret the types of processing that need to be performed
     flatten_architecture = 1 if oflags['flattened_arch'] else 0
@@ -70,8 +74,14 @@ def main():
     # ----- Determine what operations should be performed
     available_inputs = raw_dicts.get_available_inputs()
 
-    # ----- Interpret the input architecture description using only the input information (w/o class definitions)
-    system_state.set_hier_arch_spec(raw_dicts.get_hier_arch_spec_dict())
+    # ---- Detecting config only cases and gracefully exiting
+    if len(available_inputs) == 0:
+        INFO("no input is provided, exiting...")
+        sys.exit(0)
+
+    if compute_ART or flatten_architecture or compute_ERT and 'ERT' not in available_inputs:
+        # ----- Interpret the input architecture description using only the input information (w/o class definitions)
+        system_state.set_hier_arch_spec(raw_dicts.get_hier_arch_spec_dict())
 
     if flatten_architecture or (compute_ERT and 'ERT' not in available_inputs) or compute_ART:
         # architecture needs to be defined if
@@ -93,6 +103,7 @@ def main():
         # ERT/ERT_summary/energy estimates/ART/ART summary need to be generated without provided ERT
         #        ----> all components need to be defined
         # ----- Add the Fully Defined Components (all flattened out)
+
         for arch_component in system_state.arch_spec:
             if arch_component.get_class_name() in system_state.pc_classes:
                 class_name = arch_component.get_class_name()
@@ -116,7 +127,7 @@ def main():
                                               'parser_version': accelergy_version,
                                               'precision': precision}))
 
-    if compute_ERT:
+    if compute_ERT and 'ERT' not in available_inputs:
             # ----- Generate Energy Reference Table
             ert_gen = EnergyReferenceTableGenerator({'parser_version': accelergy_version,
                                                      'pcs': system_state.pcs,

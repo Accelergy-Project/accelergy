@@ -44,7 +44,7 @@ def parse_commandline_args():
                               'Default is 0')
     parser.add_argument('-f', '--output_files',  nargs="*", type =str, default = ['all'],
                          help= 'list that contains the desired output files.'
-                               ' Options include: ERT, ERT_summary, ART, ART_summary, estimations, flattened_arch,'
+                               ' Options include: ERT, ERT_summary, ART, ART_summary, energy_estimation, flattened_arch,'
                                ' and all (which refers to all possible outputs)')
     parser.add_argument('--oprefix', type =str, default = '',
                          help= 'prefix that will be added to the output files names.')
@@ -64,7 +64,6 @@ def generate_output_files(system_state):
     verbose = system_state.flags['verbose']
     parser_version = system_state.parser_version
     output_prefix = system_state.flags['output_prefix']
-
 
     # Generate Flattened Architecture
     if system_state.flags['flattened_arch']:

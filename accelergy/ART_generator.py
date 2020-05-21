@@ -62,7 +62,7 @@ class AreaReferenceTableGenerator:
                                            'estimator': estimator_name,
                                            'area': estimated_area,
                                            'area_share': subcomp_obj.get_area_share(),
-                                           'interpreted_area': round(pc_area, self.precision)}))
+                                           'total_component_area': round(pc_area, self.precision)}))
         self.ART.add_entry({'comp_name': cc_name,
                             'area': cc_area,
                             'estimator': estimators})
