@@ -44,7 +44,7 @@ class AreaReferenceTableGenerator:
                                         'attributes': pc.get_attributes()}
         estimated_area, estimator_name = self.eval_primitive_area(estimation_plug_in_interface)
         self.ART.add_entry({'comp_name': pc_name,
-                            'area': estimated_area,
+                            'area': round(estimated_area, self.precision),
                             'estimator': estimator_name})
 
     def generate_cc_ART(self, cc):
@@ -60,11 +60,11 @@ class AreaReferenceTableGenerator:
             cc_area += pc_area
             estimators.append(OrderedDict({'name': subcomp_name,
                                            'estimator': estimator_name,
-                                           'area': estimated_area,
+                                           'area': round(estimated_area, self.precision),
                                            'area_share': subcomp_obj.get_area_share(),
                                            'total_component_area': round(pc_area, self.precision)}))
         self.ART.add_entry({'comp_name': cc_name,
-                            'area': cc_area,
+                            'area': round(cc_area, self.precision),
                             'estimator': estimators})
 
     def get_ART(self):
