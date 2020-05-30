@@ -8,7 +8,7 @@ class RawInputs2Dicts():
     def __init__(self, input_info):
         self.parser_version = input_info['parser_version']
         self.possible_top_keys = {'architecture', 'compound_components', 'action_counts', 'ERT',
-                                  'flattened_architecture'}
+                                  'flattened_architecture', 'variables'}
         self.path_arglist = input_info['path_arglist']
         self.flatten_arch_spec_dict = {}
         self.hier_arch_spec_dict = {}
@@ -17,7 +17,9 @@ class RawInputs2Dicts():
         self.ERT_dict = {}
         self.action_counts_dict = {}
         self.config = None
+        self.arch_variables = {}
         self.load_and_construct_dicts()
+
 
     def check_input_parser_version(self, input_parser_version, input_file_type, input_file_path):
         # Accelergy v0.3 can parser input files of version 0.2 and 0.3 (except ERT)
@@ -48,16 +50,45 @@ class RawInputs2Dicts():
 
     def load_and_construct_dicts(self):
         # load and classify input files
+        input_file_info = {}
         for path in self.path_arglist:
             if os.path.isfile(path):
-                self.load_file(path)
+                loaded_content_list = self.load_file(path)
+                for loaded_content in loaded_content_list:
+                    if loaded_content['top_key'] not in input_file_info:
+                        input_file_info[loaded_content['top_key']] = []
+                    input_file_info[loaded_content['top_key']].append(loaded_content)
             elif os.path.isdir(path):
                 for root, directories, file_names in os.walk(path):
                     for file_name in file_names:
                         file_path = os.path.join(root, file_name)
-                        self.load_file(file_path)
+                        loaded_content_list = self.load_file(file_path)
+                        for loaded_content in loaded_content_list:
+                            if loaded_content['top_key'] not in input_file_info:
+                                input_file_info[loaded_content['top_key']] = []
+                            input_file_info[loaded_content['top_key']].append(loaded_content)
             else:
                 ERROR_CLEAN_EXIT('Cannot recognize input path: ', path)
+
+        if 'variables' in input_file_info:
+            for variable_spec in input_file_info['variables']:
+                for var_name, var_var in variable_spec['content']['variables'].items():
+                    if type(var_var) is str:
+                        if var_var in variable_spec['content']['variables']:
+                            variable_spec['content']['variables'][var_name] = variable_spec['content']['variables'][var_var]
+                        else:
+                            op_type, op1, op2 = parse_expression_for_arithmetic(var_var, variable_spec['content']['variables'])
+                            if op_type is not None:
+                                variable_spec['content']['variables'][var_name] = process_arithmetic(op1, op2, op_type)
+                self.arch_variables.update(variable_spec['content']['variables'])
+
+        for top_key, top_key_file_list in input_file_info.items():
+            if top_key != 'variables':
+                for file_info in top_key_file_list:
+                    YAML_parser_fname = top_key + '_input_parser'
+                    file_path = file_info['path']
+                    INFO('Parsing file %s for %s info' % (file_path, top_key))
+                    getattr(self, YAML_parser_fname)(file_info)
 
         # construct new or parse existing config file
         self.construct_parse_config_file()
@@ -69,15 +100,16 @@ class RawInputs2Dicts():
         if '.yaml' in file_path:
             file_obj = open(file_path)
             file = load(file_obj, accelergy_loader)
+            loaded_content_list =[]
             for top_key in file.keys():
                 if top_key not in self.possible_top_keys:
                     WARN('Cannot recognize the top key "%s" in file %s' % (top_key, file_path))
                 else:
-                    INFO('Parsing file %s for %s info' % (file_path, top_key))
-                    YAML_parser_fname = top_key + '_input_parser'
-                    file_info = {'content': file, 'path': file_path}
-                    getattr(self, YAML_parser_fname)(file_info)
+                    # YAML_parser_fname = top_key + '_input_parser'
+                    loaded_content_list.append({'top_key': top_key, 'content': file, 'path': file_path})
+                    # getattr(self, YAML_parser_fname)(file_info)
             file_obj.close()
+            return loaded_content_list
 
     def architecture_input_parser(self, file_info):
         """responsible for parsing the loaded architecture YAML file """
@@ -129,14 +161,18 @@ class RawInputs2Dicts():
         :return: None
         """
         # interpret the mapping and arithmetic operations in the raw description
+        all_attrs = deepcopy(node_attrs)
+        all_attrs.update(self.arch_variables)
         for attr_name, attr_val in node_attrs.items():
             if type(attr_val) is str:
-                if attr_val in node_attrs:
-                    node_attrs[attr_name] = node_attrs[attr_val]
+                if attr_val in all_attrs:
+                    node_attrs[attr_name] = all_attrs[attr_val]
+                    all_attrs[attr_name] = all_attrs[attr_val]
                 else:
-                    op_type, op1, op2 = parse_expression_for_arithmetic(attr_val, node_attrs)
+                    op_type, op1, op2 = parse_expression_for_arithmetic(attr_val, all_attrs)
                     if op_type is not None:
                         node_attrs[attr_name] = process_arithmetic(op1, op2, op_type)
+                        all_attrs[attr_name] = node_attrs[attr_name]
 
         if 'subtree' in node_description:
             ASSERT_MSG(isinstance(node_description['subtree'], list), " %s.subtree has to be a list"%(prefix))
@@ -156,16 +192,20 @@ class RawInputs2Dicts():
                 for attr_name, attr_val in node_attrs.items():
                     if attr_name not in node_info['attributes']:
                         node_info['attributes'][attr_name] = attr_val
+
+                all_attrs = deepcopy(node_info['attributes'])
+                all_attrs.update(self.arch_variables)
                 for attr_name, attr_val in node_info['attributes'].items():
                     if type(attr_val) is str:
-                        if attr_val in node_info['attributes']:
-                            node_info['attributes'][attr_name] = node_info['attributes'][attr_val]
+                        if attr_val in all_attrs:
+                            node_info['attributes'][attr_name] = all_attrs[attr_val]
+                            all_attrs[attr_name] = all_attrs[attr_val]
                         else:
-                            op_type, op1, op2 = parse_expression_for_arithmetic(attr_val, node_info['attributes'])
+                            op_type, op1, op2 = parse_expression_for_arithmetic(attr_val, all_attrs)
                             if op_type is not None and type(op1) is not str and type(op2) is not str:
                                 node_info['attributes'][attr_name] = process_arithmetic(op1, op2, op_type)
-
-                name_base, list_suffix, list_length = interpret_component_list(node_info['name'], node_attrs)
+                                all_attrs[attr_name] = node_info['attributes'][attr_name]
+                name_base, list_suffix, list_length = interpret_component_list(node_info['name'], all_attrs)
                 if list_suffix is not None:
                     node_info['name'] = name_base + list_suffix
 
@@ -200,8 +240,10 @@ class RawInputs2Dicts():
                 node_attrs = deepcopy(shared_attributes_dict)
                 node_attrs.update(subtree_item_description['attributes'])
 
+            all_attrs = deepcopy(node_attrs)
+            all_attrs.update(self.arch_variables)
             node_name = subtree_item_description['name']
-            name_base, list_suffix, list_length = interpret_component_list(node_name, node_attrs)
+            name_base, list_suffix, list_length = interpret_component_list(node_name, all_attrs)
             if list_suffix is not None:
                 node_name = name_base + list_suffix
             subtree_item_description['name'] = node_name
