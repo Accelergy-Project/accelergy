@@ -32,6 +32,19 @@ classes:
     actions:
       - name: instruction
 
+  - name: xbar
+    attributes:
+      technology: must_specify
+      clockrate: must_specify
+      datawidth: must_specify
+      horizontal_nodes: must_specify
+      vertical_nodes: must_specify
+      link_throughput: must_specity
+      link_latency: must_specify
+      flit_bytes: must_specify
+    actions:
+      - name: access
+
   - name: memory_controller
     attributes:
       technology: must_specify
@@ -48,15 +61,6 @@ classes:
     actions:
       - name: read_access
       - name: write_access
-  - name: coherentxbar
-    attributes:
-      response_latency: must_specify
-      protocol_response_latency: must_specify
-      width: must_specify
-    actions: # TODO still need to work out details for coherentxbar
-      - name: transfer_random
-      - name: transfer_repeated
-      - name: idle
   - name: decode
     attributes:
       instr_buffer_size: must_specify
