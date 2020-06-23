@@ -45,40 +45,17 @@ classes:
     actions:
       - name: access
 
-  - name: memory_controller
+  - name: tournament_bp
     attributes:
       technology: must_specify
-      memory_type: must_specify
-      response_latency: must_specify
-      size: must_specify
-      page_size: must_specify
-      burst_length: must_specify
-      port: must_specify
-      bus_width: must_specify
-      block_size: must_specify
-      ranks_per_channel: 2
-      banks_per_rank: 8
+      clockrate: must_specify
+      datawidth: must_specify
+      local_pred_entries: must_specify
+      local_pred_bits: must_specify
+      global_pred_entries: must_specify
+      global_pred_bits: must_specify
+      choice_pred_entries: must_specify
+      choice_pred_bits: must_specify
     actions:
-      - name: read_access
-      - name: write_access
-  - name: decode
-    attributes:
-      instr_buffer_size: must_specify
-      instr_width: must_specify
-      cycle_delay: must_specify
-    # need to add actions for gem5 from O3, as not in minorCPU
-    actions:
-      - name: filler
-  - name: fetch
-    attributes:
-      ports: 1
-    # need to add actions for gem5 from O3, as not in minorCPU
-    actions:
-      - name: filler
-  - name: tlb
-    attributes:
-      technology: must_specify
-      number_entries: must_specify
-    actions:
-      - name: read_access
-      - name: write_access
+      - name: access
+      - name: miss
