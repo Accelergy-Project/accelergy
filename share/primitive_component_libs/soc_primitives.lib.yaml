@@ -59,3 +59,13 @@ classes:
     actions:
       - name: access
       - name: miss
+
+  - name: cpu_regfile
+    attributes:
+      technology: must_specify
+      clockrate: must_specify
+      datawidth: must_specify
+      type: must_specify # int fp
+    actions:
+      - name: read
+      - name: write
