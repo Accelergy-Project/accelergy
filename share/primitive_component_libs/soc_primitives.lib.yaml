@@ -60,6 +60,19 @@ classes:
       - name: access
       - name: miss
 
+  - name: btb
+    attributes:
+      technology: must_specify
+      clockrate: must_specify
+      datawidth: must_specify
+      entries: must_specify
+      block_width: must_specify
+      associativity: must_specify
+      banks: must_specify
+    actions:
+      - name: read
+      - name: write
+
   - name: cpu_regfile
     attributes:
       technology: must_specify
@@ -79,3 +92,22 @@ classes:
     actions:
       - name: access
       - name: miss
+
+  - name: renaming_unit
+    attributes:
+      technology: must_specify
+      clockrate: must_specify
+      datawidth: must_specify
+    actions:
+      - name: read
+      - name: write
+
+  - name: reorder_buffer
+    attributes:
+      technology: must_specify
+      clockrate: must_specify
+      datawidth: must_specify
+      entries: must_specify
+    actions:
+      - name: read
+      - name: write
