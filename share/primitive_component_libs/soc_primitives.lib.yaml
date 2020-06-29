@@ -111,3 +111,14 @@ classes:
     actions:
       - name: read
       - name: write
+
+  - name: load_store_queue
+    attributes:
+      technology: must_specify
+      clockrate: must_specify
+      datawidth: must_specify
+      entries: must_specify
+      type: must_specify # load store
+    actions:
+      - name: access
+
