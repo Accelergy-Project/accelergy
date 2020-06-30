@@ -5,14 +5,14 @@ classes:
       technology: must_specify
       clockrate: must_specify
       datawidth: must_specify
-      cache_type: must_specify
+      cache_type: must_specify # icache dcache l2cache
       size: must_specify
       associativity: must_specify
       data_latency: must_specity
       block_size: must_specify
       mshr_size: must_specify
-      tag_size: must_specify
       write_buffer_size: must_specify
+      tag_size: must_specify
       n_rd_ports: 1
       n_wr_ports: 1
       n_rdwr_ports: 1
