@@ -31,6 +31,7 @@ classes:
       type: must_specify # fpu int_alu mul_alu
     actions:
       - name: instruction
+      - name: idle
 
   - name: xbar
     attributes:
