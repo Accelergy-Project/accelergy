@@ -124,7 +124,8 @@ classes:
       entries: must_specify
       type: must_specify # load store
     actions:
-      - name: access
+      - name: load
+      - name: store
 
   - name: fetch_buffer
     attributes:
@@ -134,3 +135,24 @@ classes:
       entries: must_specify
     actions:
       - name: access
+
+  - name: decoder
+    attributes:
+      technology: must_specify
+      clockrate: must_specify
+      datawidth: must_specify
+      width: must_specify
+    actions:
+      - name: access
+
+  - name: inst_queue
+    attributes:
+      technology: must_specify
+      clockrate: must_specify
+      datawidth: must_specify
+      type: must_specify # int fp
+      entries: must_specify
+    actions:
+      - name: read
+      - name: write
+      - name: wakeup
