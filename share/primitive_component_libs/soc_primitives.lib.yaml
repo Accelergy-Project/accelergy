@@ -126,3 +126,11 @@ classes:
     actions:
       - name: access
 
+  - name: fetch_buffer
+    attributes:
+      technology: must_specify
+      clockrate: must_specify
+      datawidth: must_specify
+      entries: must_specify
+    actions:
+      - name: access
