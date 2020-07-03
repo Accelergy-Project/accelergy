@@ -81,6 +81,7 @@ classes:
       clockrate: must_specify
       datawidth: must_specify
       type: must_specify # int fp
+      phys_size: must_specify
     actions:
       - name: read
       - name: write
