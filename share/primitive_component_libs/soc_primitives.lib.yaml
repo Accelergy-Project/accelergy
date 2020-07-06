@@ -60,7 +60,6 @@ classes:
     actions:
       - name: access
       - name: miss
-      - name: idle
 
   - name: btb
     attributes:
@@ -85,7 +84,6 @@ classes:
     actions:
       - name: read
       - name: write
-      - name: idle
 
   - name: tlb
     attributes:
@@ -102,6 +100,7 @@ classes:
       technology: must_specify
       clockrate: must_specify
       datawidth: must_specify
+      decode_width: must_specify
     actions:
       - name: read
       - name: write
