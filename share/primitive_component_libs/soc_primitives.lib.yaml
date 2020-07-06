@@ -5,6 +5,7 @@ classes:
       technology: must_specify
       clockrate: must_specify
       datawidth: must_specify
+      device_type: must_specity # hp lop lstp
       cache_type: must_specify # icache dcache l2cache
       size: must_specify
       associativity: must_specify
@@ -28,6 +29,7 @@ classes:
       technology: must_specify
       clockrate: must_specify
       datawidth: must_specify
+      device_type: must_specity # hp lop lstp
       type: must_specify # fpu int_alu mul_alu
     actions:
       - name: instruction
@@ -38,6 +40,7 @@ classes:
       technology: must_specify
       clockrate: must_specify
       datawidth: must_specify
+      device_type: must_specity # hp lop lstp
       horizontal_nodes: must_specify
       vertical_nodes: must_specify
       link_throughput: must_specity
@@ -51,6 +54,7 @@ classes:
       technology: must_specify
       clockrate: must_specify
       datawidth: must_specify
+      device_type: must_specity # hp lop lstp
       local_pred_entries: must_specify
       local_pred_bits: must_specify
       global_pred_entries: must_specify
@@ -66,6 +70,7 @@ classes:
       technology: must_specify
       clockrate: must_specify
       datawidth: must_specify
+      device_type: must_specity # hp lop lstp
       entries: must_specify
       block_width: must_specify
       associativity: must_specify
@@ -79,6 +84,7 @@ classes:
       technology: must_specify
       clockrate: must_specify
       datawidth: must_specify
+      device_type: must_specity # hp lop lstp
       type: must_specify # int fp
       phys_size: must_specify
     actions:
@@ -90,6 +96,7 @@ classes:
       technology: must_specify
       clockrate: must_specify
       datawidth: must_specify
+      device_type: must_specity # hp lop lstp
       entries: must_specify
     actions:
       - name: access
@@ -100,6 +107,7 @@ classes:
       technology: must_specify
       clockrate: must_specify
       datawidth: must_specify
+      device_type: must_specity # hp lop lstp
       decode_width: must_specify
     actions:
       - name: read
@@ -111,6 +119,7 @@ classes:
       technology: must_specify
       clockrate: must_specify
       datawidth: must_specify
+      device_type: must_specity # hp lop lstp
       entries: must_specify
     actions:
       - name: read
@@ -121,6 +130,7 @@ classes:
       technology: must_specify
       clockrate: must_specify
       datawidth: must_specify
+      device_type: must_specity # hp lop lstp
       entries: must_specify
       type: must_specify # load store
     actions:
@@ -132,6 +142,7 @@ classes:
       technology: must_specify
       clockrate: must_specify
       datawidth: must_specify
+      device_type: must_specity # hp lop lstp
       entries: must_specify
     actions:
       - name: access
@@ -141,6 +152,7 @@ classes:
       technology: must_specify
       clockrate: must_specify
       datawidth: must_specify
+      device_type: must_specity # hp lop lstp
       width: must_specify
     actions:
       - name: access
@@ -150,6 +162,7 @@ classes:
       technology: must_specify
       clockrate: must_specify
       datawidth: must_specify
+      device_type: must_specity # hp lop lstp
       type: must_specify # int fp
       entries: must_specify
     actions:
