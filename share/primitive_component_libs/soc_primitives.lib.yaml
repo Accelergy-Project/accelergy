@@ -87,6 +87,7 @@ classes:
       device_type: must_specity # hp lop lstp
       type: must_specify # int fp
       phys_size: must_specify
+      issue_width: must_specify
     actions:
       - name: read
       - name: write
@@ -109,6 +110,9 @@ classes:
       datawidth: must_specify
       device_type: must_specity # hp lop lstp
       decode_width: must_specify
+      commit_width: must_specify
+      phys_irf_size: must_specify
+      phys_frf_size: must_specify
     actions:
       - name: read
       - name: write
@@ -133,6 +137,7 @@ classes:
       device_type: must_specity # hp lop lstp
       entries: must_specify
       type: must_specify # load store
+      ports: must_specify
     actions:
       - name: load
       - name: store
