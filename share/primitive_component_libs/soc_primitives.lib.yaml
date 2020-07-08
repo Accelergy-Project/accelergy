@@ -170,6 +170,7 @@ classes:
       device_type: must_specity # hp lop lstp
       type: must_specify # int fp
       entries: must_specify
+      issue_width: must_specify
     actions:
       - name: read
       - name: write
