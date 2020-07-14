@@ -19,9 +19,9 @@ classes:
       n_rdwr_ports: 1
       n_banks: 1
     actions:
-      - name: read_access
+      - name: read_hit
       - name: read_miss
-      - name: write_access
+      - name: write_hit
       - name: write_miss
 
   - name: func_unit
@@ -32,7 +32,7 @@ classes:
       device_type: must_specity # hp lop lstp
       type: must_specify # fpu int_alu mul_alu
     actions:
-      - name: instruction
+      - name: access
       - name: idle
 
   - name: xbar
@@ -62,7 +62,7 @@ classes:
       choice_pred_entries: must_specify
       choice_pred_bits: must_specify
     actions:
-      - name: access
+      - name: hit
       - name: miss
 
   - name: btb
@@ -100,7 +100,7 @@ classes:
       device_type: must_specity # hp lop lstp
       entries: must_specify
     actions:
-      - name: access
+      - name: hit
       - name: miss
 
   - name: renaming_unit
@@ -116,7 +116,6 @@ classes:
     actions:
       - name: read
       - name: write
-      - name: idle
 
   - name: reorder_buffer
     attributes:
