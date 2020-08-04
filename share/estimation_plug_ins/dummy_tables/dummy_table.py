@@ -49,6 +49,9 @@ class DummyTable(object):
         """
         if interface['action_name'] == 'idle':
             return 0 # dummy returns 0 for all idle actions
+        if interface["class_name"] == "SRAM" and interface["attributes"]["depth"] == 0:
+            return 0 # zero depth SRAM has zero energy
+
         return 1 # dummy returns 1 for all non-idle actions
 
     def primitive_area_supported(self, interface):
@@ -81,4 +84,6 @@ class DummyTable(object):
         :rtype: float
 
         """
+        if interface["class_name"] == "SRAM" and interface["attributes"]["depth"] == 0:
+            return 0 # zero depth SRAM has zero area
         return 1 # dummy returns 1 for all areas

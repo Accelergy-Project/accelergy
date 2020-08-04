@@ -33,6 +33,7 @@ class EnergyCalculator:
 
     def calculate_energy_estimates(self):
         energy_estimates = {}
+        total_design_energy = 0
         for component_name, action_counts_obj_list in self.action_counts.get_action_counts().items():
             component_energy = 0
             ERT_entry_obj = self.ERT.get_ERT_entry(component_name)
@@ -40,12 +41,14 @@ class EnergyCalculator:
                 energy_per_action = ERT_entry_obj.get_action_energy(action_count_obj)
                 component_energy = component_energy + energy_per_action * action_count_obj.get_action_count()
             energy_estimates[component_name] = component_energy
-        self.energy_estimates = EnergyEstimates(energy_estimates, self.parser_version)
+            total_design_energy += component_energy
+        self.energy_estimates = EnergyEstimates(energy_estimates, total_design_energy, self.parser_version)
 
 class EnergyEstimates:
-    def __init__(self, estimates_dict, parser_version):
+    def __init__(self, estimates_dict, total_design_energy, parser_version):
         self.energy_estimates_dict = estimates_dict
         self.parser_version = parser_version
+        self.total_design_energy = total_design_energy
 
     def get_energy_estimation(self, component_name):
         if component_name not in self.energy_estimates_dict:
@@ -56,6 +59,6 @@ class EnergyEstimates:
         energy_estimate_list = []
         for component_name, component_energy in self.energy_estimates_dict.items():
             energy_estimate_list.append(OrderedDict({'name': component_name, 'energy': component_energy}))
-        estimate_dict = {'energy_estimation':OrderedDict({'version': self.parser_version, 'components': energy_estimate_list})}
+        estimate_dict = {'energy_estimation':OrderedDict({'version': self.parser_version, 'components': energy_estimate_list, 'Total': self.total_design_energy})}
         return estimate_dict
 
