@@ -1,0 +1,176 @@
+version: 0.3
+classes:
+  - name: cache
+    attributes:
+      technology: must_specify
+      clockrate: must_specify
+      datawidth: must_specify
+      device_type: must_specity # hp lop lstp
+      cache_type: must_specify # icache dcache l2cache
+      size: must_specify
+      associativity: must_specify
+      data_latency: must_specity
+      block_size: must_specify
+      mshr_size: must_specify
+      write_buffer_size: must_specify
+      tag_size: must_specify
+      n_rd_ports: 1
+      n_wr_ports: 1
+      n_rdwr_ports: 1
+      n_banks: 1
+    actions:
+      - name: read_hit
+      - name: read_miss
+      - name: write_hit
+      - name: write_miss
+
+  - name: func_unit
+    attributes:
+      technology: must_specify
+      clockrate: must_specify
+      datawidth: must_specify
+      device_type: must_specity # hp lop lstp
+      type: must_specify # fpu int_alu mul_alu
+    actions:
+      - name: access
+      - name: idle
+
+  - name: xbar
+    attributes:
+      technology: must_specify
+      clockrate: must_specify
+      datawidth: must_specify
+      device_type: must_specity # hp lop lstp
+      horizontal_nodes: must_specify
+      vertical_nodes: must_specify
+      link_throughput: must_specity
+      link_latency: must_specify
+      flit_bytes: must_specify
+    actions:
+      - name: access
+
+  - name: tournament_bp
+    attributes:
+      technology: must_specify
+      clockrate: must_specify
+      datawidth: must_specify
+      device_type: must_specity # hp lop lstp
+      local_pred_entries: must_specify
+      local_pred_bits: must_specify
+      global_pred_entries: must_specify
+      global_pred_bits: must_specify
+      choice_pred_entries: must_specify
+      choice_pred_bits: must_specify
+    actions:
+      - name: hit
+      - name: miss
+
+  - name: btb
+    attributes:
+      technology: must_specify
+      clockrate: must_specify
+      datawidth: must_specify
+      device_type: must_specity # hp lop lstp
+      entries: must_specify
+      block_width: must_specify
+      associativity: must_specify
+      banks: must_specify
+    actions:
+      - name: read
+      - name: write
+
+  - name: cpu_regfile
+    attributes:
+      technology: must_specify
+      clockrate: must_specify
+      datawidth: must_specify
+      device_type: must_specity # hp lop lstp
+      type: must_specify # int fp
+      phys_size: must_specify
+      issue_width: must_specify
+    actions:
+      - name: read
+      - name: write
+
+  - name: tlb
+    attributes:
+      technology: must_specify
+      clockrate: must_specify
+      datawidth: must_specify
+      device_type: must_specity # hp lop lstp
+      entries: must_specify
+    actions:
+      - name: hit
+      - name: miss
+
+  - name: renaming_unit
+    attributes:
+      technology: must_specify
+      clockrate: must_specify
+      datawidth: must_specify
+      device_type: must_specity # hp lop lstp
+      decode_width: must_specify
+      commit_width: must_specify
+      phys_irf_size: must_specify
+      phys_frf_size: must_specify
+    actions:
+      - name: read
+      - name: write
+
+  - name: reorder_buffer
+    attributes:
+      technology: must_specify
+      clockrate: must_specify
+      datawidth: must_specify
+      device_type: must_specity # hp lop lstp
+      entries: must_specify
+    actions:
+      - name: read
+      - name: write
+
+  - name: load_store_queue
+    attributes:
+      technology: must_specify
+      clockrate: must_specify
+      datawidth: must_specify
+      device_type: must_specity # hp lop lstp
+      entries: must_specify
+      type: must_specify # load store
+      ports: must_specify
+    actions:
+      - name: load
+      - name: store
+
+  - name: fetch_buffer
+    attributes:
+      technology: must_specify
+      clockrate: must_specify
+      datawidth: must_specify
+      device_type: must_specity # hp lop lstp
+      entries: must_specify
+    actions:
+      - name: access
+
+  - name: decoder
+    attributes:
+      technology: must_specify
+      clockrate: must_specify
+      datawidth: must_specify
+      device_type: must_specity # hp lop lstp
+      width: must_specify
+    actions:
+      - name: access
+
+  - name: inst_queue
+    attributes:
+      technology: must_specify
+      clockrate: must_specify
+      datawidth: must_specify
+      device_type: must_specity # hp lop lstp
+      type: must_specify # int fp
+      entries: must_specify
+      issue_width: must_specify
+    actions:
+      - name: read
+      - name: write
+      - name: wakeup
