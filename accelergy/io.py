@@ -36,7 +36,7 @@ def parse_commandline_args():
                         help = 'Path to output directory that stores '
                                'the ERT and/or flattened_architecture and/or energy estimation. '
                                'Default is current directory.')
-    parser.add_argument('-p', '--precision', type=int, default='3',
+    parser.add_argument('-p', '--precision', type=int, default='5',
                         help= 'Number of decimal points for generated energy values. '
                               'Default is 3.')
     parser.add_argument('-v', '--verbose', type=int, default = 0,
