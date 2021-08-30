@@ -50,6 +50,10 @@ class RawInputs2Dicts():
 
     def load_and_construct_dicts(self):
         # load and classify input files
+
+        # construct new or parse existing config file
+        self.construct_parse_config_file()
+
         input_file_info = {}
         for path in self.path_arglist:
             if os.path.isfile(path):
@@ -90,8 +94,6 @@ class RawInputs2Dicts():
                     INFO('Parsing file %s for %s info' % (file_path, top_key))
                     getattr(self, YAML_parser_fname)(file_info)
 
-        # construct new or parse existing config file
-        self.construct_parse_config_file()
 
         # construct primitive classes dictionary
         self.primitive_classes_input_parser()
@@ -255,6 +257,7 @@ class RawInputs2Dicts():
         """responsible for parsing the loaded compound component description YAML files """
 
         top_key = 'compound_components'
+
         file_path = file_info['path']
         file_reload = load(open(file_path), accelergy_loader_ordered)
         content = file_reload
@@ -327,9 +330,12 @@ class RawInputs2Dicts():
         accelergy_share_folder_path = os.path.abspath(curr_file_path + '../../../../../../share/accelergy/')
         default_estimator_path = os.path.abspath(accelergy_share_folder_path + '/estimation_plug_ins/')
         default_pc_lib_path = os.path.abspath(accelergy_share_folder_path + '/primitive_component_libs/')
+        
         config_file_content = {'version': self.parser_version,
                                'estimator_plug_ins': [default_estimator_path],
-                               'primitive_components': [default_pc_lib_path]}
+                               'primitive_components': [default_pc_lib_path],
+                               'compound_components': []}  # by default, CCs are always input files
+
         INFO('Accelergy creating default config at:', possible_config_dirs[1] + config_file_name, 'with:\n',
              config_file_content)
         write_yaml_file(config_file_path, config_file_content)
@@ -349,6 +355,7 @@ class RawInputs2Dicts():
 
         ASSERT_MSG(not len(self.pc_classes_dict) == 0, 'No primitive component class found, '
                                                        'please check if the paths in config file are correct')
+
 
     def expand_primitive_component_lib_info(self, pc_path):
         primitive_component_list_obj = open(pc_path)
