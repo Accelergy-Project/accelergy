@@ -53,10 +53,17 @@ class RawInputs2Dicts():
 
         # construct new or parse existing config file
         self.construct_parse_config_file()
-
+        
+        # merge all paths (input + compound compondnt lib)
+        all_paths = self.path_arglist
+        for cc_lib_path in self.config["compound_components"]:
+            all_paths.append(cc_lib_path)
+        print(all_paths)
+        
+        # go through each path in the merged list
         input_file_info = {}
-        for path in self.path_arglist:
-            if os.path.isfile(path):
+        for path in all_paths:
+            if os.path.isfile(path) and path.split('.')[-1] == "yaml":
                 loaded_content_list = self.load_file(path)
                 for loaded_content in loaded_content_list:
                     if loaded_content['top_key'] not in input_file_info:
@@ -65,12 +72,13 @@ class RawInputs2Dicts():
             elif os.path.isdir(path):
                 for root, directories, file_names in os.walk(path):
                     for file_name in file_names:
-                        file_path = os.path.join(root, file_name)
-                        loaded_content_list = self.load_file(file_path)
-                        for loaded_content in loaded_content_list:
-                            if loaded_content['top_key'] not in input_file_info:
-                                input_file_info[loaded_content['top_key']] = []
-                            input_file_info[loaded_content['top_key']].append(loaded_content)
+                        if file_name.split('.')[-1] == "yaml":
+                            file_path = os.path.join(root, file_name)
+                            loaded_content_list = self.load_file(file_path)
+                            for loaded_content in loaded_content_list:
+                                if loaded_content['top_key'] not in input_file_info:
+                                    input_file_info[loaded_content['top_key']] = []
+                                input_file_info[loaded_content['top_key']].append(loaded_content)
             else:
                 ERROR_CLEAN_EXIT('Cannot recognize input path: ', path)
 
