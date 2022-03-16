@@ -88,9 +88,12 @@ class RawInputs2Dicts():
                         if var_var in variable_spec['content']['variables']:
                             variable_spec['content']['variables'][var_name] = variable_spec['content']['variables'][var_var]
                         else:
-                            op_type, op1, op2 = parse_expression_for_arithmetic(var_var, variable_spec['content']['variables'])
-                            if op_type is not None:
-                                variable_spec['content']['variables'][var_name] = process_arithmetic(op1, op2, op_type)
+                            v = parse_expression_for_arithmetic(var_var, variable_spec['content']['variables'])
+                            if not isinstance(v, str):
+                                variable_spec['content']['variables'][var_name] = v
+                            else:
+                                print(f'ERROR: {var_var} is not a valid expression. Not setting "variables" attribute in {variable_spec}')
+
                 self.arch_variables.update(variable_spec['content']['variables'])
 
         for top_key, top_key_file_list in input_file_info.items():
@@ -178,10 +181,12 @@ class RawInputs2Dicts():
                     node_attrs[attr_name] = all_attrs[attr_val]
                     all_attrs[attr_name] = all_attrs[attr_val]
                 else:
-                    op_type, op1, op2 = parse_expression_for_arithmetic(attr_val, all_attrs)
-                    if op_type is not None:
-                        node_attrs[attr_name] = process_arithmetic(op1, op2, op_type)
+                    v = parse_expression_for_arithmetic(attr_val, all_attrs)
+                    if not isinstance(v, str):
+                        node_attrs[attr_name] = vars
                         all_attrs[attr_name] = node_attrs[attr_name]
+                    else:
+                        print(f'ERROR: {attr_val} is not a valid expression. Not setting "{attr_name}" attribute in {node_attrs}')
 
         if 'subtree' in node_description:
             ASSERT_MSG(isinstance(node_description['subtree'], list), " %s.subtree has to be a list"%(prefix))
@@ -210,10 +215,12 @@ class RawInputs2Dicts():
                             node_info['attributes'][attr_name] = all_attrs[attr_val]
                             all_attrs[attr_name] = all_attrs[attr_val]
                         else:
-                            op_type, op1, op2 = parse_expression_for_arithmetic(attr_val, all_attrs)
-                            if op_type is not None and type(op1) is not str and type(op2) is not str:
-                                node_info['attributes'][attr_name] = process_arithmetic(op1, op2, op_type)
+                            v = parse_expression_for_arithmetic(attr_val, all_attrs)
+                            if not isinstance(v, str):
+                                node_info['attributes'][attr_name] = v
                                 all_attrs[attr_name] = node_info['attributes'][attr_name]
+                            else:
+                                print(f'ERROR: {attr_val} is not a valid expression. Not setting "{attr_name}" attribute in {node_info}')
                 name_base, list_suffix, list_length = interpret_component_list(node_info['name'], all_attrs)
                 if list_suffix is not None:
                     node_info['name'] = name_base + list_suffix
