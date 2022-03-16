@@ -20,7 +20,26 @@
 
 import math
 from accelergy.utils import *
+from numbers import Number
 
+MATH_FUNCS = {
+    'ceil': math.ceil, 'comb': math.comb, 'copysign': math.copysign, 'fabs': math.fabs,
+    'factorial': math.factorial, 'floor': math.floor, 'fmod': math.fmod, 'frexp': math.frexp,
+    'fsum': math.fsum, 'gcd': math.gcd, 'isclose': math.isclose, 'isfinite': math.isfinite,
+    'isinf': math.isinf, 'isnan': math.isnan, 'isqrt': math.isqrt, 'ldexp': math.ldexp,
+    'modf': math.modf, 'perm': math.perm, 'prod': math.prod, 'remainder': math.remainder,
+    'trunc': math.trunc, 'exp': math.exp, 'expm1': math.expm1, 'log': math.log,
+    'log1p': math.log1p, 'log2': math.log2, 'log10': math.log10, 'pow': math.pow, 'sqrt': math.sqrt,
+    'acos': math.acos, 'asin': math.asin, 'atan': math.atan, 'atan2': math.atan2,
+    'cos': math.cos, 'dist': math.dist, 'hypot': math.hypot, 'sin': math.sin,
+    'tan': math.tan, 'degrees': math.degrees, 'radians': math.radians, 'acosh': math.acosh,
+    'asinh': math.asinh, 'atanh': math.atanh, 'cosh': math.cosh, 'sinh': math.sinh,
+    'tanh': math.tanh, 'erf': math.erf, 'erfc': math.erfc, 'gamma': math.gamma,
+    'lgamma': math.lgamma, 'pi': math.pi, 'e': math.e, 'tau': math.tau,
+    'inf': math.inf, 'nan': math.nan, 'abs': abs, 'round': round, 'pow': pow, 'sum': sum, 
+    'range': range, 'len': len, 'min': min, 'max': max
+}
+EXPR_CACHE = {}
 
 def interpret_component_list(name, binding_dictionary = None):
     """
@@ -51,118 +70,48 @@ def interpret_component_list(name, binding_dictionary = None):
 
 def str_to_int(str_to_be_parsed, binding_dictionary):
     """parses the string indexes to integers"""
-    optype, op1, op2 = parse_expression_for_arithmetic(str_to_be_parsed, binding_dictionary)
-    if optype is None:
+    v = parse_expression_for_arithmetic(str_to_be_parsed, binding_dictionary)
+    if isinstance(v, Number):
+        parsed_int = int(v)
+    else:
         if binding_dictionary is None:
             parsed_int = int(str_to_be_parsed)
         else:
             parsed_int = binding_dictionary[str_to_be_parsed] if str_to_be_parsed in binding_dictionary \
                                                           else int(str_to_be_parsed)
-    else:
-        parsed_int = int(process_arithmetic(op1, op2, optype))
+
 
     return parsed_int
 
-def parse_expression_for_arithmetic(expression, binding_dictionary):
+def parse_expression_for_arithmetic(expression, binding_dictionary, force_convert_numeric_on_fail=False):
     """
     Expression contains the operands and the op type,
     binding dictionary contains the numerical values of the operands (if they are strings)
     """
-    # parse for the supported arithmetic operations
-    if '*' in expression:
-        op_type = '*'
-    elif 'round' in expression and '/' in expression:
-        op_type = 'round'
-    elif 'round_up' in expression and '/' in expression:
-        op_type = 'round_up'
-    elif '/' in expression:
-        op_type = '/'
-    elif '//' in expression:
-        op_type = '//'
-    elif '%' in expression:
-        op_type = '%'
-    elif '+' in expression:
-        op_type = '+'
-    elif '-' in expression:
-        op_type = '-'
-    elif 'log2(' and ')' in expression:
-        op_type = 'log2'
-    else:
-        op_type = None
-
-    # if the expression is an arithmetic operation
-    if op_type is not None:
-
-        if op_type == 'round':
-            oprands = expression[5:]
-            op1 = oprands.split('/')[0][1:]
-            op2 = oprands.split('/')[1][:-1]
-        elif op_type == 'round_up':
-            oprands = expression[8:]
-            op1 = oprands.split('/')[0][1:]
-            op2 = oprands.split('/')[1][:-1]
-        elif not op_type == 'log2':
-            op1 = expression[:expression.find(op_type)].strip()
-            op2 = expression[expression.find(op_type) + 1:].strip()
-
-        # log2 only needs one operand, and needs to be processed differently
+    try:
+        try:
+            if float(expression) == int(expression):
+                return int(expression)
+            return float(expression)
+        except:
+            pass
+        MATH_FUNCS['__builtins__'] = None # Safety
+        v = eval(expression, MATH_FUNCS, binding_dictionary)
+        if float(v) == int(v):
+            v = int(v)
+        infostr = f'Calculated "{expression}" = {v}'
+    except:
+        v = expression
+        if force_convert_numeric_on_fail:
+            v = int(''.join(filter(str.isdigit, expression)))
+            infostr = f'Calculated "{expression}" = {v}'
         else:
-            op1 = expression[expression.find('(') + 1: expression.find(')')].strip()
-            op2 = None
+            infostr = f'Found non-numeric expression {expression}. Available bindings: {binding_dictionary}'
 
-        if op1 in binding_dictionary:
-            op1 = binding_dictionary[op1]
-        else:
-            try:
-                op1 = int(op1)
-            except ValueError:
-                print('arithmetic expression:', expression, '\n',
-                      'available operand-value binding:', binding_dictionary)
-                ERROR_CLEAN_EXIT('arithmetic operation located, but cannot parse operand value')
-
-        # if the operation needs 2 operands
-        if op2 is not None:
-            if op2 in binding_dictionary:
-                op2 = binding_dictionary[op2]
-            else:
-                try:
-                    op2 = int(op2)
-                except ValueError:
-                    print('arithmetic expression:', expression, '\n',
-                          'available operand-value binding:', binding_dictionary)
-                    ERROR_CLEAN_EXIT('arithmetic operation located, but cannot parse operand value')
-    # if the expression is not an arithmetic operation
-    else:
-        op1 = None
-        op2 = None
-    return op_type, op1, op2
-
-def process_arithmetic(op1, op2, op_type):
-    """ Turns string expression into arithmetic operation"""
-    ASSERT_MSG(type(op1) is not str and type(op2) is not str, 'operands have strings %s, %s'%(op1, op2))
-    if op_type == '*':
-        result = op1 * op2
-    elif op_type == '/':
-        result = op1/op2
-    elif op_type == '//':
-        result = op1//op2
-    elif op_type == '%':
-        result = math.remainder(op1, op2)
-    elif op_type == '-':
-        result = int(op1 -op2)
-    elif op_type == '+':
-        result = int(op1 + op2)
-    elif op_type == 'log2':
-        result = int(math.ceil(math.log2(op1)))
-    elif op_type == 'round':
-        result = int(round(op1/op2, 0)) # round according to the first decimal
-    elif op_type == 'round_up':
-        result = int(math.ceil(op1/op2))
-    else:
-        result = None
-        ERROR_CLEAN_EXIT('wrong op_type')
-    return result
-
+    if expression not in EXPR_CACHE or EXPR_CACHE[expression] != v:
+        INFO(infostr)
+    EXPR_CACHE[expression] = v
+    return v
 
 def remove_brackets(name):
     """Removes the brackets from a component name in a list"""
