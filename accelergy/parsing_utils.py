@@ -79,8 +79,6 @@ def str_to_int(str_to_be_parsed, binding_dictionary):
         else:
             parsed_int = binding_dictionary[str_to_be_parsed] if str_to_be_parsed in binding_dictionary \
                                                           else int(str_to_be_parsed)
-
-
     return parsed_int
 
 def parse_expression_for_arithmetic(expression, binding_dictionary, force_convert_numeric_on_fail=False):
@@ -112,17 +110,6 @@ def parse_expression_for_arithmetic(expression, binding_dictionary, force_conver
         INFO(infostr)
     EXPR_CACHE[expression] = v
     return v
-
-def remove_brackets(name):
-    """Removes the brackets from a component name in a list"""
-    if '[' not in name and ']' not in name:
-        return name
-    if '[' in name and ']' in name:
-        start_idx = name.find('[')
-        end_idx = name.find(']')
-        name = name[:start_idx] + name[end_idx + 1:]
-        name = remove_brackets(name)
-        return name
 
 def count_num_identical_comps(name):
     total_num_identical_comps = 1
