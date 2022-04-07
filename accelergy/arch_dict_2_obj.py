@@ -18,10 +18,10 @@ def fully_define_arch_dict(arch_dict, cc_classes, pc_classes):
                 if attr_val in cinfo['attributes']:
                     cinfo['attributes'][attr_name] = cinfo['attributes'][attr_val]
                 v = parse_expression_for_arithmetic(attr_val, cinfo['attributes'])
-                if not isinstance(v, str): 
-                    cinfo['attributes'][attr_name] = v
-                else:
-                    print(f'ERROR: {attr_val} is not a valid expression. Not setting "{attr_name}" attribute in {cinfo["attributes"]}')
+                if isinstance(v, str):
+                    arithmetic_failed_evaluate_warn(attr_val, attr_name, cname, cinfo['attributes'])
+                cinfo['attributes'][attr_name] = v
+
     return arch_dict
 
 class Architecture(object):

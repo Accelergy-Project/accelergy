@@ -89,10 +89,9 @@ class RawInputs2Dicts():
                             variable_spec['content']['variables'][var_name] = variable_spec['content']['variables'][var_var]
                         else:
                             v = parse_expression_for_arithmetic(var_var, variable_spec['content']['variables'])
-                            if not isinstance(v, str):
-                                variable_spec['content']['variables'][var_name] = v
-                            else:
-                                print(f'ERROR: {var_var} is not a valid expression. Not setting "variables" attribute in {variable_spec}')
+                            if isinstance(v, str):
+                                arithmetic_failed_evaluate_warn(var_var, var_name, 'variables', variable_spec['content']['variables'])
+                            variable_spec['content']['variables'][var_name] = v
 
                 self.arch_variables.update(variable_spec['content']['variables'])
 
@@ -182,11 +181,10 @@ class RawInputs2Dicts():
                     all_attrs[attr_name] = all_attrs[attr_val]
                 else:
                     v = parse_expression_for_arithmetic(attr_val, all_attrs)
-                    if not isinstance(v, str):
-                        node_attrs[attr_name] = vars
-                        all_attrs[attr_name] = node_attrs[attr_name]
-                    else:
-                        print(f'ERROR: {attr_val} is not a valid expression. Not setting "{attr_name}" attribute in {node_attrs}')
+                    if isinstance(v, str):
+                        arithmetic_failed_evaluate_warn(attr_val, attr_name, prefix, node_attrs)
+                    node_attrs[attr_name] = v
+                    all_attrs[attr_name] = node_attrs[attr_name]
 
         if 'subtree' in node_description:
             ASSERT_MSG(isinstance(node_description['subtree'], list), " %s.subtree has to be a list"%(prefix))
@@ -216,11 +214,12 @@ class RawInputs2Dicts():
                             all_attrs[attr_name] = all_attrs[attr_val]
                         else:
                             v = parse_expression_for_arithmetic(attr_val, all_attrs)
-                            if not isinstance(v, str):
-                                node_info['attributes'][attr_name] = v
-                                all_attrs[attr_name] = node_info['attributes'][attr_name]
-                            else:
-                                print(f'ERROR: {attr_val} is not a valid expression. Not setting "{attr_name}" attribute in {node_info}')
+                            if isinstance(v, str):
+                                arithmetic_failed_evaluate_warn(attr_val, attr_name, 'variables', node_info)
+                            node_info['attributes'][attr_name] = v
+                            all_attrs[attr_name] = node_info['attributes'][attr_name]
+
+
                 name_base, list_suffix, list_length = interpret_component_list(node_info['name'], all_attrs)
                 if list_suffix is not None:
                     node_info['name'] = name_base + list_suffix

@@ -40,6 +40,7 @@ MATH_FUNCS = {
     'range': range, 'len': len, 'min': min, 'max': max
 }
 EXPR_CACHE = {}
+WARNINGS_LOGGED = []
 
 def interpret_component_list(name, binding_dictionary = None):
     """
@@ -80,6 +81,16 @@ def str_to_int(str_to_be_parsed, binding_dictionary):
             parsed_int = binding_dictionary[str_to_be_parsed] if str_to_be_parsed in binding_dictionary \
                                                           else int(str_to_be_parsed)
     return parsed_int
+
+def arithmetic_failed_evaluate_warn(expr, setting, name, binding_dictionary, error=False):
+    if (expr, setting) in WARNINGS_LOGGED:
+        return
+
+    warnstring = f'Failed to evaluate "{expr}". Setting {name}.{setting}="{expr}". Available bindings: {binding_dictionary}'
+    warnstring = 'WARN: ' + warnstring if not error else 'ERROR: ' + warnstring
+
+    print(warnstring)
+    WARNINGS_LOGGED.append((expr, setting))
 
 def parse_expression_for_arithmetic(expression, binding_dictionary, force_convert_numeric_on_fail=False):
     """
