@@ -227,10 +227,9 @@ class CompoundComponent:
                     subcomponent.add_new_attr({attr_name: compound_attributes[attr_val]})
                 else:
                     v = parse_expression_for_arithmetic(attr_val, compound_attributes)
-                    if not isinstance(v, str):
-                        subcomponent.add_new_attr({attr_name: v})
-                    else:
-                        print(f'ERROR: {attr_val} is not a valid expression. Not setting "{attr_name}" attribute in {subcomponent.get_attributes()}')
+                    subcomponent.add_new_attr({attr_name: v})
+                    if isinstance(v, str):
+                        arithmetic_failed_evaluate_warn(attr_val, attr_name, subcomponent.get_name(), compound_attributes)
                         
         attrs_to_be_applied = subclass.get_default_attr_to_apply(subcomponent.get_attributes())
         subcomponent.add_new_attr(attrs_to_be_applied)
@@ -256,10 +255,9 @@ class CompoundComponent:
                     component.add_new_attr({attr_name: component.get_attributes()[attr_val]})
                 else:
                     v = parse_expression_for_arithmetic(attr_val, component.get_attributes())
-                    if not isinstance(v, str):
-                        component.add_new_attr({attr_name:v})
-                    else:
-                        print(f'ERROR: {attr_val} is not a valid expression. Not setting "{attr_name}" attribute in {component.get_attributes()}')
+                    component.add_new_attr({attr_name:v})
+                    if isinstance(v, str):
+                        arithmetic_failed_evaluate_warn(attr_val, attr_name, component.get_name(), component.get_attributes())
 
     def construct_name_base_name_map(self):
         self.subcomponent_base_name_map = {}
