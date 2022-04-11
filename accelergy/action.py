@@ -1,6 +1,5 @@
 from copy import deepcopy
 
-from numpy import isin
 from accelergy.utils import *
 from accelergy.parsing_utils import *
 
