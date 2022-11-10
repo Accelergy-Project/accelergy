@@ -56,8 +56,11 @@ class RawInputs2Dicts():
         
         # merge all paths (input + compound compondnt lib)
         all_paths = self.path_arglist
-        for cc_lib_path in self.config["compound_components"]:
-            all_paths.append(cc_lib_path)
+        if "compound_components" in self.config:
+            for cc_lib_path in self.config["compound_components"]:
+                all_paths.append(cc_lib_path)
+        else:
+            WARN("No default paths for compound components specified in config")
         
         # go through each path in the merged list
         input_file_info = {}
