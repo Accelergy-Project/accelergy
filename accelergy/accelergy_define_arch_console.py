@@ -18,7 +18,6 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-
 from accelergy.raw_inputs_2_dicts import RawInputs2Dicts
 from accelergy.system_state import SystemState
 from accelergy.io import parse_commandline_args, generate_output_files

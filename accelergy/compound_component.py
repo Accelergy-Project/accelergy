@@ -157,9 +157,9 @@ class CompoundComponent:
                         try:
                             subaction.set_argument({subarg_name: aggregated_dict[subarg_val]})
                         except KeyError:
-                            op_type, op1, op2 = parse_expression_for_arithmetic(subarg_val, aggregated_dict)
-                            if op_type is not None:
-                                subaction.set_argument({subarg_name: process_arithmetic(op1, op2, op_type)})
+                            v = parse_expression_for_arithmetic(subarg_val, aggregated_dict)
+                            if not isinstance(v, str):
+                                subaction.set_argument({subarg_name: v})
                             else:
                                 print('available compound arguments and attributes: ', aggregated_dict)
                                 print('primitive argument to for binding:', subarg_val)
@@ -182,9 +182,9 @@ class CompoundComponent:
         action_share = action.get_action_share()
         if action_share is not None:
             if type(action_share) is not int:
-                op_type, op1, op2 = parse_expression_for_arithmetic(action_share, upper_level_binding)
-                if op_type is not None:
-                    parsed_action_share = process_arithmetic(op1, op2, op_type)
+                v = parse_expression_for_arithmetic(action_share, upper_level_binding)
+                if not isinstance(v, str):
+                    parsed_action_share = v
                 else:
                     if action_share in upper_level_binding:
                        parsed_action_share = upper_level_binding[action_share]
@@ -226,17 +226,19 @@ class CompoundComponent:
                 if attr_val in compound_attributes:
                     subcomponent.add_new_attr({attr_name: compound_attributes[attr_val]})
                 else:
-                    op_type, op1, op2 = parse_expression_for_arithmetic(attr_val, compound_attributes)
-                    if op_type is not None:
-                        subcomponent.add_new_attr({attr_name: process_arithmetic(op1, op2, op_type)})
+                    v = parse_expression_for_arithmetic(attr_val, compound_attributes)
+                    subcomponent.add_new_attr({attr_name: v})
+                    if isinstance(v, str):
+                        arithmetic_failed_evaluate_warn(attr_val, attr_name, subcomponent.get_name(), compound_attributes)
+                        
         attrs_to_be_applied = subclass.get_default_attr_to_apply(subcomponent.get_attributes())
         subcomponent.add_new_attr(attrs_to_be_applied)
         CompoundComponent.apply_internal_bindings(subcomponent)
         if type(subcomponent.get_area_share()) is str:
             combined_attributes = merge_dicts(compound_attributes, subcomponent.get_attributes())
-            op_type, op1, op2 = parse_expression_for_arithmetic(subcomponent.get_area_share(), combined_attributes)
-            if op_type is not None:
-                subcomponent.set_area_share(process_arithmetic(op1,op2, op_type))
+            v = parse_expression_for_arithmetic(subcomponent.get_area_share(), combined_attributes)
+            if not isinstance(v, str):
+                subcomponent.set_area_share(v)
             else:
                 ASSERT_MSG(subcomponent.get_area_share() in combined_attributes,
                            'Unable to interpret the area share for subcomponent: %s' %(subcomponent.get_name()))
@@ -252,8 +254,10 @@ class CompoundComponent:
                 if attr_val in component.get_attributes():
                     component.add_new_attr({attr_name: component.get_attributes()[attr_val]})
                 else:
-                    op_type, op1, op2  = parse_expression_for_arithmetic(attr_val, component.get_attributes())
-                    if op_type is not None: component.add_new_attr({attr_name:process_arithmetic(op1, op2, op_type)})
+                    v = parse_expression_for_arithmetic(attr_val, component.get_attributes())
+                    component.add_new_attr({attr_name:v})
+                    if isinstance(v, str):
+                        arithmetic_failed_evaluate_warn(attr_val, attr_name, component.get_name(), component.get_attributes())
 
     def construct_name_base_name_map(self):
         self.subcomponent_base_name_map = {}

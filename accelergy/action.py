@@ -1,4 +1,5 @@
 from copy import deepcopy
+
 from accelergy.utils import *
 from accelergy.parsing_utils import *
 
@@ -175,11 +176,12 @@ class Action(object):
         try:
             start_idx = int(split_sub_string[0])
         except ValueError:
-            op_type, op1, op2 = parse_expression_for_arithmetic(split_sub_string[0], attributes_dict)
-            if op_type is not None:
-                start_idx = process_arithmetic(op1, op2, op_type)
+            v = parse_expression_for_arithmetic(split_sub_string[0], attributes_dict)
+            if not isinstance(v, str):
+                start_idx = v
             else:
                 if split_sub_string[0] not in attributes_dict:
+                    print(f'ERROR: {split_sub_string[0]} is not a valid expression.')
                     ERROR_CLEAN_EXIT('cannot find mapping from', arg_range_str, 'to', attributes_dict)
                 start_idx = attributes_dict[split_sub_string[0]]
             detect_arg_range_binding = True
@@ -188,11 +190,12 @@ class Action(object):
         try:
             end_idx = int(split_sub_string[1])
         except ValueError:
-            op_type, op1, op2 = parse_expression_for_arithmetic(split_sub_string[1], attributes_dict)
-            if op_type is not None:
-                end_idx = process_arithmetic(op1, op2, op_type)
+            v = parse_expression_for_arithmetic(split_sub_string[1], attributes_dict)
+            if not isinstance(v, str):
+                end_idx = v
             else:
                 if split_sub_string[1] not in attributes_dict:
+                    print(f'ERROR: {split_sub_string[1]} is not a valid expression.')
                     ERROR_CLEAN_EXIT('cannot find mapping from', arg_range_str, 'to', attributes_dict)
                 end_idx = attributes_dict[split_sub_string[1]]
             detect_arg_range_binding = True

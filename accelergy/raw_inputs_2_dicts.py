@@ -50,9 +50,22 @@ class RawInputs2Dicts():
 
     def load_and_construct_dicts(self):
         # load and classify input files
+
+        # construct new or parse existing config file
+        self.construct_parse_config_file()
+        
+        # merge all paths (input + compound compondnt lib)
+        all_paths = self.path_arglist
+        if "compound_components" in self.config:
+            for cc_lib_path in self.config["compound_components"]:
+                all_paths.append(cc_lib_path)
+        else:
+            WARN("No default paths for compound components specified in config")
+        
+        # go through each path in the merged list
         input_file_info = {}
-        for path in self.path_arglist:
-            if os.path.isfile(path):
+        for path in all_paths:
+            if os.path.isfile(path) and path.split('.')[-1] == "yaml":
                 loaded_content_list = self.load_file(path)
                 for loaded_content in loaded_content_list:
                     if loaded_content['top_key'] not in input_file_info:
@@ -61,12 +74,13 @@ class RawInputs2Dicts():
             elif os.path.isdir(path):
                 for root, directories, file_names in os.walk(path):
                     for file_name in file_names:
-                        file_path = os.path.join(root, file_name)
-                        loaded_content_list = self.load_file(file_path)
-                        for loaded_content in loaded_content_list:
-                            if loaded_content['top_key'] not in input_file_info:
-                                input_file_info[loaded_content['top_key']] = []
-                            input_file_info[loaded_content['top_key']].append(loaded_content)
+                        if file_name.split('.')[-1] == "yaml":
+                            file_path = os.path.join(root, file_name)
+                            loaded_content_list = self.load_file(file_path)
+                            for loaded_content in loaded_content_list:
+                                if loaded_content['top_key'] not in input_file_info:
+                                    input_file_info[loaded_content['top_key']] = []
+                                input_file_info[loaded_content['top_key']].append(loaded_content)
             else:
                 ERROR_CLEAN_EXIT('Cannot recognize input path: ', path)
 
@@ -77,9 +91,11 @@ class RawInputs2Dicts():
                         if var_var in variable_spec['content']['variables']:
                             variable_spec['content']['variables'][var_name] = variable_spec['content']['variables'][var_var]
                         else:
-                            op_type, op1, op2 = parse_expression_for_arithmetic(var_var, variable_spec['content']['variables'])
-                            if op_type is not None:
-                                variable_spec['content']['variables'][var_name] = process_arithmetic(op1, op2, op_type)
+                            v = parse_expression_for_arithmetic(var_var, variable_spec['content']['variables'])
+                            if isinstance(v, str):
+                                arithmetic_failed_evaluate_warn(var_var, var_name, 'variables', variable_spec['content']['variables'])
+                            variable_spec['content']['variables'][var_name] = v
+
                 self.arch_variables.update(variable_spec['content']['variables'])
 
         for top_key, top_key_file_list in input_file_info.items():
@@ -90,8 +106,6 @@ class RawInputs2Dicts():
                     INFO('Parsing file %s for %s info' % (file_path, top_key))
                     getattr(self, YAML_parser_fname)(file_info)
 
-        # construct new or parse existing config file
-        self.construct_parse_config_file()
 
         # construct primitive classes dictionary
         self.primitive_classes_input_parser()
@@ -169,10 +183,11 @@ class RawInputs2Dicts():
                     node_attrs[attr_name] = all_attrs[attr_val]
                     all_attrs[attr_name] = all_attrs[attr_val]
                 else:
-                    op_type, op1, op2 = parse_expression_for_arithmetic(attr_val, all_attrs)
-                    if op_type is not None:
-                        node_attrs[attr_name] = process_arithmetic(op1, op2, op_type)
-                        all_attrs[attr_name] = node_attrs[attr_name]
+                    v = parse_expression_for_arithmetic(attr_val, all_attrs)
+                    if isinstance(v, str):
+                        arithmetic_failed_evaluate_warn(attr_val, attr_name, prefix, node_attrs)
+                    node_attrs[attr_name] = v
+                    all_attrs[attr_name] = node_attrs[attr_name]
 
         if 'subtree' in node_description:
             ASSERT_MSG(isinstance(node_description['subtree'], list), " %s.subtree has to be a list"%(prefix))
@@ -201,10 +216,13 @@ class RawInputs2Dicts():
                             node_info['attributes'][attr_name] = all_attrs[attr_val]
                             all_attrs[attr_name] = all_attrs[attr_val]
                         else:
-                            op_type, op1, op2 = parse_expression_for_arithmetic(attr_val, all_attrs)
-                            if op_type is not None and type(op1) is not str and type(op2) is not str:
-                                node_info['attributes'][attr_name] = process_arithmetic(op1, op2, op_type)
-                                all_attrs[attr_name] = node_info['attributes'][attr_name]
+                            v = parse_expression_for_arithmetic(attr_val, all_attrs)
+                            if isinstance(v, str):
+                                arithmetic_failed_evaluate_warn(attr_val, attr_name, 'variables', node_info)
+                            node_info['attributes'][attr_name] = v
+                            all_attrs[attr_name] = node_info['attributes'][attr_name]
+
+
                 name_base, list_suffix, list_length = interpret_component_list(node_info['name'], all_attrs)
                 if list_suffix is not None:
                     node_info['name'] = name_base + list_suffix
@@ -255,6 +273,7 @@ class RawInputs2Dicts():
         """responsible for parsing the loaded compound component description YAML files """
 
         top_key = 'compound_components'
+
         file_path = file_info['path']
         file_reload = load(open(file_path), accelergy_loader_ordered)
         content = file_reload
@@ -327,9 +346,12 @@ class RawInputs2Dicts():
         accelergy_share_folder_path = os.path.abspath(curr_file_path + '../../../../../../share/accelergy/')
         default_estimator_path = os.path.abspath(accelergy_share_folder_path + '/estimation_plug_ins/')
         default_pc_lib_path = os.path.abspath(accelergy_share_folder_path + '/primitive_component_libs/')
+        
         config_file_content = {'version': self.parser_version,
                                'estimator_plug_ins': [default_estimator_path],
-                               'primitive_components': [default_pc_lib_path]}
+                               'primitive_components': [default_pc_lib_path],
+                               'compound_components': []}  # by default, CCs are always input files
+
         INFO('Accelergy creating default config at:', possible_config_dirs[1] + config_file_name, 'with:\n',
              config_file_content)
         write_yaml_file(config_file_path, config_file_content)
@@ -349,6 +371,7 @@ class RawInputs2Dicts():
 
         ASSERT_MSG(not len(self.pc_classes_dict) == 0, 'No primitive component class found, '
                                                        'please check if the paths in config file are correct')
+
 
     def expand_primitive_component_lib_info(self, pc_path):
         primitive_component_list_obj = open(pc_path)

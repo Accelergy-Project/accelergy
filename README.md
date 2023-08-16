@@ -12,7 +12,7 @@ An infrastructure for architecture-level energy/area estimations of accelerator 
 ## Get started 
 - Infrastructure tested on RedHat Linux, Ubuntu, MacOS
 - Required packages
-  - Python >= 3.6
+  - Python >= 3.8
   - PyYAML >= 1.1 (dependency automatically handled at installation)
   - yamlordereddictloader >= 0.4 (dependency automatically handled at installation)
 
