@@ -19,7 +19,7 @@
 # SOFTWARE.
 
 from collections import OrderedDict
-from accelergy.utils import *
+from accelergy.utils.utils import *
 
 class EnergyCalculator:
     def __init__(self, info):

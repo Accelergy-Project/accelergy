@@ -1,4 +1,4 @@
-from accelergy.utils import *
+from accelergy.utils.utils import *
 
 def action_counts_dict_2_obj(actions_dict):
     action_counts = ActionCounts(actions_dict)
@@ -30,7 +30,7 @@ class ActionCountEntry:
     def get_action_name(self):
         return self.action_info_dict['name']
 
-    def get_action_arguments(self):
+    def get_action_args(self):
         if 'arguments' in self.action_info_dict:  return self.action_info_dict['arguments']
         else: return None
 

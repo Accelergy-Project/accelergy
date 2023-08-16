@@ -1,20 +1,22 @@
-# Accelergy infrastructure (version 0.3)
-
+# Accelergy infrastructure (version 0.4)
 An infrastructure for architecture-level energy/area estimations of accelerator designs. Project website: http://accelergy.mit.edu
 
 
 [![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-v2.0%20adopted-ff69b4.svg)](code_of_conduct.md)
 [![Open Source Love png1](https://badges.frapsoft.com/os/v1/open-source.png?v=103)](https://github.com/ellerbrock/open-source-badges/)
-## Major updates from V0.2
+## Update v0.4
+- New plug-in interface
+- Arithmetic parsing supports full-fledged Python code
+- New logging system
+- Tests
+- Bug fixes
+
+## Update v0.3
 - Addition of area reference table generation
 - Updated command line flags
 - The **ERT** and **energy_estimation** output format has been updated.
 ## Get started 
 - Infrastructure tested on RedHat Linux, Ubuntu, MacOS
-- Required packages
-  - Python >= 3.8
-  - PyYAML >= 1.1 (dependency automatically handled at installation)
-  - yamlordereddictloader >= 0.4 (dependency automatically handled at installation)
 
 ## Install the package
 ```
@@ -48,14 +50,14 @@ accelergy -o ../output/ *.yaml components/*.yaml -v 1
   - architecture description (unique)
     ```yaml
     artchitecture_description:  # required top-key
-      version: 0.3              # required version number
+      version: 0.4              # required version number
       subtree:                  # required architecture tree root
         ...
     ```
   - compound component class description (can be composed of multiple files)
     ```yaml
     compound_components: # required top-key
-      version: 0.3       # required version number
+      version: 0.4       # required version number
       classes:           # required list identifier
         - name: ...      # various compound component classes specified as a list
         ...
@@ -63,7 +65,7 @@ accelergy -o ../output/ *.yaml components/*.yaml -v 1
   - action counts (can be composed of multiple files)
     ```yaml
     compound_components: # required top-key
-      version: 0.3       # required version number
+      version: 0.4       # required version number
       subtree:           # required architecture tree root
         - name: ...      # various action counts specified as a list
         ...
@@ -84,6 +86,7 @@ accelergy -o ../output/ *.yaml components/*.yaml -v 1
 - accelergy : package source
 - share: contains directories for default primitive component libraries and dummy estimation pug-ins
 - examples: example designs and action counts for Accelergy to evaluate
+- test: tests
 
 ## Documentation
 

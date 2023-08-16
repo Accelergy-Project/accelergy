@@ -1,0 +1,66 @@
+compound_components:
+  version: 0.4
+  classes:
+    - name: pick_higher_accuracy
+      # Area fits low and mid accuracy plug-ins. Pick mid.
+      attributes: {}
+      subcomponents: [{name: component, class: component, attributes: {unused_parameter: 1}}]
+      actions:
+        # Action fits low and mid accuracy plug-ins. Pick mid.
+        - {name: action_a, subcomponents: [{name: component, actions: [{name: action_a}]}]}
+        # Action fits low and mid accuracy plug-ins. Mid fails with error. Pick low, report "Broken action" in log.
+        - {name: action_b, subcomponents: [{name: component, actions: [{name: action_b}]}]}
+
+    - name: no_match_init
+      # Area fits low and mid accuracy plug-ins. Pick mid.
+      attributes: {}
+      subcomponents: [{name: component, class: component, attributes: {unused_parameter: 1}}]
+      actions:
+        # Action fits low and mid accuracy plug-ins. Pick mid.
+        - {name: action_a, subcomponents: [{name: component, actions: [{name: action_a, arguments: {required_parameter: 1}}]}]}
+        # Action fits low and mid accuracy plug-ins. Mid fails with error. Pick low, report "Broken action" in log.
+        - {name: action_b, subcomponents: [{name: component, actions: [{name: action_b, arguments: {required_parameter: 1}}]}]}
+
+    - name: no_match_args
+      # Area fits highest-accuracy plug-in
+      attributes: {}
+      subcomponents: [{name: component, class: component, attributes: {required_parameter: 3}}]
+      actions:
+        # Fits highest-accuracy plug-in
+        - {name: action_a, subcomponents: [{name: component, actions: [{name: action_a, arguments: {}}]}]}
+        # Parameters do not match highest-accuracy plug-in. Mid-accuracy plug-in errors. Fit low-acc.
+        - {name: action_b, subcomponents: [{name: component, actions: [{name: action_b, arguments: {}}]}]}
+
+    - name: match_args_init
+      # Area fits highest accuracy plug-in
+      attributes: {}
+      subcomponents: [{name: component, class: component, attributes: {required_parameter: 3, optional_parameter: 9}}]
+      actions:
+        # Unneeded parameter for highest-accuracy plug-in
+        - {name: action_a, subcomponents: [{name: component, actions: [{name: action_a, arguments: {required_parameter: 5}}]}]}
+        # Needed parameter for highest-accuracy plug-in
+        - {name: action_b, subcomponents: [{name: component, actions: [{name: action_b, arguments: {required_parameter: 5}}]}]}
+        # Needed parameters for highest-accuracy plug-in
+        - {name: action_c, subcomponents: [{name: component, actions: [{name: action_c, arguments: {required_1: 1, required_2: 3}}]}]}
+        # Needed parameters for highest-accuracy plug-in plus optional parameter
+        - {name: action_c_optional_arg_override, subcomponents: [{name: component, actions: [{name: action_c, arguments: {required_1: 1, required_2: 3, optional: 9}}]}]}
+
+    - name: error_in_area
+      # Area fits low and mid accuracy plug-ins. Pick mid.
+      attributes: {}
+      subcomponents: [{name: component, class: component, attributes: {required_parameter: 1000}}]
+      actions:
+        # Action fits low and mid accuracy plug-ins. Pick mid.
+        - {name: action_a, subcomponents: [{name: component, actions: [{name: action_a, arguments: {required_parameter: 1}}]}]}
+        # Action fits low and mid accuracy plug-ins. Mid fails with error. Pick low, report "Broken action" in log.
+        - {name: action_b, subcomponents: [{name: component, actions: [{name: action_b, arguments: {required_parameter: 3}}]}]}
+
+    - name: error_in_init
+      # Area fits low and mid accuracy plug-ins. Pick mid.
+      attributes: {}
+      subcomponents: [{name: component, class: component, attributes: {required_parameter: -1}}]
+      actions:
+        # Action fits low and mid accuracy plug-ins. Pick mid.
+        - {name: action_a, subcomponents: [{name: component, actions: [{name: action_a, arguments: {required_parameter: 1}}]}]}
+        # Action fits low and mid accuracy plug-ins. Mid fails with error. Pick low, report "Broken action" in log.
+        - {name: action_b, subcomponents: [{name: component, actions: [{name: action_b, arguments: {required_parameter: 1}}]}]}

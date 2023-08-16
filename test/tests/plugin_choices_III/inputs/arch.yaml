@@ -1,0 +1,31 @@
+architecture:
+  version: 0.4
+  subtree:
+  - name: arch
+    attributes: {}
+    local:
+    - name: pick_higher_accuracy
+      class: pick_higher_accuracy
+      attributes: {}
+
+    - name: no_match_init
+      class: no_match_init
+      attributes: {}
+
+    - name: no_match_args
+      class: no_match_args
+      attributes: {}
+
+    - name: match_args_init
+      class: match_args_init
+      attributes: {}
+
+    - name: error_in_area
+      class: error_in_area
+      attributes: {}
+
+    - name: error_in_init
+      class: error_in_init
+      attributes: {}
+
+    subtree: []

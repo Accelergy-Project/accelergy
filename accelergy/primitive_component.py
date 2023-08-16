@@ -1,5 +1,5 @@
 from copy import deepcopy
-from accelergy.utils import  *
+from accelergy.utils.utils import  *
 from accelergy.parsing_utils import *
 
 class PrimitiveComponent():
@@ -12,6 +12,7 @@ class PrimitiveComponent():
         self._name = arch_component.get_name()
         self._class_name = arch_component.get_class_name()
         self._attributes = arch_component.get_attributes()
+        self._area_share = arch_component.get_area_share()
         self._actions = []
         for action in self.flatten_top_level_action_list(component_class):
             self._actions.append(action)
@@ -40,13 +41,13 @@ class PrimitiveComponent():
 
     def get_dict_representation(self):
         from collections import OrderedDict
-        dict = OrderedDict({'name': self.get_name(),
+        dict_rep = OrderedDict({'name': self.get_name(),
                 'class': self.get_class_name(),
                 'actions': []})
         for action in self.get_actions():
-            dict['actions'].append( OrderedDict({'name': action.get_name(),
+            dict_rep['actions'].append( OrderedDict({'name': action.get_name(),
                                                 'arguments': action.get_arguments()}))
-        return dict
-
-
-
+        return dict_rep
+    
+    def get_area_share(self):
+        return self._area_share

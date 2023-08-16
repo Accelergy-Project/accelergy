@@ -3,41 +3,41 @@ version: 0.3
 classes:
   - name: bitwise
     attributes:
-      technology: 65nm
+      technology: "65nm"
       datawidth: 16
-      latency: 5ns
+      latency: "5ns"
       num: 1
     actions:
       - name: process
       - name: idle
   - name: intadder
     attributes:
-      technology: 65nm
+      technology: "65nm"
       datawidth: 16
       num_pipeline_stages: 1
-      latency: 5ns
+      latency: "5ns"
     actions:
       - name: add
       - name: idle
 
   - name: fpadder
     attributes:
-      technology: 65nm
+      technology: "65nm"
       exponent: 8
       mantissa: 24
       sign: 0
       num_pipeline_stages: 1
-      latency: 5ns
+      latency: "5ns"
     actions:
       - name: add
       - name: idle
 
   - name: intmultiplier
     attributes:
-      technology: 65nm
+      technology: "65nm"
       datawidth: 16
       num_pipeline_stages: 1
-      latency: 5ns
+      latency: "5ns"
     actions:
       - name: mult_random
       - name: mult_reused
@@ -46,12 +46,12 @@ classes:
 
   - name: fpmultiplier
     attributes:
-      technology: 65nm
+      technology: "65nm"
       exponent: 8
       mantissa: 24
       sign: 0
       num_pipeline_stages: 1
-      latency: 5ns
+      latency: "5ns"
     actions:
       - name: mult_random
       - name: mult_reused
@@ -61,11 +61,11 @@ classes:
 
   - name: regfile
     attributes:
-      technology: 65nm
+      technology: "65nm"
       width: 16
       depth: 1
       n_ports: 2
-      latency: 5ns
+      latency: "5ns"
     actions:
       - name: read
         arguments:
@@ -79,22 +79,22 @@ classes:
 
   - name: reg
     attributes:
-      technology: 65nm
+      technology: "65nm"
       datawidth: 16
-      latency: 5ns
+      latency: "5ns"
     actions:
       - name: access
 
   - name: SRAM
     attributes:
-      technology: 65nm
+      technology: "65nm"
       width: 64
       depth: 512
       n_rd_ports: 0
       n_wr_ports: 0
       n_rdwr_ports: 1
       n_banks: 1
-      latency: 5ns
+      latency: "5ns"
     actions:
       - name: read
         arguments:
@@ -108,8 +108,8 @@ classes:
 
   - name: DRAM
     attributes:
-      technology: 65nm
-      type: LPDDR4
+      technology: "65nm"
+      type: "LPDDR4"
       width: 64
     actions:
       - name: read
@@ -118,19 +118,19 @@ classes:
 
   - name: counter
     attributes:
-      technology: 65nm
+      technology: "65nm"
       width: 16
-      latency: 5ns
+      latency: "5ns"
     actions:
       - name: count
       - name: idle
 
   - name: FIFO
     attributes:
-      technology: 65nm
+      technology: "65nm"
       datawidth: 16
       depth: 2
-      latency: 5ns
+      latency: "5ns"
     actions:
       - name: push
       - name: pop
@@ -138,10 +138,10 @@ classes:
 
   - name: intmac
     attributes:
-      technology: 65nm
+      technology: "65nm"
       datawidth: 16
       num_pipeline_stages: 2
-      latency: 5ns
+      latency: "5ns"
     actions:
       - name: mac_random
       - name: mac_reused
@@ -150,12 +150,12 @@ classes:
 
   - name: fpmac
     attributes:
-      technology: 65nm
+      technology: "65nm"
       exponent: 8
       mantissa: 24
       sign: 0
       num_pipeline_stages: 3
-      latency: 5ns
+      latency: "5ns"
     actions:
       - name: mac_random
       - name: mac_reused
@@ -164,11 +164,11 @@ classes:
 
   - name: crossbar
     attributes:
-      technology: 65nm
+      technology: "65nm"
       n_inputs: 1
       n_outputs: 1
       datawidth: 16
-      latency: 5ns
+      latency: "5ns"
     actions:
       - name: transfer_random
       - name: transfer_repeated
@@ -176,9 +176,9 @@ classes:
 
   - name: wire
     attributes:
-      technology: 65nm
-      length: 1um
-      latency: 5ns
+      technology: "65nm"
+      length: "1um"
+      latency: "5ns"
     actions:
       - name: transfer_random
       - name: transfer_repeated
@@ -186,7 +186,7 @@ classes:
 
   - name: serializer
     attributes:
-      technology: 65nm
+      technology: "65nm"
       ratio: 4
       datawidth: 64  #input data width
     actions:
@@ -195,7 +195,7 @@ classes:
 
   - name: deserializer
     attributes:
-      technology: 65nm
+      technology: "65nm"
       ratio: 4
       datawidth: 16  # input data width
     actions:
@@ -204,7 +204,7 @@ classes:
 
   - name: comparator
     attributes:
-      technology: 65nm
+      technology: "65nm"
       datawidth: 8
     actions:
       - name: compare
