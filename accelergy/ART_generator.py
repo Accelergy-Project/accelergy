@@ -20,8 +20,9 @@
 
 
 from collections import OrderedDict
-from accelergy.utils import *
+from accelergy.utils.utils import *
 from accelergy.parsing_utils import count_num_identical_comps
+from accelergy.plug_in_interface.query_plug_ins import get_best_estimate
 
 
 class AreaReferenceTableGenerator:
@@ -42,9 +43,12 @@ class AreaReferenceTableGenerator:
         pc_name = pc.get_name()
         estimation_plug_in_interface = {'class_name': pc.get_class_name(),
                                         'attributes': pc.get_attributes()}
-        estimated_area, estimator_name = self.eval_primitive_area(estimation_plug_in_interface)
+        estimation = self.eval_primitive_area(estimation_plug_in_interface)
+        estimated_area, estimator_name = estimation.get_value() * 1e12, estimation.estimator_name
+        area_share = pc.get_area_share()
+        pc_area = estimated_area * area_share
         self.ART.add_entry({'comp_name': pc_name,
-                            'area': round(estimated_area, self.precision),
+                            'area': round(pc_area, self.precision),
                             'estimator': estimator_name})
 
     def generate_cc_ART(self, cc):
@@ -54,7 +58,8 @@ class AreaReferenceTableGenerator:
         for subcomp_name, subcomp_obj in cc.get_subcomponents().items():
             estimation_plug_in_interface = {'class_name': subcomp_obj.get_class_name(),
                                             'attributes': subcomp_obj.get_attributes()}
-            estimated_area, estimator_name = self.eval_primitive_area(estimation_plug_in_interface)
+            estimation = self.eval_primitive_area(estimation_plug_in_interface)
+            estimated_area, estimator_name = estimation.get_value() * 1e12, estimation.estimator_name
             factored_estimated_area = estimated_area * subcomp_obj.get_area_share()
             pc_area = factored_estimated_area * count_num_identical_comps(subcomp_name)
             cc_area += pc_area
@@ -71,25 +76,7 @@ class AreaReferenceTableGenerator:
         return self.ART
 
     def eval_primitive_area(self, estimator_plug_in_interface):
-        """
-        :param estimator_plug_in_interface: dictionary that adheres to
-               Accelergy-external estimator interface format
-        :return energy estimation of the action
-        """
-        best_accuracy = 0
-        best_estimator = None
-        for estimator in self.estimation_plug_ins:
-            accuracy = estimator.primitive_area_supported(estimator_plug_in_interface)
-            ASSERT_MSG(type(accuracy) is int or type(accuracy) is float,
-                       'Wrong plug-in accuracy: %s ...  Returned accuracy must be integers or floats'%(estimator))
-            if accuracy > best_accuracy:
-                best_accuracy = accuracy
-                best_estimator = estimator
-        if best_estimator is None:
-            ERROR_CLEAN_EXIT('cannot find appropriate plug-in:', estimator_plug_in_interface,
-                             'Available plug-ins:', self.estimation_plug_ins)
-        area = round(best_estimator.estimate_area(estimator_plug_in_interface), self.precision)
-        return area, best_estimator.estimator_name
+        return get_best_estimate(self.estimation_plug_ins, estimator_plug_in_interface, False)
 
 class ART:
     def __init__(self, parser_version):

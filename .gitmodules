@@ -1,0 +1,3 @@
+[submodule "test/tests/exercises/timeloop-accelergy-exercises"]
+	path = test/tests/exercises/timeloop-accelergy-exercises
+	url = git@github.com:Accelergy-Project/timeloop-accelergy-exercises.git

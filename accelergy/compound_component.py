@@ -20,6 +20,8 @@
 
 from copy import deepcopy
 from accelergy.parsing_utils import *
+from accelergy.component_class import ComponentClass
+
 class CompoundComponent:
     def __init__(self, def_info):
         arch_component = def_info['component']
@@ -29,6 +31,7 @@ class CompoundComponent:
         self.name = arch_component.get_name()
         self.class_name = arch_component.get_class_name()
         self.attributes = arch_component.get_attributes()
+        self.area_share = arch_component.get_area_share()
         self._primitive_type = cc_classes[self.class_name].get_primitive_type()
         self._subcomponents = {}
         self.all_possible_subcomponents = {}
@@ -72,6 +75,8 @@ class CompoundComponent:
         for default_sub_name, subcomponent in subcomponents.items():
             defined_sub_name = CompoundComponent.define_subcomponent_name(default_sub_name, compound_attributes)
             subcomponent.set_name(defined_sub_name)
+            
+        my_area_share = self.process_area_share(self.area_share, compound_attributes, f'{self.name}.area_share')
         # process the subcomponent attribute values, subcomponent attributes can be:
         #     1. numbers
         #     2. string bindings to/arithmetic operations of compound component attributes
@@ -87,13 +92,19 @@ class CompoundComponent:
             sub_class_type = 'compound' if subclass_name in cc_classes else 'primitive'
             if sub_class_type == 'compound':
                 subclass_def = cc_classes[subclass_name]
-                defined_subcomponent = CompoundComponent.define_attrs_area_share_for_subcomponent(subcomponent, compound_attributes, subclass_def)
+                defined_subcomponent = self.define_attrs_area_share_for_subcomponent(subcomponent, compound_attributes, subclass_def)
                 list_of_new_defined_primitive_components = self.process_subcomponents(defined_subcomponent, cc_classes, pc_classes)
+                cc_area_share = defined_subcomponent.get_area_share()
                 for new_defined_pc in list_of_new_defined_primitive_components:
+                    defined_area_share = defined_subcomponent.get_area_share()
+                    new_defined_pc.set_area_share(new_defined_pc.get_area_share() * cc_area_share)
                     list_of_primitive_components.append(new_defined_pc)
             else:
+                if subclass_name not in pc_classes:
+                    pc_classes[subclass_name] = ComponentClass({'name': subcomponent.get_class_name(), 'attributes': {}, 'actions': []})
                 subclass_def = pc_classes[subclass_name]
-                defined_subcomponent = CompoundComponent.define_attrs_area_share_for_subcomponent(subcomponent, compound_attributes, subclass_def)
+                defined_subcomponent = self.define_attrs_area_share_for_subcomponent(subcomponent, compound_attributes, subclass_def)
+                defined_subcomponent.set_area_share(defined_subcomponent.get_area_share() * my_area_share)
                 list_of_primitive_components.append(defined_subcomponent)
             self.all_possible_subcomponents[subname] = defined_subcomponent
 
@@ -124,6 +135,10 @@ class CompoundComponent:
         aggregated_mappings = deepcopy(compound_attributes) if compound_arguments is None \
                               else merge_dicts(compound_attributes, compound_arguments)
 
+        action_share = action.get_action_share()
+        if action_share is None:
+            action_share = 1.0
+
         for subcomp_name, action_obj_list in subcomponent_actions.items():
             # make sure the top-level component name is not added as prefix
             if not component_name == self.get_name():
@@ -133,7 +148,7 @@ class CompoundComponent:
 
             subclass_name = self.find_subcomponent_obj(defined_subcomp_name).get_class_name()
             subcomponent_class_type = 'compound' if subclass_name in cc_classes else 'primitive'
-            defined_action_obj_list = CompoundComponent.define_subactions(action_obj_list, aggregated_mappings)
+            defined_action_obj_list = CompoundComponent.define_subactions(action_obj_list, aggregated_mappings, action_share)
             for subaction in defined_action_obj_list:
                 if subcomponent_class_type == 'primitive':
                     list_of_primitive_actions.append((defined_subcomp_name, subaction))
@@ -146,25 +161,15 @@ class CompoundComponent:
         return list_of_primitive_actions
 
     @staticmethod
-    def define_subactions(subactions, aggregated_dict):
+    def define_subactions(subactions, aggregated_dict, upper_level_action_share):
         defined_subactions = []
         for subaction in subactions:
             parsed_action_share = CompoundComponent.parse_action_share(subaction, aggregated_dict)
-            subaction.set_action_share(parsed_action_share)
+            subaction.set_action_share(parsed_action_share * upper_level_action_share)
             if subaction.get_arguments() is not None:
                 for subarg_name, subarg_val in subaction.get_arguments().items():
-                    if type(subarg_val) is str:
-                        try:
-                            subaction.set_argument({subarg_name: aggregated_dict[subarg_val]})
-                        except KeyError:
-                            v = parse_expression_for_arithmetic(subarg_val, aggregated_dict)
-                            if not isinstance(v, str):
-                                subaction.set_argument({subarg_name: v})
-                            else:
-                                print('available compound arguments and attributes: ', aggregated_dict)
-                                print('primitive argument to for binding:', subarg_val)
-                                ERROR_CLEAN_EXIT('subcomponent argument name cannot be ',
-                                                 'mapped to upper class arguments', subarg_val)
+                    v = parse_expression_for_arithmetic(subarg_val, aggregated_dict, f'action {subaction.get_name()}', strings_allowed=False)
+                    subaction.set_argument({subarg_name: v})
             defined_subactions.append(subaction)
         return defined_subactions
 
@@ -181,21 +186,7 @@ class CompoundComponent:
         """
         action_share = action.get_action_share()
         if action_share is not None:
-            if type(action_share) is not int:
-                v = parse_expression_for_arithmetic(action_share, upper_level_binding)
-                if not isinstance(v, str):
-                    parsed_action_share = v
-                else:
-                    if action_share in upper_level_binding:
-                       parsed_action_share = upper_level_binding[action_share]
-                    else:
-                        parsed_action_share = None
-                        ERROR_CLEAN_EXIT('action_share/repeat value for primitive action cannot be parsed, ',
-                                      'no binding found in compound arguments/ attributes',action,
-                                         'available binding:', upper_level_binding)
-                return parsed_action_share
-            # return the actual value if action_share is an integer
-            return action_share
+            return parse_expression_for_arithmetic(action_share, upper_level_binding, f'action {action.get_name()} action_share', strings_allowed=False)
         # default action_share value is 1
         return 1
 
@@ -218,46 +209,31 @@ class CompoundComponent:
         if list_suffix is not None: subcomponent_name = name_base + list_suffix
         return subcomponent_name
 
+    def process_area_share(self, area_share, combined_attributes, name):
+        if area_share is None:
+            return 1.0
+        else:
+            return parse_expression_for_arithmetic(area_share, combined_attributes, name, strings_allowed=False)
 
-    @staticmethod
-    def define_attrs_area_share_for_subcomponent(subcomponent, compound_attributes, subclass):
-        for attr_name, attr_val in subcomponent.get_attributes().items():
-            if type(attr_val) is str:
-                if attr_val in compound_attributes:
-                    subcomponent.add_new_attr({attr_name: compound_attributes[attr_val]})
-                else:
-                    v = parse_expression_for_arithmetic(attr_val, compound_attributes)
-                    subcomponent.add_new_attr({attr_name: v})
-                    if isinstance(v, str):
-                        arithmetic_failed_evaluate_warn(attr_val, attr_name, subcomponent.get_name(), compound_attributes)
-                        
+    def define_attrs_area_share_for_subcomponent(self, subcomponent, compound_attributes, subclass):
+        attrs = parse_expressions_sequentially_replacing_bindings(
+            subcomponent.get_attributes(), compound_attributes, f'{subcomponent.get_name()}.', strings_allowed=True
+        )
+        subcomponent.add_new_attr(attrs)
         attrs_to_be_applied = subclass.get_default_attr_to_apply(subcomponent.get_attributes())
         subcomponent.add_new_attr(attrs_to_be_applied)
-        CompoundComponent.apply_internal_bindings(subcomponent)
-        if type(subcomponent.get_area_share()) is str:
-            combined_attributes = merge_dicts(compound_attributes, subcomponent.get_attributes())
-            v = parse_expression_for_arithmetic(subcomponent.get_area_share(), combined_attributes)
-            if not isinstance(v, str):
-                subcomponent.set_area_share(v)
-            else:
-                ASSERT_MSG(subcomponent.get_area_share() in combined_attributes,
-                           'Unable to interpret the area share for subcomponent: %s' %(subcomponent.get_name()))
-                subcomponent.set_area_share(combined_attributes[subcomponent.get_area_share()])
+        CompoundComponent.apply_internal_bindings(subcomponent, compound_attributes)
+        combined_attributes = merge_dicts(compound_attributes, subcomponent.get_attributes())
+        subcomponent.set_area_share(self.process_area_share(subcomponent.get_area_share(), combined_attributes, f'{subcomponent.get_name()}.area_share'))
         return subcomponent
 
     @staticmethod
-    def apply_internal_bindings(component):
+    def apply_internal_bindings(component, compound_attributes):
         """ Locate and process any mappings or arithmetic operations between the component attributes"""
-
-        for attr_name, attr_val in component.get_attributes().items():
-            if type(attr_val) is str:
-                if attr_val in component.get_attributes():
-                    component.add_new_attr({attr_name: component.get_attributes()[attr_val]})
-                else:
-                    v = parse_expression_for_arithmetic(attr_val, component.get_attributes())
-                    component.add_new_attr({attr_name:v})
-                    if isinstance(v, str):
-                        arithmetic_failed_evaluate_warn(attr_val, attr_name, component.get_name(), component.get_attributes())
+        attrs = parse_expressions_sequentially_replacing_bindings(
+            component.get_attributes(), compound_attributes, f'{component.get_name()}.', strings_allowed=True
+        )
+        component.add_new_attr(attrs)
 
     def construct_name_base_name_map(self):
         self.subcomponent_base_name_map = {}

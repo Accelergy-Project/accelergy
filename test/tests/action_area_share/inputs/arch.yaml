@@ -1,0 +1,67 @@
+architecture:
+  version: 0.4
+  subtree:
+  - name: arch
+    attributes: {}
+    local:
+    - name: three_level_hierarchy
+      class: three_level_hierarchy
+      attributes: {}
+
+    - name: two_level_hierarchy
+      class: two_level_hierarchy
+      attributes: {}
+
+    - name: one_level_hierarchy
+      class: one_level_hierarchy
+      attributes: {}
+
+    - name: primitive_direct_from_arch
+      class: dummy_object_area_energy_one
+      attributes: {}
+
+    - name: three_level_hierarchy_with_area_share
+      class: three_level_hierarchy
+      attributes:
+        area_share: 2
+
+    - name: two_level_hierarchy_with_area_share
+      class: two_level_hierarchy
+      attributes:
+        area_share: 3
+
+    - name: one_level_hierarchy_with_area_share
+      class: one_level_hierarchy
+      attributes:
+        area_share: 4
+
+    - name: primitive_direct_from_arch_with_area_share
+      class: dummy_object_area_energy_one
+      attributes:
+        area_share: 5
+
+    - name: three_level_hierarchy_with_area_share_defined_not_in_attrs
+      class: three_level_hierarchy
+      area_share: 6
+      attributes: {}
+
+    - name: two_level_hierarchy_with_area_share_defined_not_in_attrs
+      class: two_level_hierarchy
+      area_share: 7
+      attributes: {}
+
+    - name: one_level_hierarchy_with_area_share_defined_not_in_attrs
+      class: one_level_hierarchy
+      area_share: 8
+      attributes: {}
+
+    - name: primitive_direct_from_arch_with_area_share_defined_not_in_attrs
+      class: dummy_object_area_energy_one
+      area_share: 9
+      attributes: {}
+
+    - name: two_subcomponents_different_shares
+      class: two_subcomponents_different_shares
+      attributes: {}
+
+    subtree: []

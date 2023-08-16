@@ -21,12 +21,20 @@
 
 import argparse
 from collections import OrderedDict
-from accelergy.utils import *
+from accelergy.utils.utils import *
 import pyfiglet
+import sys
+from accelergy.utils.yaml import write_yaml_file
 
 def parse_commandline_args():
     ascii_banner = pyfiglet.figlet_format("Accelergy")
-    print(ascii_banner)
+    INFO(ascii_banner)
+    
+    for i in range(len(sys.argv) - 1):
+        if (sys.argv[i] == '-v' or sys.argv[i] == '--verbose') and sys.argv[i+1] == '1':
+            sys.argv.pop(i+1)
+            break
+        
     """parse command line inputs"""
     parser = argparse.ArgumentParser(
         description='Accelergy is an architecture-level energy estimator for accelerator designs. Accelergy allows '
@@ -36,10 +44,17 @@ def parse_commandline_args():
                         help = 'Path to output directory that stores '
                                'the ERT and/or flattened_architecture and/or energy estimation. '
                                'Default is current directory.')
-    parser.add_argument('-p', '--precision', type=int, default='5',
+    # parser.add_argument('-s', '--scripts', type=str, default=[], nargs="+",
+    #                     help = 'Path(s) to Python scripts to be used for arithmetic calculation when '
+    #                            'parsing input files. Top-level functions defined in these scripts may '
+    #                            'be called from the input files.')
+    parser.add_argument('-e', '--extra_plugins', type=str, default=[], nargs="+",
+                        help = 'Paths to additional Accelergy plug-ins to be used for energy/area '
+                               'estimation. Plug-ins must be defined using the Python plug-in format.')
+    parser.add_argument('-p', '--precision', type=int, default=6,
                         help= 'Number of decimal points for generated energy values. '
-                              'Default is 3.')
-    parser.add_argument('-v', '--verbose', type=int, default = 0,
+                              'Default is 6.')
+    parser.add_argument('-v', '--verbose', action='store_true', default=False,
                         help= 'If set to 1, Accelergy outputs the verbose version of the output files '
                               'Default is 0')
     parser.add_argument('-f', '--output_files',  nargs="*", type =str, default = ['all'],
@@ -54,6 +69,12 @@ def parse_commandline_args():
                                                                     'e.g., architecture description, '
                                                                           'compound component class descriptions, etc. '
                         )
+    parser.add_argument('--suppress_version_errors', action='store_true', default=False,
+                        help='If set, Accelergy will not raise errors if the input files are '
+                        'of incompatible versions. This may result in unexpected behavior. ')
+    parser.add_argument('--update_config_version', action='store_true', default=False,
+                        help='Update the Accelergy config file ' \
+                             '(usually ~/.config/accelergy/accelergy_config.yaml) to the latest version.')
     return parser.parse_args()
 
 

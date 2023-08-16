@@ -1,0 +1,54 @@
+compound_components:
+  version: 0.4
+  classes:
+    # Dummy storage for when we want a 0-cost storage
+    - name: three_level_hierarchy
+      subcomponents: [
+        {name: level_two, class: two_level_hierarchy, area_share: 4, attributes: {}}
+      ]
+      attributes: {}
+      actions:
+        - {name: read, subcomponents:  [{name: level_two, actions: [{name: read, action_share: 2}]}]}
+        - {name: write, subcomponents: [{name: level_two, actions: [{name: write, action_share: 0.5}]}]}
+
+    - name: two_level_hierarchy
+      subcomponents: [{name: level_two, class: one_level_hierarchy, attributes: {area_share: 3}}]
+      attributes: {}
+      actions:
+        - {name: read, subcomponents:  [{name: level_two, actions: [{name: read, action_share: 4}]}]}
+        - {name: write, subcomponents: [{name: level_two, actions: [{name: write, action_share: 0.5}]}]}
+
+    - name: one_level_hierarchy
+      subcomponents: [{name: primitive, class: dummy_object_area_energy_one, area_share: 2, attributes: {}}]
+      attributes: {}
+      actions:
+        - {name: read, subcomponents:  [{name: primitive, actions: [{name: read, action_share: 8}]}]}
+        - {name: write, subcomponents: [{name: primitive, actions: [{name: write, action_share: 0.5}]}]}
+
+    - name: two_subcomponents_different_shares
+      subcomponents: [
+        {name: primitive1, class: dummy_object_area_energy_one, attributes: {area_share: 2}},
+        {name: primitive2, class: dummy_object_area_energy_one, area_share: 3, attributes: {}}
+      ]
+      attributes: {}
+      actions:
+        - name: read
+          subcomponents:
+            - name: primitive1
+              actions:
+                - name: read
+                  action_share: 8
+            - name: primitive2
+              actions:
+                - name: read
+                  action_share: 4
+        - name: write
+          subcomponents:
+            - name: primitive1
+              actions:
+                - name: write
+                  action_share: 0.5
+            - name: primitive2
+              actions:
+                - name: write
+                  action_share: 0.25

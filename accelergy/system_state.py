@@ -1,4 +1,6 @@
-from accelergy.utils import *
+from accelergy.utils.utils import *
+from accelergy.plug_in_interface.interface import AccelergyPlugIn
+
 class SystemState():
     def __init__(self):
         self.cc_classes = {}
@@ -50,8 +52,15 @@ class SystemState():
         self.pcs[pc_name] = pc
 
     def add_plug_ins(self, plug_ins):
-        ASSERT_MSG(type(plug_ins) is list, 'plug in objects need to be passed in as a list')
+        ASSERT_MSG(isinstance(plug_ins, list), 'plug in objects need to be passed in as a list')
         self.plug_ins = plug_ins
+        for plug_in in self.plug_ins:
+            if isinstance(plug_in, AccelergyPlugIn):
+                if not getattr(plug_in, '_accelergy_plug_in_initialized', False):
+                    plug_in.__AccelergyPlugIn__init__()
+                if not getattr(plug_in, '_accelergy_plug_in_initialized', False):
+                    ERROR_CLEAN_EXIT(f'Plug-in {plug_in.get_name()} is not initialized. Please ' \
+                                     f'call super().__init__() in the plug-in\'s __init__ method.')
 
     def set_ERT(self, ERT):
         self.ERT = ERT
@@ -64,5 +73,3 @@ class SystemState():
 
     def set_energy_estimations(self, energy_estimations):
         self.energy_estimations = energy_estimations
-
-

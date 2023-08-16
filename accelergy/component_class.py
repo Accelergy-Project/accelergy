@@ -1,12 +1,15 @@
 from copy import deepcopy
-from accelergy.utils import *
+from accelergy.utils.utils import *
 from accelergy.action import Action
 from accelergy.subcomponent import Subcomponent
 from collections import OrderedDict
+from accelergy.parsing_utils import *
 
 class ComponentClass:
     def __init__(self, class_dict):
         self._name = class_dict['name']
+        # resolve_optional_required_attributes(class_dict)
+
         self._default_attributes = deepcopy(class_dict['attributes'])
 
         self._actions = {}
@@ -21,13 +24,16 @@ class ComponentClass:
             self.type = 'primitive'
         self._primitive_type = class_dict['primitive_type'] if 'primitive_type' in class_dict else None
 
+    def add_action(self, action):
+        ASSERT_MSG('name' in action, '%s class actions must contain "name" keys'%(self.get_name()))
+        self._actions[action['name']] = Action(action)
+
     def set_actions(self, action_list):
-        ASSERT_MSG(type(action_list) is list,
+        ASSERT_MSG(isinstance(action_list, list),
                    '%s class description must specify its actions in list format'%(self.get_name()))
         for action in action_list:
-            ASSERT_MSG('name' in action, '%s class actions must contain "name" keys'%(self.get_name()))
-            self._actions[action['name']] = Action(action)
-
+            self.add_action(action)
+            
     #-----------------------------------------------------
     # Getters
     #-----------------------------------------------------
@@ -37,11 +43,16 @@ class ComponentClass:
     def get_default_attr_to_apply(self, obj_attr_name_list):
         attr_to_be_applied = OrderedDict()
         for attr_name, attr_val in self._get_default_attrs().items():
-            if attr_val == "must_specify":
-                ASSERT_MSG(attr_name in obj_attr_name_list,
-                           "attributes %s for compound class %s must be specified in architecture description"
-                           %(attr_name, self.get_name()))
-            if attr_name not in obj_attr_name_list:
+            # print(f'Checking for {attr_name=} {attr_val=} in {obj_attr_name_list}')
+            found_val = obj_attr_name_list.get(attr_name, None)
+            if attr_val == "must_specify" and found_val is None:
+                ERROR_CLEAN_EXIT(
+                    f'Attribute {attr_name} for compound class '
+                    f'{self.get_name()} must be specified. Available '
+                    f'attributes are: {list(obj_attr_name_list.keys())}')
+            if found_val is not None:
+                attr_to_be_applied[attr_name] = found_val
+            else:
                 attr_to_be_applied[attr_name] = attr_val
         return attr_to_be_applied
 
@@ -59,7 +70,8 @@ class ComponentClass:
         return list(self._actions.keys())
 
     def get_action(self, actionName):
-        ASSERT_MSG(actionName in self._actions, '%s does not exist in class %s'%(actionName, self.get_name()))
+        if actionName not in self._actions:
+            self.add_action({'name': actionName, 'subcomponents': []})
         return self._actions[actionName]
 
     def get_subcomponents_as_dict(self):
