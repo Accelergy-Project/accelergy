@@ -22,7 +22,7 @@ setup(
       packages=['accelergy'],
       install_requires = ['pyYAML >= 1.1', 'yamlordereddictloader >= 0.4', 'pyfiglet'],
       python_requires = '>=3.8',
-      data_files=[('share/accelergy/primitive_component_libs/',
+      data_files=[('share/accelergy/primitive_component_libs',
                     ['share/primitive_component_libs/primitive_component.lib.yaml',
                      'share/primitive_component_libs/pim_primitive_component.lib.yaml',
                      'share/primitive_component_libs/soc_primitives.lib.yaml']),
