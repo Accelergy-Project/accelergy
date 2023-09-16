@@ -1,22 +1,26 @@
 from accelergy.parsing_utils import *
 from accelergy.component_class import ComponentClass
 
+
 def arch_dict_2_obj(arch_dict, cc_classes, pc_classes):
-    fully_defined_arch_dict = fully_define_arch_dict(arch_dict, cc_classes, pc_classes)
+    fully_defined_arch_dict = fully_define_arch_dict(
+        arch_dict, cc_classes, pc_classes)
     return Architecture(fully_defined_arch_dict)
+
 
 def fully_define_arch_dict(arch_dict, cc_classes, pc_classes):
     for cname, cinfo in arch_dict['components'].items():
-        ASSERT_MSG('class' in cinfo or 'subclass' in cinfo, 'Please specify class name for %s'%(cname))
+        ASSERT_MSG('class' in cinfo or 'subclass' in cinfo,
+                   'Please specify class name for %s' % (cname))
         class_name = cinfo['subclass'] if 'subclass' in cinfo else cinfo['class']
 
         if class_name in cc_classes:
             class_obj = cc_classes[class_name]
             for a in cinfo.get('required_actions', []):
                 ASSERT_MSG(
-                    a in class_obj._actions, 
+                    a in class_obj._actions,
                     'Required action %s not found in compound component '
-                    'class %s'%(a, class_name))
+                    'class %s' % (a, class_name))
         else:
             if class_name not in pc_classes:
                 pc_classes[class_name] = ComponentClass(
@@ -25,7 +29,7 @@ def fully_define_arch_dict(arch_dict, cc_classes, pc_classes):
             for a in cinfo.get('required_actions', []):
                 if a in class_obj._actions:
                     continue
-                logging.info('Adding required action "%s" to class %s' 
+                logging.info('Adding required action "%s" to class %s'
                              % (a, class_name))
                 subcomp_action = {'name': class_name, 'actions': [{
                     'name': a, 'arguments': {}
@@ -33,20 +37,21 @@ def fully_define_arch_dict(arch_dict, cc_classes, pc_classes):
                 action = {'name': a, 'subcomponents': [subcomp_action]}
                 class_obj.add_action(action)
 
-        attrs_to_be_applied = class_obj.get_default_attr_to_apply(cinfo['attributes'])
+        attrs_to_be_applied = class_obj.get_default_attr_to_apply(
+            cinfo['attributes'])
         for attr_name, attr_val in attrs_to_be_applied.items():
             cinfo['attributes'][attr_name] = attr_val
-        for attr_name, attr_val in cinfo['attributes'].items():
-            if isinstance(attr_val, str):
-                if attr_val in cinfo['attributes']:
-                    cinfo['attributes'][attr_name] = cinfo['attributes'][attr_val]
-                v = parse_expression_for_arithmetic(attr_val, cinfo['attributes'], class_name, use_bindings_after=attr_name)
-                cinfo['attributes'][attr_name] = v
-
+        cinfo['attributes'] = parse_expressions_sequentially_replacing_bindings(
+            cinfo['attributes'],
+            {},
+            f'Architecture class {class_name} attributes',
+        )
     return arch_dict
+
 
 class Architecture(object):
     """Architecture class"""
+
     def __init__(self, arch_dict):
         self.version = arch_dict['version']
         self.component_dict = {}
@@ -69,18 +74,19 @@ class Architecture(object):
         return list(self.component_dict.keys())
 
     def get_component(self, compName):
-        ASSERT_MSG(compName in self.get_component_name_list(), '%s not found in architecture '%(compName))
+        ASSERT_MSG(compName in self.get_component_name_list(),
+                   '%s not found in architecture ' % (compName))
         return self.component_dict[compName]
 
     def generate_flattened_arch(self):
         from collections import OrderedDict
-        flattened_arch = {'architecture': OrderedDict({'version': self.version, 'local': []})}
+        flattened_arch = {'architecture': OrderedDict(
+            {'version': self.version, 'local': []})}
         for cname in self.get_component_name_list():
             cobj = self.get_component(cname)
             dict_rep = OrderedDict(cobj.get_dict_representation())
             flattened_arch['architecture']['local'].append(dict_rep)
         return flattened_arch
-
 
     @staticmethod
     def remove_brackets(name):
@@ -93,6 +99,7 @@ class Architecture(object):
             name = name[:start_idx] + name[end_idx + 1:]
             name = Architecture.remove_brackets(name)
             return name
+
 
 class ArchComp():
     def __init__(self, comp_dict):
@@ -108,7 +115,7 @@ class ArchComp():
 
     def get_class_name(self):
         if 'subclass' in self.dict_representation:
-            return  self.dict_representation['subclass']
+            return self.dict_representation['subclass']
         else:
             return self.dict_representation['class']
 
@@ -118,11 +125,8 @@ class ArchComp():
     def get_area_share(self):
         if 'area_share' in self.dict_representation:
             return self.dict_representation['area_share']
-        
+
         if 'area_share' in self.dict_representation['attributes']:
             return self.dict_representation['attributes']['area_share']
-        
+
         return 1.0
-
-
-
