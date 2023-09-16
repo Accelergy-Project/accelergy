@@ -98,16 +98,23 @@ def check_input_parser_version(
     PATH_TO_VERSION[input_file_path] = input_parser_version
     if len(INPUT_FILE_VERSIONS) > 1:
         lowest_version = min(INPUT_FILE_VERSIONS)
-        lowest_version_paths = [
-            path
-            for path, version in PATH_TO_VERSION.items()
-            if version == lowest_version
-        ]
-        version_error_func(
-            f"Input files of multiple versions detected. Input file versions are {INPUT_FILE_VERSIONS}. "
-            f"\n Please use input files of the same version. Files with version {lowest_version} are: "
-            + "\n".join(lowest_version_paths)
-        )
+        highest_version = max(INPUT_FILE_VERSIONS)
+        # If the highest version is leq 0.4, then we just use the highest version
+        if version_compare(highest_version, "0.4") <= 0:
+            INPUT_FILE_VERSIONS.clear()
+            INPUT_FILE_VERSIONS.add(highest_version)
+
+        else:
+            lowest_version_paths = [
+                path
+                for path, version in PATH_TO_VERSION.items()
+                if version == lowest_version
+            ]
+            version_error_func(
+                f"Input files of multiple versions detected. Input file versions are {INPUT_FILE_VERSIONS}. "
+                f"\n Please use input files of the same version. Files with version {lowest_version} are: "
+                + "\n".join(lowest_version_paths)
+            )
 
     # Warn for outdated input files
     if input_parser_version != MAX_VERSION:
