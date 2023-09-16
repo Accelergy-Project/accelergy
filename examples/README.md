@@ -15,5 +15,5 @@ Q: How do see the detailed primitive energy/area estimations from the plug-ins?
 A: Turn on the ```-v``` flag will allow the detailes estimations to be summarized in the ERT/ART_summary_verbose files
 
 Q: How do interpret the data in ```reference```?  
-A: All data in ```reference``` files are generated using the default dummy plug-in, which returns 1 for all non-idle actions
-   and returns 0 for all idle actions, regardless of the component class and attributes.
+A: All data in ```reference``` files are generated using the default dummy plug-in, which returns 1 for all non-leak actions
+   and returns 0 for all leak actions, regardless of the component class and attributes.

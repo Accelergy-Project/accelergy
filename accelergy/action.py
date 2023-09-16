@@ -6,12 +6,13 @@ from accelergy.parsing_utils import *
 
 class Action(object):
     """Action class"""
+
     def __init__(self, action_def_dict):
 
         self.action_def_dict = action_def_dict
         self.name = action_def_dict['name']
 
-        self._arguments = None
+        self._arguments = {}
         self.set_arguments(action_def_dict)
 
         # compound action contains action definitions in terms of subcomponents
@@ -70,7 +71,8 @@ class Action(object):
         return self._arguments[arg_name]
 
     def get_subcomps(self):
-        ASSERT_MSG(self._subcomponents is not None, 'action does not have defined subcomponents')
+        ASSERT_MSG(self._subcomponents is not None,
+                   'action does not have defined subcomponents')
         return self._subcomponents
 
     def get_primitive_list(self):
@@ -78,17 +80,20 @@ class Action(object):
 
     def get_action_info_as_dict(self):
         action_dict = {'name': self.name}
-        if self._subcomponents is not None: action_dict['subcomponents'] = self._subcomponents
-        if self._arguments is not None: action_dict['arguments'] = self._arguments
+        if self._subcomponents is not None:
+            action_dict['subcomponents'] = self._subcomponents
+        if self._arguments is not None:
+            action_dict['arguments'] = self._arguments
         return action_dict
 
     def get_subactions(self, subcompName):
         ASSERT_MSG(self._subcomponents is not None and subcompName in self._subcomponents,
-                   'cannot find subactions associated with %s for action %s'%(subcompName, self.name))
+                   'cannot find subactions associated with %s for action %s' % (subcompName, self.name))
         return self._subcomponents[subcompName]
 
     def get_arg_val(self, argName):
-        ASSERT_MSG(argName in self._arguments, 'argument name %s is not associated with action %s'%(argName, self.name))
+        ASSERT_MSG(argName in self._arguments,
+                   'argument name %s is not associated with action %s' % (argName, self.name))
         return self._arguments[argName]
 
     def set_arg(self, arg_dict):
@@ -105,9 +110,12 @@ class Action(object):
         total_entries = 1
         argument_range_record = {}
         for arg_name, arg_range in args.items():
-            ASSERT_MSG(isinstance(arg_range, str), '%s: argument value for action %s is not string, cannot parse range'%(arg_name,self.name))            
-            ASSERT_MSG('..' in arg_range, '%s: argument value for action %s is not range, cannot parse range'%(arg_name,self.name))
-            new_arg_range = Action.map_arg_range_bounds(arg_range, mappingDict)[0]
+            ASSERT_MSG(isinstance(arg_range, str),
+                       '%s: argument value for action %s is not string, cannot parse range' % (arg_name, self.name))
+            ASSERT_MSG('..' in arg_range, '%s: argument value for action %s is not range, cannot parse range' % (
+                arg_name, self.name))
+            new_arg_range = Action.map_arg_range_bounds(
+                arg_range, mappingDict)[0]
             startIdx, endIdx = Action.parse_arg_range(new_arg_range)
             total_entries *= (endIdx - startIdx + 1)
             argument_range_record[arg_name] = (startIdx, endIdx)
@@ -118,10 +126,12 @@ class Action(object):
             arg_def = {}
             for arg_name, range_record in argument_range_record.items():
                 arg_range = range_record[1] - range_record[0] + 1
-                arg_def[arg_name] = (entry_idx // offset) % arg_range + range_record[0]
+                arg_def[arg_name] = (
+                    entry_idx // offset) % arg_range + range_record[0]
                 offset *= arg_range
             subcomp_list = []
-            new_action = deepcopy(self); new_action._arguments = arg_def
+            new_action = deepcopy(self)
+            new_action._arguments = arg_def
             action_list.append(new_action)
         return action_list
 
@@ -129,7 +139,8 @@ class Action(object):
     def parse_arg_range(arg_range):
         """ Parse the start index and end index for an argument range"""
         if not isinstance(arg_range, str) or '..' not in arg_range:
-            ERROR_CLEAN_EXIT('cannot parse the argument range specification: ', arg_range)
+            ERROR_CLEAN_EXIT(
+                'cannot parse the argument range specification: ', arg_range)
         split_sub_string = arg_range.split('..')
         start_idx = int(split_sub_string[0])
         end_idx = int(split_sub_string[1])
@@ -149,7 +160,8 @@ class Action(object):
             start_idx, end_idx = Action.parse_arg_range(argument_range)
             total_entries *= (end_idx - start_idx + 1)
             argument_range_record[argument_name] = (start_idx, end_idx)
-        expanded_list = [{'name': action_name, 'arguments':{}} for i in range(total_entries)]
+        expanded_list = [{'name': action_name, 'arguments': {}}
+                         for i in range(total_entries)]
         # construct list of dictionaries that contain all the possible combination of argument values
         for entry_idx in range(total_entries):
             offset = 1
@@ -176,7 +188,8 @@ class Action(object):
         try:
             start_idx = int(split_sub_string[0])
         except ValueError:
-            v = parse_expression_for_arithmetic(split_sub_string[0], attributes_dict, 'index range expression', strings_allowed=False)
+            v = parse_expression_for_arithmetic(
+                split_sub_string[0], attributes_dict, 'index range expression', strings_allowed=False)
             start_idx = v
             detect_arg_range_binding = True
 
@@ -184,7 +197,8 @@ class Action(object):
         try:
             end_idx = int(split_sub_string[1])
         except ValueError:
-            v = parse_expression_for_arithmetic(split_sub_string[1], attributes_dict, 'index range expression', strings_allowed=False)
+            v = parse_expression_for_arithmetic(
+                split_sub_string[1], attributes_dict, 'index range expression', strings_allowed=False)
             end_idx = v
             detect_arg_range_binding = True
 
@@ -195,8 +209,9 @@ class Action(object):
     @staticmethod
     def parse_arg_range(arg_range):
         if not isinstance(arg_range, str) or '..' not in arg_range:
-            ERROR_CLEAN_EXIT('cannot parse the argument range specification: ', arg_range)
+            ERROR_CLEAN_EXIT(
+                'cannot parse the argument range specification: ', arg_range)
         split_sub_string = arg_range.split('..')
         start_idx = int(split_sub_string[0])
-        end_idx   = int(split_sub_string[1])
+        end_idx = int(split_sub_string[1])
         return start_idx, end_idx

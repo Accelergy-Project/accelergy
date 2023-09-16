@@ -1,4 +1,4 @@
-from accelergy.plug_in_interface.estimator import Estimator, action2energy
+from accelergy.plug_in_interface.estimator import Estimator, actionDynamicEnergy
 
 
 class DummyObjectAreaEnergyOne(Estimator):
@@ -8,16 +8,15 @@ class DummyObjectAreaEnergyOne(Estimator):
     def __init__(self):
         super().__init__()
 
-    @action2energy
+    @actionDynamicEnergy
     def read(self):
         return 1e-12
 
-    @action2energy
+    @actionDynamicEnergy
     def write(self):
         return 1e-12
 
-    @action2energy
-    def idle(self):
+    def leak(self):
         return 1e-12
 
     def get_area(self):

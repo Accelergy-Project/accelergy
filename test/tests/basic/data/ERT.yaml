@@ -4,16 +4,16 @@ ERT:
   - name: design.mac
     actions:
     - name: mac_random
-      arguments: null
+      arguments: {}
       energy: 3
     - name: mac_reused
-      arguments: null
+      arguments: {}
       energy: 2
     - name: mac_gated
-      arguments: null
+      arguments: {}
       energy: 1
-    - name: idle
-      arguments: null
+    - name: leak
+      arguments: {}
       energy: 0
   - name: design.scratchpad[0..2]
     actions:
@@ -57,6 +57,6 @@ ERT:
         address_delta: 1
         data_delta: 1
       energy: 8
-    - name: idle
-      arguments: null
+    - name: leak
+      arguments: {}
       energy: 0

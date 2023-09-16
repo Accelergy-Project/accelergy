@@ -2,7 +2,7 @@ architecture:
   version: 0.4
   subtree:
   - name: arch
-    attributes: {}
+    attributes: {technology: 0, global_cycle_seconds: 1e-09}
     local:
     - name: pick_higher_accuracy
       class: pick_higher_accuracy

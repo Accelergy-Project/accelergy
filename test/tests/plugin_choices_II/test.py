@@ -11,4 +11,4 @@ class Test(AccelergyUnitTest):
         # The low-accuracy plug-in is picked if specified
         self.assert_area('arch.pick_higher_accuracy', 1)
         self.assert_energy('arch.pick_higher_accuracy', 'action_a', 1)
-        self.assertIn('Unused arguments (required_parameter)', self.accelergy_out)
+        self.assertIn('Unused arguments (required_parameter', self.accelergy_out)

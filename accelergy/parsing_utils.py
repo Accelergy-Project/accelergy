@@ -108,6 +108,40 @@ EXPR_CACHE = {}
 PARSED_EXPRESSIONS = set()
 
 
+def propagate_required_keys(d1: dict, d2: dict, location: str):
+    """ Propagate required keys from d1 to d2. """
+    def propagate(key, setdefault: Any = None):
+        if key in d2:
+            return
+        if key not in d1:
+            if setdefault is not None:
+                d2[key] = setdefault
+                return
+            combined_keys = list(d1.keys()) + [
+                k for k in d2.keys() if k not in d1
+            ]
+            raise ValueError(
+                f'Required key "{key}" not found in {location}. Found keys: '
+                f'{", ".join(combined_keys)}'
+            )
+        d2[key] = d1[key]
+
+    if not version.input_version_greater_or_equal(0.4):
+        # Legacy
+        propagate('global_cycle_seconds', d2.get('latency', 1e-9))
+        if isinstance(d2['global_cycle_seconds'], str):
+            d2['global_cycle_seconds'] = d2['global_cycle_seconds'].replace(
+                'ns', 'e-9').replace(' ', '')
+        return
+
+    propagate('global_cycle_seconds')
+    d2.setdefault('cycle_seconds', d2['global_cycle_seconds'])
+    propagate('cycle_seconds')
+    propagate('action_latency_cycles', 1)
+    propagate('technology')
+    propagate('n_instances', 1)
+
+
 def interpret_component_list(name, binding_dictionary=None):
     """
     determines if the component is a list according to its name
@@ -295,6 +329,7 @@ def parse_expressions_sequentially_replacing_bindings(
     binding_dictionary: dict,
     location: str,
     strings_allowed: bool = True,
+    propagate_keys: bool = True,
 ):
     parsed = {}
     for k, v in expression_dictionary.items():
@@ -303,6 +338,8 @@ def parse_expressions_sequentially_replacing_bindings(
         parsed[k] = parse_expression_for_arithmetic(
             v, attrs, f'{location}"{k}"', strings_allowed
         )
+    if propagate_keys:
+        propagate_required_keys(binding_dictionary, parsed, location)
     return parsed
 
 

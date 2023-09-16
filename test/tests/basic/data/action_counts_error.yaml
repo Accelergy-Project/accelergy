@@ -5,7 +5,7 @@ action_counts:
       local:
         - name: scratchpad[4]
           action_counts:
-            - name: idle
+            - name: leak
               counts: 100
             - name: fill
               arguments:

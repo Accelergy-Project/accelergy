@@ -34,7 +34,7 @@ class CallableFunction:
         if is_init:
             function = function.__init__
 
-        args = function.__code__.co_varnames[1 : function.__code__.co_argcount]
+        args = function.__code__.co_varnames[1: function.__code__.co_argcount]
         default_length = (
             len(function.__defaults__)
             if function.__defaults__ is not None
@@ -45,7 +45,7 @@ class CallableFunction:
         if force_name_override is not None:
             self.function_name = force_name_override
         self.non_default_args = args[: len(args) - default_length]
-        self.default_args = args[len(args) - default_length :]
+        self.default_args = args[len(args) - default_length:]
         self.logger = logger
 
     def get_error_message_for_name_match(
@@ -114,6 +114,7 @@ class EstimatorWrapper(AccelergyPlugIn):
 
         self.percent_accuracy = estimator_cls.percent_accuracy_0_to_100
         self.get_area = CallableFunction(estimator_cls.get_area, self.logger)
+        self.leak = CallableFunction(estimator_cls.leak, self.logger)
         self.init_function = CallableFunction(
             estimator_cls, self.logger, is_init=True
         )

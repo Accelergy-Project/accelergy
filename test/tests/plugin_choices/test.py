@@ -11,7 +11,7 @@ class Test(AccelergyUnitTest):
         # Pick appropriate plug-in for higher accuracy
         self.assert_area('arch.pick_higher_accuracy', 2)
         self.assert_energy('arch.pick_higher_accuracy', 'action_a', 2)
-        self.assertIn('Unused arguments (required_parameter)', self.accelergy_out)
+        self.assertIn('Unused arguments (required_parameter', self.accelergy_out)
         
         # Fall back to lower accuracy plug-in if there is an error
         self.assert_energy('arch.pick_higher_accuracy', 'action_b', 1)

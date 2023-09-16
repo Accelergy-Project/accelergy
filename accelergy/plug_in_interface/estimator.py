@@ -8,16 +8,17 @@ from accelergy.plug_in_interface.interface import Estimation
 from accelergy.utils.utils import get_config_file_path
 from accelergy.utils.yaml import load_yaml, write_yaml_file
 
+
 class Estimator(ListLoggable, ABC):
     """ 
     Estimator base class. Estimator class must have "name" attribute, "percent_accuracy_0_to_100"
     attribute, and "get_area" method. Estimators may have any number of methods that are
-    decorated with @action2energy.
+    decorated with @.
     """
     name: Union[str, List[str]] = None
     percent_accuracy_0_to_100: Number = None
 
-    def __init__(self, name: str=None):
+    def __init__(self, name: str = None):
         super().__init__(name=name)
 
     @abstractmethod
@@ -25,8 +26,14 @@ class Estimator(ListLoggable, ABC):
         """ Returns the area in m^2 or an Estimation object with the area and units."""
         pass
 
+    @abstractmethod
+    def leak(self, global_cycle_seconds: float) -> Union[Number, Estimation]:
+        """ Returns the leakage energy per global cycle or an Estimation object 
+        with the leakage energy and units. """
+        pass
 
-def action2energy(func: Callable) -> Callable:
+
+def actionDynamicEnergy(func: Callable) -> Callable:
     """ 
     Decorator that adds an action to an Accelergy estimator. Actions are expected to return an
     energy value in Juoles or an Estimation object with the energy and units.
@@ -41,11 +48,11 @@ def add_estimator_path(path: str, add_full_dir: bool = False):
     path = os.path.abspath(path)
     if add_full_dir:
         path = os.path.dirname(path)
-    
+
     with open(os.path.expanduser(cfg_yaml), 'r') as f:
         cfg = load_yaml(f)
         python_paths = cfg.get('python_plug_ins', [])
-        
+
     # Update the list of paths
     if path in python_paths:
         info(f'Path {path} already in the list of python paths.')
@@ -61,11 +68,11 @@ def remove_estimator_path(path: str, remove_full_dir: bool = False):
     path = os.path.abspath(path)
     if remove_full_dir:
         path = os.path.dirname(path)
-    
+
     with open(os.path.expanduser(cfg_yaml), 'r') as f:
         cfg = load_yaml(f)
         python_paths = cfg.get('python_plug_ins', [])
-        
+
     # Update the list of paths
     if path not in python_paths:
         info(f'Path {path} not in the list of python paths.')

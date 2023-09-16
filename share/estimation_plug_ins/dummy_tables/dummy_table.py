@@ -38,10 +38,10 @@ class DummyTable(AccelergyPlugIn):
         action_name = query.action_name
         arguments = query.action_args
 
-        energy_pj = 0 if action_name == "idle" else 1
+        energy_pj = 0 if action_name == "leak" else 1
         return Estimation(
             energy_pj, "p"
-        )  # Dummy returns 1 for all non-idle actions
+        )  # Dummy returns 1 for all non-leak actions
 
     def primitive_area_supported(
         self, query: AccelergyQuery
@@ -64,7 +64,7 @@ class DummyTable(AccelergyPlugIn):
         attributes = query.class_attrs
         action_name = query.action_name
         arguments = query.action_args
-        return Estimation(1, "u^2")  # Dummy returns 1 for all non-idle actions
+        return Estimation(1, "u^2")  # Dummy returns 1 for all non-leak actions
 
     def get_name(self) -> str:
         return "dummy_table"
