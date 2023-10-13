@@ -93,7 +93,7 @@ class EnergyReferenceTableGenerator:
                                                 'arguments': cc_arguments}
                 estimation = self.eval_primitive_action_energy(estimation_plug_in_interface)
                 energy = estimation.get_value() * 1e12
-                primitive_action_estimations = estimator_name
+                primitive_action_estimations = estimation.estimator_name
             else:
                 energy = 0
                 primitive_action_tuples = cc_action_obj.get_primitive_list()
