@@ -18,17 +18,20 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
+from inspect import signature
 import copy
 from importlib.machinery import SourceFileLoader
 import math
 import re
 import traceback
-from typing import Any, Union
+from typing import Any, Callable, Union
 from accelergy.utils.utils import *
 from numbers import Number
+from accelergy.utils.yaml import load_yaml, SCRIPTS_FROM
 import accelergy.version as version
 import ruamel.yaml
 import os
+import keyword
 
 MATH_FUNCS = {
     "ceil": math.ceil,
@@ -102,18 +105,27 @@ MATH_FUNCS = {
     "tuple": tuple,
     "enumerate": enumerate,
     "getcwd": os.getcwd,
+    "map": map,
 }
 SCRIPT_FUNCS = {}
-EXPR_CACHE = {}
-PARSED_EXPRESSIONS = set()
+LOADED_MATH_FUNCS_FROM = set()
+# EXPR_CACHE = {}
+# PARSED_EXPRESSIONS = set()
 
 
-def propagate_required_keys(d1: dict, d2: dict, location: str):
+def propagate_required_keys(
+        d1: dict,
+        d2: dict,
+        location: str,
+        action_keys: bool = False):
     """ Propagate required keys from d1 to d2. """
     def propagate(key, setdefault: Any = None):
         if key in d2:
             return
-        if key not in d1:
+        if key.upper() in d2:
+            d2[key] = d2[key.upper()]
+            return
+        if key not in d1 and key.upper() not in d1:
             if setdefault is not None:
                 d2[key] = setdefault
                 return
@@ -124,7 +136,7 @@ def propagate_required_keys(d1: dict, d2: dict, location: str):
                 f'Required key "{key}" not found in {location}. Found keys: '
                 f'{", ".join(combined_keys)}'
             )
-        d2[key] = d1[key]
+        d2[key] = d1.get(key, d1.get(key.upper()))
 
     if not version.input_version_greater_or_equal(0.4):
         # Legacy
@@ -135,6 +147,8 @@ def propagate_required_keys(d1: dict, d2: dict, location: str):
         return
 
     propagate('global_cycle_seconds')
+    if action_keys:
+        return
     d2.setdefault('cycle_seconds', d2['global_cycle_seconds'])
     propagate('cycle_seconds')
     propagate('action_latency_cycles', 1)
@@ -214,9 +228,6 @@ def cast_to_numeric(x: Any) -> Union[int, float, bool]:
     return float(x)
 
 
-QUOTED_STRINGS = set()
-
-
 def is_quoted_string(expression):
     return (
         isinstance(
@@ -225,12 +236,20 @@ def is_quoted_string(expression):
         or isinstance(
             expression, ruamel.yaml.scalarstring.SingleQuotedScalarString
         )
-        or id(expression) in QUOTED_STRINGS
     )
 
 
 def ruamel_str_to_normal_str(expression):
     return str(expression) if is_quoted_string(expression) else expression
+
+
+def get_callable_lambda(func, expression):
+    l = lambda *args, **kwargs: func(*args, **kwargs)
+    l.__name__ = func.__name__
+    l.__doc__ = func.__doc__
+    l._original_accelergy_expression = expression
+    l._func = func
+    return l
 
 
 def parse_expression_for_arithmetic(
@@ -240,16 +259,13 @@ def parse_expression_for_arithmetic(
     strings_allowed: bool = True,
     use_bindings_after: str = None,
 ):
-    if (
-        strings_allowed
-        and is_quoted_string(expression)
-        or id(expression) in QUOTED_STRINGS
-    ):
-        QUOTED_STRINGS.add(id(expression))
+    refresh_math_funcs()
+
+    if strings_allowed and is_quoted_string(expression):
         return expression
 
-    if id(expression) in PARSED_EXPRESSIONS:
-        return expression
+    # if id(expression) in PARSED_EXPRESSIONS:
+    #     return expression
 
     try:
         return cast_to_numeric(expression)
@@ -273,9 +289,11 @@ def parse_expression_for_arithmetic(
 
     try:
         v = eval(expression, FUNCTION_BINDINGS, binding_dictionary)
-        infostr = f'Calculated {location} as "{expression}" = {v}'
+        infostr = f'Calculated {location} as "{expression}" = {v}.'
         if isinstance(v, str):
             v = ruamel.yaml.scalarstring.DoubleQuotedScalarString(v)
+        if isinstance(v, Callable):
+            v = get_callable_lambda(v, expression)
         success = True
     except Exception as e:
         errstr = f"Failed to evaluate: {expression}\n"
@@ -288,15 +306,27 @@ def parse_expression_for_arithmetic(
         ):
             e = NameError(f"Name '{expression}' is not defined.")
         errstr += f"Problem encountered: {e.__class__.__name__}: {e}\n"
+        err = errstr
         errstr += f"Available bindings: "
-        available_bindings = {}
-        available_bindings.update(binding_dictionary)
-        available_bindings.update(SCRIPT_FUNCS)
-        errstr += (
-            f"".join(f"\n    {k} = {v}" for k, v in available_bindings.items())
-            + f"\n"
-        )
+        bindings = {}
+        bindings.update(binding_dictionary)
+        bindings.update(SCRIPT_FUNCS)
+        extras = []
+        for k, v in bindings.items():
+            if isinstance(v, Callable):
+                bindings[k] = f"{k}{signature(getattr(v, '_func', v))}"
+            else:
+                extras.append(f"\n    {k} = {v}")
+        errstr += "".join(f"\n\t{k} = {v}" for k, v in bindings.items())
+        errstr += "\n\n" + err
         errstr += f"Please ensure that the expression used is a valid Python expression.\n"
+        possibly_used = {k: bindings.get(k, FUNCTION_BINDINGS.get(k, 'UNDEFINED'))
+                         for k in re.findall(r"([a-zA-Z_][a-zA-Z0-9_]*)", expression) if k not in keyword.kwlist}
+        if possibly_used:
+            errstr += f"The following may have been used in the expression:"
+            errstr += "".join(f"\n\t{k} = {v}" for k,
+                              v in possibly_used.items())
+            errstr += "\n"
         if strings_allowed:
             errstr += "Strings are allowed here. If you meant to enter a string, please wrap the\n"
             errstr += "expression in single or double quotes:\n"
@@ -316,11 +346,11 @@ def parse_expression_for_arithmetic(
             return expression
         ERROR_CLEAN_EXIT(f"{errstr}\n")
 
-    if expression not in EXPR_CACHE or EXPR_CACHE[expression] != v:
-        INFO(infostr)
+    # if expression not in EXPR_CACHE or EXPR_CACHE[expression] != v:
+    INFO(infostr)
 
-    EXPR_CACHE[expression] = v
-    PARSED_EXPRESSIONS.add(id(v))
+    # EXPR_CACHE[expression] = v
+    # PARSED_EXPRESSIONS.add(id(v))
     return v
 
 
@@ -414,18 +444,41 @@ def get_ranges_or_indices_in_name(name):
     return exisiting_ranges
 
 
-def set_script_paths(paths):
+def load_functions_from_file(path: str):
+    path = path.strip()
+    if not os.path.exists(path):
+        ERROR_CLEAN_EXIT(f"Could not find math function file {path}.")
+    python_module = SourceFileLoader("python_plug_in", path).load_module()
     funcs = {}
-    for path in paths:
-        if not path.endswith(".py"):
-            continue
-        python_module = SourceFileLoader("python_plug_in", path).load_module()
-        defined_funcs = [
-            func
-            for func in dir(python_module)
-            if callable(getattr(python_module, func))
-        ]
-        for func in defined_funcs:
-            INFO(f"Adding function {func} from {path} to the script library.")
-            funcs[func] = getattr(python_module, func)
+    defined_funcs = [f for f in dir(
+        python_module) if isinstance(getattr(python_module, f), Callable)]
+    for func in defined_funcs:
+        INFO(f"Adding function {func} from {path} to the script library.")
+        funcs[func] = getattr(python_module, func)
     SCRIPT_FUNCS.update(funcs)
+    LOADED_MATH_FUNCS_FROM.add(path)
+
+
+def set_script_paths():
+    try:
+        config = load_yaml(get_config_file_path())
+    except FileNotFoundError:
+        config = {}
+    funcs = {}
+    paths = config.get('math_functions', [])
+    for path in paths:
+        load_functions_from_file(path)
+    SCRIPT_FUNCS.update(funcs)
+
+
+def refresh_math_funcs():
+    scripts = os.environ.get('ACCELERGY_MATH_FUNCTIONS', '').split(':')
+    scripts = [s.strip() for s in scripts if s.strip()]
+    scripts += SCRIPTS_FROM
+    for script in scripts:
+        if script in LOADED_MATH_FUNCS_FROM:
+            continue
+        load_functions_from_file(script)
+
+
+set_script_paths()

@@ -5,6 +5,7 @@ from accelergy.subcomponent import Subcomponent
 from collections import OrderedDict
 from accelergy.parsing_utils import *
 
+
 class ComponentClass:
     def __init__(self, class_dict):
         self._name = class_dict['name']
@@ -19,24 +20,26 @@ class ComponentClass:
         if 'subcomponents' in class_dict:
             self._subcomponents = {}
             self.type = 'compound'
-            for scomp in class_dict['subcomponents']: self._subcomponents[scomp['name']] = Subcomponent(scomp)
+            for scomp in class_dict['subcomponents']:
+                self._subcomponents[scomp['name']] = Subcomponent(scomp)
         else:
             self.type = 'primitive'
         self._primitive_type = class_dict['primitive_type'] if 'primitive_type' in class_dict else None
 
     def add_action(self, action):
-        ASSERT_MSG('name' in action, '%s class actions must contain "name" keys'%(self.get_name()))
+        ASSERT_MSG('name' in action, '%s class actions must contain "name" keys' % (
+            self.get_name()))
         self._actions[action['name']] = Action(action)
 
     def set_actions(self, action_list):
         ASSERT_MSG(isinstance(action_list, list),
-                   '%s class description must specify its actions in list format'%(self.get_name()))
+                   '%s class description must specify its actions in list format' % (self.get_name()))
         for action in action_list:
             self.add_action(action)
-            
-    #-----------------------------------------------------
+
+    # -----------------------------------------------------
     # Getters
-    #-----------------------------------------------------
+    # -----------------------------------------------------
     def get_name(self):
         return self._name
 
@@ -63,7 +66,8 @@ class ComponentClass:
         return list(self._default_attributes.keys())
 
     def _get_attr_default_val(self, attrName):
-        ASSERT_MSG(attrName in self._default_attributes, 'Attribute %s cannot be found in class %s'%(attrName, self.get_name()))
+        ASSERT_MSG(attrName in self._default_attributes,
+                   'Attribute %s cannot be found in class %s' % (attrName, self.get_name()))
         return self._default_attributes[attrName]
 
     def get_action_name_list(self):
@@ -75,7 +79,8 @@ class ComponentClass:
         return self._actions[actionName]
 
     def get_subcomponents_as_dict(self):
-        ASSERT_MSG(self._subcomponents is not None, 'component class %s does not have subcomponents' % self.get_name())
+        ASSERT_MSG(self._subcomponents is not None,
+                   'component class %s does not have subcomponents' % self.get_name())
         return self._subcomponents
 
     def get_primitive_type(self):

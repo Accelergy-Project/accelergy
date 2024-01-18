@@ -49,9 +49,8 @@ def add_estimator_path(path: str, add_full_dir: bool = False):
     if add_full_dir:
         path = os.path.dirname(path)
 
-    with open(os.path.expanduser(cfg_yaml), 'r') as f:
-        cfg = load_yaml(f)
-        python_paths = cfg.get('python_plug_ins', [])
+    cfg = load_yaml(cfg_yaml)
+    python_paths = cfg.get('python_plug_ins', [])
 
     # Update the list of paths
     if path in python_paths:
@@ -69,9 +68,8 @@ def remove_estimator_path(path: str, remove_full_dir: bool = False):
     if remove_full_dir:
         path = os.path.dirname(path)
 
-    with open(os.path.expanduser(cfg_yaml), 'r') as f:
-        cfg = load_yaml(f)
-        python_paths = cfg.get('python_plug_ins', [])
+    cfg = load_yaml(cfg_yaml)
+    python_paths = cfg.get('python_plug_ins', [])
 
     # Update the list of paths
     if path not in python_paths:

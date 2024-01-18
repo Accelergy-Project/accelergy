@@ -21,9 +21,13 @@
 import math
 from collections import OrderedDict
 from accelergy.utils.utils import *
-from accelergy.parsing_utils import count_num_identical_comps
-from accelergy.parsing_utils import comp_name_within_range
+from accelergy.parsing_utils import (
+    count_num_identical_comps,
+    comp_name_within_range,
+    propagate_required_keys,
+)
 from accelergy.plug_in_interface.query_plug_ins import get_best_estimate
+
 
 def ERT_dict_to_obj(ERT_info):
     ERT_dict = ERT_info['ERT_dict']
@@ -67,15 +71,16 @@ class EnergyReferenceTableGenerator:
             action_name = pc_action_obj.get_name()
             arguments = pc_action_obj.get_arguments()
             estimation_plug_in_interface = {'class_name': pc.get_class_name(),
-                                           'attributes': pc.get_attributes(),
-                                           'action_name': action_name,
-                                           'arguments': arguments}
-            estimation = self.eval_primitive_action_energy(estimation_plug_in_interface)
+                                            'attributes': pc.get_attributes(),
+                                            'action_name': action_name,
+                                            'arguments': arguments}
+            estimation = self.eval_primitive_action_energy(
+                estimation_plug_in_interface)
             self.ERT.add_action_entry({'name': pc_name,
-                                'action_name': action_name,
-                                'arguments': arguments,
-                                'energy': round(estimation.get_value() * 1e12, self.precision),
-                                'estimator': estimation.estimator_name})
+                                       'action_name': action_name,
+                                       'arguments': arguments,
+                                       'energy': round(estimation.get_value() * 1e12, self.precision),
+                                       'estimator': estimation.estimator_name})
 
     def generat_cc_ERT(self, cc):
         cc_name = cc.get_name()
@@ -91,7 +96,8 @@ class EnergyReferenceTableGenerator:
                                                 'attributes': cc.get_attributes(),
                                                 'action_name': cc_action_name,
                                                 'arguments': cc_arguments}
-                estimation = self.eval_primitive_action_energy(estimation_plug_in_interface)
+                estimation = self.eval_primitive_action_energy(
+                    estimation_plug_in_interface)
                 energy = estimation.get_value() * 1e12
                 primitive_action_estimations = estimation.estimator_name
             else:
@@ -100,19 +106,30 @@ class EnergyReferenceTableGenerator:
                 for primitive_action_tuple in primitive_action_tuples:
                     subcomp_name = primitive_action_tuple[0]
                     subaction_obj = primitive_action_tuple[1]
-                    subcomp_obj = sub_base_name_map[remove_brackets(subcomp_name)]
+                    subcomp_obj = sub_base_name_map[remove_brackets(
+                        subcomp_name)]
                     estimation_plug_in_interface = {'class_name': subcomp_obj.get_class_name(),
                                                     'attributes': subcomp_obj.get_attributes(),
                                                     'action_name': subaction_obj.get_name(),
                                                     'arguments': subaction_obj.get_arguments()}
-                    estimation = self.eval_primitive_action_energy(estimation_plug_in_interface)
+                    propagate_required_keys(
+                        estimation_plug_in_interface['attributes'],
+                        estimation_plug_in_interface['arguments'],
+                        f'attributes for {cc_name}.{cc_action_name}',
+                        action_keys=True
+                    )
+                    estimation = self.eval_primitive_action_energy(
+                        estimation_plug_in_interface)
                     # check if the subcomponent name is a list, if so, take it into account using list length
                     estimated_energy = estimation.get_value() * 1e12
                     estimator_name = estimation.estimator_name
-                    total_identical_comps = count_num_identical_comps(subcomp_name)
+                    total_identical_comps = count_num_identical_comps(
+                        subcomp_name)
                     # accumulate energy (consider action_share and # of identical subactions)
-                    energy += estimated_energy * subaction_obj.get_action_share() * total_identical_comps
-                    primitive_action_estimations.append((subcomp_name, subaction_obj, estimator_name, estimated_energy))
+                    energy += estimated_energy * subaction_obj.get_action_share() * \
+                        total_identical_comps
+                    primitive_action_estimations.append(
+                        (subcomp_name, subaction_obj, estimator_name, estimated_energy))
 
             self.ERT.add_action_entry({'name': cc_name,
                                        'action_name': cc_action_name,
@@ -120,10 +137,10 @@ class EnergyReferenceTableGenerator:
                                        'energy': round(energy, self.precision),
                                        'estimator': primitive_action_estimations})
         if primitive_type is not None:
-            INFO('Component %s estimated with primitive type %s' % (cc_name, primitive_type))
+            INFO('Component %s estimated with primitive type %s' %
+                 (cc_name, primitive_type))
 
-
-    def construct_sub_base_name_map(self,cc):
+    def construct_sub_base_name_map(self, cc):
         sub_base_name_map = {}
         for subcomp_name, subcomp_obj in cc.get_subcomponents().items():
             subcomp_base_name = remove_brackets(subcomp_name)
@@ -131,6 +148,14 @@ class EnergyReferenceTableGenerator:
         return sub_base_name_map
 
     def eval_primitive_action_energy(self, estimator_plug_in_interface):
+        name = estimator_plug_in_interface['class_name']
+        action_name = estimator_plug_in_interface['action_name']
+        propagate_required_keys(
+            estimator_plug_in_interface['attributes'],
+            estimator_plug_in_interface['arguments'],
+            f'attributes for {name}.{action_name}',
+            action_keys=True
+        )
         return get_best_estimate(self.estimation_plug_ins, estimator_plug_in_interface, True)
 
 
@@ -144,12 +169,14 @@ class ERT:
     def add_action_entry(self, entry_dict):
         comp_name = entry_dict['name']
         if comp_name not in self.entries:
-            self.entries[comp_name] = ComponentERTEntry(comp_name, self.precision)
+            self.entries[comp_name] = ComponentERTEntry(
+                comp_name, self.precision)
         self.entries[comp_name].add_action_energy(entry_dict)
 
     def get_ERT(self):
         from collections import OrderedDict
-        ERT = {'ERT': OrderedDict({'version': self.parser_version, 'tables': []})}
+        ERT = {'ERT': OrderedDict(
+            {'version': self.parser_version, 'tables': []})}
         for comp_name, ERT_entry_obj in self.entries.items():
             ERT['ERT']['tables'].append(ERT_entry_obj.get_ERT_entry_dict_rep())
         return ERT
@@ -157,15 +184,17 @@ class ERT:
     def get_ERT_entry(self, component_name):
         component_base_name = remove_brackets(component_name)
         ERT_entry = self.get_ERT_entry_w_base_name(component_base_name)
-        ASSERT_MSG(ERT_entry is not None, 'Cannot find corresponding entry for component %s' % component_name)
+        ASSERT_MSG(ERT_entry is not None,
+                   'Cannot find corresponding entry for component %s' % component_name)
         ASSERT_MSG(comp_name_within_range(component_name, ERT_entry.get_component_name()),
                    'component name "%s" in action counts is not legal, legal range should be within "%s"'
-                   %(component_name, ERT_entry.get_component_name()))
+                   % (component_name, ERT_entry.get_component_name()))
         return ERT_entry
 
     def get_ERT_entry_w_base_name(self, component_base_name):
         self.get_base_name_map()
-        if component_base_name not in self.base_name_map: return None
+        if component_base_name not in self.base_name_map:
+            return None
         entry_name = self.base_name_map[component_base_name]
         ERT_entry = self.entries[entry_name]
         return ERT_entry
@@ -183,13 +212,14 @@ class ERT:
             ERT_entry_summary_dict = ERT_entry_obj.get_ERT_entry_summary_dict_rep()
             ERT_summary_list.append(ERT_entry_summary_dict)
         return {'ERT_summary': OrderedDict({'version': self.parser_version, 'table_summary': ERT_summary_list})}
-    
+
     def get_ERT_summary_verbose(self):
         ERT_summary_list = []
         for comp_name, ERT_entry_obj in self.entries.items():
             ERT_entry_summary_dict = ERT_entry_obj.get_ERT_summary_verbose_dict_rep()
             ERT_summary_list.append(ERT_entry_summary_dict)
         return {'ERT_summary': OrderedDict({'version': self.parser_version, 'table_summary': ERT_summary_list})}
+
 
 class ComponentERTEntry:
     def __init__(self, component_name, precision):
@@ -215,9 +245,12 @@ class ComponentERTEntry:
                 estimator_name = primitive_estimation_info[2]
                 estimated_energy = primitive_estimation_info[3]
                 if subcomponent_name not in self.estimator_s:
-                    self.estimator_s[subcomponent_name] = {'estimator': estimator_name}
-                interpreted_energy = estimated_energy * subaction_obj.get_action_share() * count_num_identical_comps(subcomponent_name)
-                percentage = 0 if energy == 0 else round(100*interpreted_energy/energy,2)
+                    self.estimator_s[subcomponent_name] = {
+                        'estimator': estimator_name}
+                interpreted_energy = estimated_energy * subaction_obj.get_action_share() * \
+                    count_num_identical_comps(subcomponent_name)
+                percentage = 0 if energy == 0 else round(
+                    100*interpreted_energy/energy, 2)
                 subaction_estimations.append(OrderedDict({'subcomponent_name': subcomponent_name,
                                                           'subaction_name': subaction_obj.get_name(),
                                                           'arguments': subaction_obj.get_arguments(),
@@ -230,9 +263,10 @@ class ComponentERTEntry:
                 {'arguments': arguments, 'energy': energy, 'subaction_estimations': subaction_estimations})
         else:
             if self.estimator_s == {}:
-                self.estimator_s = {self.component_name: {'estimator': action_dict['estimator']}}
-            self.action_entries[action_name].append({'arguments': arguments, 'energy': energy})
-
+                self.estimator_s = {self.component_name: {
+                    'estimator': action_dict['estimator']}}
+            self.action_entries[action_name].append(
+                {'arguments': arguments, 'energy': energy})
 
     def get_component_name(self):
         return self.component_name
@@ -252,10 +286,11 @@ class ComponentERTEntry:
             if matched:
                 return arg_combo['energy']
         ASSERT_MSG(matched, 'cannot find corresponding action energy in ERT for component "%s" '
-                         'action "%s", argument "%s"'%(self.component_name, action_name, action_args))
+                   'action "%s", argument "%s"' % (self.component_name, action_name, action_args))
 
     def get_ERT_entry_dict_rep(self):
-        ERT_entry_dict_rep = OrderedDict({'name': self.component_name, 'actions':{}})
+        ERT_entry_dict_rep = OrderedDict(
+            {'name': self.component_name, 'actions': {}})
         action_list = []
         for action_name, action_info_list in self.action_entries.items():
             for argument_combo in action_info_list:
@@ -268,10 +303,12 @@ class ComponentERTEntry:
         return ERT_entry_dict_rep
 
     def get_ERT_entry_summary_dict_rep(self):
-        ERT_entry_summary = OrderedDict({'name': self.component_name, 'actions': None, 'primitive_estimation(s)': None})
+        ERT_entry_summary = OrderedDict(
+            {'name': self.component_name, 'actions': None, 'primitive_estimation(s)': None})
         ERT_entry_summary['primitive_estimation(s)'] = []
         for key, val in self.estimator_s.items():
-            ERT_entry_summary['primitive_estimation(s)'].append(OrderedDict({'name': key, 'estimator': val['estimator']}))
+            ERT_entry_summary['primitive_estimation(s)'].append(
+                OrderedDict({'name': key, 'estimator': val['estimator']}))
         ERT_entry_summary['actions'] = self.get_actions_energy_min_max_avg_as_list()
         return ERT_entry_summary
 
@@ -280,26 +317,31 @@ class ComponentERTEntry:
                                                  'actions': None,
                                                  'primitive_estimation(s)': None})
 
-        ERT_entry_verbose_summary['actions'] = self.get_actions_energy_min_max_avg_as_list()
+        ERT_entry_verbose_summary['actions'] = self.get_actions_energy_min_max_avg_as_list(
+        )
         ERT_entry_verbose_summary['primitive_estimation(s)'] = []
         for action_name, action_info in self.action_entries.items():
             for arg_combo in action_info:
                 if 'subaction_estimations' in arg_combo:
-                    dict = OrderedDict({'action_name': action_name, 'arguments': arg_combo['arguments'],'energy': arg_combo['energy'],
+                    dict = OrderedDict({'action_name': action_name, 'arguments': arg_combo['arguments'], 'energy': arg_combo['energy'],
                                         'subaction_estimations': arg_combo['subaction_estimations']})
-                    ERT_entry_verbose_summary['primitive_estimation(s)'].append(dict)
+                    ERT_entry_verbose_summary['primitive_estimation(s)'].append(
+                        dict)
                 else:
                     if ERT_entry_verbose_summary['primitive_estimation(s)'] == []:
-                        ERT_entry_verbose_summary['primitive_estimation(s)'].append(self.estimator_s)
+                        ERT_entry_verbose_summary['primitive_estimation(s)'].append(
+                            self.estimator_s)
         return ERT_entry_verbose_summary
 
     def get_actions_energy_min_max_avg_as_list(self):
         actions = []
         for action_name, action_info in self.action_entries.items():
             if len(action_info) == 1:
-                actions.append(OrderedDict({'name': action_name, 'energy': action_info[0]['energy']}))
+                actions.append(OrderedDict(
+                    {'name': action_name, 'energy': action_info[0]['energy']}))
             else:
-                init_dict = OrderedDict({'name': action_name, 'average_energy': None, 'max_energy': -1, 'min_energy': math.inf})
+                init_dict = OrderedDict(
+                    {'name': action_name, 'average_energy': None, 'max_energy': -1, 'min_energy': math.inf})
                 accumulator = 0
                 for arg_combo in action_info:
                     accumulator = accumulator + arg_combo['energy']
@@ -307,7 +349,7 @@ class ComponentERTEntry:
                         init_dict['max_energy'] = arg_combo['energy']
                     if arg_combo['energy'] < init_dict['min_energy']:
                         init_dict['min_energy'] = arg_combo['energy']
-                init_dict['average_energy'] = round(accumulator/len(action_info), self.precision)
+                init_dict['average_energy'] = round(
+                    accumulator/len(action_info), self.precision)
                 actions.append(init_dict)
         return actions
-
