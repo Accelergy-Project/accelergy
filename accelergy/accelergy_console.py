@@ -84,7 +84,7 @@ def run():
 
     # ----- Determine what operations should be performed
     available_inputs = raw_dicts.get_available_inputs()
-    accelergy.parsing_utils.set_script_paths(scripts)
+    # accelergy.parsing_utils.set_script_paths()
 
     # ---- Detecting config only cases and gracefully exiting
     if len(available_inputs) == 0:
