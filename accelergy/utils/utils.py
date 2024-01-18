@@ -106,4 +106,7 @@ def get_config_file_path() -> str:
             path = os.path.join(possible_dir, config_file_name)
             INFO(f"Located config file at {path}.")
             return path
-    return None
+    raise FileNotFoundError(
+        f"Could not find Accelergy config file. Run 'accelergy' to "
+        f"generate a default config file at {possible_config_dirs[1]}."
+    )

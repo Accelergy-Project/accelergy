@@ -4,6 +4,7 @@ from collections import OrderedDict
 import accelergy.version as version
 from accelergy.utils.yaml import load_yaml, write_yaml_file
 
+
 class RawInputs2Dicts:
     def __init__(self, input_info, update_config_version=False):
         self.parser_version = input_info["parser_version"]
@@ -423,7 +424,8 @@ class RawInputs2Dicts:
             os.path.expanduser("~") + "/.config/accelergy/",
         ]
         config_file_name = "accelergy_config.yaml"
-        if (original_config_file_path := get_config_file_path()) is not None:
+        try:
+            original_config_file_path = get_config_file_path()
             original_content = load_yaml(original_config_file_path)
             INFO("config file located:", original_config_file_path)
             if "version" not in original_content:
@@ -442,36 +444,37 @@ class RawInputs2Dicts:
                 file_version, "config", original_config_file_path
             )
             self.config = original_content
-            return
+        except FileNotFoundError:
+            create_folder(possible_config_dirs[1])
+            config_file_path = possible_config_dirs[1] + config_file_name
+            curr_file_path = os.path.abspath(__file__)
+            accelergy_share_folder_path = os.path.abspath(
+                curr_file_path + "../../../../../../share/accelergy/"
+            )
+            default_estimator_path = os.path.abspath(
+                accelergy_share_folder_path + "/estimation_plug_ins/"
+            )
+            default_pc_lib_path = os.path.abspath(
+                accelergy_share_folder_path + "/primitive_component_libs/"
+            )
 
-        create_folder(possible_config_dirs[1])
-        config_file_path = possible_config_dirs[1] + config_file_name
-        curr_file_path = os.path.abspath(__file__)
-        accelergy_share_folder_path = os.path.abspath(
-            curr_file_path + "../../../../../../share/accelergy/"
-        )
-        default_estimator_path = os.path.abspath(
-            accelergy_share_folder_path + "/estimation_plug_ins/"
-        )
-        default_pc_lib_path = os.path.abspath(
-            accelergy_share_folder_path + "/primitive_component_libs/"
-        )
+            config_file_content = {
+                "version": self.parser_version,
+                "estimator_plug_ins": [default_estimator_path],
+                "primitive_components": [default_pc_lib_path],
+                "compound_components": [],
+                "math_functions": [],
+                "python_plug_ins": [],
+            }  # by default, CCs are always input files
 
-        config_file_content = {
-            "version": self.parser_version,
-            "estimator_plug_ins": [default_estimator_path],
-            "primitive_components": [default_pc_lib_path],
-            "compound_components": [],
-        }  # by default, CCs are always input files
-
-        INFO(
-            "Accelergy creating default config at:",
-            possible_config_dirs[1] + config_file_name,
-            "with:\n",
-            config_file_content,
-        )
-        write_yaml_file(config_file_path, config_file_content)
-        self.config = config_file_content
+            INFO(
+                "Accelergy creating default config at:",
+                possible_config_dirs[1] + config_file_name,
+                "with:\n",
+                config_file_content,
+            )
+            write_yaml_file(config_file_path, config_file_content)
+            self.config = config_file_content
 
     def primitive_classes_input_parser(self):
         """construct a dictionary for primitive classes"""
