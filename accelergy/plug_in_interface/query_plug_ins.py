@@ -58,7 +58,8 @@ def call_plug_in(plug_in: Any, query: AccelergyQuery, target_func: Callable,
 
     # See if this estimation matches user requested plug-in and min accuracy
     attrs = query.class_attrs
-    if 'plug_in' in attrs and attrs['plug_in'] != estimation.estimator_name:
+    if attrs.get('plug_in', None) is not None \
+            and attrs['plug_in'] != estimation.estimator_name:
         estimation.fail(
             f'Plug-in {estimation.estimator_name} was not selected for query.')
     if isinstance(estimation, AccuracyEstimation):
