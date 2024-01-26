@@ -121,22 +121,28 @@ def append_path(p: str, cur_path: str, include_dirs: List[str]):
 
 
 def find_paths(p: str, cur_path: str, include_dirs: List[str]):
-    searched = []
-    paths = []
-    prepend = [""] if os.path.isabs(p) else [os.path.dirname(cur_path)] + include_dirs
-
-    for d in prepend:
-        s = os.path.abspath(os.path.realpath(os.path.join(d, p)))
-        globbed_paths = glob.glob(s)
-        if globbed_paths:
-            paths.extend(globbed_paths)
-        searched.append(s)
-    if not paths:
-        raise FileNotFoundError(
-            f"Could not find file {p} in any of the following paths:"
-            + "\n  "
-            + "\n  ".join(searched)
+    if isinstance(p, list):
+        paths = [find_paths(x, cur_path, include_dirs) for x in p]
+    else:
+        searched = []
+        paths = []
+        prepend = (
+            [""] if os.path.isabs(p) else [os.path.dirname(cur_path)] + include_dirs
         )
+
+        for d in prepend:
+            s = os.path.abspath(os.path.realpath(os.path.join(d, p)))
+            globbed_paths = glob.glob(s)
+            if globbed_paths:
+                paths.extend(globbed_paths)
+            searched.append(s)
+        if not paths:
+            raise FileNotFoundError(
+                f"Could not find file {p} in any of the following paths:"
+                + "\n  "
+                + "\n  ".join(searched)
+            )
+
     unique_paths = []
     uniques = set()
     while paths:
