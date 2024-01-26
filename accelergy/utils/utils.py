@@ -72,7 +72,7 @@ def INFO(*argv):
 
 def ASSERT_MSG(expression, msg):
     if not expression:
-        ERROR_CLEAN_EXIT(msg)
+        raise AssertionError(msg)
 
 
 def remove_brackets(name):
