@@ -1,7 +1,8 @@
 from accelergy.utils.utils import *
 from accelergy.plug_in_interface.interface import AccelergyPlugIn
 
-class SystemState():
+
+class SystemState:
     def __init__(self):
         self.cc_classes = {}
         self.pc_classes = {}
@@ -24,43 +25,59 @@ class SystemState():
         self.parser_version = version
 
     def set_hier_arch_spec(self, arch_dict):
-        ASSERT_MSG(self.hier_arch_spec is None, 'interpreted input arch is set')
+        ASSERT_MSG(self.hier_arch_spec is None, "interpreted input arch is set")
         self.hier_arch_spec = arch_dict
 
     def set_arch_spec(self, arch_spec):
-        ASSERT_MSG(self.arch_spec is None, 'architecture spec is already set')
+        ASSERT_MSG(self.arch_spec is None, "architecture spec is already set")
         self.arch_spec = arch_spec
 
     def add_cc_class(self, cc_class):
         cc_class_name = cc_class.get_name()
-        ASSERT_MSG(cc_class_name not in self.cc_classes, '%s compound class is already added'%(cc_class_name))
+        ASSERT_MSG(
+            cc_class_name not in self.cc_classes,
+            "%s compound class is already added" % (cc_class_name),
+        )
         self.cc_classes[cc_class_name] = cc_class
 
     def add_pc_class(self, pc_class):
         pc_class_name = pc_class.get_name()
-        ASSERT_MSG(pc_class_name not in self.pc_classes, '%s primitive class is already added'%(pc_class_name))
+        ASSERT_MSG(
+            pc_class_name not in self.pc_classes,
+            "%s primitive class is already added" % (pc_class_name),
+        )
         self.pc_classes[pc_class_name] = pc_class
 
     def add_cc(self, cc):
         cc_name = cc.get_name()
-        ASSERT_MSG(cc_name not in self.ccs, '%s compound component is already added'%(cc_name))
+        ASSERT_MSG(
+            cc_name not in self.ccs,
+            "%s compound component is already added" % (cc_name),
+        )
         self.ccs[cc_name] = cc
 
     def add_pc(self, pc):
         pc_name = pc.get_name()
-        ASSERT_MSG(pc_name not in self.ccs, '%s compound component is already added'%(pc_name))
+        ASSERT_MSG(
+            pc_name not in self.ccs,
+            "%s compound component is already added" % (pc_name),
+        )
         self.pcs[pc_name] = pc
 
     def add_plug_ins(self, plug_ins):
-        ASSERT_MSG(isinstance(plug_ins, list), 'plug in objects need to be passed in as a list')
+        ASSERT_MSG(
+            isinstance(plug_ins, list), "plug in objects need to be passed in as a list"
+        )
         self.plug_ins = plug_ins
         for plug_in in self.plug_ins:
             if isinstance(plug_in, AccelergyPlugIn):
-                if not getattr(plug_in, '_accelergy_plug_in_initialized', False):
+                if not getattr(plug_in, "_accelergy_plug_in_initialized", False):
                     plug_in.__AccelergyPlugIn__init__()
-                if not getattr(plug_in, '_accelergy_plug_in_initialized', False):
-                    ERROR_CLEAN_EXIT(f'Plug-in {plug_in.get_name()} is not initialized. Please ' \
-                                     f'call super().__init__() in the plug-in\'s __init__ method.')
+                if not getattr(plug_in, "_accelergy_plug_in_initialized", False):
+                    raise RuntimeError(
+                        f"Plug-in {plug_in.get_name()} is not initialized. Please "
+                        f"call super().__init__() in the plug-in's __init__ method."
+                    )
 
     def set_ERT(self, ERT):
         self.ERT = ERT

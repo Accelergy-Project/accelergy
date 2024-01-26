@@ -114,11 +114,10 @@ LOADED_MATH_FUNCS_FROM = set()
 
 
 def propagate_required_keys(
-        d1: dict,
-        d2: dict,
-        location: str,
-        action_keys: bool = False):
-    """ Propagate required keys from d1 to d2. """
+    d1: dict, d2: dict, location: str, action_keys: bool = False
+):
+    """Propagate required keys from d1 to d2."""
+
     def propagate(key, setdefault: Any = None):
         if key in d2:
             return
@@ -129,9 +128,7 @@ def propagate_required_keys(
             if setdefault is not None:
                 d2[key] = setdefault
                 return
-            combined_keys = list(d1.keys()) + [
-                k for k in d2.keys() if k not in d1
-            ]
+            combined_keys = list(d1.keys()) + [k for k in d2.keys() if k not in d1]
             raise ValueError(
                 f'Required key "{key}" not found in {location}. Found keys: '
                 f'{", ".join(combined_keys)}'
@@ -140,20 +137,21 @@ def propagate_required_keys(
 
     if not version.input_version_greater_or_equal(0.4):
         # Legacy
-        propagate('global_cycle_seconds', d2.get('latency', 1e-9))
-        if isinstance(d2['global_cycle_seconds'], str):
-            d2['global_cycle_seconds'] = d2['global_cycle_seconds'].replace(
-                'ns', 'e-9').replace(' ', '')
+        propagate("global_cycle_seconds", d2.get("latency", 1e-9))
+        if isinstance(d2["global_cycle_seconds"], str):
+            d2["global_cycle_seconds"] = (
+                d2["global_cycle_seconds"].replace("ns", "e-9").replace(" ", "")
+            )
         return
 
-    propagate('global_cycle_seconds')
+    propagate("global_cycle_seconds")
     if action_keys:
         return
-    d2.setdefault('cycle_seconds', d2['global_cycle_seconds'])
-    propagate('cycle_seconds')
-    propagate('action_latency_cycles', 1)
-    propagate('technology')
-    propagate('n_instances', 1)
+    d2.setdefault("cycle_seconds", d2["global_cycle_seconds"])
+    propagate("cycle_seconds")
+    propagate("action_latency_cycles", 1)
+    propagate("technology")
+    propagate("n_instances", 1)
 
 
 def interpret_component_list(name, binding_dictionary=None):
@@ -179,14 +177,12 @@ def interpret_component_list(name, binding_dictionary=None):
             name_base = name[:left_bracket_idx]
             right_bracket_idx = name.find("]")
             list_start_idx = str_to_int(
-                name[left_bracket_idx + 1: range_flag], binding_dictionary
+                name[left_bracket_idx + 1 : range_flag], binding_dictionary
             )
             list_end_idx = str_to_int(
-                name[range_flag + 2: right_bracket_idx], binding_dictionary
+                name[range_flag + 2 : right_bracket_idx], binding_dictionary
             )
-            list_suffix = (
-                "[" + str(list_start_idx) + ".." + str(list_end_idx) + "]"
-            )
+            list_suffix = "[" + str(list_start_idx) + ".." + str(list_end_idx) + "]"
             ASSERT_MSG(
                 list_end_idx >= list_start_idx,
                 "end index < start index %s (interpreted as %s)"
@@ -229,14 +225,9 @@ def cast_to_numeric(x: Any) -> Union[int, float, bool]:
 
 
 def is_quoted_string(expression):
-    return (
-        isinstance(
-            expression, ruamel.yaml.scalarstring.DoubleQuotedScalarString
-        )
-        or isinstance(
-            expression, ruamel.yaml.scalarstring.SingleQuotedScalarString
-        )
-    )
+    return isinstance(
+        expression, ruamel.yaml.scalarstring.DoubleQuotedScalarString
+    ) or isinstance(expression, ruamel.yaml.scalarstring.SingleQuotedScalarString)
 
 
 def ruamel_str_to_normal_str(expression):
@@ -319,13 +310,17 @@ def parse_expression_for_arithmetic(
                 extras.append(f"\n    {k} = {v}")
         errstr += "".join(f"\n\t{k} = {v}" for k, v in bindings.items())
         errstr += "\n\n" + err
-        errstr += f"Please ensure that the expression used is a valid Python expression.\n"
-        possibly_used = {k: bindings.get(k, FUNCTION_BINDINGS.get(k, 'UNDEFINED'))
-                         for k in re.findall(r"([a-zA-Z_][a-zA-Z0-9_]*)", expression) if k not in keyword.kwlist}
+        errstr += (
+            f"Please ensure that the expression used is a valid Python expression.\n"
+        )
+        possibly_used = {
+            k: bindings.get(k, FUNCTION_BINDINGS.get(k, "UNDEFINED"))
+            for k in re.findall(r"([a-zA-Z_][a-zA-Z0-9_]*)", expression)
+            if k not in keyword.kwlist
+        }
         if possibly_used:
             errstr += f"The following may have been used in the expression:"
-            errstr += "".join(f"\n\t{k} = {v}" for k,
-                              v in possibly_used.items())
+            errstr += "".join(f"\n\t{k} = {v}" for k, v in possibly_used.items())
             errstr += "\n"
         if strings_allowed:
             errstr += "Strings are allowed here. If you meant to enter a string, please wrap the\n"
@@ -344,7 +339,7 @@ def parse_expression_for_arithmetic(
             for l in errstr.splitlines():
                 WARN(l)
             return expression
-        ERROR_CLEAN_EXIT(f"{errstr}\n")
+        raise ArithmeticError(f"{errstr}\n")
 
     # if expression not in EXPR_CACHE or EXPR_CACHE[expression] != v:
     INFO(infostr)
@@ -377,16 +372,15 @@ def count_num_identical_comps(name):
     total_num_identical_comps = 1
     start_idx = name.find("[")
     end_idx = name.find("]")
-    potential_range = name[start_idx + 1: end_idx]
+    potential_range = name[start_idx + 1 : end_idx]
     if ".." in potential_range:
         range_start = int(potential_range.split("..")[0])
         range_end = int(potential_range.split("..")[1])
         range = range_end - range_start + 1
         total_num_identical_comps = total_num_identical_comps * range
-    if "[" and "]" in name[end_idx + 1:]:
+    if "[" and "]" in name[end_idx + 1 :]:
         total_num_identical_comps = (
-            total_num_identical_comps
-            * count_num_identical_comps(name[end_idx + 1:])
+            total_num_identical_comps * count_num_identical_comps(name[end_idx + 1 :])
         )
     return total_num_identical_comps
 
@@ -397,9 +391,7 @@ def comp_name_within_range(comp_name, comp_name_w_reference_range):
     if "[" not in comp_name:
         return True
     subname_vals_list = get_ranges_or_indices_in_name(comp_name)
-    reference_ranges_list = get_ranges_or_indices_in_name(
-        comp_name_w_reference_range
-    )
+    reference_ranges_list = get_ranges_or_indices_in_name(comp_name_w_reference_range)
     ASSERT_MSG(
         len(reference_ranges_list) == len(subname_vals_list),
         "subcomp name %s missing index specifications (should agree with the format %s"
@@ -427,7 +419,7 @@ def get_ranges_or_indices_in_name(name):
     exisiting_ranges = []
     start_idx = name.find("[")
     end_idx = name.find("]")
-    range = name[start_idx + 1: end_idx]
+    range = name[start_idx + 1 : end_idx]
     if ".." in range:
         range_start = int(range.split("..")[0])
         range_end = int(range.split("..")[1])
@@ -435,7 +427,7 @@ def get_ranges_or_indices_in_name(name):
     else:
         val = int(range)
     exisiting_ranges.append(val)
-    subname = name[end_idx + 1:]
+    subname = name[end_idx + 1 :]
     if "[" and "]" not in subname:
         return exisiting_ranges
     else:
@@ -447,11 +439,12 @@ def get_ranges_or_indices_in_name(name):
 def load_functions_from_file(path: str):
     path = path.strip()
     if not os.path.exists(path):
-        ERROR_CLEAN_EXIT(f"Could not find math function file {path}.")
+        raise FileNotFoundError(f"Could not find math function file {path}.")
     python_module = SourceFileLoader("python_plug_in", path).load_module()
     funcs = {}
-    defined_funcs = [f for f in dir(
-        python_module) if isinstance(getattr(python_module, f), Callable)]
+    defined_funcs = [
+        f for f in dir(python_module) if isinstance(getattr(python_module, f), Callable)
+    ]
     for func in defined_funcs:
         INFO(f"Adding function {func} from {path} to the script library.")
         funcs[func] = getattr(python_module, func)
@@ -465,14 +458,14 @@ def set_script_paths():
     except FileNotFoundError:
         config = {}
     funcs = {}
-    paths = config.get('math_functions', [])
+    paths = config.get("math_functions", [])
     for path in paths:
         load_functions_from_file(path)
     SCRIPT_FUNCS.update(funcs)
 
 
 def refresh_math_funcs():
-    scripts = os.environ.get('ACCELERGY_MATH_FUNCTIONS', '').split(':')
+    scripts = os.environ.get("ACCELERGY_MATH_FUNCTIONS", "").split(":")
     scripts = [s.strip() for s in scripts if s.strip()]
     scripts += SCRIPTS_FROM
     for script in scripts:

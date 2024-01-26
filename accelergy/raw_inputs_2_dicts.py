@@ -38,9 +38,7 @@ class RawInputs2Dicts:
             for cc_lib_path in self.config["compound_components"]:
                 all_paths.append(cc_lib_path)
         else:
-            WARN(
-                "No default paths for compound components specified in config"
-            )
+            WARN("No default paths for compound components specified in config")
 
         # go through each path in the merged list
         input_file_info = {}
@@ -50,9 +48,7 @@ class RawInputs2Dicts:
                 for loaded_content in loaded_content_list:
                     if loaded_content["top_key"] not in input_file_info:
                         input_file_info[loaded_content["top_key"]] = []
-                    input_file_info[loaded_content["top_key"]].append(
-                        loaded_content
-                    )
+                    input_file_info[loaded_content["top_key"]].append(loaded_content)
             elif os.path.isdir(path):
                 for root, directories, file_names in os.walk(path):
                     for file_name in file_names:
@@ -60,18 +56,13 @@ class RawInputs2Dicts:
                             file_path = os.path.join(root, file_name)
                             loaded_content_list = self.load_file(file_path)
                             for loaded_content in loaded_content_list:
-                                if (
-                                    loaded_content["top_key"]
-                                    not in input_file_info
-                                ):
-                                    input_file_info[
-                                        loaded_content["top_key"]
-                                    ] = []
-                                input_file_info[
-                                    loaded_content["top_key"]
-                                ].append(loaded_content)
+                                if loaded_content["top_key"] not in input_file_info:
+                                    input_file_info[loaded_content["top_key"]] = []
+                                input_file_info[loaded_content["top_key"]].append(
+                                    loaded_content
+                                )
             else:
-                ERROR_CLEAN_EXIT("Cannot recognize input path: ", path)
+                raise FileNotFoundError("Cannot recognize input path: ", path)
 
         if "variables" in input_file_info:
             for variable_spec in input_file_info["variables"]:
@@ -83,9 +74,7 @@ class RawInputs2Dicts:
                     "variables.",
                     strings_allowed=True,
                 )
-                self.arch_variables.update(
-                    variable_spec["content"]["variables"]
-                )
+                self.arch_variables.update(variable_spec["content"]["variables"])
 
         for top_key, top_key_file_list in input_file_info.items():
             if top_key != "variables":
@@ -151,7 +140,7 @@ class RawInputs2Dicts:
                 % (file_path),
             )
         else:
-            ERROR_CLEAN_EXIT(
+            raise AttributeError(
                 "Architecture Description must contain subtree or local key at top-level"
             )
 
@@ -180,9 +169,7 @@ class RawInputs2Dicts:
                 global_attributes,
             )
         else:
-            arch_comp_list = self.tree_node_classification(
-                arch_comp_list, None, {}
-            )
+            arch_comp_list = self.tree_node_classification(arch_comp_list, None, {})
         self.hier_arch_spec_dict["architecture"] = OrderedDict(arch_comp_list)
 
     def tree_node_classification(self, node_description, prefix, node_attrs):
@@ -217,9 +204,7 @@ class RawInputs2Dicts:
             )
             for c_id in range(len(node_description["local"])):
                 node_info = node_description["local"][c_id]
-                ASSERT_MSG(
-                    "name" in node_info, "name must be specified for each node"
-                )
+                ASSERT_MSG("name" in node_info, "name must be specified for each node")
                 if "attributes" not in node_info:
                     node_info["attributes"] = {}
                 else:
@@ -257,15 +242,12 @@ class RawInputs2Dicts:
                     else node_info["name"]
                 )
                 node_info["name"] = local_node_name
-                self.flatten_arch_spec_dict["components"][
-                    local_node_name
-                ] = node_info
+                self.flatten_arch_spec_dict["components"][local_node_name] = node_info
 
-        if (
-            "subtree" not in node_description
-            and "local" not in node_description
-        ):
-            ERROR_CLEAN_EXIT("Unrecognized tree node type", node_description)
+        if "subtree" not in node_description and "local" not in node_description:
+            raise AttributeError(
+                f"Could not find 'subtree' or 'local' in tree node {node_description}"
+            )
 
         return node_description
 
@@ -280,7 +262,7 @@ class RawInputs2Dicts:
         for subtree_idx in range(len(subtree_description)):
             subtree_item_description = subtree_description[subtree_idx]
             if "name" not in subtree_item_description:
-                ERROR_CLEAN_EXIT(
+                raise AttributeError(
                     "error: architecture description...",
                     ' "name" needs to be specified as a key in node description',
                     subtree_item_description,
@@ -314,9 +296,7 @@ class RawInputs2Dicts:
             if list_suffix is not None:
                 node_name = name_base + list_suffix
             subtree_item_description["name"] = node_name
-            item_prefix = (
-                prefix + "." + node_name
-            )  # generated for the flattened arch
+            item_prefix = prefix + "." + node_name  # generated for the flattened arch
             subtree_description[subtree_idx] = OrderedDict(
                 self.tree_node_classification(
                     subtree_item_description, item_prefix, node_attrs
@@ -384,27 +364,26 @@ class RawInputs2Dicts:
                 ), f"Expected dict in {context}. Found: {target}"
                 for t in to_find:
                     assert t in target, (
-                        f'Missing required key "{t}" '
-                        f"in {context}. Found: {target}"
+                        f'Missing required key "{t}" ' f"in {context}. Found: {target}"
                     )
 
             for action_info in cc_class["actions"]:
                 cc_context = f'compound component class {cc_class["name"]}'
-                assert_name_actions(
-                    action_info, cc_context, ["name", "subcomponents"]
-                )
+                assert_name_actions(action_info, cc_context, ["name", "subcomponents"])
                 for subcomponent_actions in action_info["subcomponents"]:
-                    action_context = f'{cc_context} action {action_info["name"]} subcomponent'
+                    action_context = (
+                        f'{cc_context} action {action_info["name"]} subcomponent'
+                    )
                     assert_name_actions(
                         subcomponent_actions,
                         action_context,
                         ["name", "actions"],
                     )
                     for subcomponent_action in subcomponent_actions["actions"]:
-                        sub_context = f'{action_context} {subcomponent_actions["name"]} action'
-                        assert_name_actions(
-                            subcomponent_action, sub_context, ["name"]
+                        sub_context = (
+                            f'{action_context} {subcomponent_actions["name"]} action'
                         )
+                        assert_name_actions(subcomponent_action, sub_context, ["name"])
                         if "action_share" not in subcomponent_action:
                             if "repeat" in subcomponent_action:
                                 subcomponent_action[
@@ -429,7 +408,7 @@ class RawInputs2Dicts:
             original_content = load_yaml(original_config_file_path)
             INFO("config file located:", original_config_file_path)
             if "version" not in original_content:
-                ERROR_CLEAN_EXIT(
+                raise AttributeError(
                     "config file has no version number, cannot proceed"
                 )
             file_version = original_content["version"]
@@ -500,9 +479,7 @@ class RawInputs2Dicts:
             pc_description = primitive_component_list["classes"][idx]
             if pc_description["name"] in self.pc_classes_dict:
                 WARN(f'{pc_description["name"]} redefined in {pc_path}')
-            self.pc_classes_dict[pc_description["name"]] = deepcopy(
-                pc_description
-            )
+            self.pc_classes_dict[pc_description["name"]] = deepcopy(pc_description)
         INFO("primitive component file parsed: ", pc_path)
 
     def ERT_input_parser(self, file_info):
@@ -519,9 +496,7 @@ class RawInputs2Dicts:
             isinstance(content["tables"], list),
             "ERT tables must be in the form of list",
         )
-        version.check_input_parser_version(
-            content["version"], "ERT", file_path
-        )
+        version.check_input_parser_version(content["version"], "ERT", file_path)
 
         for ERT_component_entry in ERT_component_entry_list:
             ASSERT_MSG(
@@ -542,8 +517,7 @@ class RawInputs2Dicts:
         file_path = file_info["path"]
         ASSERT_MSG(
             "version" in file_info["content"][top_key],
-            "Please specify the version of the action counts file: %s"
-            % (file_path),
+            "Please specify the version of the action counts file: %s" % (file_path),
         )
         version.check_input_parser_version(
             file_info["content"][top_key]["version"],
@@ -576,9 +550,7 @@ class RawInputs2Dicts:
                     full_name = local_node["name"]
                 else:
                     full_name = prefix + "." + local_node["name"]
-                self.action_counts_dict[full_name] = local_node[
-                    "action_counts"
-                ]
+                self.action_counts_dict[full_name] = local_node["action_counts"]
 
         if "subtree" in node_description:
             subtree_nodes = node_description["subtree"]
@@ -595,12 +567,8 @@ class RawInputs2Dicts:
                 if prefix is None:
                     subtree_prefix = subtree_node_description["name"]
                 else:
-                    subtree_prefix = (
-                        prefix + "." + subtree_node_description["name"]
-                    )
-                self.flatten_action_counts(
-                    subtree_prefix, subtree_node_description
-                )
+                    subtree_prefix = prefix + "." + subtree_node_description["name"]
+                self.flatten_action_counts(subtree_prefix, subtree_node_description)
 
     def get_hier_arch_spec_dict(self):
         ASSERT_MSG(
