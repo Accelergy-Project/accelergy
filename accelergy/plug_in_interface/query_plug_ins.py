@@ -187,7 +187,7 @@ def get_best_estimate(
         return estimation
 
     estimation_target = "energy" if is_energy_estimation else "area"
-    raise RuntimeError(
+    ERROR_CLEAN_EXIT(
         *(
             f"Can not find an {estimation_target} estimator for {query}\n"
             f'{indent_list_text_block("Logs for plug-ins that could estimate query:", full_logs)}\n'
