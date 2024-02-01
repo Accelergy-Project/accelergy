@@ -268,12 +268,20 @@ def load_file_and_includes(
         os.environ[key] = value
         return "{{ setenv('" + key + "', '" + value + "') }}}}"
 
+    def path_exists(p):
+        try:
+            find_path(p, path, include_dirs)
+            return True
+        except FileNotFoundError:
+            return False
+
     env.globals["cwd"] = lambda: os.path.dirname(path)
     env.globals["include"] = include_single
     env.globals["include_all"] = include_all
     env.globals["include_text"] = include_text
     env.globals["find_path"] = lambda x: find_path(x, path, include_dirs)
     env.globals["find_paths"] = lambda x: find_paths(x, path, include_dirs)
+    env.globals["path_exists"] = path_exists
     env.globals["setenv"] = setenv
 
     env.globals["add_to_path"] = lambda p: append_path(p, path, include_dirs)
