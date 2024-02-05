@@ -145,11 +145,11 @@ def propagate_required_keys(
         return
 
     propagate("global_cycle_seconds")
+    propagate("action_latency_cycles", 1)
     if action_keys:
         return
     d2.setdefault("cycle_seconds", d2["global_cycle_seconds"])
     propagate("cycle_seconds")
-    propagate("action_latency_cycles", 1)
     propagate("technology")
     propagate("n_instances", 1)
 
