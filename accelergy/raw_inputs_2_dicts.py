@@ -66,13 +66,13 @@ class RawInputs2Dicts:
 
         if "variables" in input_file_info:
             for variable_spec in input_file_info["variables"]:
-                variable_spec["content"][
-                    "variables"
-                ] = parse_expressions_sequentially_replacing_bindings(
-                    variable_spec["content"]["variables"],
-                    {},
-                    "variables.",
-                    strings_allowed=True,
+                variable_spec["content"]["variables"] = (
+                    parse_expressions_sequentially_replacing_bindings(
+                        variable_spec["content"]["variables"],
+                        {},
+                        "variables.",
+                        strings_allowed=True,
+                    )
                 )
                 self.arch_variables.update(variable_spec["content"]["variables"])
 
@@ -217,13 +217,13 @@ class RawInputs2Dicts:
                     if attr_name not in node_info["attributes"]:
                         node_info["attributes"][attr_name] = attr_val
 
-                node_info[
-                    "attributes"
-                ] = parse_expressions_sequentially_replacing_bindings(
-                    node_info["attributes"],
-                    self.arch_variables,
-                    f"arch attribute ",
-                    strings_allowed=True,
+                node_info["attributes"] = (
+                    parse_expressions_sequentially_replacing_bindings(
+                        node_info["attributes"],
+                        self.arch_variables,
+                        f"arch attribute ",
+                        strings_allowed=True,
+                    )
                 )
                 all_attrs = copy.deepcopy(self.arch_variables)
                 all_attrs.update(node_info["attributes"])
@@ -386,13 +386,13 @@ class RawInputs2Dicts:
                         assert_name_actions(subcomponent_action, sub_context, ["name"])
                         if "action_share" not in subcomponent_action:
                             if "repeat" in subcomponent_action:
-                                subcomponent_action[
-                                    "action_share"
-                                ] = subcomponent_action["repeat"]
+                                subcomponent_action["action_share"] = (
+                                    subcomponent_action["repeat"]
+                                )
                             else:
-                                subcomponent_action[
-                                    "action_share"
-                                ] = 1  # default action share is 1
+                                subcomponent_action["action_share"] = (
+                                    1  # default action share is 1
+                                )
             self.cc_classes_dict[cc_class["name"]] = deepcopy(cc_class)
 
     def construct_parse_config_file(self, update_config_version):
@@ -436,6 +436,9 @@ class RawInputs2Dicts:
             default_pc_lib_path = os.path.abspath(
                 accelergy_share_folder_path + "/primitive_component_libs/"
             )
+            table_plug_ins_path = os.path.abspath(
+                accelergy_share_folder_path + "/table_plug_ins/"
+            )
 
             config_file_content = {
                 "version": self.parser_version,
@@ -444,6 +447,7 @@ class RawInputs2Dicts:
                 "compound_components": [],
                 "math_functions": [],
                 "python_plug_ins": [],
+                "table_plug_ins": {"roots": [table_plug_ins_path]},
             }  # by default, CCs are always input files
 
             INFO(
