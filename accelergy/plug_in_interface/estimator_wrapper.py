@@ -34,23 +34,19 @@ class CallableFunction:
         if is_init:
             function = function.__init__
 
-        args = function.__code__.co_varnames[1: function.__code__.co_argcount]
+        args = function.__code__.co_varnames[1 : function.__code__.co_argcount]
         default_length = (
-            len(function.__defaults__)
-            if function.__defaults__ is not None
-            else 0
+            len(function.__defaults__) if function.__defaults__ is not None else 0
         )
 
         self.function_name = function.__name__
         if force_name_override is not None:
             self.function_name = force_name_override
         self.non_default_args = args[: len(args) - default_length]
-        self.default_args = args[len(args) - default_length:]
+        self.default_args = args[len(args) - default_length :]
         self.logger = logger
 
-    def get_error_message_for_name_match(
-        self, name: str, class_name: str = ""
-    ):
+    def get_error_message_for_name_match(self, name: str, class_name: str = ""):
         if self.function_name != name:
             return f"Function name {self.function_name} does not match my name {class_name}.{name}"
         return None
@@ -72,9 +68,7 @@ class CallableFunction:
         name_error = self.get_error_message_for_name_match(name, class_name)
         if name_error is not None:
             return name_error
-        arg_error = self.get_error_message_for_non_default_arg_match(
-            kwargs, class_name
-        )
+        arg_error = self.get_error_message_for_non_default_arg_match(kwargs, class_name)
         if arg_error is not None:
             return arg_error
         return None
@@ -115,9 +109,7 @@ class EstimatorWrapper(AccelergyPlugIn):
         self.percent_accuracy = estimator_cls.percent_accuracy_0_to_100
         self.get_area = CallableFunction(estimator_cls.get_area, self.logger)
         self.leak = CallableFunction(estimator_cls.leak, self.logger)
-        self.init_function = CallableFunction(
-            estimator_cls, self.logger, is_init=True
-        )
+        self.init_function = CallableFunction(estimator_cls, self.logger, is_init=True)
 
         self.actions = [
             CallableFunction(getattr(estimator_cls, a), self.logger)
@@ -128,6 +120,7 @@ class EstimatorWrapper(AccelergyPlugIn):
                 False,
             )
         ]
+        self.actions.append(CallableFunction(estimator_cls.leak, self.logger))
         INFO(
             f"Added estimator {self.estimator_name} that estimates {self.class_name} with actions "
             f'{", ".join(self.get_action_names())}'
@@ -143,9 +136,7 @@ class EstimatorWrapper(AccelergyPlugIn):
 
     def is_class_supported(self, query: AccelergyQuery) -> bool:
         name_check = (
-            [self.class_name]
-            if isinstance(self.class_name, str)
-            else self.class_name
+            [self.class_name] if isinstance(self.class_name, str) else self.class_name
         )
         if not query.class_name in name_check:
             return False
@@ -162,13 +153,9 @@ class EstimatorWrapper(AccelergyPlugIn):
         subclass.__ListLoggable__init__()
         return subclass
 
-    def get_matching_actions(
-        self, query: AccelergyQuery
-    ) -> List[CallableFunction]:
+    def get_matching_actions(self, query: AccelergyQuery) -> List[CallableFunction]:
         # Find actions that match the name
-        name_matches = [
-            a for a in self.actions if a.function_name == query.action_name
-        ]
+        name_matches = [a for a in self.actions if a.function_name == query.action_name]
         if len(name_matches) == 0:
             raise AttributeError(
                 f"No action with name {query.action_name} found in {self.class_name}. "
@@ -179,8 +166,7 @@ class EstimatorWrapper(AccelergyPlugIn):
         matching_name_and_arg_actions = [
             a
             for a in name_matches
-            if a.get_call_error_message(query.action_name, query.action_args)
-            is None
+            if a.get_call_error_message(query.action_name, query.action_args) is None
         ]
         if len(matching_name_and_arg_actions) == 0:
             matching_func_strings = [
@@ -201,14 +187,11 @@ class EstimatorWrapper(AccelergyPlugIn):
                 f"Action with name {query.action_name} found in {self.class_name}, but provided "
                 f"arguments do not match.\n\t"
                 f'Arguments provided: {", ".join(args_provided)}\n\t'
-                f"Possible actions:\n\t\t"
-                + "\n\t\t".join(matching_func_strings)
+                f"Possible actions:\n\t\t" + "\n\t\t".join(matching_func_strings)
             )
         return matching_name_and_arg_actions
 
-    def primitive_action_supported(
-        self, query: AccelergyQuery
-    ) -> AccuracyEstimation:
+    def primitive_action_supported(self, query: AccelergyQuery) -> AccuracyEstimation:
         """Returns the accuracy of the action if it is supported, otherwise 0."""
         if not self.is_class_supported(query):
             return AccuracyEstimation(0)
@@ -216,9 +199,7 @@ class EstimatorWrapper(AccelergyPlugIn):
             return AccuracyEstimation(0)
         return AccuracyEstimation(self.percent_accuracy)
 
-    def primitive_area_supported(
-        self, query: AccelergyQuery
-    ) -> AccuracyEstimation:
+    def primitive_area_supported(self, query: AccelergyQuery) -> AccuracyEstimation:
         """Returns the accuracy of the area if it is supported, otherwise 0."""
         if not self.is_class_supported(query):
             return AccuracyEstimation(0)
@@ -227,9 +208,7 @@ class EstimatorWrapper(AccelergyPlugIn):
     def estimate_energy(self, query: AccelergyQuery) -> Estimation:
         """Returns the energy estimation for the given action."""
         initialized_obj = self.get_initialized_subclass(query)
-        move_queue_from_one_logger_to_another(
-            initialized_obj.logger, self.logger
-        )
+        move_queue_from_one_logger_to_another(initialized_obj.logger, self.logger)
         supported_actions = self.get_matching_actions(query)
         if len(supported_actions) == 0:
             raise AttributeError(
@@ -241,16 +220,12 @@ class EstimatorWrapper(AccelergyPlugIn):
                 query.action_args, self.class_name, initialized_obj
             )
         )
-        move_queue_from_one_logger_to_another(
-            initialized_obj.logger, self.logger
-        )
+        move_queue_from_one_logger_to_another(initialized_obj.logger, self.logger)
         return estimation
 
     def estimate_area(self, query: AccelergyQuery) -> Estimation:
         """Returns the area estimation for the given action."""
-        return Estimation.from_value(
-            self.get_initialized_subclass(query).get_area()
-        )
+        return Estimation.from_value(self.get_initialized_subclass(query).get_area())
 
     def get_name(self) -> str:
         return self.estimator_name
@@ -261,20 +236,12 @@ def get_all_estimators_in_module(
 ) -> List[Estimator]:
     INFO(f"Getting all estimators in module {module}")
     classes = [
-        (x, name)
-        for name in dir(module)
-        if inspect.isclass(x := getattr(module, name))
+        (x, name) for name in dir(module) if inspect.isclass(x := getattr(module, name))
     ]
-    classes = [
-        (x, name) for x, name in classes if x.__module__ == module.__name__
-    ]
+    classes = [(x, name) for x, name in classes if x.__module__ == module.__name__]
     found = []
     for x, name in classes:
-        if (
-            issubclass(x, Estimator)
-            and not x is Estimator
-            and id(x) not in plug_in_ids
-        ):
+        if issubclass(x, Estimator) and not x is Estimator and id(x) not in plug_in_ids:
             plug_in_ids.add(id(x))
             found.append(EstimatorWrapper(x, name))
     return found
@@ -283,9 +250,7 @@ def get_all_estimators_in_module(
 def check_for_valid_estimator_attrs(estimator: Estimator):
     # Check for valid class_name. Must be a string or list of strings
     if getattr(estimator, "name", None) is None:
-        raise AttributeError(
-            f"Estimator {estimator} must have a name attribute"
-        )
+        raise AttributeError(f"Estimator {estimator} must have a name attribute")
     name = estimator.name
     if not isinstance(name, str) and not (
         isinstance(name, list) and all(isinstance(n, str) for n in name)
