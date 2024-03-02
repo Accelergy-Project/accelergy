@@ -50,6 +50,10 @@ class Estimator(ListLoggable, ABC):
 
 def add_estimator_path(path: str, add_full_dir: bool = False):
     """Adds a path to the list of Python plug-in paths in the Accelergy config file."""
+    print(
+        f"WARNING: This method of installation is for testing purposes only. For public "
+        f"plug-ins, use the pip install instructions in the tutorial exercises."
+    )
     cfg_yaml = get_config_file_path()
     path = os.path.abspath(path)
     if add_full_dir:
