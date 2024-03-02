@@ -139,6 +139,10 @@ class EstimatorWrapper(AccelergyPlugIn):
             [self.class_name] if isinstance(self.class_name, str) else self.class_name
         )
         if not query.class_name in name_check:
+            self.logger.error(
+                f"Class name {query.class_name} is not supported. Supported class "
+                f"names: {name_check}"
+            )
             return False
         init_error = self.init_function.get_call_error_message(
             "__init__", query.class_attrs, self.class_name
