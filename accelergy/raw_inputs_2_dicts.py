@@ -471,12 +471,6 @@ class RawInputs2Dicts:
                         pc_path = root + os.sep + file_name
                         self.expand_primitive_component_lib_info(pc_path)
 
-        ASSERT_MSG(
-            not len(self.pc_classes_dict) == 0,
-            "No primitive component class found, "
-            "please check if the paths in config file are correct",
-        )
-
     def expand_primitive_component_lib_info(self, pc_path):
         primitive_component_list = load_yaml(pc_path)
         for idx in range(len(primitive_component_list["classes"])):
@@ -589,10 +583,6 @@ class RawInputs2Dicts:
         return self.flatten_arch_spec_dict
 
     def get_pc_classses(self):
-        ASSERT_MSG(
-            not self.pc_classes_dict == {},
-            "Cannot get primitive component class from raw inputs",
-        )
         return self.pc_classes_dict
 
     def get_cc_classses(self):
