@@ -401,7 +401,7 @@ def merge(
         elif isinstance(merge_into[k], dict) and isinstance(v, dict) and recursive:
             merge_into[k] = merge(merge_into[k], v, recursive)
         elif isinstance(merge_into[k], list) and isinstance(v, list) and recursive:
-            merge_into[k] += v
+            merge_into[k] = merge_into[k] + v
         else:
             merge_into[k] = v
     # if not recursive:
