@@ -400,6 +400,10 @@ def merge(
             merge_into[k] = v
         elif isinstance(merge_into[k], dict) and isinstance(v, dict) and recursive:
             merge_into[k] = merge(merge_into[k], v, recursive)
+        elif isinstance(merge_into[k], list) and isinstance(v, list) and recursive:
+            merge_into[k] += v
+        else:
+            merge_into[k] = v
     # if not recursive:
     #     print(f"Non-recursive merge of {tomerge} into {merge_into}")
     return merge_into
