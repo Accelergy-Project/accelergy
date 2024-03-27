@@ -19,20 +19,18 @@
 # SOFTWARE.
 
 import copy
-import timeit
 import functools
 import os
 import glob
 import re
 import io
-from typing import Callable, List, Dict, Any, Set, Union, OrderedDict, Tuple, Optional
+from typing import Callable, List, Dict, Any, Union, OrderedDict, Tuple
 from accelergy.utils.utils import INFO
 import ruamel.yaml
 import accelergy.utils.utils as utils
-import accelergy.version as version
 import warnings
 from ruamel.yaml.error import ReusedAnchorWarning
-from jinja2 import Template, StrictUndefined, Environment, FileSystemLoader
+from jinja2 import StrictUndefined, Environment, FileSystemLoader
 import threading
 import time
 
