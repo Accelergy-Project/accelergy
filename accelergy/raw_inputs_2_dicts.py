@@ -456,6 +456,7 @@ class RawInputs2Dicts:
                 "with:\n",
                 config_file_content,
             )
+            create_folder(os.path.dirname(config_file_path))
             write_yaml_file(config_file_path, config_file_content)
             self.config = config_file_content
 
