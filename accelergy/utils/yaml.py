@@ -18,6 +18,7 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
+import copy
 import timeit
 import functools
 import os
@@ -328,7 +329,7 @@ def merge_check(x: Union[Dict[str, Any], List[Any], Any]) -> None:
                     f"Keys were {list(x.keys())}"
                 )
                 found_merge = True
-                x = merge(x, x.pop(k), str(k) == "<<<")
+                x = merge(x, copy.deepcopy(x.pop(k)), str(k) == "<<<")
     return x
 
 
@@ -377,10 +378,6 @@ def merge(
     merge_into: dict, tomerge: Union[dict, list, tuple], recursive: bool = True
 ) -> dict:
     if isinstance(tomerge, (list, tuple)):
-        assert not recursive, (
-            f"Cannot recursively merge multiple dicts. Please only specify "
-            f'one dict under the "<<<" key.'
-        )
         combined = dict()
         for m in tomerge:
             combined = merge(combined, m, recursive)
@@ -398,14 +395,14 @@ def merge(
     for k, v in tomerge.items():
         if k not in merge_into:
             merge_into[k] = v
-        elif isinstance(merge_into[k], dict) and isinstance(v, dict) and recursive:
+        elif not recursive:
+            continue
+        elif isinstance(merge_into[k], (NoMergeListWrapper, NoMergeDictWrapper)):
+            continue
+        elif isinstance(merge_into[k], dict) and isinstance(v, dict):
             merge_into[k] = merge(merge_into[k], v, recursive)
-        elif isinstance(merge_into[k], list) and isinstance(v, list) and recursive:
+        elif isinstance(merge_into[k], list) and isinstance(v, list):
             merge_into[k] = merge_into[k] + v
-        else:
-            merge_into[k] = v
-    # if not recursive:
-    #     print(f"Non-recursive merge of {tomerge} into {merge_into}")
     return merge_into
 
 
@@ -528,8 +525,19 @@ def get_yaml(path: str, data: Dict[str, Any] = None) -> ruamel.yaml.YAML:
     yaml.constructor.add_constructor("!include_loaded", ymf.include_loaded)
     yaml.constructor.add_constructor("!include", ymf.include)
     yaml.constructor.add_constructor("!includedir", ymf.includedir)
+    yaml.constructor.add_constructor("!nomerge", ymf.nomerge)
 
     return yaml
+
+
+class NoMergeListWrapper(list):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+
+class NoMergeDictWrapper(dict):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
 
 
 class YAMLFileLoader:
@@ -542,6 +550,23 @@ class YAMLFileLoader:
         self.env = Environment(
             loader=FileSystemLoader(os.path.dirname(path)), undefined=StrictUndefined
         )
+
+    def nomerge(self, constructor, node):
+        # print(f"Got node {node}")
+        # Pop the tag
+        # node.tag = None
+        # print(f"Got node {node}")
+        # # value = constructor.construct_object(node, deep=True)
+        # print(f"COnstructed object {value}")
+        if isinstance(node, ruamel.yaml.nodes.SequenceNode):
+            return NoMergeListWrapper(constructor.construct_sequence(node, deep=True))
+        if isinstance(node, ruamel.yaml.nodes.MappingNode):
+            return NoMergeDictWrapper(
+                ruamel.yaml.SafeConstructor.construct_mapping(
+                    constructor, node, deep=True
+                )
+            )
+        raise ValueError(f"!nomerge tag must be applied to a list or dict, not {node}")
 
     def include_loaded(
         self,
