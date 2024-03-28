@@ -456,6 +456,8 @@ def set_script_paths():
     try:
         config = load_yaml(get_config_file_path())
     except FileNotFoundError:
+        config = None
+    if config is None:
         config = {}
     funcs = {}
     paths = config.get("math_functions", [])
