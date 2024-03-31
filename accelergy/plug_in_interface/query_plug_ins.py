@@ -90,7 +90,12 @@ def primitive_energy_supported(
 
 
 def get_energy_estimation(plug_in: Any, query: AccelergyQuery) -> Estimation:
-    return call_plug_in(plug_in, query, plug_in.estimate_energy, Estimation)
+    e = call_plug_in(plug_in, query, plug_in.estimate_energy, Estimation)
+    if e and e.success and query.action_name == "leak":
+        n_instances = query.class_attrs.get("n_instances", 1)
+        e.add_messages(f"Multiplying by n_instances {n_instances}")
+        e.value *= n_instances
+    return e
 
 
 def primitive_area_supported(plug_in: Any, query: AccelergyQuery) -> AccuracyEstimation:
@@ -100,7 +105,12 @@ def primitive_area_supported(plug_in: Any, query: AccelergyQuery) -> AccuracyEst
 
 
 def get_area_estimation(plug_in: Any, query: AccelergyQuery) -> AccuracyEstimation:
-    return call_plug_in(plug_in, query, plug_in.estimate_area, Estimation)
+    e = call_plug_in(plug_in, query, plug_in.estimate_area, Estimation)
+    if e and e.success:
+        n_instances = query.class_attrs.get("n_instances", 1)
+        e.add_messages(f"Multiplying by n_instances {n_instances}")
+        e.value *= n_instances
+    return e
 
 
 def get_best_estimate(
