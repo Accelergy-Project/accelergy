@@ -405,6 +405,10 @@ class RawInputs2Dicts:
         config_file_name = "accelergy_config.yaml"
         try:
             original_config_file_path = get_config_file_path()
+            if not os.path.exists(original_config_file_path):
+                raise FileNotFoundError(
+                    f"Couldn't find Accelergy config file at {original_config_file_path}"
+                )
             original_content = load_yaml(original_config_file_path)
             INFO("config file located:", original_config_file_path)
             if "version" not in original_content:
