@@ -1,13 +1,13 @@
 from accelergy.utils.utils import *
 
-__version__ = '0.4'
+__version__ = "0.4"
 
 VERSION_COMPATIBILITIES = (
     {  # Key: Parser Version, Value: List of compatible input file versions
-        '0.1': [],  # Parser version 0.1 deprecated
-        '0.2': ['0.2'],
-        '0.3': ['0.2', '0.3'],
-        '0.4': ['0.2', '0.3', '0.4'],
+        "0.1": [],  # Parser version 0.1 deprecated
+        "0.2": ["0.2"],
+        "0.3": ["0.2", "0.3"],
+        "0.4": ["0.2", "0.3", "0.4"],
     }
 )
 
@@ -20,9 +20,8 @@ PATH_TO_VERSION = {}
 SUPPRESS_VERSION_ERRORS = True
 
 VERSION_OUTDATED_MSG = f"""
-Config file version outdated. Latest version is v{MAX_VERSION}. Config file can be updated by:
-  1. Running accelergy --update_config_version
-  OR 2. Updating the version number in ~/.config/accelergy/accelergy_config.yaml
+Input file version is newer than Accelergy version. Please install the latest
+Accelergy version or use v{__version__} input files.
 """
 
 
@@ -61,25 +60,17 @@ def versions_compatible(parser_version, file_version):
     return file_version in VERSION_COMPATIBILITIES.get(parser_version, [])
 
 
-def check_input_parser_version(
-    input_parser_version, input_file_type, input_file_path
-):
+def check_input_parser_version(input_parser_version, input_file_type, input_file_path):
     global PARSER_VERSION
     global INPUT_VERSION
-    version_error_func = (
-        ERROR_CLEAN_EXIT if not SUPPRESS_VERSION_ERRORS else WARN
-    )
+    version_error_func = ERROR_CLEAN_EXIT if not SUPPRESS_VERSION_ERRORS else WARN
 
     # Accelergy v0.3 can parser input files of version 0.2 and 0.3 (except ERT)
     if input_file_type is not "ERT":
-        if input_file_type == "config":
-            PARSER_VERSION = input_parser_version
-            ASSERT_MSG(
-                versions_compatible(PARSER_VERSION, None), VERSION_OUTDATED_MSG
-            )
-        else:
+        if input_file_type != "config":
             INPUT_VERSION = input_parser_version
             INPUT_FILE_VERSIONS.add(input_parser_version)
+    PARSER_VERSION = __version__
 
     # Warn for outdated parser version
     if input_file_type == "config" and PARSER_VERSION != MAX_VERSION:
