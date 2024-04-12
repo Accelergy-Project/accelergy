@@ -1,6 +1,6 @@
 import os
 import unittest
-import tests.action_area_share.test
+import tests.action_area_scale.test
 import tests.plugin_choices.test
 import tests.plugin_choices_II.test
 import tests.plugin_choices_III.test
@@ -11,10 +11,14 @@ from tests.basic.test_parsing_utils import TestParsingUtils
 import argparse
 import utils
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     arg_parser = argparse.ArgumentParser()
-    arg_parser.add_argument('-p', '--preserve_output',
-                            action='store_true', help='Preserve output files from passed tests.')
+    arg_parser.add_argument(
+        "-p",
+        "--preserve_output",
+        action="store_true",
+        help="Preserve output files from passed tests.",
+    )
     args = arg_parser.parse_args()
 
     utils.PRESERVE_OUTPUT_FILES = args.preserve_output
@@ -22,7 +26,7 @@ if __name__ == '__main__':
     test_loader = unittest.TestLoader()
 
     suite = unittest.TestSuite()
-    os.chdir('tests/basic')
+    os.chdir("tests/basic")
 
     def addTests(test):
         suite.addTests(test_loader.loadTestsFromTestCase(test))
@@ -30,7 +34,7 @@ if __name__ == '__main__':
     addTests(TestEnergyCalculation)
     addTests(TestHelperFunctions)
     addTests(TestParsingUtils)
-    addTests(tests.action_area_share.test.Test)
+    addTests(tests.action_area_scale.test.Test)
     addTests(tests.plugin_choices.test.Test)
     addTests(tests.plugin_choices_II.test.Test)
     addTests(tests.plugin_choices_III.test.Test)

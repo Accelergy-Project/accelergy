@@ -20,11 +20,11 @@ class Action(object):
 
         # repeat has the same meaning as action share
         if "repeat" in action_def_dict:
-            self._action_share = action_def_dict["repeat"]
-        elif "action_share" in action_def_dict:
-            self._action_share = action_def_dict["action_share"]
+            self._energy_scale = action_def_dict["repeat"]
+        elif "energy_scale" in action_def_dict:
+            self._energy_scale = action_def_dict["energy_scale"]
         else:
-            self._action_share = None
+            self._energy_scale = None
         # only compound actions will later set this property
         self._primitive_list = None
 
@@ -46,9 +46,9 @@ class Action(object):
     def set_primitive_list(self, primitive_list):
         self._primitive_list = primitive_list
 
-    def set_action_share(self, new_action_share):
-        """update the parsed repeat/action_share value"""
-        self._action_share = new_action_share
+    def set_energy_scale(self, new_energy_scale):
+        """update the parsed repeat/energy_scale value"""
+        self._energy_scale = new_energy_scale
 
     def set_argument(self, new_arg_dict):
         """update one or more argument name-val pairs"""
@@ -60,8 +60,8 @@ class Action(object):
     def get_name(self):
         return self.name
 
-    def get_action_share(self):
-        return self._action_share
+    def get_energy_scale(self):
+        return self._energy_scale
 
     def get_arguments(self):
         return self._arguments

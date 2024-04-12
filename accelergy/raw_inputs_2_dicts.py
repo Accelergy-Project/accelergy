@@ -352,11 +352,11 @@ class RawInputs2Dicts:
                     '"name" and "class" keys must be specified for the subcomponents of the '
                     "compound component class: %s" % (cc_class["name"]),
                 )
-                if "area_share" not in subcomponent_info:
+                if "area_scale" not in subcomponent_info:
                     # Try to grab it from the attributes if it's there. Otherwise, default to 1.0
-                    subcomponent_info["area_share"] = subcomponent_info.get(
+                    subcomponent_info["area_scale"] = subcomponent_info.get(
                         "attributes", {}
-                    ).get("area_share", 1.0)
+                    ).get("area_scale", 1.0)
 
             def assert_name_actions(target, context, to_find):
                 assert isinstance(
@@ -384,13 +384,13 @@ class RawInputs2Dicts:
                             f'{action_context} {subcomponent_actions["name"]} action'
                         )
                         assert_name_actions(subcomponent_action, sub_context, ["name"])
-                        if "action_share" not in subcomponent_action:
+                        if "energy_scale" not in subcomponent_action:
                             if "repeat" in subcomponent_action:
-                                subcomponent_action["action_share"] = (
+                                subcomponent_action["energy_scale"] = (
                                     subcomponent_action["repeat"]
                                 )
                             else:
-                                subcomponent_action["action_share"] = (
+                                subcomponent_action["energy_scale"] = (
                                     1  # default action share is 1
                                 )
             self.cc_classes_dict[cc_class["name"]] = deepcopy(cc_class)

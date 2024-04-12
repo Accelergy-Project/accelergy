@@ -1,18 +1,19 @@
 from copy import deepcopy
-from accelergy.utils.utils import  *
+from accelergy.utils.utils import *
 from accelergy.parsing_utils import *
 
-class PrimitiveComponent():
+
+class PrimitiveComponent:
     def __init__(self, def_info):
-        """ An instance of the class represent a component in the architecture
-            A component type instance can be a primitive component instance or component component instance
+        """An instance of the class represent a component in the architecture
+        A component type instance can be a primitive component instance or component component instance
         """
-        arch_component = def_info['component']
-        component_class = def_info['pc_class']
+        arch_component = def_info["component"]
+        component_class = def_info["pc_class"]
         self._name = arch_component.get_name()
         self._class_name = arch_component.get_class_name()
         self._attributes = arch_component.get_attributes()
-        self._area_share = arch_component.get_area_share()
+        self._area_scale = arch_component.get_area_scale()
         self._actions = []
         for action in self.flatten_top_level_action_list(component_class):
             self._actions.append(action)
@@ -41,13 +42,17 @@ class PrimitiveComponent():
 
     def get_dict_representation(self):
         from collections import OrderedDict
-        dict_rep = OrderedDict({'name': self.get_name(),
-                'class': self.get_class_name(),
-                'actions': []})
+
+        dict_rep = OrderedDict(
+            {"name": self.get_name(), "class": self.get_class_name(), "actions": []}
+        )
         for action in self.get_actions():
-            dict_rep['actions'].append( OrderedDict({'name': action.get_name(),
-                                                'arguments': action.get_arguments()}))
+            dict_rep["actions"].append(
+                OrderedDict(
+                    {"name": action.get_name(), "arguments": action.get_arguments()}
+                )
+            )
         return dict_rep
-    
-    def get_area_share(self):
-        return self._area_share
+
+    def get_area_scale(self):
+        return self._area_scale
