@@ -1,6 +1,7 @@
 # Accelergy infrastructure (version 0.4)
 An infrastructure for architecture-level energy/area estimations of accelerator designs. Project website: http://accelergy.mit.edu
 
+Examples: [https://github.com/Accelergy-Project/timeloop-accelergy-exercises](https://github.com/Accelergy-Project/timeloop-accelergy-exercises)
 
 [![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-v2.0%20adopted-ff69b4.svg)](code_of_conduct.md)
 [![Open Source Love png1](https://badges.frapsoft.com/os/v1/open-source.png?v=103)](https://github.com/ellerbrock/open-source-badges/)
