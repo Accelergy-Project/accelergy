@@ -333,20 +333,22 @@ class CompoundComponent:
         """find the corresponding subcomponent def to retrieve the action-related information"""
 
         subcomponent_base_name = remove_brackets(subcomponent_name)
-        ASSERT_MSG(
-            self.subcomponent_base_name_map[subcomponent_base_name]
-            in self.all_possible_subcomponents,
-            "subcomponent: %s not found"
-            % (self.subcomponent_base_name_map[subcomponent_base_name]),
+        assert subcomponent_base_name in self.subcomponent_base_name_map, (
+            f"Subcomponent {subcomponent_base_name} not found in "
+            f"compound component {self.get_name()}. Subcomponents are: "
+            f"{self.subcomponent_base_name_map.keys()}"
         )
-        subcomp_obj = self.all_possible_subcomponents[
+        assert (
+            self.subcomponent_base_name_map[subcomponent_base_name]
+            in self.all_possible_subcomponents
+        ), (
+            f"Subcomponent {subcomponent_base_name} not found in "
+            f"compound component {self.get_name()}. Subcomponents are: "
+            f"{self.all_possible_subcomponents.keys()}"
+        )
+        return self.all_possible_subcomponents[
             self.subcomponent_base_name_map[subcomponent_base_name]
         ]
-        ASSERT_MSG(
-            comp_name_within_range(subcomponent_name, subcomp_obj.get_name()),
-            "subcompnent name %s in action definition does not have a valid index (should be a subset of %s)"
-            % (subcomponent_name, subcomp_obj.get_name()),
-        )
         return subcomp_obj
 
     # ------------ CONVERSION TO DICTS for BETTER OUTPUTS FUNCTIONS ------------#
