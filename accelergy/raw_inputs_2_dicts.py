@@ -2,6 +2,7 @@ from copy import deepcopy
 from accelergy.parsing_utils import *
 from collections import OrderedDict
 import accelergy.version as version
+import accelergy.utils.yaml as yaml
 from accelergy.utils.yaml import load_yaml, write_yaml_file
 
 
@@ -606,7 +607,7 @@ class RawInputs2Dicts:
         return path_list
 
     def get_python_plug_in_paths(self):
-        return self.config.get("python_plug_ins", [])
+        return self.config.get("python_plug_ins", []) + yaml.EXTRA_PLUG_IN_PATHS
 
     def get_action_counts_dict(self):
         if self.action_counts_dict == {}:

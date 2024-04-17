@@ -39,6 +39,7 @@ PARSING_LOCK = threading.Lock()
 THREAD_ID = 0
 
 SCRIPTS_FROM = []
+EXTRA_PLUG_IN_PATHS = []
 
 
 class LockAcquirer:
@@ -187,6 +188,11 @@ def parse_globals_key(
             INFO(f"YAML Adding expression custom functions from {path}")
             found_funcs.append(os.path.abspath(path))
     globals["expression_custom_functions"] = found_funcs
+
+    for plug_in_path in globals.get("accelergy_plug_ins", []):
+        for path in find_paths(plug_in_path, cur_path, include_dirs):
+            EXTRA_PLUG_IN_PATHS.append(path)
+            INFO(f"YAML Adding plug-in path {path}")
 
 
 @recursive_mutator_eq_stop
