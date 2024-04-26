@@ -360,7 +360,7 @@ def load_yaml(
                 path, data, include_dirs
             )
         except Exception as e:
-            raise ValueError(f"Error loading YAML file {path}") from e
+            raise ValueError(f"Error loading YAML file {path}. {e}") from e
         try:
             result = merge_check(get_yaml(path, data).load(parsed))
             parse_globals_key(result, path, include_dirs)
@@ -373,7 +373,7 @@ def load_yaml(
                 f.write(parsed)
             raise ValueError(
                 f"Error parsing YAML file {path}. Offending file written to "
-                f"{failpath}"
+                f"{failpath}. {e}"
             ) from e
 
 
