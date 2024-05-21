@@ -106,34 +106,25 @@ find correspondence.
 See the creating-plug-ins tutorial in the [exercises repository](https://github.com/Accelergy-Project/timeloop-accelergy-exercises/tree/master).
 
 
-## Citing Accelergy+CiMLoop
-
+## Citation
 Please cite the following:
 
-- Y. N. Wu, J. S. Emer, and V. Sze, “Accelergy: An architecturelevel energy estimation methodology for accelerator designs,” in 2019 IEEE/ACM International Conference on Computer-Aided Design (ICCAD). IEEE, 2019, pp. 1–8.
+- Y. N. Wu, J. S. Emer, and V. Sze, “Accelergy: An architecture-level energy estimation methodology for accelerator designs,” in 2019 IEEE/ACM International Conference on Computer-Aided Design (ICCAD), 2019, pp. 1–8.
 - T. Andrulis, J. S. Emer, and V. Sze, “CiMLoop: A flexible, accurate, and fast compute-in-memory modeling tool,” in 2024 IEEE International Symposium on Performance Analysis of Systems and Software (ISPASS), 2024.
 
-Or the following BibTeX:
+Or use the following BibTeX:
 
 ```BibTeX
 @inproceedings{accelergy,
-  title={Accelergy: An architecture-level energy estimation methodology for accelerator designs},
-  author={Wu, Yannan Nellie and Emer, Joel S and Sze, Vivienne},
-  booktitle={2019 IEEE/ACM International Conference on Computer-Aided Design (ICCAD)},
-  pages={1--8},
-  year={2019},
-  organization={IEEE}
+  author      = {Wu, Yannan Nellie and Emer, Joel S and Sze, Vivienne},
+  booktitle   = {2019 IEEE/ACM International Conference on Computer-Aided Design (ICCAD)},
+  title       = {Accelergy: An architecture-level energy estimation methodology for accelerator designs},
+  year        = {2019},
 }
 @inproceedings{cimloop,
-  author={Andrulis, Tanner and Emer, Joel S. and Sze, Vivienne},
-  booktitle={2024 IEEE International Symposium on Performance Analysis of Systems and Software (ISPASS)}, 
-  title={{CiMLoop}: A Flexible, Accurate, and Fast Compute-In-Memory Modeling Tool}, 
-  year={2024},
-  volume={},
-  number={},
-  pages={},
-  keywords={Compute-In-Memory;Processing-In-Memory;Analog;Deep Neural Networks;Systems;Hardware;Modeling;Open-Source},
-  doi={}
+  author      = {Andrulis, Tanner and Emer, Joel S. and Sze, Vivienne},
+  booktitle   = {2024 IEEE International Symposium on Performance Analysis of Systems and Software (ISPASS)}, 
+  title       = {{CiMLoop}: A Flexible, Accurate, and Fast Compute-In-Memory Modeling Tool}, 
+  year        = {2024},
 }
 ```
-
