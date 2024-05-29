@@ -1,13 +1,13 @@
-# Accelergy infrastructure (version 0.4)
+# Accelergy (v4: CiMLoop)
 An infrastructure for architecture-level energy/area estimations of accelerator designs. Project website: http://accelergy.mit.edu
 
 Examples: [https://github.com/Accelergy-Project/timeloop-accelergy-exercises](https://github.com/Accelergy-Project/timeloop-accelergy-exercises)
 
 [![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-v2.0%20adopted-ff69b4.svg)](code_of_conduct.md)
 [![Open Source Love png1](https://badges.frapsoft.com/os/v1/open-source.png?v=103)](https://github.com/ellerbrock/open-source-badges/)
-## Update v0.4
+## Update v0.4 (CiMLoop)
 - New plug-in interface
-- Arithmetic parsing supports full-fledged Python code
+- New arithmetic parsing system
 - New logging system
 - Tests
 - Bug fixes
@@ -103,39 +103,28 @@ Primitive component library files need be end with ```.lib.yaml``` for Accelergy
 find correspondence. 
 
 ### API for Estimation Plug-ins
-- Users need to specify the root directory in config file in the format below. Accelergy does a recursive search to locate the estimator 
-plug-ins according to the provided root directories
-```
-estimator_plug_ins:
-  - root0
-  - root1
-```
-  
-- *.estimator.yaml* file needs to be specified for Accelergy to locate the estimator, and the file should have the following format
-```yaml
-  version: <version_number> 
-  estimator_plug_in_name:
-    module:  <wrapper file name>
-    class:   <class to be imported>
-    parameter: <initialization values>  #optional, only specified if the estimator plug-in needs input for __init__()
-    
-```
+See the creating-plug-ins tutorial in the [exercises repository](https://github.com/Accelergy-Project/timeloop-accelergy-exercises/tree/master).
 
-- A python module is required to be present in the same folder as the *.estimator.yaml* file
-    - The python file should contain a class as specified in *.estimator.yaml*
-    - There are two required class functions, i.e., the interface function calls. Accelergy specifically calls
-    these two functions to check if the estimator plug-in can be used for a specific primitive component
-        - ``` primitive_action_supported(self, interface) ```
-            - parameters: ```interface``` is a dictionary that contains the following four keys:
-                - class_name, type string
-                - attributes, type dictionary {attribute_name: attribute_value}
-                - action_name, type string
-                - arguments, type dictionary {argument_name: argument_value} 
-                    - ```None``` if the action does not need arguments
-            - return: integer accuracy if supported (0 is not supported)
-                
-        - ```estimate_energy(self, interface) ```
-            - parameters: same interface
-            - return: the energy/action value
-    - Accelergy is unaware of the other functions that are implemented in this module
-    
+
+## Citation
+Please cite the following:
+
+- Y. N. Wu, J. S. Emer, and V. Sze, “Accelergy: An architecture-level energy estimation methodology for accelerator designs,” in 2019 IEEE/ACM International Conference on Computer-Aided Design (ICCAD), 2019, pp. 1–8.
+- T. Andrulis, J. S. Emer, and V. Sze, “CiMLoop: A flexible, accurate, and fast compute-in-memory modeling tool,” in 2024 IEEE International Symposium on Performance Analysis of Systems and Software (ISPASS), 2024.
+
+Or use the following BibTeX:
+
+```BibTeX
+@inproceedings{accelergy,
+  author      = {Wu, Yannan Nellie and Emer, Joel S and Sze, Vivienne},
+  booktitle   = {2019 IEEE/ACM International Conference on Computer-Aided Design (ICCAD)},
+  title       = {Accelergy: An architecture-level energy estimation methodology for accelerator designs},
+  year        = {2019},
+}
+@inproceedings{cimloop,
+  author      = {Andrulis, Tanner and Emer, Joel S. and Sze, Vivienne},
+  booktitle   = {2024 IEEE International Symposium on Performance Analysis of Systems and Software (ISPASS)}, 
+  title       = {{CiMLoop}: A Flexible, Accurate, and Fast Compute-In-Memory Modeling Tool}, 
+  year        = {2024},
+}
+```
