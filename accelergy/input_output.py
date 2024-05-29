@@ -120,11 +120,11 @@ def parse_commandline_args():
         "(usually ~/.config/accelergy/accelergy_config.yaml) to the latest version.",
     )
     parser.add_argument(
-        "--update_config_version",
+        "-l",
+        "--list-components",
         action="store_true",
         default=False,
-        help="Update the Accelergy config file "
-        "(usually ~/.config/accelergy/accelergy_config.yaml) to the latest version.",
+        help="List all supported components and actions.",
     )
     return parser.parse_args()
 

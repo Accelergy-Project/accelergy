@@ -50,6 +50,7 @@ def run():
     scripts = []
     extra_plugins = args.extra_plugins
     version.SUPPRESS_VERSION_ERRORS = args.suppress_version_errors
+    verbose = args.verbose
     logging.getLogger().setLevel(logging.INFO if not args.verbose else logging.DEBUG)
     # interpret desired output files
     oflags = {
@@ -98,7 +99,18 @@ def run():
 
     # ---- Detecting config only cases and gracefully exiting
     if len(available_inputs) == 0:
-        INFO("no input is provided, exiting...")
+        if args.list_components or args.verbose:
+            # ----- Add all available plug-ins
+            system_state.add_plug_ins(
+                plug_in_path_to_obj(
+                    raw_dicts.get_estimation_plug_in_paths(),
+                    raw_dicts.get_python_plug_in_paths() + extra_plugins,
+                    output_prefix,
+                ),
+            )
+            list_components(system_state)
+        else:
+            INFO("no input is provided, exiting...")
         sys.exit(0)
 
     if (
@@ -134,7 +146,22 @@ def run():
         )
         system_state.set_arch_spec(arch_obj)
 
-    if (compute_ERT and "ERT" not in available_inputs) or compute_ART:
+    # ----- Add all available plug-ins
+    system_state.add_plug_ins(
+        plug_in_path_to_obj(
+            raw_dicts.get_estimation_plug_in_paths(),
+            raw_dicts.get_python_plug_in_paths() + extra_plugins,
+            output_prefix,
+        ),
+    )
+
+    if args.list_components:
+        list_components(system_state)
+        sys.exit(0)
+    if verbose:
+        list_components(system_state, INFO)
+
+    if (compute_ERT and "ERT" not in available_inputs) or compute_ART or True:
         # ERT/ERT_summary/energy estimates/ART/ART summary need to be generated without provided ERT
         #        ----> all components need to be defined
         # ----- Add the Fully Defined Components (all flattened out)
@@ -162,14 +189,6 @@ def run():
                     }
                 )
                 system_state.add_pc(pc)
-        # ----- Add all available plug-ins
-        system_state.add_plug_ins(
-            plug_in_path_to_obj(
-                raw_dicts.get_estimation_plug_in_paths(),
-                raw_dicts.get_python_plug_in_paths() + extra_plugins,
-                output_prefix,
-            ),
-        )
 
     if compute_ERT and "ERT" in available_inputs:
         # ERT/ ERT_summary/ energy estimates need to be generated with provided ERT
@@ -227,6 +246,89 @@ def run():
 
     # ----- Generate All Necessary Output Files
     generate_output_files(system_state)
+
+
+def list_components(system_state, printfunc=print):
+    printfunc("\n")
+    printfunc("Components in the architecture:")
+    printfunc("\tPrimitive Components:")
+    for pc_name in system_state.pc_classes:
+        printfunc(f"\t\t{pc_name}")
+    printfunc("\tCompound Components:")
+    for cc_name in system_state.cc_classes:
+        printfunc(f"\t\t{cc_name}")
+
+    printfunc("\n")
+    printfunc("Supported Components:")
+    from accelergy.plug_in_interface.estimator_wrapper import EstimatorWrapper
+
+    class Entry:
+        def __init__(
+            self,
+            name: str,
+            class_name: str,
+            init_function: str,
+            actions: List[str],
+        ):
+            self.name = name
+            self.class_name = class_name
+            self.init_function = init_function
+            self.actions = actions
+
+        def __str__(self):
+            return (
+                # f"Plug-In: {self.class_name}\n"
+                f"\t{self.class_name}{self.init_function} <{self.name} plug-in> \n"
+                + "\n".join(f"\t\t{self.class_name}.{a}" for a in self.actions)
+            )
+
+    entries = []
+    plug_ins_without_entries = []
+    for plug_in in system_state.plug_ins:
+
+        def add_entry(name, class_names, init_func, actions):
+            class_names = [class_names] if isinstance(class_names, str) else class_names
+            entries.append(
+                (class_names[0], Entry(name, class_names[0], str(init_func), actions))
+            )
+            for c in class_names[1:]:
+                entries.append((c, f"\t{c}: alias for {name} plug-in {class_names[0]}"))
+
+        if isinstance(plug_in, EstimatorWrapper):
+            add_entry(
+                plug_in.get_name(),
+                plug_in.get_class_names(),
+                str(plug_in.init_function),
+                plug_in.actions,
+            )
+        elif hasattr(plug_in, "get_supported_components"):
+            for c in plug_in.get_supported_components():
+                add_entry(
+                    plug_in.get_name(),
+                    c.class_names,
+                    str(c.init_function),
+                    c.actions,
+                )
+        else:
+            plug_ins_without_entries.append(plug_in.get_name())
+
+    entries = sorted(entries, key=lambda x: x[0].lower())
+    for entry in entries:
+        printfunc(entry[1])
+
+    printfunc("\n")
+
+    if plug_ins_without_entries:
+        printfunc("Plug-ins without entries:")
+        for plug_in in plug_ins_without_entries:
+            printfunc(f"\t{plug_in}")
+
+    printfunc("\n")
+    printfunc("Parsing functions:")
+    for func_name in accelergy.parsing_utils.SCRIPT_FUNCS:
+        printfunc(f"\t{func_name}")
+
+    printfunc("\n")
 
 
 def main():

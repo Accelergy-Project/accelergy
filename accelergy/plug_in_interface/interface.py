@@ -10,6 +10,7 @@ import accelergy.version as version
 
 from accelergy.parsing_utils import ruamel_str_to_normal_str
 
+
 class UnitOption(Enum):
     """ Unit options for Estimation objects. """
     femto =      (1e-15, 'f')

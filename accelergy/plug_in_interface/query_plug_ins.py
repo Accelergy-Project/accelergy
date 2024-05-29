@@ -202,5 +202,8 @@ def get_best_estimate(
             f"Can not find an {estimation_target} estimator for {query}\n"
             f'{indent_list_text_block("Logs for plug-ins that could estimate query:", full_logs)}\n'
             f'{indent_list_text_block("Why plug-ins did not estimate:", fail_reasons)}\n'
+            f'\n.\n.\nTo see a list of available component models, run "<command you used> -h" and '
+            f"find the option to list Accelergy components. Alternatively, run accelergy verbose and "
+            f"check the log file."
         ).splitlines()
     )

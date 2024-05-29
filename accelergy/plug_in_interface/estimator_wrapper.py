@@ -3,7 +3,7 @@ import inspect
 import logging
 from numbers import Number
 from types import ModuleType
-from typing import Any, Callable, Dict, List, Optional, Set
+from typing import Any, Callable, Dict, List, Optional, Set, Union
 from accelergy.utils.utils import INFO, WARN
 from accelergy.plug_in_interface.interface import (
     AccelergyPlugIn,
@@ -13,6 +13,40 @@ from accelergy.plug_in_interface.interface import (
 )
 from accelergy.plug_in_interface.estimator import Estimator
 from accelergy.utils.logging import move_queue_from_one_logger_to_another
+
+
+class PrintableCall:
+    def __init__(
+        self,
+        name: str,
+        args: List[str] = (),
+        defaults: Dict[str, Any] = None,
+    ):
+        self.name = name
+        self.args = args
+        self.defaults = defaults or {}
+
+    def __str__(self):
+        n = self.name
+        args = [str(a) for a in self.args] + [
+            f"{k}={v}" for k, v in self.defaults.items()
+        ]
+
+        return f"{n}({', '.join(args)})"
+
+
+class SupportedComponent:
+    def __init__(
+        self,
+        class_names: Union[str, List[str]],
+        init_function: PrintableCall,
+        actions: List[PrintableCall],
+    ):
+        self.class_names = (
+            class_names if isinstance(class_names, list) else [class_names]
+        )
+        self.init_function = init_function
+        self.actions = actions
 
 
 class CallableFunction:
@@ -44,6 +78,9 @@ class CallableFunction:
             self.function_name = force_name_override
         self.non_default_args = args[: len(args) - default_length]
         self.default_args = args[len(args) - default_length :]
+        self.default_arg_values = (
+            function.__defaults__ if function.__defaults__ is not None else []
+        )
         self.logger = logger
 
     def get_error_message_for_name_match(self, name: str, class_name: str = ""):
@@ -94,6 +131,15 @@ class CallableFunction:
         if call_function_on_object is not None:
             return self.function(call_function_on_object, **kwags_included)
         return self.function(**kwags_included)
+
+    def __str__(self):
+        return str(
+            PrintableCall(
+                self.function_name if self.function_name != "__init__" else "",
+                self.non_default_args,
+                {a: b for a, b in zip(self.default_args, self.default_arg_values)},
+            )
+        )
 
 
 class EstimatorWrapper(AccelergyPlugIn):
@@ -233,6 +279,13 @@ class EstimatorWrapper(AccelergyPlugIn):
 
     def get_name(self) -> str:
         return self.estimator_name
+
+    def get_class_names(self) -> List[str]:
+        return [self.class_name]
+
+    @staticmethod
+    def print_action(action: CallableFunction) -> str:
+        return action.function_name
 
 
 def get_all_estimators_in_module(

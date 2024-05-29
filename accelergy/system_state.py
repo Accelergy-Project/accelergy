@@ -1,6 +1,10 @@
 from accelergy.utils.utils import *
 from accelergy.plug_in_interface.interface import AccelergyPlugIn
 
+# Option to list all names and option to list all names and arguments
+# tl accelergy list-components
+# tl accelergy list-actions
+
 
 class SystemState:
     def __init__(self):
@@ -68,7 +72,15 @@ class SystemState:
         ASSERT_MSG(
             isinstance(plug_ins, list), "plug in objects need to be passed in as a list"
         )
-        self.plug_ins = plug_ins
+        self.plug_ins = []
+        found_names = set()
+        for plug_in in plug_ins:
+            if plug_in.get_name() in found_names:
+                WARN(f"Plug-in {plug_in.get_name()} is already added")
+            else:
+                self.plug_ins.append(plug_in)
+                found_names.add(plug_in.get_name())
+
         for plug_in in self.plug_ins:
             if isinstance(plug_in, AccelergyPlugIn):
                 if not getattr(plug_in, "_accelergy_plug_in_initialized", False):
