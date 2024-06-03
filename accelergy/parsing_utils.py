@@ -154,6 +154,21 @@ def propagate_required_keys(
     propagate("n_instances", 1)
 
 
+def assert_required_keys_numeric(d: dict, location: str, action_keys: bool = False):
+    failmsg = f"Expected numeric value for key {{key}} in {location}."
+    if not version.input_version_greater_or_equal(0.4):
+        return
+
+    if action_keys:
+        for key in ["action_latency_cycles"]:
+            if key in d and not isinstance(d[key], (int, float)):
+                ERROR_CLEAN_EXIT(failmsg.format(key=key))
+        return
+    for key in ["global_cycle_seconds", "cycle_seconds", "n_instances"]:
+        if key in d and not isinstance(d[key], (int, float)):
+            ERROR_CLEAN_EXIT(failmsg.format(key=key))
+
+
 def interpret_component_list(name, binding_dictionary=None):
     """
     determines if the component is a list according to its name
