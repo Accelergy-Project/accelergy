@@ -281,7 +281,9 @@ class EstimatorWrapper(AccelergyPlugIn):
         return self.estimator_name
 
     def get_class_names(self) -> List[str]:
-        return [self.class_name]
+        return (
+            [self.class_name] if isinstance(self.class_name, str) else self.class_name
+        )
 
     @staticmethod
     def print_action(action: CallableFunction) -> str:
