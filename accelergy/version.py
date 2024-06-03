@@ -108,7 +108,7 @@ def check_input_parser_version(input_parser_version, input_file_type, input_file
             )
 
     # Warn for outdated input files
-    if input_parser_version != MAX_VERSION:
+    if str(input_parser_version) != str(MAX_VERSION):
         WARN(
             f"File {input_file_path} is outdated. File version is {input_parser_version}, "
             f"while the latest version is {MAX_VERSION}. "
