@@ -6,12 +6,10 @@ from accelergy.plug_in_interface.estimator_wrapper import (
 )
 
 
-class DummyTable(AccelergyPlugIn):
+class Dummy(AccelergyPlugIn):
     """
-    A dummy estimation plug-in
-    Note that this plug-in is just a placeholder to illustrate the estimation plug-in interface
-    It can be used as a template for creating user-defined plug-ins
-    The energy values returned by this plug-in is not meaningful
+    A dummy estimation plug-in. Estimations from this plug-in are not
+    meaningful and to be used for testing only.
     """
 
     # -------------------------------------------------------------------------------------
@@ -65,13 +63,18 @@ class DummyTable(AccelergyPlugIn):
         return Estimation(1, "u^2")  # Dummy returns 1 for all non-leak actions
 
     def get_name(self) -> str:
-        return "dummy_table"
+        return "dummy"
 
     def get_supported_components(self) -> List[SupportedComponent]:
         return [
             SupportedComponent(
                 "_anything_",
-                PrintableCall("", ["set 'technology=-1' to use the dummy table"]),
+                PrintableCall(
+                    "",
+                    [
+                        "set 'technology=-1' to use placeholder estimations (for testing)."
+                    ],
+                ),
                 [PrintableCall("_anything_")],
             )
         ]
