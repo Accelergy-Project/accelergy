@@ -6,7 +6,7 @@ from accelergy.plug_in_interface.estimator_wrapper import (
 )
 
 
-class Dummy(AccelergyPlugIn):
+class DummyTable(AccelergyPlugIn):
     """
     A dummy estimation plug-in. Estimations from this plug-in are not
     meaningful and to be used for testing only.
