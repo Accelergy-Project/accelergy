@@ -29,7 +29,9 @@ class DummyTable(AccelergyPlugIn):
             return AccuracyEstimation(100)
         if not input_version_greater_or_equal(0.4):
             return AccuracyEstimation(1)
-        self.logger.info('Set attribute "technology" to -1 to use the dummy table')
+        self.logger.info(
+            'Set attribute "technology" to -1 to use placeholder estimations (for testing).'
+        )
         return AccuracyEstimation(0)
 
     def estimate_energy(self, query: AccelergyQuery) -> Estimation:
@@ -50,7 +52,9 @@ class DummyTable(AccelergyPlugIn):
             return AccuracyEstimation(100)
         if not input_version_greater_or_equal(0.4):
             return AccuracyEstimation(1)
-        self.logger.info('Set attribute "technology" to -1 to use the dummy table')
+        self.logger.info(
+            'Set attribute "technology" to -1 to use placeholder estimations (for testing).'
+        )
         return AccuracyEstimation(0)
 
     def estimate_area(self, query: AccelergyQuery) -> Estimation:
