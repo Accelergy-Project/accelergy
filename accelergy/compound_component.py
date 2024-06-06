@@ -33,6 +33,7 @@ class CompoundComponent:
         self.class_name = arch_component.get_class_name()
         self.attributes = arch_component.get_attributes()
         self.area_scale = arch_component.get_area_scale()
+        self.energy_scale = arch_component.get_energy_scale()
         self._primitive_type = cc_classes[self.class_name].get_primitive_type()
         self._subcomponents = {}
         self.all_possible_subcomponents = {}
@@ -84,6 +85,11 @@ class CompoundComponent:
         my_area_scale = self.process_area_scale(
             self.area_scale, compound_attributes, f"{self.name}.area_scale"
         )
+        self.area_scale = my_area_scale
+        my_energy_scale = self.process_area_scale(
+            self.energy_scale, compound_attributes, f"{self.name}.energy_scale"
+        )
+        self.energy_scale = my_energy_scale
         # process the subcomponent attribute values, subcomponent attributes can be:
         #     1. numbers
         #     2. string bindings to/arithmetic operations of compound component attributes
@@ -109,10 +115,13 @@ class CompoundComponent:
                     defined_subcomponent, cc_classes, pc_classes
                 )
                 cc_area_scale = defined_subcomponent.get_area_scale()
+                cc_energy_scale = defined_subcomponent.get_energy_scale()
                 for new_defined_pc in list_of_new_defined_primitive_components:
-                    defined_area_scale = defined_subcomponent.get_area_scale()
                     new_defined_pc.set_area_scale(
                         new_defined_pc.get_area_scale() * cc_area_scale
+                    )
+                    new_defined_pc.set_energy_scale(
+                        new_defined_pc.get_energy_scale() * cc_energy_scale
                     )
                     list_of_primitive_components.append(new_defined_pc)
             else:
@@ -130,6 +139,9 @@ class CompoundComponent:
                 )
                 defined_subcomponent.set_area_scale(
                     defined_subcomponent.get_area_scale() * my_area_scale
+                )
+                defined_subcomponent.set_energy_scale(
+                    defined_subcomponent.get_energy_scale() * my_energy_scale
                 )
                 list_of_primitive_components.append(defined_subcomponent)
             self.all_possible_subcomponents[subname] = defined_subcomponent
@@ -310,6 +322,13 @@ class CompoundComponent:
                 f"{subcomponent.get_name()}.area_scale",
             )
         )
+        subcomponent.set_energy_scale(
+            self.process_area_scale(
+                subcomponent.get_energy_scale(),
+                combined_attributes,
+                f"{subcomponent.get_name()}.energy_scale",
+            )
+        )
         return subcomponent
 
     @staticmethod
@@ -360,6 +379,7 @@ class CompoundComponent:
                 "class": sub_obj.get_class_name(),
                 "attributes": sub_obj.get_attributes(),
                 "area_scale": sub_obj.get_area_scale(),
+                "energy_scale": sub_obj.get_energy_scale(),
             }
         return subcomp_dict
 

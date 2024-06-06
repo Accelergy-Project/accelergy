@@ -14,6 +14,7 @@ class PrimitiveComponent:
         self._class_name = arch_component.get_class_name()
         self._attributes = arch_component.get_attributes()
         self._area_scale = arch_component.get_area_scale()
+        self._energy_scale = arch_component.get_energy_scale()
         self._actions = []
         for action in self.flatten_top_level_action_list(component_class):
             self._actions.append(action)
@@ -56,3 +57,6 @@ class PrimitiveComponent:
 
     def get_area_scale(self):
         return self._area_scale
+
+    def get_energy_scale(self):
+        return self._energy_scale

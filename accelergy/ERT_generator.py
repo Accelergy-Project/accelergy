@@ -79,6 +79,7 @@ class EnergyReferenceTableGenerator:
                 "arguments": arguments,
             }
             estimation = self.eval_primitive_action_energy(estimation_plug_in_interface)
+            estimation.value *= pc.get_energy_scale()
             self.ERT.add_action_entry(
                 {
                     "name": pc_name,
@@ -141,6 +142,7 @@ class EnergyReferenceTableGenerator:
                         estimated_energy
                         * subaction_obj.get_energy_scale()
                         * total_identical_comps
+                        * subcomp_obj.get_energy_scale()
                     )
                     primitive_action_estimations.append(
                         (subcomp_name, subaction_obj, estimator_name, estimated_energy)

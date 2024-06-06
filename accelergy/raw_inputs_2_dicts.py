@@ -358,6 +358,11 @@ class RawInputs2Dicts:
                     subcomponent_info["area_scale"] = subcomponent_info.get(
                         "attributes", {}
                     ).get("area_scale", 1.0)
+                if "energy_scale" not in subcomponent_info:
+                    # Try to grab it from the attributes if it's there. Otherwise, default to 1.0
+                    subcomponent_info["energy_scale"] = subcomponent_info.get(
+                        "attributes", {}
+                    ).get("energy_scale", 1.0)
 
             def assert_name_actions(target, context, to_find):
                 assert isinstance(

@@ -115,6 +115,17 @@ class ArchComp:
         if "attributes" not in self.dict_representation:
             self.dict_representation["attributes"] = {}
 
+        self.dict_representation.setdefault("area_scale", 1.0)
+        self.dict_representation.setdefault("energy_scale", 1.0)
+        if "area_scale" in self.dict_representation["attributes"]:
+            WARN(
+                "Area scale in attributes is deprecated. Use it on the same level as the attributes, not a subkey."
+            )
+        if "energy_scale" in self.dict_representation["attributes"]:
+            WARN(
+                "Energy scale in attributes is deprecated. Use it on the same level as the attributes, not a subkey."
+            )
+
     def get_attributes(self):
         return self.dict_representation["attributes"]
 
@@ -136,5 +147,14 @@ class ArchComp:
 
         if "area_scale" in self.dict_representation["attributes"]:
             return self.dict_representation["attributes"]["area_scale"]
+
+        return 1.0
+
+    def get_energy_scale(self):
+        if "energy_scale" in self.dict_representation:
+            return self.dict_representation["energy_scale"]
+
+        if "energy_scale" in self.dict_representation["attributes"]:
+            return self.dict_representation["attributes"]["energy_scale"]
 
         return 1.0
