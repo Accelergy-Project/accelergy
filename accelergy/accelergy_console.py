@@ -129,7 +129,7 @@ def run():
     ):
         # architecture needs to be defined if
         #    (1) flattened architecture required output,
-        #    (2) ERT needed but bot provided,
+        #    (2) ERT needed but not provided,
         #    (3) ART needed
 
         # ----- Add the Component Classes
@@ -161,7 +161,7 @@ def run():
     if verbose:
         list_components(system_state, INFO)
 
-    if (compute_ERT and "ERT" not in available_inputs) or compute_ART or True:
+    if (compute_ERT and "ERT" not in available_inputs) or compute_ART:
         # ERT/ERT_summary/energy estimates/ART/ART summary need to be generated without provided ERT
         #        ----> all components need to be defined
         # ----- Add the Fully Defined Components (all flattened out)
