@@ -110,7 +110,7 @@ See the creating-plug-ins tutorial in the [exercises repository](https://github.
 Please cite the following:
 
 - Y. N. Wu, J. S. Emer, and V. Sze, “Accelergy: An architecture-level energy estimation methodology for accelerator designs,” in 2019 IEEE/ACM International Conference on Computer-Aided Design (ICCAD), 2019, pp. 1–8.
-- T. Andrulis, J. S. Emer, and V. Sze, “CiMLoop: A flexible, accurate, and fast compute-in-memory modeling tool,” in 2024 IEEE International Symposium on Performance Analysis of Systems and Software (ISPASS), 2024.
+- T. Andrulis, J. S. Emer and V. Sze, "CiMLoop: A Flexible, Accurate, and Fast Compute-In-Memory Modeling Tool," in 2024 IEEE International Symposium on Performance Analysis of Systems and Software (ISPASS), 2024, pp. 10-23.
 
 Or use the following BibTeX:
 
