@@ -19,6 +19,7 @@
 # SOFTWARE.
 
 import logging
+from math import floor, log10
 import os, sys
 
 from copy import deepcopy
@@ -110,3 +111,9 @@ def get_config_file_path() -> str:
         f"Could not find Accelergy config file. Run 'accelergy' to "
         f"generate a default config file at {possible_config_dirs[1]}."
     )
+
+def round_sigfig(value: float, precision: int):
+    """Rounds to "precision" significant figures"""
+    if value == 0:
+        return value
+    return round(value, precision - int(floor(log10(abs(value)))) - 1)

@@ -55,7 +55,7 @@ class AreaReferenceTableGenerator:
         self.ART.add_entry(
             {
                 "comp_name": pc_name,
-                "area": round(pc_area, self.precision),
+                "area": round_sigfig(pc_area, self.precision),
                 "estimator": estimator_name,
             }
         )
@@ -82,16 +82,16 @@ class AreaReferenceTableGenerator:
                     {
                         "name": subcomp_name,
                         "estimator": estimator_name,
-                        "area": round(estimated_area, self.precision),
+                        "area": round_sigfig(estimated_area, self.precision),
                         "area_scale": subcomp_obj.get_area_scale(),
-                        "total_component_area": round(pc_area, self.precision),
+                        "total_component_area": round_sigfig(pc_area, self.precision),
                     }
                 )
             )
         self.ART.add_entry(
             {
                 "comp_name": cc_name,
-                "area": round(cc_area, self.precision),
+                "area": round_sigfig(cc_area, self.precision),
                 "estimator": estimators,
             }
         )

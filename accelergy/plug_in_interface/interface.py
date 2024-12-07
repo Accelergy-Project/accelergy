@@ -149,11 +149,11 @@ class Estimation:
         else:
             return f"No messages found."
 
-    def round(self, precision: int):
+    def round_sigfig(self, precision: int):
         """Rounds to "precision" significant figures"""
         if self.value == 0:
             return self.value
-        self.value = round(
+        self.value = round_sigfig(
             self.value, precision - int(floor(log10(abs(self.value)))) - 1
         )
 

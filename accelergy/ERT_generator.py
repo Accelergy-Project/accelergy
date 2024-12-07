@@ -85,7 +85,7 @@ class EnergyReferenceTableGenerator:
                     "name": pc_name,
                     "action_name": action_name,
                     "arguments": arguments,
-                    "energy": round(estimation.get_value() * 1e12, self.precision),
+                    "energy": round_sigfig(estimation.get_value() * 1e12, self.precision),
                     "estimator": estimation.estimator_name,
                 }
             )
@@ -153,7 +153,7 @@ class EnergyReferenceTableGenerator:
                     "name": cc_name,
                     "action_name": cc_action_name,
                     "arguments": cc_arguments,
-                    "energy": round(energy, self.precision),
+                    "energy": round_sigfig(energy, self.precision),
                     "estimator": primitive_action_estimations,
                 }
             )
@@ -288,7 +288,7 @@ class ComponentERTEntry:
                     * count_num_identical_comps(subcomponent_name)
                 )
                 percentage = (
-                    0 if energy == 0 else round(100 * interpreted_energy / energy, 2)
+                    0 if energy == 0 else round_sigfig(100 * interpreted_energy / energy, 2)
                 )
                 subaction_estimations.append(
                     OrderedDict(
@@ -430,7 +430,7 @@ class ComponentERTEntry:
                         init_dict["max_energy"] = arg_combo["energy"]
                     if arg_combo["energy"] < init_dict["min_energy"]:
                         init_dict["min_energy"] = arg_combo["energy"]
-                init_dict["average_energy"] = round(
+                init_dict["average_energy"] = round_sigfig(
                     accumulator / len(action_info), self.precision
                 )
                 actions.append(init_dict)
