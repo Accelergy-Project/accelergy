@@ -83,6 +83,7 @@ def plug_in_path_to_obj(
     # Load Python plug-ins
     plug_in_ids = set()
     for root, python_path in iter_files_recursive(python_path_list):
+        INFO(f"Loading Python plug-in: {python_path}. Errors below are likely due to plug-in, not Accelergy.")
         if not python_path.endswith(".py"):
             continue
         prev_sys_path = copy.deepcopy(sys.path)
@@ -92,6 +93,8 @@ def plug_in_path_to_obj(
         python_module = SourceFileLoader("python_plug_in", python_path).load_module()
         estimator_plug_ins += get_all_estimators_in_module(python_module, plug_in_ids)
         sys.path = prev_sys_path
+        
+    INFO(f"Done loading Python plug-ins.")
 
     for estimator_plug_in in estimator_plug_ins:
         INFO(
