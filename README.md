@@ -1,4 +1,4 @@
-# Accelergy (v4: CiMLoop)
+# Accelergy+CiMLoop v4
 An infrastructure for architecture-level energy/area estimations of accelerator designs. Project website: http://accelergy.mit.edu
 
 Examples: [https://github.com/Accelergy-Project/timeloop-accelergy-exercises](https://github.com/Accelergy-Project/timeloop-accelergy-exercises)
