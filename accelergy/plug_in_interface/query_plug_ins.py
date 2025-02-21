@@ -162,7 +162,7 @@ def get_best_estimate(
         )
         for a, e in estimations
     ]
-    full_logs = (full_logs_acc if full_logs_acc[0] else []) + full_logs_estimations
+    full_logs = full_logs_acc + full_logs_estimations
     fail_reasons_accuracy = [
         f"{e.estimator_name} with accuracy {e} estimating accuracy: {e.lastmessage()}"
         for _, e in accuracies
