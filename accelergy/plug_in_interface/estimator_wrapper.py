@@ -300,7 +300,12 @@ def get_all_estimators_in_module(
     classes = [(x, name) for x, name in classes if x.__module__ == module.__name__]
     found = []
     for x, name in classes:
-        if issubclass(x, Estimator) and not x is Estimator and id(x) not in plug_in_ids:
+        superclasses = [c.__name__ for c in inspect.getmro(x)]
+        if (
+            any(base in superclasses for base in ["EnergyAreaEstimator", "Estimator"])
+            and not inspect.isabstract(x)
+            and id(x) not in plug_in_ids
+        ):
             plug_in_ids.add(id(x))
             found.append(EstimatorWrapper(x, name))
     return found
